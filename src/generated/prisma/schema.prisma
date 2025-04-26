@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model tbl_campa_as {
+  pkid                BigInt   @id @default(autoincrement())
+  nombre              String   @db.VarChar(255)
+  presupuesto_gastado Float
+  fecha_inicio        DateTime @db.Date
+  fecha_fin           DateTime @db.Date
+  fkid_tbl_comercios  BigInt
+
+  @@map("tbl_campañas")
+}
+
+model tbl_clientes {
+  pktelefono             String @id @db.VarChar(255)
+  nombres                String @db.VarChar(255)
+  apellidos              String @db.VarChar(255)
+  correo                 String @db.VarChar(255)
+  direccion              String @db.VarChar(255)
+  fkid_tbl_departamentos BigInt
+  fkid_tbl_municipios    BigInt
+  fkid_tbl_comercios     BigInt
+}
+
+model tbl_departamentos {
+  pkid   BigInt @id @default(autoincrement())
+  nombre String @db.VarChar(255)
+}
+
+model tbl_det_productos {
+  pkid               BigInt @id @default(autoincrement())
+  nombre             String @db.VarChar(255)
+  fkid_tbl_productos BigInt
+}
+
+model tbl_estados_usuario {
+  pkid         BigInt @id @default(autoincrement())
+  nombre       String @db.VarChar(255)
+  nomenclatura String @db.VarChar(255)
+}
+
+model tbl_municipios {
+  pkid   BigInt @id @default(autoincrement())
+  nombre String @db.VarChar(255)
+}
+
+model tbl_pedidos {
+  pkid                     BigInt   @id @default(autoincrement())
+  fktelefono_tbl_clientes  String   @db.VarChar(255)
+  fkid_tbl_det_productos   BigInt
+  fkid_tbl_transportadoras BigInt
+  valor                    Float
+  fecha                    DateTime @db.Date
+}
+
+model tbl_personas {
+  pkid      BigInt         @id @default(autoincrement())
+  nombres   String         @db.VarChar(255)
+  apellidos String         @db.VarChar(255)
+  correo    String         @db.VarChar(255)
+  usuarios  tbl_usuarios[]
+}
+
+model tbl_productos {
+  pkid   BigInt @id @default(autoincrement())
+  nombre String @db.VarChar(255)
+  costo  Float
+  valor  Float
+}
+
+model tbl_roles {
+  pkid         BigInt @id @default(autoincrement())
+  nombre       String @db.VarChar(255)
+  nomenclatura String @db.VarChar(255)
+}
+
+model tbl_comercios {
+  pkid                   BigInt @id @default(autoincrement())
+  nombre                 String @db.VarChar(255)
+  telefono               String @db.VarChar(255)
+  correo                 String @db.VarChar(255)
+  fkusuario_tbl_usuarios String @db.VarChar(255)
+}
+
+model tbl_transportadoras {
+  pkid         BigInt @id @default(autoincrement())
+  nombre       String @db.VarChar(255)
+  nomenclatura String @db.VarChar(255)
+}
+
+model tbl_usuarios {
+  pkusuario                String       @id @db.VarChar(255)
+  contrase_a               String       @map("contraseña") @db.VarChar(255)
+  fkid_tbl_roles           BigInt
+  fkid_tbl_estados_usuario BigInt
+  fkid_tbl_personas        BigInt
+  persona                  tbl_personas @relation(fields: [fkid_tbl_personas], references: [pkid])
+}
