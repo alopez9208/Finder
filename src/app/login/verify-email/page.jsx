@@ -40,9 +40,9 @@ export default function LoginPage() {
           <span className="text-lg font-semibold text-gray-700"></span>
         </div>
 
-        <h1 className="text-3xl font-bold text-[#3066C8] mb-4">Restablece tu contraseña</h1>
+        <h1 className="text-3xl font-bold text-[#3066C8] mb-4">Identifica tu cuenta</h1>
 
-        <p className="text-lg text-blue-500 text-center mb-8">Te enviaremos un código para restablecer tu contraseña </p>
+        <p className="text-lg text-blue-500 text-center mb-8">¿A qué cuenta de Finder tienes problemas para acceder? </p>
 
         <div className="w-full max-w-sm">
           {/* Input Usuario */}

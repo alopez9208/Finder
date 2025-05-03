@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaEye } from "react-icons/fa";
 import { TbArrowsSort } from "react-icons/tb";
 
@@ -9,110 +9,77 @@ export default function DashboardPage() {
   const [searchName, setSearchName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 5;
-
-  const [usuarios, setUsuarios] = useState([
-    {
-      usuario: "user3",
-      rol: "Supervisor",
-      estado: "Activo",
-      nombre: "Luis",
-      apellido: "Gómez",
-      correo: "luis@example.com",
-    },
-    {
-      usuario: "user4",
-      rol: "Admin",
-      estado: "Activo",
-      nombre: "Marta",
-      apellido: "Pérez",
-      correo: "marta@example.com",
-    },
-    {
-      usuario: "user5",
-      rol: "Vigilante",
-      estado: "Inactivo",
-      nombre: "José",
-      apellido: "Rodríguez",
-      correo: "jose@example.com",
-    },   
-    {
-      usuario: "user2",
-      rol: "Vigilante",
-      estado: "Inactivo",
-      nombre: "Ana",
-      apellido: "Martínez",
-      correo: "ana@example.com",
-    },
-    {
-      usuario: "user3",
-      rol: "Supervisor",
-      estado: "Activo",
-      nombre: "Luis",
-      apellido: "Gómez",
-      correo: "luis@example.com",
-    },
-    {
-      usuario: "user4",
-      rol: "Admin",
-      estado: "Activo",
-      nombre: "Marta",
-      apellido: "Pérez",
-      correo: "marta@example.com",
-    },
-    {
-      usuario: "user5",
-      rol: "Vigilante",
-      estado: "Inactivo",
-      nombre: "José",
-      apellido: "Rodríguez",
-      correo: "jose@example.com",
-    },
-    {
-      usuario: "user1",
-      rol: "Admin",
-      estado: "Activo",
-      nombre: "Carlos",
-      apellido: "Sánchez",
-      correo: "carlos@example.com",
-    },
-    {
-      usuario: "user2",
-      rol: "Vigilante",
-      estado: "Inactivo",
-      nombre: "Ana",
-      apellido: "Martínez",
-      correo: "ana@example.com",
-    },
-    {
-      usuario: "user4",
-      rol: "Admin",
-      estado: "Activo",
-      nombre: "Marta",
-      apellido: "Pérez",
-      correo: "marta@example.com",
-    },
-    {
-      usuario: "user5",
-      rol: "Vigilante",
-      estado: "Inactivo",
-      nombre: "José",
-      apellido: "Rodríguez",
-      correo: "jose@example.com",
-    },
-  ]);
-
+  const [usuarios, setUsuarios] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
+  useEffect(() => {
+    const fetchUsuarios = async () => {
+      try {
+        const res = await fetch("/api/dashboard/user-data", { cache: "no-store" });
+        const data = await res.json();
+
+        console.log("Datos recibidos:", data); 
+
+        if (data.success) {
+          setUsuarios(data.usuarios); 
+          console.log("Usuarios:", data.usuarios);
+        } else {
+          console.error('No se encontraron usuarios');
+        }
+      } catch (error) {
+        console.error('Error al obtener usuarios:', error);
+      }
+    };
+
+    fetchUsuarios();
+  }, []);
+
+
   const filteredUsuarios = usuarios
-    .filter(
-      (usuario) =>
-        usuario.usuario.toLowerCase().includes(searchUser.toLowerCase()) &&
-        usuario.nombre.toLowerCase().includes(searchName.toLowerCase())
-    )
+    .filter((usuario) => {
+      const username = usuario.pkusuario ? usuario.pkusuario.toLowerCase() : '';
+      const name = usuario.persona?.nombres ? usuario.persona.nombres.toLowerCase() : '';
+
+      return (
+        username.includes(searchUser.toLowerCase()) &&
+        name.includes(searchName.toLowerCase())
+      );
+    })
     .sort((a, b) => {
       if (!sortConfig.key) return 0;
-      const aValue = a[sortConfig.key].toLowerCase();
-      const bValue = b[sortConfig.key].toLowerCase();
+
+      let aValue = '';
+      let bValue = '';
+
+      switch (sortConfig.key) {
+        case 'usuario':
+          aValue = a.pkusuario ? a.pkusuario.toLowerCase() : '';
+          bValue = b.pkusuario ? b.pkusuario.toLowerCase() : '';
+          break;
+        case 'rol':
+          aValue = a.rol?.nomenclatura ? a.rol.nomenclatura.toLowerCase() : '';
+          bValue = b.rol?.nomenclatura ? b.rol.nomenclatura.toLowerCase() : '';
+          break;
+        case 'estado':
+          aValue = a.estado?.nomenclatura ? a.estado.nomenclatura.toLowerCase() : '';
+          bValue = b.estado?.nomenclatura ? b.estado.nomenclatura.toLowerCase() : '';
+          break;
+        case 'nombre':
+          aValue = a.persona?.nombres ? a.persona.nombres.toLowerCase() : '';
+          bValue = b.persona?.nombres ? b.persona.nombres.toLowerCase() : '';
+          break;
+        case 'apellido':
+          aValue = a.persona?.apellidos ? a.persona.apellidos.toLowerCase() : '';
+          bValue = b.persona?.apellidos ? b.persona.apellidos.toLowerCase() : '';
+          break;
+        case 'correo':
+          aValue = a.persona?.correo ? a.persona.correo.toLowerCase() : '';
+          bValue = b.persona?.correo ? b.persona.correo.toLowerCase() : '';
+          break;
+        default:
+          break;
+      }
+
       if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
       if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
       return 0;
@@ -133,9 +100,9 @@ export default function DashboardPage() {
   const renderSortIcon = (key) => {
     if (sortConfig.key !== key) return <TbArrowsSort className="inline ml-1 text-gray-400" />;
     return sortConfig.direction === "asc" ? (
-      <TbArrowsSort className="inline ml-1 text-blue-500" />
+      <TbArrowsSort className="inline ml-1 text-blue-500 rotate-180" />
     ) : (
-      <TbArrowsSort className="inline ml-1 text-blue-500" />
+      <TbArrowsSort className="inline ml-1 text-blue-500 rotate-0" />
     );
   };
 
@@ -200,12 +167,12 @@ export default function DashboardPage() {
             <tbody>
               {visibleUsuarios.map((usuario, index) => (
                 <tr key={index} className="border-b">
-                  <td className="p-3">{usuario.usuario}</td>
-                  <td className="p-3">{usuario.rol}</td>
-                  <td className="p-3">{usuario.estado}</td>
-                  <td className="p-3">{usuario.nombre}</td>
-                  <td className="p-3">{usuario.apellido}</td>
-                  <td className="p-3">{usuario.correo}</td>
+                  <td className="p-3">{usuario.pkusuario}</td>
+                  <td className="p-3">{usuario.rol.nomenclatura}</td>
+                  <td className="p-3">{usuario.estado.nomenclatura}</td>
+                  <td className="p-3">{usuario.persona.nombres}</td>
+                  <td className="p-3">{usuario.persona.apellidos}</td>
+                  <td className="p-3">{usuario.persona.correo}</td>
                   <td className="p-3">
                     <button className="bg-green-500 text-white p-2 rounded-lg flex items-center space-x-2">
                       <FaEye />

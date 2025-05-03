@@ -1957,6 +1957,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type Tbl_estados_usuarioCountOutputType
+   */
+
+  export type Tbl_estados_usuarioCountOutputType = {
+    usuarios: number
+  }
+
+  export type Tbl_estados_usuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuarios?: boolean | Tbl_estados_usuarioCountOutputTypeCountUsuariosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Tbl_estados_usuarioCountOutputType without action
+   */
+  export type Tbl_estados_usuarioCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tbl_estados_usuarioCountOutputType
+     */
+    select?: Tbl_estados_usuarioCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Tbl_estados_usuarioCountOutputType without action
+   */
+  export type Tbl_estados_usuarioCountOutputTypeCountUsuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: tbl_usuariosWhereInput
+  }
+
+
+  /**
    * Count Type Tbl_personasCountOutputType
    */
 
@@ -1983,6 +2014,37 @@ export namespace Prisma {
    * Tbl_personasCountOutputType without action
    */
   export type Tbl_personasCountOutputTypeCountUsuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: tbl_usuariosWhereInput
+  }
+
+
+  /**
+   * Count Type Tbl_rolesCountOutputType
+   */
+
+  export type Tbl_rolesCountOutputType = {
+    usuarios: number
+  }
+
+  export type Tbl_rolesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuarios?: boolean | Tbl_rolesCountOutputTypeCountUsuariosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Tbl_rolesCountOutputType without action
+   */
+  export type Tbl_rolesCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tbl_rolesCountOutputType
+     */
+    select?: Tbl_rolesCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Tbl_rolesCountOutputType without action
+   */
+  export type Tbl_rolesCountOutputTypeCountUsuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: tbl_usuariosWhereInput
   }
 
@@ -4140,16 +4202,19 @@ export namespace Prisma {
   export type Tbl_departamentosMinAggregateOutputType = {
     pkid: bigint | null
     nombre: string | null
+    nomenclatura: string | null
   }
 
   export type Tbl_departamentosMaxAggregateOutputType = {
     pkid: bigint | null
     nombre: string | null
+    nomenclatura: string | null
   }
 
   export type Tbl_departamentosCountAggregateOutputType = {
     pkid: number
     nombre: number
+    nomenclatura: number
     _all: number
   }
 
@@ -4165,16 +4230,19 @@ export namespace Prisma {
   export type Tbl_departamentosMinAggregateInputType = {
     pkid?: true
     nombre?: true
+    nomenclatura?: true
   }
 
   export type Tbl_departamentosMaxAggregateInputType = {
     pkid?: true
     nombre?: true
+    nomenclatura?: true
   }
 
   export type Tbl_departamentosCountAggregateInputType = {
     pkid?: true
     nombre?: true
+    nomenclatura?: true
     _all?: true
   }
 
@@ -4267,6 +4335,7 @@ export namespace Prisma {
   export type Tbl_departamentosGroupByOutputType = {
     pkid: bigint
     nombre: string
+    nomenclatura: string
     _count: Tbl_departamentosCountAggregateOutputType | null
     _avg: Tbl_departamentosAvgAggregateOutputType | null
     _sum: Tbl_departamentosSumAggregateOutputType | null
@@ -4291,24 +4360,28 @@ export namespace Prisma {
   export type tbl_departamentosSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     pkid?: boolean
     nombre?: boolean
+    nomenclatura?: boolean
   }, ExtArgs["result"]["tbl_departamentos"]>
 
   export type tbl_departamentosSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     pkid?: boolean
     nombre?: boolean
+    nomenclatura?: boolean
   }, ExtArgs["result"]["tbl_departamentos"]>
 
   export type tbl_departamentosSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     pkid?: boolean
     nombre?: boolean
+    nomenclatura?: boolean
   }, ExtArgs["result"]["tbl_departamentos"]>
 
   export type tbl_departamentosSelectScalar = {
     pkid?: boolean
     nombre?: boolean
+    nomenclatura?: boolean
   }
 
-  export type tbl_departamentosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "nombre", ExtArgs["result"]["tbl_departamentos"]>
+  export type tbl_departamentosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "nombre" | "nomenclatura", ExtArgs["result"]["tbl_departamentos"]>
 
   export type $tbl_departamentosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "tbl_departamentos"
@@ -4316,6 +4389,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       pkid: bigint
       nombre: string
+      nomenclatura: string
     }, ExtArgs["result"]["tbl_departamentos"]>
     composites: {}
   }
@@ -4741,6 +4815,7 @@ export namespace Prisma {
   interface tbl_departamentosFieldRefs {
     readonly pkid: FieldRef<"tbl_departamentos", 'BigInt'>
     readonly nombre: FieldRef<"tbl_departamentos", 'String'>
+    readonly nomenclatura: FieldRef<"tbl_departamentos", 'String'>
   }
     
 
@@ -6296,6 +6371,8 @@ export namespace Prisma {
     pkid?: boolean
     nombre?: boolean
     nomenclatura?: boolean
+    usuarios?: boolean | tbl_estados_usuario$usuariosArgs<ExtArgs>
+    _count?: boolean | Tbl_estados_usuarioCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_estados_usuario"]>
 
   export type tbl_estados_usuarioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6317,10 +6394,18 @@ export namespace Prisma {
   }
 
   export type tbl_estados_usuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "nombre" | "nomenclatura", ExtArgs["result"]["tbl_estados_usuario"]>
+  export type tbl_estados_usuarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuarios?: boolean | tbl_estados_usuario$usuariosArgs<ExtArgs>
+    _count?: boolean | Tbl_estados_usuarioCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type tbl_estados_usuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type tbl_estados_usuarioIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $tbl_estados_usuarioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "tbl_estados_usuario"
-    objects: {}
+    objects: {
+      usuarios: Prisma.$tbl_usuariosPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       pkid: bigint
       nombre: string
@@ -6719,6 +6804,7 @@ export namespace Prisma {
    */
   export interface Prisma__tbl_estados_usuarioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    usuarios<T extends tbl_estados_usuario$usuariosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_estados_usuario$usuariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_usuariosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6768,6 +6854,10 @@ export namespace Prisma {
      */
     omit?: tbl_estados_usuarioOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_estados_usuarioInclude<ExtArgs> | null
+    /**
      * Filter, which tbl_estados_usuario to fetch.
      */
     where: tbl_estados_usuarioWhereUniqueInput
@@ -6786,6 +6876,10 @@ export namespace Prisma {
      */
     omit?: tbl_estados_usuarioOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_estados_usuarioInclude<ExtArgs> | null
+    /**
      * Filter, which tbl_estados_usuario to fetch.
      */
     where: tbl_estados_usuarioWhereUniqueInput
@@ -6803,6 +6897,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_estados_usuario
      */
     omit?: tbl_estados_usuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_estados_usuarioInclude<ExtArgs> | null
     /**
      * Filter, which tbl_estados_usuario to fetch.
      */
@@ -6852,6 +6950,10 @@ export namespace Prisma {
      */
     omit?: tbl_estados_usuarioOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_estados_usuarioInclude<ExtArgs> | null
+    /**
      * Filter, which tbl_estados_usuario to fetch.
      */
     where?: tbl_estados_usuarioWhereInput
@@ -6900,6 +7002,10 @@ export namespace Prisma {
      */
     omit?: tbl_estados_usuarioOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_estados_usuarioInclude<ExtArgs> | null
+    /**
      * Filter, which tbl_estados_usuarios to fetch.
      */
     where?: tbl_estados_usuarioWhereInput
@@ -6942,6 +7048,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_estados_usuario
      */
     omit?: tbl_estados_usuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_estados_usuarioInclude<ExtArgs> | null
     /**
      * The data needed to create a tbl_estados_usuario.
      */
@@ -6990,6 +7100,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_estados_usuario
      */
     omit?: tbl_estados_usuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_estados_usuarioInclude<ExtArgs> | null
     /**
      * The data needed to update a tbl_estados_usuario.
      */
@@ -7057,6 +7171,10 @@ export namespace Prisma {
      */
     omit?: tbl_estados_usuarioOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_estados_usuarioInclude<ExtArgs> | null
+    /**
      * The filter to search for the tbl_estados_usuario to update in case it exists.
      */
     where: tbl_estados_usuarioWhereUniqueInput
@@ -7083,6 +7201,10 @@ export namespace Prisma {
      */
     omit?: tbl_estados_usuarioOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_estados_usuarioInclude<ExtArgs> | null
+    /**
      * Filter which tbl_estados_usuario to delete.
      */
     where: tbl_estados_usuarioWhereUniqueInput
@@ -7103,6 +7225,30 @@ export namespace Prisma {
   }
 
   /**
+   * tbl_estados_usuario.usuarios
+   */
+  export type tbl_estados_usuario$usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_usuarios
+     */
+    select?: tbl_usuariosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_usuarios
+     */
+    omit?: tbl_usuariosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_usuariosInclude<ExtArgs> | null
+    where?: tbl_usuariosWhereInput
+    orderBy?: tbl_usuariosOrderByWithRelationInput | tbl_usuariosOrderByWithRelationInput[]
+    cursor?: tbl_usuariosWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Tbl_usuariosScalarFieldEnum | Tbl_usuariosScalarFieldEnum[]
+  }
+
+  /**
    * tbl_estados_usuario without action
    */
   export type tbl_estados_usuarioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7114,6 +7260,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_estados_usuario
      */
     omit?: tbl_estados_usuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_estados_usuarioInclude<ExtArgs> | null
   }
 
 
@@ -7140,16 +7290,19 @@ export namespace Prisma {
   export type Tbl_municipiosMinAggregateOutputType = {
     pkid: bigint | null
     nombre: string | null
+    nomenclatura: string | null
   }
 
   export type Tbl_municipiosMaxAggregateOutputType = {
     pkid: bigint | null
     nombre: string | null
+    nomenclatura: string | null
   }
 
   export type Tbl_municipiosCountAggregateOutputType = {
     pkid: number
     nombre: number
+    nomenclatura: number
     _all: number
   }
 
@@ -7165,16 +7318,19 @@ export namespace Prisma {
   export type Tbl_municipiosMinAggregateInputType = {
     pkid?: true
     nombre?: true
+    nomenclatura?: true
   }
 
   export type Tbl_municipiosMaxAggregateInputType = {
     pkid?: true
     nombre?: true
+    nomenclatura?: true
   }
 
   export type Tbl_municipiosCountAggregateInputType = {
     pkid?: true
     nombre?: true
+    nomenclatura?: true
     _all?: true
   }
 
@@ -7267,6 +7423,7 @@ export namespace Prisma {
   export type Tbl_municipiosGroupByOutputType = {
     pkid: bigint
     nombre: string
+    nomenclatura: string
     _count: Tbl_municipiosCountAggregateOutputType | null
     _avg: Tbl_municipiosAvgAggregateOutputType | null
     _sum: Tbl_municipiosSumAggregateOutputType | null
@@ -7291,24 +7448,28 @@ export namespace Prisma {
   export type tbl_municipiosSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     pkid?: boolean
     nombre?: boolean
+    nomenclatura?: boolean
   }, ExtArgs["result"]["tbl_municipios"]>
 
   export type tbl_municipiosSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     pkid?: boolean
     nombre?: boolean
+    nomenclatura?: boolean
   }, ExtArgs["result"]["tbl_municipios"]>
 
   export type tbl_municipiosSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     pkid?: boolean
     nombre?: boolean
+    nomenclatura?: boolean
   }, ExtArgs["result"]["tbl_municipios"]>
 
   export type tbl_municipiosSelectScalar = {
     pkid?: boolean
     nombre?: boolean
+    nomenclatura?: boolean
   }
 
-  export type tbl_municipiosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "nombre", ExtArgs["result"]["tbl_municipios"]>
+  export type tbl_municipiosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "nombre" | "nomenclatura", ExtArgs["result"]["tbl_municipios"]>
 
   export type $tbl_municipiosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "tbl_municipios"
@@ -7316,6 +7477,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       pkid: bigint
       nombre: string
+      nomenclatura: string
     }, ExtArgs["result"]["tbl_municipios"]>
     composites: {}
   }
@@ -7741,6 +7903,7 @@ export namespace Prisma {
   interface tbl_municipiosFieldRefs {
     readonly pkid: FieldRef<"tbl_municipios", 'BigInt'>
     readonly nombre: FieldRef<"tbl_municipios", 'String'>
+    readonly nomenclatura: FieldRef<"tbl_municipios", 'String'>
   }
     
 
@@ -11458,6 +11621,8 @@ export namespace Prisma {
     pkid?: boolean
     nombre?: boolean
     nomenclatura?: boolean
+    usuarios?: boolean | tbl_roles$usuariosArgs<ExtArgs>
+    _count?: boolean | Tbl_rolesCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_roles"]>
 
   export type tbl_rolesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11479,10 +11644,18 @@ export namespace Prisma {
   }
 
   export type tbl_rolesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "nombre" | "nomenclatura", ExtArgs["result"]["tbl_roles"]>
+  export type tbl_rolesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuarios?: boolean | tbl_roles$usuariosArgs<ExtArgs>
+    _count?: boolean | Tbl_rolesCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type tbl_rolesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type tbl_rolesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $tbl_rolesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "tbl_roles"
-    objects: {}
+    objects: {
+      usuarios: Prisma.$tbl_usuariosPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       pkid: bigint
       nombre: string
@@ -11881,6 +12054,7 @@ export namespace Prisma {
    */
   export interface Prisma__tbl_rolesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    usuarios<T extends tbl_roles$usuariosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_roles$usuariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_usuariosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11930,6 +12104,10 @@ export namespace Prisma {
      */
     omit?: tbl_rolesOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_rolesInclude<ExtArgs> | null
+    /**
      * Filter, which tbl_roles to fetch.
      */
     where: tbl_rolesWhereUniqueInput
@@ -11948,6 +12126,10 @@ export namespace Prisma {
      */
     omit?: tbl_rolesOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_rolesInclude<ExtArgs> | null
+    /**
      * Filter, which tbl_roles to fetch.
      */
     where: tbl_rolesWhereUniqueInput
@@ -11965,6 +12147,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_roles
      */
     omit?: tbl_rolesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_rolesInclude<ExtArgs> | null
     /**
      * Filter, which tbl_roles to fetch.
      */
@@ -12014,6 +12200,10 @@ export namespace Prisma {
      */
     omit?: tbl_rolesOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_rolesInclude<ExtArgs> | null
+    /**
      * Filter, which tbl_roles to fetch.
      */
     where?: tbl_rolesWhereInput
@@ -12062,6 +12252,10 @@ export namespace Prisma {
      */
     omit?: tbl_rolesOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_rolesInclude<ExtArgs> | null
+    /**
      * Filter, which tbl_roles to fetch.
      */
     where?: tbl_rolesWhereInput
@@ -12104,6 +12298,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_roles
      */
     omit?: tbl_rolesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_rolesInclude<ExtArgs> | null
     /**
      * The data needed to create a tbl_roles.
      */
@@ -12152,6 +12350,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_roles
      */
     omit?: tbl_rolesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_rolesInclude<ExtArgs> | null
     /**
      * The data needed to update a tbl_roles.
      */
@@ -12219,6 +12421,10 @@ export namespace Prisma {
      */
     omit?: tbl_rolesOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_rolesInclude<ExtArgs> | null
+    /**
      * The filter to search for the tbl_roles to update in case it exists.
      */
     where: tbl_rolesWhereUniqueInput
@@ -12245,6 +12451,10 @@ export namespace Prisma {
      */
     omit?: tbl_rolesOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_rolesInclude<ExtArgs> | null
+    /**
      * Filter which tbl_roles to delete.
      */
     where: tbl_rolesWhereUniqueInput
@@ -12265,6 +12475,30 @@ export namespace Prisma {
   }
 
   /**
+   * tbl_roles.usuarios
+   */
+  export type tbl_roles$usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_usuarios
+     */
+    select?: tbl_usuariosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_usuarios
+     */
+    omit?: tbl_usuariosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_usuariosInclude<ExtArgs> | null
+    where?: tbl_usuariosWhereInput
+    orderBy?: tbl_usuariosOrderByWithRelationInput | tbl_usuariosOrderByWithRelationInput[]
+    cursor?: tbl_usuariosWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Tbl_usuariosScalarFieldEnum | Tbl_usuariosScalarFieldEnum[]
+  }
+
+  /**
    * tbl_roles without action
    */
   export type tbl_rolesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12276,6 +12510,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_roles
      */
     omit?: tbl_rolesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_rolesInclude<ExtArgs> | null
   }
 
 
@@ -14518,6 +14756,8 @@ export namespace Prisma {
     fkid_tbl_estados_usuario?: boolean
     fkid_tbl_personas?: boolean
     persona?: boolean | tbl_personasDefaultArgs<ExtArgs>
+    rol?: boolean | tbl_rolesDefaultArgs<ExtArgs>
+    estado?: boolean | tbl_estados_usuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_usuarios"]>
 
   export type tbl_usuariosSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -14527,6 +14767,8 @@ export namespace Prisma {
     fkid_tbl_estados_usuario?: boolean
     fkid_tbl_personas?: boolean
     persona?: boolean | tbl_personasDefaultArgs<ExtArgs>
+    rol?: boolean | tbl_rolesDefaultArgs<ExtArgs>
+    estado?: boolean | tbl_estados_usuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_usuarios"]>
 
   export type tbl_usuariosSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -14536,6 +14778,8 @@ export namespace Prisma {
     fkid_tbl_estados_usuario?: boolean
     fkid_tbl_personas?: boolean
     persona?: boolean | tbl_personasDefaultArgs<ExtArgs>
+    rol?: boolean | tbl_rolesDefaultArgs<ExtArgs>
+    estado?: boolean | tbl_estados_usuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_usuarios"]>
 
   export type tbl_usuariosSelectScalar = {
@@ -14549,18 +14793,26 @@ export namespace Prisma {
   export type tbl_usuariosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkusuario" | "contrase_a" | "fkid_tbl_roles" | "fkid_tbl_estados_usuario" | "fkid_tbl_personas", ExtArgs["result"]["tbl_usuarios"]>
   export type tbl_usuariosInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     persona?: boolean | tbl_personasDefaultArgs<ExtArgs>
+    rol?: boolean | tbl_rolesDefaultArgs<ExtArgs>
+    estado?: boolean | tbl_estados_usuarioDefaultArgs<ExtArgs>
   }
   export type tbl_usuariosIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     persona?: boolean | tbl_personasDefaultArgs<ExtArgs>
+    rol?: boolean | tbl_rolesDefaultArgs<ExtArgs>
+    estado?: boolean | tbl_estados_usuarioDefaultArgs<ExtArgs>
   }
   export type tbl_usuariosIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     persona?: boolean | tbl_personasDefaultArgs<ExtArgs>
+    rol?: boolean | tbl_rolesDefaultArgs<ExtArgs>
+    estado?: boolean | tbl_estados_usuarioDefaultArgs<ExtArgs>
   }
 
   export type $tbl_usuariosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "tbl_usuarios"
     objects: {
       persona: Prisma.$tbl_personasPayload<ExtArgs>
+      rol: Prisma.$tbl_rolesPayload<ExtArgs>
+      estado: Prisma.$tbl_estados_usuarioPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       pkusuario: string
@@ -14963,6 +15215,8 @@ export namespace Prisma {
   export interface Prisma__tbl_usuariosClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     persona<T extends tbl_personasDefaultArgs<ExtArgs> = {}>(args?: Subset<T, tbl_personasDefaultArgs<ExtArgs>>): Prisma__tbl_personasClient<$Result.GetResult<Prisma.$tbl_personasPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    rol<T extends tbl_rolesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, tbl_rolesDefaultArgs<ExtArgs>>): Prisma__tbl_rolesClient<$Result.GetResult<Prisma.$tbl_rolesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    estado<T extends tbl_estados_usuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, tbl_estados_usuarioDefaultArgs<ExtArgs>>): Prisma__tbl_estados_usuarioClient<$Result.GetResult<Prisma.$tbl_estados_usuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15453,7 +15707,8 @@ export namespace Prisma {
 
   export const Tbl_departamentosScalarFieldEnum: {
     pkid: 'pkid',
-    nombre: 'nombre'
+    nombre: 'nombre',
+    nomenclatura: 'nomenclatura'
   };
 
   export type Tbl_departamentosScalarFieldEnum = (typeof Tbl_departamentosScalarFieldEnum)[keyof typeof Tbl_departamentosScalarFieldEnum]
@@ -15479,7 +15734,8 @@ export namespace Prisma {
 
   export const Tbl_municipiosScalarFieldEnum: {
     pkid: 'pkid',
-    nombre: 'nombre'
+    nombre: 'nombre',
+    nomenclatura: 'nomenclatura'
   };
 
   export type Tbl_municipiosScalarFieldEnum = (typeof Tbl_municipiosScalarFieldEnum)[keyof typeof Tbl_municipiosScalarFieldEnum]
@@ -15785,11 +16041,13 @@ export namespace Prisma {
     NOT?: tbl_departamentosWhereInput | tbl_departamentosWhereInput[]
     pkid?: BigIntFilter<"tbl_departamentos"> | bigint | number
     nombre?: StringFilter<"tbl_departamentos"> | string
+    nomenclatura?: StringFilter<"tbl_departamentos"> | string
   }
 
   export type tbl_departamentosOrderByWithRelationInput = {
     pkid?: SortOrder
     nombre?: SortOrder
+    nomenclatura?: SortOrder
   }
 
   export type tbl_departamentosWhereUniqueInput = Prisma.AtLeast<{
@@ -15798,11 +16056,13 @@ export namespace Prisma {
     OR?: tbl_departamentosWhereInput[]
     NOT?: tbl_departamentosWhereInput | tbl_departamentosWhereInput[]
     nombre?: StringFilter<"tbl_departamentos"> | string
+    nomenclatura?: StringFilter<"tbl_departamentos"> | string
   }, "pkid">
 
   export type tbl_departamentosOrderByWithAggregationInput = {
     pkid?: SortOrder
     nombre?: SortOrder
+    nomenclatura?: SortOrder
     _count?: tbl_departamentosCountOrderByAggregateInput
     _avg?: tbl_departamentosAvgOrderByAggregateInput
     _max?: tbl_departamentosMaxOrderByAggregateInput
@@ -15816,6 +16076,7 @@ export namespace Prisma {
     NOT?: tbl_departamentosScalarWhereWithAggregatesInput | tbl_departamentosScalarWhereWithAggregatesInput[]
     pkid?: BigIntWithAggregatesFilter<"tbl_departamentos"> | bigint | number
     nombre?: StringWithAggregatesFilter<"tbl_departamentos"> | string
+    nomenclatura?: StringWithAggregatesFilter<"tbl_departamentos"> | string
   }
 
   export type tbl_det_productosWhereInput = {
@@ -15869,12 +16130,14 @@ export namespace Prisma {
     pkid?: BigIntFilter<"tbl_estados_usuario"> | bigint | number
     nombre?: StringFilter<"tbl_estados_usuario"> | string
     nomenclatura?: StringFilter<"tbl_estados_usuario"> | string
+    usuarios?: Tbl_usuariosListRelationFilter
   }
 
   export type tbl_estados_usuarioOrderByWithRelationInput = {
     pkid?: SortOrder
     nombre?: SortOrder
     nomenclatura?: SortOrder
+    usuarios?: tbl_usuariosOrderByRelationAggregateInput
   }
 
   export type tbl_estados_usuarioWhereUniqueInput = Prisma.AtLeast<{
@@ -15884,6 +16147,7 @@ export namespace Prisma {
     NOT?: tbl_estados_usuarioWhereInput | tbl_estados_usuarioWhereInput[]
     nombre?: StringFilter<"tbl_estados_usuario"> | string
     nomenclatura?: StringFilter<"tbl_estados_usuario"> | string
+    usuarios?: Tbl_usuariosListRelationFilter
   }, "pkid">
 
   export type tbl_estados_usuarioOrderByWithAggregationInput = {
@@ -15912,11 +16176,13 @@ export namespace Prisma {
     NOT?: tbl_municipiosWhereInput | tbl_municipiosWhereInput[]
     pkid?: BigIntFilter<"tbl_municipios"> | bigint | number
     nombre?: StringFilter<"tbl_municipios"> | string
+    nomenclatura?: StringFilter<"tbl_municipios"> | string
   }
 
   export type tbl_municipiosOrderByWithRelationInput = {
     pkid?: SortOrder
     nombre?: SortOrder
+    nomenclatura?: SortOrder
   }
 
   export type tbl_municipiosWhereUniqueInput = Prisma.AtLeast<{
@@ -15925,11 +16191,13 @@ export namespace Prisma {
     OR?: tbl_municipiosWhereInput[]
     NOT?: tbl_municipiosWhereInput | tbl_municipiosWhereInput[]
     nombre?: StringFilter<"tbl_municipios"> | string
+    nomenclatura?: StringFilter<"tbl_municipios"> | string
   }, "pkid">
 
   export type tbl_municipiosOrderByWithAggregationInput = {
     pkid?: SortOrder
     nombre?: SortOrder
+    nomenclatura?: SortOrder
     _count?: tbl_municipiosCountOrderByAggregateInput
     _avg?: tbl_municipiosAvgOrderByAggregateInput
     _max?: tbl_municipiosMaxOrderByAggregateInput
@@ -15943,6 +16211,7 @@ export namespace Prisma {
     NOT?: tbl_municipiosScalarWhereWithAggregatesInput | tbl_municipiosScalarWhereWithAggregatesInput[]
     pkid?: BigIntWithAggregatesFilter<"tbl_municipios"> | bigint | number
     nombre?: StringWithAggregatesFilter<"tbl_municipios"> | string
+    nomenclatura?: StringWithAggregatesFilter<"tbl_municipios"> | string
   }
 
   export type tbl_pedidosWhereInput = {
@@ -16112,12 +16381,14 @@ export namespace Prisma {
     pkid?: BigIntFilter<"tbl_roles"> | bigint | number
     nombre?: StringFilter<"tbl_roles"> | string
     nomenclatura?: StringFilter<"tbl_roles"> | string
+    usuarios?: Tbl_usuariosListRelationFilter
   }
 
   export type tbl_rolesOrderByWithRelationInput = {
     pkid?: SortOrder
     nombre?: SortOrder
     nomenclatura?: SortOrder
+    usuarios?: tbl_usuariosOrderByRelationAggregateInput
   }
 
   export type tbl_rolesWhereUniqueInput = Prisma.AtLeast<{
@@ -16127,6 +16398,7 @@ export namespace Prisma {
     NOT?: tbl_rolesWhereInput | tbl_rolesWhereInput[]
     nombre?: StringFilter<"tbl_roles"> | string
     nomenclatura?: StringFilter<"tbl_roles"> | string
+    usuarios?: Tbl_usuariosListRelationFilter
   }, "pkid">
 
   export type tbl_rolesOrderByWithAggregationInput = {
@@ -16257,6 +16529,8 @@ export namespace Prisma {
     fkid_tbl_estados_usuario?: BigIntFilter<"tbl_usuarios"> | bigint | number
     fkid_tbl_personas?: BigIntFilter<"tbl_usuarios"> | bigint | number
     persona?: XOR<Tbl_personasScalarRelationFilter, tbl_personasWhereInput>
+    rol?: XOR<Tbl_rolesScalarRelationFilter, tbl_rolesWhereInput>
+    estado?: XOR<Tbl_estados_usuarioScalarRelationFilter, tbl_estados_usuarioWhereInput>
   }
 
   export type tbl_usuariosOrderByWithRelationInput = {
@@ -16266,6 +16540,8 @@ export namespace Prisma {
     fkid_tbl_estados_usuario?: SortOrder
     fkid_tbl_personas?: SortOrder
     persona?: tbl_personasOrderByWithRelationInput
+    rol?: tbl_rolesOrderByWithRelationInput
+    estado?: tbl_estados_usuarioOrderByWithRelationInput
   }
 
   export type tbl_usuariosWhereUniqueInput = Prisma.AtLeast<{
@@ -16278,6 +16554,8 @@ export namespace Prisma {
     fkid_tbl_estados_usuario?: BigIntFilter<"tbl_usuarios"> | bigint | number
     fkid_tbl_personas?: BigIntFilter<"tbl_usuarios"> | bigint | number
     persona?: XOR<Tbl_personasScalarRelationFilter, tbl_personasWhereInput>
+    rol?: XOR<Tbl_rolesScalarRelationFilter, tbl_rolesWhereInput>
+    estado?: XOR<Tbl_estados_usuarioScalarRelationFilter, tbl_estados_usuarioWhereInput>
   }, "pkusuario">
 
   export type tbl_usuariosOrderByWithAggregationInput = {
@@ -16447,36 +16725,43 @@ export namespace Prisma {
   export type tbl_departamentosCreateInput = {
     pkid?: bigint | number
     nombre: string
+    nomenclatura: string
   }
 
   export type tbl_departamentosUncheckedCreateInput = {
     pkid?: bigint | number
     nombre: string
+    nomenclatura: string
   }
 
   export type tbl_departamentosUpdateInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
   }
 
   export type tbl_departamentosUncheckedUpdateInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
   }
 
   export type tbl_departamentosCreateManyInput = {
     pkid?: bigint | number
     nombre: string
+    nomenclatura: string
   }
 
   export type tbl_departamentosUpdateManyMutationInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
   }
 
   export type tbl_departamentosUncheckedUpdateManyInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
   }
 
   export type tbl_det_productosCreateInput = {
@@ -16525,24 +16810,28 @@ export namespace Prisma {
     pkid?: bigint | number
     nombre: string
     nomenclatura: string
+    usuarios?: tbl_usuariosCreateNestedManyWithoutEstadoInput
   }
 
   export type tbl_estados_usuarioUncheckedCreateInput = {
     pkid?: bigint | number
     nombre: string
     nomenclatura: string
+    usuarios?: tbl_usuariosUncheckedCreateNestedManyWithoutEstadoInput
   }
 
   export type tbl_estados_usuarioUpdateInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
+    usuarios?: tbl_usuariosUpdateManyWithoutEstadoNestedInput
   }
 
   export type tbl_estados_usuarioUncheckedUpdateInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
+    usuarios?: tbl_usuariosUncheckedUpdateManyWithoutEstadoNestedInput
   }
 
   export type tbl_estados_usuarioCreateManyInput = {
@@ -16566,36 +16855,43 @@ export namespace Prisma {
   export type tbl_municipiosCreateInput = {
     pkid?: bigint | number
     nombre: string
+    nomenclatura: string
   }
 
   export type tbl_municipiosUncheckedCreateInput = {
     pkid?: bigint | number
     nombre: string
+    nomenclatura: string
   }
 
   export type tbl_municipiosUpdateInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
   }
 
   export type tbl_municipiosUncheckedUpdateInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
   }
 
   export type tbl_municipiosCreateManyInput = {
     pkid?: bigint | number
     nombre: string
+    nomenclatura: string
   }
 
   export type tbl_municipiosUpdateManyMutationInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
   }
 
   export type tbl_municipiosUncheckedUpdateManyInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
   }
 
   export type tbl_pedidosCreateInput = {
@@ -16767,24 +17063,28 @@ export namespace Prisma {
     pkid?: bigint | number
     nombre: string
     nomenclatura: string
+    usuarios?: tbl_usuariosCreateNestedManyWithoutRolInput
   }
 
   export type tbl_rolesUncheckedCreateInput = {
     pkid?: bigint | number
     nombre: string
     nomenclatura: string
+    usuarios?: tbl_usuariosUncheckedCreateNestedManyWithoutRolInput
   }
 
   export type tbl_rolesUpdateInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
+    usuarios?: tbl_usuariosUpdateManyWithoutRolNestedInput
   }
 
   export type tbl_rolesUncheckedUpdateInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
+    usuarios?: tbl_usuariosUncheckedUpdateManyWithoutRolNestedInput
   }
 
   export type tbl_rolesCreateManyInput = {
@@ -16906,9 +17206,9 @@ export namespace Prisma {
   export type tbl_usuariosCreateInput = {
     pkusuario: string
     contrase_a: string
-    fkid_tbl_roles: bigint | number
-    fkid_tbl_estados_usuario: bigint | number
     persona: tbl_personasCreateNestedOneWithoutUsuariosInput
+    rol: tbl_rolesCreateNestedOneWithoutUsuariosInput
+    estado: tbl_estados_usuarioCreateNestedOneWithoutUsuariosInput
   }
 
   export type tbl_usuariosUncheckedCreateInput = {
@@ -16922,9 +17222,9 @@ export namespace Prisma {
   export type tbl_usuariosUpdateInput = {
     pkusuario?: StringFieldUpdateOperationsInput | string
     contrase_a?: StringFieldUpdateOperationsInput | string
-    fkid_tbl_roles?: BigIntFieldUpdateOperationsInput | bigint | number
-    fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
     persona?: tbl_personasUpdateOneRequiredWithoutUsuariosNestedInput
+    rol?: tbl_rolesUpdateOneRequiredWithoutUsuariosNestedInput
+    estado?: tbl_estados_usuarioUpdateOneRequiredWithoutUsuariosNestedInput
   }
 
   export type tbl_usuariosUncheckedUpdateInput = {
@@ -16946,8 +17246,6 @@ export namespace Prisma {
   export type tbl_usuariosUpdateManyMutationInput = {
     pkusuario?: StringFieldUpdateOperationsInput | string
     contrase_a?: StringFieldUpdateOperationsInput | string
-    fkid_tbl_roles?: BigIntFieldUpdateOperationsInput | bigint | number
-    fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
   export type tbl_usuariosUncheckedUpdateManyInput = {
@@ -17157,6 +17455,7 @@ export namespace Prisma {
   export type tbl_departamentosCountOrderByAggregateInput = {
     pkid?: SortOrder
     nombre?: SortOrder
+    nomenclatura?: SortOrder
   }
 
   export type tbl_departamentosAvgOrderByAggregateInput = {
@@ -17166,11 +17465,13 @@ export namespace Prisma {
   export type tbl_departamentosMaxOrderByAggregateInput = {
     pkid?: SortOrder
     nombre?: SortOrder
+    nomenclatura?: SortOrder
   }
 
   export type tbl_departamentosMinOrderByAggregateInput = {
     pkid?: SortOrder
     nombre?: SortOrder
+    nomenclatura?: SortOrder
   }
 
   export type tbl_departamentosSumOrderByAggregateInput = {
@@ -17205,6 +17506,16 @@ export namespace Prisma {
     fkid_tbl_productos?: SortOrder
   }
 
+  export type Tbl_usuariosListRelationFilter = {
+    every?: tbl_usuariosWhereInput
+    some?: tbl_usuariosWhereInput
+    none?: tbl_usuariosWhereInput
+  }
+
+  export type tbl_usuariosOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type tbl_estados_usuarioCountOrderByAggregateInput = {
     pkid?: SortOrder
     nombre?: SortOrder
@@ -17234,6 +17545,7 @@ export namespace Prisma {
   export type tbl_municipiosCountOrderByAggregateInput = {
     pkid?: SortOrder
     nombre?: SortOrder
+    nomenclatura?: SortOrder
   }
 
   export type tbl_municipiosAvgOrderByAggregateInput = {
@@ -17243,11 +17555,13 @@ export namespace Prisma {
   export type tbl_municipiosMaxOrderByAggregateInput = {
     pkid?: SortOrder
     nombre?: SortOrder
+    nomenclatura?: SortOrder
   }
 
   export type tbl_municipiosMinOrderByAggregateInput = {
     pkid?: SortOrder
     nombre?: SortOrder
+    nomenclatura?: SortOrder
   }
 
   export type tbl_municipiosSumOrderByAggregateInput = {
@@ -17293,16 +17607,6 @@ export namespace Prisma {
     fkid_tbl_det_productos?: SortOrder
     fkid_tbl_transportadoras?: SortOrder
     valor?: SortOrder
-  }
-
-  export type Tbl_usuariosListRelationFilter = {
-    every?: tbl_usuariosWhereInput
-    some?: tbl_usuariosWhereInput
-    none?: tbl_usuariosWhereInput
-  }
-
-  export type tbl_usuariosOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type tbl_personasCountOrderByAggregateInput = {
@@ -17456,6 +17760,16 @@ export namespace Prisma {
     isNot?: tbl_personasWhereInput
   }
 
+  export type Tbl_rolesScalarRelationFilter = {
+    is?: tbl_rolesWhereInput
+    isNot?: tbl_rolesWhereInput
+  }
+
+  export type Tbl_estados_usuarioScalarRelationFilter = {
+    is?: tbl_estados_usuarioWhereInput
+    isNot?: tbl_estados_usuarioWhereInput
+  }
+
   export type tbl_usuariosCountOrderByAggregateInput = {
     pkusuario?: SortOrder
     contrase_a?: SortOrder
@@ -17516,6 +17830,48 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type tbl_usuariosCreateNestedManyWithoutEstadoInput = {
+    create?: XOR<tbl_usuariosCreateWithoutEstadoInput, tbl_usuariosUncheckedCreateWithoutEstadoInput> | tbl_usuariosCreateWithoutEstadoInput[] | tbl_usuariosUncheckedCreateWithoutEstadoInput[]
+    connectOrCreate?: tbl_usuariosCreateOrConnectWithoutEstadoInput | tbl_usuariosCreateOrConnectWithoutEstadoInput[]
+    createMany?: tbl_usuariosCreateManyEstadoInputEnvelope
+    connect?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+  }
+
+  export type tbl_usuariosUncheckedCreateNestedManyWithoutEstadoInput = {
+    create?: XOR<tbl_usuariosCreateWithoutEstadoInput, tbl_usuariosUncheckedCreateWithoutEstadoInput> | tbl_usuariosCreateWithoutEstadoInput[] | tbl_usuariosUncheckedCreateWithoutEstadoInput[]
+    connectOrCreate?: tbl_usuariosCreateOrConnectWithoutEstadoInput | tbl_usuariosCreateOrConnectWithoutEstadoInput[]
+    createMany?: tbl_usuariosCreateManyEstadoInputEnvelope
+    connect?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+  }
+
+  export type tbl_usuariosUpdateManyWithoutEstadoNestedInput = {
+    create?: XOR<tbl_usuariosCreateWithoutEstadoInput, tbl_usuariosUncheckedCreateWithoutEstadoInput> | tbl_usuariosCreateWithoutEstadoInput[] | tbl_usuariosUncheckedCreateWithoutEstadoInput[]
+    connectOrCreate?: tbl_usuariosCreateOrConnectWithoutEstadoInput | tbl_usuariosCreateOrConnectWithoutEstadoInput[]
+    upsert?: tbl_usuariosUpsertWithWhereUniqueWithoutEstadoInput | tbl_usuariosUpsertWithWhereUniqueWithoutEstadoInput[]
+    createMany?: tbl_usuariosCreateManyEstadoInputEnvelope
+    set?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    disconnect?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    delete?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    connect?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    update?: tbl_usuariosUpdateWithWhereUniqueWithoutEstadoInput | tbl_usuariosUpdateWithWhereUniqueWithoutEstadoInput[]
+    updateMany?: tbl_usuariosUpdateManyWithWhereWithoutEstadoInput | tbl_usuariosUpdateManyWithWhereWithoutEstadoInput[]
+    deleteMany?: tbl_usuariosScalarWhereInput | tbl_usuariosScalarWhereInput[]
+  }
+
+  export type tbl_usuariosUncheckedUpdateManyWithoutEstadoNestedInput = {
+    create?: XOR<tbl_usuariosCreateWithoutEstadoInput, tbl_usuariosUncheckedCreateWithoutEstadoInput> | tbl_usuariosCreateWithoutEstadoInput[] | tbl_usuariosUncheckedCreateWithoutEstadoInput[]
+    connectOrCreate?: tbl_usuariosCreateOrConnectWithoutEstadoInput | tbl_usuariosCreateOrConnectWithoutEstadoInput[]
+    upsert?: tbl_usuariosUpsertWithWhereUniqueWithoutEstadoInput | tbl_usuariosUpsertWithWhereUniqueWithoutEstadoInput[]
+    createMany?: tbl_usuariosCreateManyEstadoInputEnvelope
+    set?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    disconnect?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    delete?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    connect?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    update?: tbl_usuariosUpdateWithWhereUniqueWithoutEstadoInput | tbl_usuariosUpdateWithWhereUniqueWithoutEstadoInput[]
+    updateMany?: tbl_usuariosUpdateManyWithWhereWithoutEstadoInput | tbl_usuariosUpdateManyWithWhereWithoutEstadoInput[]
+    deleteMany?: tbl_usuariosScalarWhereInput | tbl_usuariosScalarWhereInput[]
+  }
+
   export type tbl_usuariosCreateNestedManyWithoutPersonaInput = {
     create?: XOR<tbl_usuariosCreateWithoutPersonaInput, tbl_usuariosUncheckedCreateWithoutPersonaInput> | tbl_usuariosCreateWithoutPersonaInput[] | tbl_usuariosUncheckedCreateWithoutPersonaInput[]
     connectOrCreate?: tbl_usuariosCreateOrConnectWithoutPersonaInput | tbl_usuariosCreateOrConnectWithoutPersonaInput[]
@@ -17558,10 +17914,64 @@ export namespace Prisma {
     deleteMany?: tbl_usuariosScalarWhereInput | tbl_usuariosScalarWhereInput[]
   }
 
+  export type tbl_usuariosCreateNestedManyWithoutRolInput = {
+    create?: XOR<tbl_usuariosCreateWithoutRolInput, tbl_usuariosUncheckedCreateWithoutRolInput> | tbl_usuariosCreateWithoutRolInput[] | tbl_usuariosUncheckedCreateWithoutRolInput[]
+    connectOrCreate?: tbl_usuariosCreateOrConnectWithoutRolInput | tbl_usuariosCreateOrConnectWithoutRolInput[]
+    createMany?: tbl_usuariosCreateManyRolInputEnvelope
+    connect?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+  }
+
+  export type tbl_usuariosUncheckedCreateNestedManyWithoutRolInput = {
+    create?: XOR<tbl_usuariosCreateWithoutRolInput, tbl_usuariosUncheckedCreateWithoutRolInput> | tbl_usuariosCreateWithoutRolInput[] | tbl_usuariosUncheckedCreateWithoutRolInput[]
+    connectOrCreate?: tbl_usuariosCreateOrConnectWithoutRolInput | tbl_usuariosCreateOrConnectWithoutRolInput[]
+    createMany?: tbl_usuariosCreateManyRolInputEnvelope
+    connect?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+  }
+
+  export type tbl_usuariosUpdateManyWithoutRolNestedInput = {
+    create?: XOR<tbl_usuariosCreateWithoutRolInput, tbl_usuariosUncheckedCreateWithoutRolInput> | tbl_usuariosCreateWithoutRolInput[] | tbl_usuariosUncheckedCreateWithoutRolInput[]
+    connectOrCreate?: tbl_usuariosCreateOrConnectWithoutRolInput | tbl_usuariosCreateOrConnectWithoutRolInput[]
+    upsert?: tbl_usuariosUpsertWithWhereUniqueWithoutRolInput | tbl_usuariosUpsertWithWhereUniqueWithoutRolInput[]
+    createMany?: tbl_usuariosCreateManyRolInputEnvelope
+    set?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    disconnect?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    delete?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    connect?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    update?: tbl_usuariosUpdateWithWhereUniqueWithoutRolInput | tbl_usuariosUpdateWithWhereUniqueWithoutRolInput[]
+    updateMany?: tbl_usuariosUpdateManyWithWhereWithoutRolInput | tbl_usuariosUpdateManyWithWhereWithoutRolInput[]
+    deleteMany?: tbl_usuariosScalarWhereInput | tbl_usuariosScalarWhereInput[]
+  }
+
+  export type tbl_usuariosUncheckedUpdateManyWithoutRolNestedInput = {
+    create?: XOR<tbl_usuariosCreateWithoutRolInput, tbl_usuariosUncheckedCreateWithoutRolInput> | tbl_usuariosCreateWithoutRolInput[] | tbl_usuariosUncheckedCreateWithoutRolInput[]
+    connectOrCreate?: tbl_usuariosCreateOrConnectWithoutRolInput | tbl_usuariosCreateOrConnectWithoutRolInput[]
+    upsert?: tbl_usuariosUpsertWithWhereUniqueWithoutRolInput | tbl_usuariosUpsertWithWhereUniqueWithoutRolInput[]
+    createMany?: tbl_usuariosCreateManyRolInputEnvelope
+    set?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    disconnect?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    delete?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    connect?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+    update?: tbl_usuariosUpdateWithWhereUniqueWithoutRolInput | tbl_usuariosUpdateWithWhereUniqueWithoutRolInput[]
+    updateMany?: tbl_usuariosUpdateManyWithWhereWithoutRolInput | tbl_usuariosUpdateManyWithWhereWithoutRolInput[]
+    deleteMany?: tbl_usuariosScalarWhereInput | tbl_usuariosScalarWhereInput[]
+  }
+
   export type tbl_personasCreateNestedOneWithoutUsuariosInput = {
     create?: XOR<tbl_personasCreateWithoutUsuariosInput, tbl_personasUncheckedCreateWithoutUsuariosInput>
     connectOrCreate?: tbl_personasCreateOrConnectWithoutUsuariosInput
     connect?: tbl_personasWhereUniqueInput
+  }
+
+  export type tbl_rolesCreateNestedOneWithoutUsuariosInput = {
+    create?: XOR<tbl_rolesCreateWithoutUsuariosInput, tbl_rolesUncheckedCreateWithoutUsuariosInput>
+    connectOrCreate?: tbl_rolesCreateOrConnectWithoutUsuariosInput
+    connect?: tbl_rolesWhereUniqueInput
+  }
+
+  export type tbl_estados_usuarioCreateNestedOneWithoutUsuariosInput = {
+    create?: XOR<tbl_estados_usuarioCreateWithoutUsuariosInput, tbl_estados_usuarioUncheckedCreateWithoutUsuariosInput>
+    connectOrCreate?: tbl_estados_usuarioCreateOrConnectWithoutUsuariosInput
+    connect?: tbl_estados_usuarioWhereUniqueInput
   }
 
   export type tbl_personasUpdateOneRequiredWithoutUsuariosNestedInput = {
@@ -17570,6 +17980,22 @@ export namespace Prisma {
     upsert?: tbl_personasUpsertWithoutUsuariosInput
     connect?: tbl_personasWhereUniqueInput
     update?: XOR<XOR<tbl_personasUpdateToOneWithWhereWithoutUsuariosInput, tbl_personasUpdateWithoutUsuariosInput>, tbl_personasUncheckedUpdateWithoutUsuariosInput>
+  }
+
+  export type tbl_rolesUpdateOneRequiredWithoutUsuariosNestedInput = {
+    create?: XOR<tbl_rolesCreateWithoutUsuariosInput, tbl_rolesUncheckedCreateWithoutUsuariosInput>
+    connectOrCreate?: tbl_rolesCreateOrConnectWithoutUsuariosInput
+    upsert?: tbl_rolesUpsertWithoutUsuariosInput
+    connect?: tbl_rolesWhereUniqueInput
+    update?: XOR<XOR<tbl_rolesUpdateToOneWithWhereWithoutUsuariosInput, tbl_rolesUpdateWithoutUsuariosInput>, tbl_rolesUncheckedUpdateWithoutUsuariosInput>
+  }
+
+  export type tbl_estados_usuarioUpdateOneRequiredWithoutUsuariosNestedInput = {
+    create?: XOR<tbl_estados_usuarioCreateWithoutUsuariosInput, tbl_estados_usuarioUncheckedCreateWithoutUsuariosInput>
+    connectOrCreate?: tbl_estados_usuarioCreateOrConnectWithoutUsuariosInput
+    upsert?: tbl_estados_usuarioUpsertWithoutUsuariosInput
+    connect?: tbl_estados_usuarioWhereUniqueInput
+    update?: XOR<XOR<tbl_estados_usuarioUpdateToOneWithWhereWithoutUsuariosInput, tbl_estados_usuarioUpdateWithoutUsuariosInput>, tbl_estados_usuarioUncheckedUpdateWithoutUsuariosInput>
   }
 
   export type NestedBigIntFilter<$PrismaModel = never> = {
@@ -17693,11 +18119,62 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type tbl_usuariosCreateWithoutPersonaInput = {
+  export type tbl_usuariosCreateWithoutEstadoInput = {
+    pkusuario: string
+    contrase_a: string
+    persona: tbl_personasCreateNestedOneWithoutUsuariosInput
+    rol: tbl_rolesCreateNestedOneWithoutUsuariosInput
+  }
+
+  export type tbl_usuariosUncheckedCreateWithoutEstadoInput = {
     pkusuario: string
     contrase_a: string
     fkid_tbl_roles: bigint | number
-    fkid_tbl_estados_usuario: bigint | number
+    fkid_tbl_personas: bigint | number
+  }
+
+  export type tbl_usuariosCreateOrConnectWithoutEstadoInput = {
+    where: tbl_usuariosWhereUniqueInput
+    create: XOR<tbl_usuariosCreateWithoutEstadoInput, tbl_usuariosUncheckedCreateWithoutEstadoInput>
+  }
+
+  export type tbl_usuariosCreateManyEstadoInputEnvelope = {
+    data: tbl_usuariosCreateManyEstadoInput | tbl_usuariosCreateManyEstadoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type tbl_usuariosUpsertWithWhereUniqueWithoutEstadoInput = {
+    where: tbl_usuariosWhereUniqueInput
+    update: XOR<tbl_usuariosUpdateWithoutEstadoInput, tbl_usuariosUncheckedUpdateWithoutEstadoInput>
+    create: XOR<tbl_usuariosCreateWithoutEstadoInput, tbl_usuariosUncheckedCreateWithoutEstadoInput>
+  }
+
+  export type tbl_usuariosUpdateWithWhereUniqueWithoutEstadoInput = {
+    where: tbl_usuariosWhereUniqueInput
+    data: XOR<tbl_usuariosUpdateWithoutEstadoInput, tbl_usuariosUncheckedUpdateWithoutEstadoInput>
+  }
+
+  export type tbl_usuariosUpdateManyWithWhereWithoutEstadoInput = {
+    where: tbl_usuariosScalarWhereInput
+    data: XOR<tbl_usuariosUpdateManyMutationInput, tbl_usuariosUncheckedUpdateManyWithoutEstadoInput>
+  }
+
+  export type tbl_usuariosScalarWhereInput = {
+    AND?: tbl_usuariosScalarWhereInput | tbl_usuariosScalarWhereInput[]
+    OR?: tbl_usuariosScalarWhereInput[]
+    NOT?: tbl_usuariosScalarWhereInput | tbl_usuariosScalarWhereInput[]
+    pkusuario?: StringFilter<"tbl_usuarios"> | string
+    contrase_a?: StringFilter<"tbl_usuarios"> | string
+    fkid_tbl_roles?: BigIntFilter<"tbl_usuarios"> | bigint | number
+    fkid_tbl_estados_usuario?: BigIntFilter<"tbl_usuarios"> | bigint | number
+    fkid_tbl_personas?: BigIntFilter<"tbl_usuarios"> | bigint | number
+  }
+
+  export type tbl_usuariosCreateWithoutPersonaInput = {
+    pkusuario: string
+    contrase_a: string
+    rol: tbl_rolesCreateNestedOneWithoutUsuariosInput
+    estado: tbl_estados_usuarioCreateNestedOneWithoutUsuariosInput
   }
 
   export type tbl_usuariosUncheckedCreateWithoutPersonaInput = {
@@ -17733,15 +18210,44 @@ export namespace Prisma {
     data: XOR<tbl_usuariosUpdateManyMutationInput, tbl_usuariosUncheckedUpdateManyWithoutPersonaInput>
   }
 
-  export type tbl_usuariosScalarWhereInput = {
-    AND?: tbl_usuariosScalarWhereInput | tbl_usuariosScalarWhereInput[]
-    OR?: tbl_usuariosScalarWhereInput[]
-    NOT?: tbl_usuariosScalarWhereInput | tbl_usuariosScalarWhereInput[]
-    pkusuario?: StringFilter<"tbl_usuarios"> | string
-    contrase_a?: StringFilter<"tbl_usuarios"> | string
-    fkid_tbl_roles?: BigIntFilter<"tbl_usuarios"> | bigint | number
-    fkid_tbl_estados_usuario?: BigIntFilter<"tbl_usuarios"> | bigint | number
-    fkid_tbl_personas?: BigIntFilter<"tbl_usuarios"> | bigint | number
+  export type tbl_usuariosCreateWithoutRolInput = {
+    pkusuario: string
+    contrase_a: string
+    persona: tbl_personasCreateNestedOneWithoutUsuariosInput
+    estado: tbl_estados_usuarioCreateNestedOneWithoutUsuariosInput
+  }
+
+  export type tbl_usuariosUncheckedCreateWithoutRolInput = {
+    pkusuario: string
+    contrase_a: string
+    fkid_tbl_estados_usuario: bigint | number
+    fkid_tbl_personas: bigint | number
+  }
+
+  export type tbl_usuariosCreateOrConnectWithoutRolInput = {
+    where: tbl_usuariosWhereUniqueInput
+    create: XOR<tbl_usuariosCreateWithoutRolInput, tbl_usuariosUncheckedCreateWithoutRolInput>
+  }
+
+  export type tbl_usuariosCreateManyRolInputEnvelope = {
+    data: tbl_usuariosCreateManyRolInput | tbl_usuariosCreateManyRolInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type tbl_usuariosUpsertWithWhereUniqueWithoutRolInput = {
+    where: tbl_usuariosWhereUniqueInput
+    update: XOR<tbl_usuariosUpdateWithoutRolInput, tbl_usuariosUncheckedUpdateWithoutRolInput>
+    create: XOR<tbl_usuariosCreateWithoutRolInput, tbl_usuariosUncheckedCreateWithoutRolInput>
+  }
+
+  export type tbl_usuariosUpdateWithWhereUniqueWithoutRolInput = {
+    where: tbl_usuariosWhereUniqueInput
+    data: XOR<tbl_usuariosUpdateWithoutRolInput, tbl_usuariosUncheckedUpdateWithoutRolInput>
+  }
+
+  export type tbl_usuariosUpdateManyWithWhereWithoutRolInput = {
+    where: tbl_usuariosScalarWhereInput
+    data: XOR<tbl_usuariosUpdateManyMutationInput, tbl_usuariosUncheckedUpdateManyWithoutRolInput>
   }
 
   export type tbl_personasCreateWithoutUsuariosInput = {
@@ -17761,6 +18267,40 @@ export namespace Prisma {
   export type tbl_personasCreateOrConnectWithoutUsuariosInput = {
     where: tbl_personasWhereUniqueInput
     create: XOR<tbl_personasCreateWithoutUsuariosInput, tbl_personasUncheckedCreateWithoutUsuariosInput>
+  }
+
+  export type tbl_rolesCreateWithoutUsuariosInput = {
+    pkid?: bigint | number
+    nombre: string
+    nomenclatura: string
+  }
+
+  export type tbl_rolesUncheckedCreateWithoutUsuariosInput = {
+    pkid?: bigint | number
+    nombre: string
+    nomenclatura: string
+  }
+
+  export type tbl_rolesCreateOrConnectWithoutUsuariosInput = {
+    where: tbl_rolesWhereUniqueInput
+    create: XOR<tbl_rolesCreateWithoutUsuariosInput, tbl_rolesUncheckedCreateWithoutUsuariosInput>
+  }
+
+  export type tbl_estados_usuarioCreateWithoutUsuariosInput = {
+    pkid?: bigint | number
+    nombre: string
+    nomenclatura: string
+  }
+
+  export type tbl_estados_usuarioUncheckedCreateWithoutUsuariosInput = {
+    pkid?: bigint | number
+    nombre: string
+    nomenclatura: string
+  }
+
+  export type tbl_estados_usuarioCreateOrConnectWithoutUsuariosInput = {
+    where: tbl_estados_usuarioWhereUniqueInput
+    create: XOR<tbl_estados_usuarioCreateWithoutUsuariosInput, tbl_estados_usuarioUncheckedCreateWithoutUsuariosInput>
   }
 
   export type tbl_personasUpsertWithoutUsuariosInput = {
@@ -17788,6 +18328,80 @@ export namespace Prisma {
     correo?: StringFieldUpdateOperationsInput | string
   }
 
+  export type tbl_rolesUpsertWithoutUsuariosInput = {
+    update: XOR<tbl_rolesUpdateWithoutUsuariosInput, tbl_rolesUncheckedUpdateWithoutUsuariosInput>
+    create: XOR<tbl_rolesCreateWithoutUsuariosInput, tbl_rolesUncheckedCreateWithoutUsuariosInput>
+    where?: tbl_rolesWhereInput
+  }
+
+  export type tbl_rolesUpdateToOneWithWhereWithoutUsuariosInput = {
+    where?: tbl_rolesWhereInput
+    data: XOR<tbl_rolesUpdateWithoutUsuariosInput, tbl_rolesUncheckedUpdateWithoutUsuariosInput>
+  }
+
+  export type tbl_rolesUpdateWithoutUsuariosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type tbl_rolesUncheckedUpdateWithoutUsuariosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type tbl_estados_usuarioUpsertWithoutUsuariosInput = {
+    update: XOR<tbl_estados_usuarioUpdateWithoutUsuariosInput, tbl_estados_usuarioUncheckedUpdateWithoutUsuariosInput>
+    create: XOR<tbl_estados_usuarioCreateWithoutUsuariosInput, tbl_estados_usuarioUncheckedCreateWithoutUsuariosInput>
+    where?: tbl_estados_usuarioWhereInput
+  }
+
+  export type tbl_estados_usuarioUpdateToOneWithWhereWithoutUsuariosInput = {
+    where?: tbl_estados_usuarioWhereInput
+    data: XOR<tbl_estados_usuarioUpdateWithoutUsuariosInput, tbl_estados_usuarioUncheckedUpdateWithoutUsuariosInput>
+  }
+
+  export type tbl_estados_usuarioUpdateWithoutUsuariosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type tbl_estados_usuarioUncheckedUpdateWithoutUsuariosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type tbl_usuariosCreateManyEstadoInput = {
+    pkusuario: string
+    contrase_a: string
+    fkid_tbl_roles: bigint | number
+    fkid_tbl_personas: bigint | number
+  }
+
+  export type tbl_usuariosUpdateWithoutEstadoInput = {
+    pkusuario?: StringFieldUpdateOperationsInput | string
+    contrase_a?: StringFieldUpdateOperationsInput | string
+    persona?: tbl_personasUpdateOneRequiredWithoutUsuariosNestedInput
+    rol?: tbl_rolesUpdateOneRequiredWithoutUsuariosNestedInput
+  }
+
+  export type tbl_usuariosUncheckedUpdateWithoutEstadoInput = {
+    pkusuario?: StringFieldUpdateOperationsInput | string
+    contrase_a?: StringFieldUpdateOperationsInput | string
+    fkid_tbl_roles?: BigIntFieldUpdateOperationsInput | bigint | number
+    fkid_tbl_personas?: BigIntFieldUpdateOperationsInput | bigint | number
+  }
+
+  export type tbl_usuariosUncheckedUpdateManyWithoutEstadoInput = {
+    pkusuario?: StringFieldUpdateOperationsInput | string
+    contrase_a?: StringFieldUpdateOperationsInput | string
+    fkid_tbl_roles?: BigIntFieldUpdateOperationsInput | bigint | number
+    fkid_tbl_personas?: BigIntFieldUpdateOperationsInput | bigint | number
+  }
+
   export type tbl_usuariosCreateManyPersonaInput = {
     pkusuario: string
     contrase_a: string
@@ -17798,8 +18412,8 @@ export namespace Prisma {
   export type tbl_usuariosUpdateWithoutPersonaInput = {
     pkusuario?: StringFieldUpdateOperationsInput | string
     contrase_a?: StringFieldUpdateOperationsInput | string
-    fkid_tbl_roles?: BigIntFieldUpdateOperationsInput | bigint | number
-    fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
+    rol?: tbl_rolesUpdateOneRequiredWithoutUsuariosNestedInput
+    estado?: tbl_estados_usuarioUpdateOneRequiredWithoutUsuariosNestedInput
   }
 
   export type tbl_usuariosUncheckedUpdateWithoutPersonaInput = {
@@ -17814,6 +18428,34 @@ export namespace Prisma {
     contrase_a?: StringFieldUpdateOperationsInput | string
     fkid_tbl_roles?: BigIntFieldUpdateOperationsInput | bigint | number
     fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
+  }
+
+  export type tbl_usuariosCreateManyRolInput = {
+    pkusuario: string
+    contrase_a: string
+    fkid_tbl_estados_usuario: bigint | number
+    fkid_tbl_personas: bigint | number
+  }
+
+  export type tbl_usuariosUpdateWithoutRolInput = {
+    pkusuario?: StringFieldUpdateOperationsInput | string
+    contrase_a?: StringFieldUpdateOperationsInput | string
+    persona?: tbl_personasUpdateOneRequiredWithoutUsuariosNestedInput
+    estado?: tbl_estados_usuarioUpdateOneRequiredWithoutUsuariosNestedInput
+  }
+
+  export type tbl_usuariosUncheckedUpdateWithoutRolInput = {
+    pkusuario?: StringFieldUpdateOperationsInput | string
+    contrase_a?: StringFieldUpdateOperationsInput | string
+    fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
+    fkid_tbl_personas?: BigIntFieldUpdateOperationsInput | bigint | number
+  }
+
+  export type tbl_usuariosUncheckedUpdateManyWithoutRolInput = {
+    pkusuario?: StringFieldUpdateOperationsInput | string
+    contrase_a?: StringFieldUpdateOperationsInput | string
+    fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
+    fkid_tbl_personas?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
 

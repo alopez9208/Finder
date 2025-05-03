@@ -33,6 +33,7 @@ model tbl_clientes {
 model tbl_departamentos {
   pkid   BigInt @id @default(autoincrement())
   nombre String @db.VarChar(255)
+  nomenclatura String @db.VarChar(255)
 }
 
 model tbl_det_productos {
@@ -45,11 +46,13 @@ model tbl_estados_usuario {
   pkid         BigInt @id @default(autoincrement())
   nombre       String @db.VarChar(255)
   nomenclatura String @db.VarChar(255)
+  usuarios  tbl_usuarios[]
 }
 
 model tbl_municipios {
   pkid   BigInt @id @default(autoincrement())
   nombre String @db.VarChar(255)
+  nomenclatura String @db.VarChar(255)
 }
 
 model tbl_pedidos {
@@ -80,6 +83,7 @@ model tbl_roles {
   pkid         BigInt @id @default(autoincrement())
   nombre       String @db.VarChar(255)
   nomenclatura String @db.VarChar(255)
+  usuarios  tbl_usuarios[]
 }
 
 model tbl_comercios {
@@ -103,4 +107,6 @@ model tbl_usuarios {
   fkid_tbl_estados_usuario  BigInt
   fkid_tbl_personas         BigInt
   persona                   tbl_personas @relation(fields: [fkid_tbl_personas], references: [pkid])
+  rol                       tbl_roles @relation(fields: [fkid_tbl_roles], references: [pkid])
+  estado                    tbl_estados_usuario @relation(fields: [fkid_tbl_estados_usuario], references: [pkid])
 }

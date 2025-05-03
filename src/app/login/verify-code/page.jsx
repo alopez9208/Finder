@@ -1,19 +1,16 @@
 "use client";
 
-import { useState } from "react";
 import { FaUnlockAlt} from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
 
 export default function LoginPage() {
-  const [usuario, setUsuario] = useState("");
-  const [contrasena, setContrasena] = useState("");
-  const [mostrarContrasena, setMostrarContrasena] = useState(false);
+  
   const router = useRouter();
 
   return (
     <div className="min-h-screen flex">
-      {/* Lado Izquierdo: Fondo azul */}
+      {/* Lado Izquierdo */}
       <div className="w-1/2 bg-[#1B96F3] text-white relative px-10 overflow-visible flex flex-col items-center pt-12">
 
         {/* Texto centrado */}
@@ -32,7 +29,7 @@ export default function LoginPage() {
       </div>
 
 
-      {/* Lado Derecho: Fondo blanco */}
+      {/* Lado Derecho */}
       <div className="w-1/2 bg-white flex flex-col justify-center items-center px-10 relative">
         {/* Logo arriba izquierda */}
         <div className="absolute top-6 left-6 flex items-center space-x-2">
@@ -40,7 +37,7 @@ export default function LoginPage() {
           <span className="text-lg font-semibold text-gray-700"></span>
         </div>
 
-        <h1 className="text-3xl font-bold text-[#3066C8] mb-4">Verificación por email</h1>
+        <h1 className="text-3xl font-bold text-[#3066C8] mb-4">Comprobación de seguridad</h1>
 
         <p className="text-lg text-blue-500 text-center mb-8">Perdiste tu contraseña de Finder. ¡Lo sentimos!
           <br />

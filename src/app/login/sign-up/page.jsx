@@ -102,7 +102,7 @@ export default function LoginPage() {
       return;
     }
   
-    const res = await fetch("/api/sign-up", {
+    const res = await fetch("/api/login/sign-up", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ nombres, apellidos, correo, usuario, contraseña: password }),
@@ -110,12 +110,10 @@ export default function LoginPage() {
 
     const data = await res.json(); // Obtener la respuesta de la API
   
-  if (res.ok) {
-    // Si la respuesta es exitosa, mostrar mensaje de éxito
+  if (res.ok) {    
     alert("Usuario creado correctamente");
-    router.push("/login"); // Redirigir a la página de login
-  } else {
-    // Si la respuesta tiene un error, mostrar el mensaje de error
+    router.push("/login"); 
+  } else {    
     setError(data.error || "Error al registrar usuario");
   }
     
@@ -232,8 +230,7 @@ export default function LoginPage() {
               </span>
             )}
           </div>
-
-          {/* Mensaje de error */}
+         
           {error && <p className="text-red-500 text-sm">{error}</p>}
           
           <button

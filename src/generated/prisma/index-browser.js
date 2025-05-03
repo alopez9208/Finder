@@ -139,7 +139,8 @@ exports.Prisma.Tbl_clientesScalarFieldEnum = {
 
 exports.Prisma.Tbl_departamentosScalarFieldEnum = {
   pkid: 'pkid',
-  nombre: 'nombre'
+  nombre: 'nombre',
+  nomenclatura: 'nomenclatura'
 };
 
 exports.Prisma.Tbl_det_productosScalarFieldEnum = {
@@ -156,7 +157,8 @@ exports.Prisma.Tbl_estados_usuarioScalarFieldEnum = {
 
 exports.Prisma.Tbl_municipiosScalarFieldEnum = {
   pkid: 'pkid',
-  nombre: 'nombre'
+  nombre: 'nombre',
+  nomenclatura: 'nomenclatura'
 };
 
 exports.Prisma.Tbl_pedidosScalarFieldEnum = {

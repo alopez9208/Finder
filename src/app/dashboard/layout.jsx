@@ -71,23 +71,19 @@ export default function Layout({ children }) {
               <span className="text-lg">Roles</span>
             </button>
 
-            <button
-              onClick={() => router.push("/dashboard/client-data")}
-              className={`flex items-center gap-1 rounded pl-4 p-1 cursor-pointer ${isActive("/dashboard/client-data")}`}>
-              <FaUserTag className="text-2xl" />
-              <span className="text-lg">Clientes</span>
-            </button>
+            <div className="flex border-t border-white p-1 mt-2 opacity-50"></div>
+            <span className="text-white text-sm">Gestión de Clientes </span>
 
             <button
               onClick={() => router.push("/dashboard/client-data/departamentos")}
-              className={`flex items-center justify-center gap-1 pr-8 rounded p-1 cursor-pointer ${isActive("/dashboard/client-data/departamentos")}`}>
+              className={`flex items-center gap-1 rounded pl-4 p-1 cursor-pointer ${isActive("/dashboard/client-data/departamentos")}`}>
               <BiWorld className="text-2xl" />
               <span className="text-lg">Departamentos</span>
             </button>
 
             <button
               onClick={() => router.push("/dashboard/client-data/municipios")}
-              className={`flex items-center justify-center gap-1 pr-16 rounded p-1 cursor-pointer ${isActive("/dashboard/client-data/municipios")}`}>
+              className={`flex items-center gap-1 rounded pl-4 p-1 cursor-pointer ${isActive("/dashboard/client-data/municipios")}`}>
               <AiOutlineBranches className="text-2xl" />
               <span className="text-lg">Municipios</span>
             </button>

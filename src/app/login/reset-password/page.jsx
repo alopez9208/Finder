@@ -23,7 +23,7 @@ function PasswordInput({ password, setPassword }) {
       <div className="relative mb-2">
         <input
           type={mostrarClave ? "text" : "password"}
-          placeholder="Contraseña"
+          placeholder="Nueva contraseña"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded focus:outline-none placeholder:text-gray-400 text-gray-800"
@@ -96,7 +96,7 @@ export default function LoginPage() {
         </div>
 
         <h1 className="text-3xl font-bold text-[#3066C8] mb-8">
-          Contraseña nueva
+          Cambiar contraseña
         </h1>
 
         <div className="w-full max-w-sm">
@@ -107,7 +107,7 @@ export default function LoginPage() {
           <div className="relative mb-4 mt-4">
             <input
               type={mostrarValidarClave ? "text" : "password"}
-              placeholder="Verificar contraseña"
+              placeholder="Verificar nueva contraseña"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded focus:outline-none placeholder:text-gray-400 text-gray-800"
