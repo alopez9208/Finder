@@ -6,7 +6,7 @@ import { FaPlus } from "react-icons/fa6";
 import { TbArrowsSort } from "react-icons/tb";
 
 export default function DepartamentosPage() {
-  const [searchID, setSearchID] = useState("");
+  const [searchNombre, setSearchNombre] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [departamentos, setDepartamentos] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
@@ -84,17 +84,35 @@ export default function DepartamentosPage() {
 
   const filteredDepartamentos = departamentos
     .filter((departamento) => {
-      const nomen = departamento.nomenclatura?.toString() || '';
-      return nomen.includes(searchID.toLowerCase());
+      const nomb = departamento.nombre?.toString().toLowerCase() || '';  // Convertir nomenclatura a minúsculas
+      const searchTerm = searchNombre?.toString().toLowerCase() || '';  // Asegurarse de que searchNombre sea una cadena
+      return nomb.includes(searchTerm);  // Comparar los dos en minúsculas
     })
     .sort((a, b) => {
       if (!sortConfig.key) return 0;
-      const aVal = a[sortConfig.key]?.toString().toLowerCase() || '';
-      const bVal = b[sortConfig.key]?.toString().toLowerCase() || '';
-      if (aVal < bVal) return sortConfig.direction === "asc" ? -1 : 1;
-      if (aVal > bVal) return sortConfig.direction === "asc" ? 1 : -1;
+    
+      const aVal = a[sortConfig.key];
+      const bVal = b[sortConfig.key];
+    
+      // Detectar si ambos valores son números
+      const aNum = Number(aVal);
+      const bNum = Number(bVal);
+    
+      if (!isNaN(aNum) && !isNaN(bNum)) {
+        // Orden numérico
+        return sortConfig.direction === "asc" ? aNum - bNum : bNum - aNum;
+      }
+    
+      // Orden alfabético si no son números
+      const aStr = aVal?.toString().toLowerCase() || '';
+      const bStr = bVal?.toString().toLowerCase() || '';
+    
+      if (aStr < bStr) return sortConfig.direction === "asc" ? -1 : 1;
+      if (aStr > bStr) return sortConfig.direction === "asc" ? 1 : -1;
       return 0;
     });
+    
+
 
   const totalPages = Math.ceil(filteredDepartamentos.length / departamentosPerPage);
   const startIndex = (currentPage - 1) * departamentosPerPage;
@@ -116,6 +134,10 @@ export default function DepartamentosPage() {
     );
   };
 
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) setCurrentPage(page);
+  };
+
   return (
     <div className="m-12">
       <h2 className="text-2xl text-gray-800 mb-8">Lista de Departamentos</h2>
@@ -125,9 +147,9 @@ export default function DepartamentosPage() {
           <input
             type="text"
             className="w-full max-w-md pl-4 pr-4 py-2 border border-gray-300 rounded focus:outline-none text-gray-800"
-            placeholder="Buscar por Nomenclatura"
-            value={searchID}
-            onChange={(e) => setSearchID(e.target.value)}
+            placeholder="Buscar por Nombre"
+            value={searchNombre}
+            onChange={(e) => setSearchNombre(e.target.value)}
           />
           <button
             onClick={openModalForNew}
@@ -182,17 +204,68 @@ export default function DepartamentosPage() {
           </table>
         </div>
 
+        {/* Paginación */}
         {totalPages > 1 && (
           <div className="mt-4 flex justify-center items-center space-x-2 text-gray-400">
-            {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
+              disabled={currentPage === 1}
+            >
+              Anterior
+            </button>
+
+            {/* Mostrar la primera página si no estamos en ella y el rango es mayor a 3 */}
+            {currentPage > 3 && (
               <button
-                key={i + 1}
-                onClick={() => setCurrentPage(i + 1)}
-                className={`px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white ${currentPage === i + 1 ? "bg-blue-500 text-white" : ""}`}
+                onClick={() => handlePageChange(1)}
+                className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
               >
-                {i + 1}
+                1
               </button>
-            ))}
+            )}
+
+            {/* Si hay más de 4 páginas anteriores a la actual, mostrar "..." */}
+            {currentPage > 4 && <span className="px-3 py-1">...</span>}
+
+            {/* Páginas alrededor de la página actual */}
+            {Array.from({ length: 5 }, (_, i) => {
+              const pageNumber = currentPage - 2 + i;
+              if (pageNumber > 0 && pageNumber <= totalPages) {
+                return (
+                  <button
+                    key={pageNumber}
+                    onClick={() => handlePageChange(pageNumber)}
+                    className={`px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white ${currentPage === pageNumber ? "bg-blue-500 text-white" : ""
+                      }`}
+                  >
+                    {pageNumber}
+                  </button>
+                );
+              }
+              return null; // No renderizar números fuera del rango
+            })}
+
+            {/* Si hay más de 3 páginas posteriores a la actual, mostrar "..." */}
+            {currentPage < totalPages - 3 && <span className="px-3 py-1">...</span>}
+
+            {/* Mostrar la última página si no estamos en ella */}
+            {currentPage < totalPages - 2 && (
+              <button
+                onClick={() => handlePageChange(totalPages)}
+                className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
+              >
+                {totalPages}
+              </button>
+            )}
+
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
+              disabled={currentPage === totalPages}
+            >
+              Siguiente
+            </button>
           </div>
         )}
       </div>

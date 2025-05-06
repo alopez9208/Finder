@@ -31,9 +31,10 @@ model tbl_clientes {
 }
 
 model tbl_departamentos {
-  pkid         BigInt @id @default(autoincrement())
-  nombre       String @db.VarChar(255)
-  nomenclatura String @db.VarChar(255)
+  pkid         BigInt           @id @default(autoincrement())
+  nombre       String           @db.VarChar(255)
+  nomenclatura String           @db.VarChar(255)
+  municipios   tbl_municipios[]
 }
 
 model tbl_det_productos {
@@ -50,9 +51,11 @@ model tbl_estados_usuario {
 }
 
 model tbl_municipios {
-  pkid         BigInt @id @default(autoincrement())
-  nombre       String @db.VarChar(255)
-  nomenclatura String @db.VarChar(255)
+  pkid                   BigInt             @id @default(autoincrement())
+  nombre                 String             @db.VarChar(255)
+  nomenclatura           String             @db.VarChar(255)
+  fkid_tbl_departamentos BigInt?
+  departamento           tbl_departamentos? @relation(fields: [fkid_tbl_departamentos], references: [pkid])
 }
 
 model tbl_pedidos {

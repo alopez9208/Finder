@@ -158,7 +158,8 @@ exports.Prisma.Tbl_estados_usuarioScalarFieldEnum = {
 exports.Prisma.Tbl_municipiosScalarFieldEnum = {
   pkid: 'pkid',
   nombre: 'nombre',
-  nomenclatura: 'nomenclatura'
+  nomenclatura: 'nomenclatura',
+  fkid_tbl_departamentos: 'fkid_tbl_departamentos'
 };
 
 exports.Prisma.Tbl_pedidosScalarFieldEnum = {
@@ -220,6 +221,11 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 
 

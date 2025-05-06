@@ -1957,6 +1957,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type Tbl_departamentosCountOutputType
+   */
+
+  export type Tbl_departamentosCountOutputType = {
+    municipios: number
+  }
+
+  export type Tbl_departamentosCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    municipios?: boolean | Tbl_departamentosCountOutputTypeCountMunicipiosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Tbl_departamentosCountOutputType without action
+   */
+  export type Tbl_departamentosCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tbl_departamentosCountOutputType
+     */
+    select?: Tbl_departamentosCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Tbl_departamentosCountOutputType without action
+   */
+  export type Tbl_departamentosCountOutputTypeCountMunicipiosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: tbl_municipiosWhereInput
+  }
+
+
+  /**
    * Count Type Tbl_estados_usuarioCountOutputType
    */
 
@@ -4361,6 +4392,8 @@ export namespace Prisma {
     pkid?: boolean
     nombre?: boolean
     nomenclatura?: boolean
+    municipios?: boolean | tbl_departamentos$municipiosArgs<ExtArgs>
+    _count?: boolean | Tbl_departamentosCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_departamentos"]>
 
   export type tbl_departamentosSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4382,10 +4415,18 @@ export namespace Prisma {
   }
 
   export type tbl_departamentosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "nombre" | "nomenclatura", ExtArgs["result"]["tbl_departamentos"]>
+  export type tbl_departamentosInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    municipios?: boolean | tbl_departamentos$municipiosArgs<ExtArgs>
+    _count?: boolean | Tbl_departamentosCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type tbl_departamentosIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type tbl_departamentosIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $tbl_departamentosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "tbl_departamentos"
-    objects: {}
+    objects: {
+      municipios: Prisma.$tbl_municipiosPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       pkid: bigint
       nombre: string
@@ -4784,6 +4825,7 @@ export namespace Prisma {
    */
   export interface Prisma__tbl_departamentosClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    municipios<T extends tbl_departamentos$municipiosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_departamentos$municipiosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_municipiosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4833,6 +4875,10 @@ export namespace Prisma {
      */
     omit?: tbl_departamentosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_departamentosInclude<ExtArgs> | null
+    /**
      * Filter, which tbl_departamentos to fetch.
      */
     where: tbl_departamentosWhereUniqueInput
@@ -4851,6 +4897,10 @@ export namespace Prisma {
      */
     omit?: tbl_departamentosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_departamentosInclude<ExtArgs> | null
+    /**
      * Filter, which tbl_departamentos to fetch.
      */
     where: tbl_departamentosWhereUniqueInput
@@ -4868,6 +4918,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_departamentos
      */
     omit?: tbl_departamentosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_departamentosInclude<ExtArgs> | null
     /**
      * Filter, which tbl_departamentos to fetch.
      */
@@ -4917,6 +4971,10 @@ export namespace Prisma {
      */
     omit?: tbl_departamentosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_departamentosInclude<ExtArgs> | null
+    /**
      * Filter, which tbl_departamentos to fetch.
      */
     where?: tbl_departamentosWhereInput
@@ -4965,6 +5023,10 @@ export namespace Prisma {
      */
     omit?: tbl_departamentosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_departamentosInclude<ExtArgs> | null
+    /**
      * Filter, which tbl_departamentos to fetch.
      */
     where?: tbl_departamentosWhereInput
@@ -5007,6 +5069,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_departamentos
      */
     omit?: tbl_departamentosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_departamentosInclude<ExtArgs> | null
     /**
      * The data needed to create a tbl_departamentos.
      */
@@ -5055,6 +5121,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_departamentos
      */
     omit?: tbl_departamentosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_departamentosInclude<ExtArgs> | null
     /**
      * The data needed to update a tbl_departamentos.
      */
@@ -5122,6 +5192,10 @@ export namespace Prisma {
      */
     omit?: tbl_departamentosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_departamentosInclude<ExtArgs> | null
+    /**
      * The filter to search for the tbl_departamentos to update in case it exists.
      */
     where: tbl_departamentosWhereUniqueInput
@@ -5148,6 +5222,10 @@ export namespace Prisma {
      */
     omit?: tbl_departamentosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_departamentosInclude<ExtArgs> | null
+    /**
      * Filter which tbl_departamentos to delete.
      */
     where: tbl_departamentosWhereUniqueInput
@@ -5168,6 +5246,30 @@ export namespace Prisma {
   }
 
   /**
+   * tbl_departamentos.municipios
+   */
+  export type tbl_departamentos$municipiosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_municipios
+     */
+    select?: tbl_municipiosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_municipios
+     */
+    omit?: tbl_municipiosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_municipiosInclude<ExtArgs> | null
+    where?: tbl_municipiosWhereInput
+    orderBy?: tbl_municipiosOrderByWithRelationInput | tbl_municipiosOrderByWithRelationInput[]
+    cursor?: tbl_municipiosWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Tbl_municipiosScalarFieldEnum | Tbl_municipiosScalarFieldEnum[]
+  }
+
+  /**
    * tbl_departamentos without action
    */
   export type tbl_departamentosDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5179,6 +5281,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_departamentos
      */
     omit?: tbl_departamentosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_departamentosInclude<ExtArgs> | null
   }
 
 
@@ -7281,56 +7387,66 @@ export namespace Prisma {
 
   export type Tbl_municipiosAvgAggregateOutputType = {
     pkid: number | null
+    fkid_tbl_departamentos: number | null
   }
 
   export type Tbl_municipiosSumAggregateOutputType = {
     pkid: bigint | null
+    fkid_tbl_departamentos: bigint | null
   }
 
   export type Tbl_municipiosMinAggregateOutputType = {
     pkid: bigint | null
     nombre: string | null
     nomenclatura: string | null
+    fkid_tbl_departamentos: bigint | null
   }
 
   export type Tbl_municipiosMaxAggregateOutputType = {
     pkid: bigint | null
     nombre: string | null
     nomenclatura: string | null
+    fkid_tbl_departamentos: bigint | null
   }
 
   export type Tbl_municipiosCountAggregateOutputType = {
     pkid: number
     nombre: number
     nomenclatura: number
+    fkid_tbl_departamentos: number
     _all: number
   }
 
 
   export type Tbl_municipiosAvgAggregateInputType = {
     pkid?: true
+    fkid_tbl_departamentos?: true
   }
 
   export type Tbl_municipiosSumAggregateInputType = {
     pkid?: true
+    fkid_tbl_departamentos?: true
   }
 
   export type Tbl_municipiosMinAggregateInputType = {
     pkid?: true
     nombre?: true
     nomenclatura?: true
+    fkid_tbl_departamentos?: true
   }
 
   export type Tbl_municipiosMaxAggregateInputType = {
     pkid?: true
     nombre?: true
     nomenclatura?: true
+    fkid_tbl_departamentos?: true
   }
 
   export type Tbl_municipiosCountAggregateInputType = {
     pkid?: true
     nombre?: true
     nomenclatura?: true
+    fkid_tbl_departamentos?: true
     _all?: true
   }
 
@@ -7424,6 +7540,7 @@ export namespace Prisma {
     pkid: bigint
     nombre: string
     nomenclatura: string
+    fkid_tbl_departamentos: bigint | null
     _count: Tbl_municipiosCountAggregateOutputType | null
     _avg: Tbl_municipiosAvgAggregateOutputType | null
     _sum: Tbl_municipiosSumAggregateOutputType | null
@@ -7449,35 +7566,54 @@ export namespace Prisma {
     pkid?: boolean
     nombre?: boolean
     nomenclatura?: boolean
+    fkid_tbl_departamentos?: boolean
+    departamento?: boolean | tbl_municipios$departamentoArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_municipios"]>
 
   export type tbl_municipiosSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     pkid?: boolean
     nombre?: boolean
     nomenclatura?: boolean
+    fkid_tbl_departamentos?: boolean
+    departamento?: boolean | tbl_municipios$departamentoArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_municipios"]>
 
   export type tbl_municipiosSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     pkid?: boolean
     nombre?: boolean
     nomenclatura?: boolean
+    fkid_tbl_departamentos?: boolean
+    departamento?: boolean | tbl_municipios$departamentoArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_municipios"]>
 
   export type tbl_municipiosSelectScalar = {
     pkid?: boolean
     nombre?: boolean
     nomenclatura?: boolean
+    fkid_tbl_departamentos?: boolean
   }
 
-  export type tbl_municipiosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "nombre" | "nomenclatura", ExtArgs["result"]["tbl_municipios"]>
+  export type tbl_municipiosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "nombre" | "nomenclatura" | "fkid_tbl_departamentos", ExtArgs["result"]["tbl_municipios"]>
+  export type tbl_municipiosInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    departamento?: boolean | tbl_municipios$departamentoArgs<ExtArgs>
+  }
+  export type tbl_municipiosIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    departamento?: boolean | tbl_municipios$departamentoArgs<ExtArgs>
+  }
+  export type tbl_municipiosIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    departamento?: boolean | tbl_municipios$departamentoArgs<ExtArgs>
+  }
 
   export type $tbl_municipiosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "tbl_municipios"
-    objects: {}
+    objects: {
+      departamento: Prisma.$tbl_departamentosPayload<ExtArgs> | null
+    }
     scalars: $Extensions.GetPayloadResult<{
       pkid: bigint
       nombre: string
       nomenclatura: string
+      fkid_tbl_departamentos: bigint | null
     }, ExtArgs["result"]["tbl_municipios"]>
     composites: {}
   }
@@ -7872,6 +8008,7 @@ export namespace Prisma {
    */
   export interface Prisma__tbl_municipiosClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    departamento<T extends tbl_municipios$departamentoArgs<ExtArgs> = {}>(args?: Subset<T, tbl_municipios$departamentoArgs<ExtArgs>>): Prisma__tbl_departamentosClient<$Result.GetResult<Prisma.$tbl_departamentosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7904,6 +8041,7 @@ export namespace Prisma {
     readonly pkid: FieldRef<"tbl_municipios", 'BigInt'>
     readonly nombre: FieldRef<"tbl_municipios", 'String'>
     readonly nomenclatura: FieldRef<"tbl_municipios", 'String'>
+    readonly fkid_tbl_departamentos: FieldRef<"tbl_municipios", 'BigInt'>
   }
     
 
@@ -7920,6 +8058,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_municipios
      */
     omit?: tbl_municipiosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_municipiosInclude<ExtArgs> | null
     /**
      * Filter, which tbl_municipios to fetch.
      */
@@ -7939,6 +8081,10 @@ export namespace Prisma {
      */
     omit?: tbl_municipiosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_municipiosInclude<ExtArgs> | null
+    /**
      * Filter, which tbl_municipios to fetch.
      */
     where: tbl_municipiosWhereUniqueInput
@@ -7956,6 +8102,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_municipios
      */
     omit?: tbl_municipiosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_municipiosInclude<ExtArgs> | null
     /**
      * Filter, which tbl_municipios to fetch.
      */
@@ -8005,6 +8155,10 @@ export namespace Prisma {
      */
     omit?: tbl_municipiosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_municipiosInclude<ExtArgs> | null
+    /**
      * Filter, which tbl_municipios to fetch.
      */
     where?: tbl_municipiosWhereInput
@@ -8053,6 +8207,10 @@ export namespace Prisma {
      */
     omit?: tbl_municipiosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_municipiosInclude<ExtArgs> | null
+    /**
      * Filter, which tbl_municipios to fetch.
      */
     where?: tbl_municipiosWhereInput
@@ -8096,6 +8254,10 @@ export namespace Prisma {
      */
     omit?: tbl_municipiosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_municipiosInclude<ExtArgs> | null
+    /**
      * The data needed to create a tbl_municipios.
      */
     data: XOR<tbl_municipiosCreateInput, tbl_municipiosUncheckedCreateInput>
@@ -8129,6 +8291,10 @@ export namespace Prisma {
      */
     data: tbl_municipiosCreateManyInput | tbl_municipiosCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_municipiosIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -8143,6 +8309,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_municipios
      */
     omit?: tbl_municipiosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_municipiosInclude<ExtArgs> | null
     /**
      * The data needed to update a tbl_municipios.
      */
@@ -8195,6 +8365,10 @@ export namespace Prisma {
      * Limit how many tbl_municipios to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_municipiosIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -8209,6 +8383,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_municipios
      */
     omit?: tbl_municipiosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_municipiosInclude<ExtArgs> | null
     /**
      * The filter to search for the tbl_municipios to update in case it exists.
      */
@@ -8236,6 +8414,10 @@ export namespace Prisma {
      */
     omit?: tbl_municipiosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_municipiosInclude<ExtArgs> | null
+    /**
      * Filter which tbl_municipios to delete.
      */
     where: tbl_municipiosWhereUniqueInput
@@ -8256,6 +8438,25 @@ export namespace Prisma {
   }
 
   /**
+   * tbl_municipios.departamento
+   */
+  export type tbl_municipios$departamentoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_departamentos
+     */
+    select?: tbl_departamentosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_departamentos
+     */
+    omit?: tbl_departamentosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_departamentosInclude<ExtArgs> | null
+    where?: tbl_departamentosWhereInput
+  }
+
+  /**
    * tbl_municipios without action
    */
   export type tbl_municipiosDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8267,6 +8468,10 @@ export namespace Prisma {
      * Omit specific fields from the tbl_municipios
      */
     omit?: tbl_municipiosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_municipiosInclude<ExtArgs> | null
   }
 
 
@@ -15735,7 +15940,8 @@ export namespace Prisma {
   export const Tbl_municipiosScalarFieldEnum: {
     pkid: 'pkid',
     nombre: 'nombre',
-    nomenclatura: 'nomenclatura'
+    nomenclatura: 'nomenclatura',
+    fkid_tbl_departamentos: 'fkid_tbl_departamentos'
   };
 
   export type Tbl_municipiosScalarFieldEnum = (typeof Tbl_municipiosScalarFieldEnum)[keyof typeof Tbl_municipiosScalarFieldEnum]
@@ -15827,6 +16033,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -16042,12 +16256,14 @@ export namespace Prisma {
     pkid?: BigIntFilter<"tbl_departamentos"> | bigint | number
     nombre?: StringFilter<"tbl_departamentos"> | string
     nomenclatura?: StringFilter<"tbl_departamentos"> | string
+    municipios?: Tbl_municipiosListRelationFilter
   }
 
   export type tbl_departamentosOrderByWithRelationInput = {
     pkid?: SortOrder
     nombre?: SortOrder
     nomenclatura?: SortOrder
+    municipios?: tbl_municipiosOrderByRelationAggregateInput
   }
 
   export type tbl_departamentosWhereUniqueInput = Prisma.AtLeast<{
@@ -16057,6 +16273,7 @@ export namespace Prisma {
     NOT?: tbl_departamentosWhereInput | tbl_departamentosWhereInput[]
     nombre?: StringFilter<"tbl_departamentos"> | string
     nomenclatura?: StringFilter<"tbl_departamentos"> | string
+    municipios?: Tbl_municipiosListRelationFilter
   }, "pkid">
 
   export type tbl_departamentosOrderByWithAggregationInput = {
@@ -16177,12 +16394,16 @@ export namespace Prisma {
     pkid?: BigIntFilter<"tbl_municipios"> | bigint | number
     nombre?: StringFilter<"tbl_municipios"> | string
     nomenclatura?: StringFilter<"tbl_municipios"> | string
+    fkid_tbl_departamentos?: BigIntNullableFilter<"tbl_municipios"> | bigint | number | null
+    departamento?: XOR<Tbl_departamentosNullableScalarRelationFilter, tbl_departamentosWhereInput> | null
   }
 
   export type tbl_municipiosOrderByWithRelationInput = {
     pkid?: SortOrder
     nombre?: SortOrder
     nomenclatura?: SortOrder
+    fkid_tbl_departamentos?: SortOrderInput | SortOrder
+    departamento?: tbl_departamentosOrderByWithRelationInput
   }
 
   export type tbl_municipiosWhereUniqueInput = Prisma.AtLeast<{
@@ -16192,12 +16413,15 @@ export namespace Prisma {
     NOT?: tbl_municipiosWhereInput | tbl_municipiosWhereInput[]
     nombre?: StringFilter<"tbl_municipios"> | string
     nomenclatura?: StringFilter<"tbl_municipios"> | string
+    fkid_tbl_departamentos?: BigIntNullableFilter<"tbl_municipios"> | bigint | number | null
+    departamento?: XOR<Tbl_departamentosNullableScalarRelationFilter, tbl_departamentosWhereInput> | null
   }, "pkid">
 
   export type tbl_municipiosOrderByWithAggregationInput = {
     pkid?: SortOrder
     nombre?: SortOrder
     nomenclatura?: SortOrder
+    fkid_tbl_departamentos?: SortOrderInput | SortOrder
     _count?: tbl_municipiosCountOrderByAggregateInput
     _avg?: tbl_municipiosAvgOrderByAggregateInput
     _max?: tbl_municipiosMaxOrderByAggregateInput
@@ -16212,6 +16436,7 @@ export namespace Prisma {
     pkid?: BigIntWithAggregatesFilter<"tbl_municipios"> | bigint | number
     nombre?: StringWithAggregatesFilter<"tbl_municipios"> | string
     nomenclatura?: StringWithAggregatesFilter<"tbl_municipios"> | string
+    fkid_tbl_departamentos?: BigIntNullableWithAggregatesFilter<"tbl_municipios"> | bigint | number | null
   }
 
   export type tbl_pedidosWhereInput = {
@@ -16726,24 +16951,28 @@ export namespace Prisma {
     pkid?: bigint | number
     nombre: string
     nomenclatura: string
+    municipios?: tbl_municipiosCreateNestedManyWithoutDepartamentoInput
   }
 
   export type tbl_departamentosUncheckedCreateInput = {
     pkid?: bigint | number
     nombre: string
     nomenclatura: string
+    municipios?: tbl_municipiosUncheckedCreateNestedManyWithoutDepartamentoInput
   }
 
   export type tbl_departamentosUpdateInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
+    municipios?: tbl_municipiosUpdateManyWithoutDepartamentoNestedInput
   }
 
   export type tbl_departamentosUncheckedUpdateInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
+    municipios?: tbl_municipiosUncheckedUpdateManyWithoutDepartamentoNestedInput
   }
 
   export type tbl_departamentosCreateManyInput = {
@@ -16856,30 +17085,35 @@ export namespace Prisma {
     pkid?: bigint | number
     nombre: string
     nomenclatura: string
+    departamento?: tbl_departamentosCreateNestedOneWithoutMunicipiosInput
   }
 
   export type tbl_municipiosUncheckedCreateInput = {
     pkid?: bigint | number
     nombre: string
     nomenclatura: string
+    fkid_tbl_departamentos?: bigint | number | null
   }
 
   export type tbl_municipiosUpdateInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
+    departamento?: tbl_departamentosUpdateOneWithoutMunicipiosNestedInput
   }
 
   export type tbl_municipiosUncheckedUpdateInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
+    fkid_tbl_departamentos?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type tbl_municipiosCreateManyInput = {
     pkid?: bigint | number
     nombre: string
     nomenclatura: string
+    fkid_tbl_departamentos?: bigint | number | null
   }
 
   export type tbl_municipiosUpdateManyMutationInput = {
@@ -16892,6 +17126,7 @@ export namespace Prisma {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
+    fkid_tbl_departamentos?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type tbl_pedidosCreateInput = {
@@ -17452,6 +17687,16 @@ export namespace Prisma {
     fkid_tbl_comercios?: SortOrder
   }
 
+  export type Tbl_municipiosListRelationFilter = {
+    every?: tbl_municipiosWhereInput
+    some?: tbl_municipiosWhereInput
+    none?: tbl_municipiosWhereInput
+  }
+
+  export type tbl_municipiosOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type tbl_departamentosCountOrderByAggregateInput = {
     pkid?: SortOrder
     nombre?: SortOrder
@@ -17542,30 +17787,72 @@ export namespace Prisma {
     pkid?: SortOrder
   }
 
+  export type BigIntNullableFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
+  }
+
+  export type Tbl_departamentosNullableScalarRelationFilter = {
+    is?: tbl_departamentosWhereInput | null
+    isNot?: tbl_departamentosWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type tbl_municipiosCountOrderByAggregateInput = {
     pkid?: SortOrder
     nombre?: SortOrder
     nomenclatura?: SortOrder
+    fkid_tbl_departamentos?: SortOrder
   }
 
   export type tbl_municipiosAvgOrderByAggregateInput = {
     pkid?: SortOrder
+    fkid_tbl_departamentos?: SortOrder
   }
 
   export type tbl_municipiosMaxOrderByAggregateInput = {
     pkid?: SortOrder
     nombre?: SortOrder
     nomenclatura?: SortOrder
+    fkid_tbl_departamentos?: SortOrder
   }
 
   export type tbl_municipiosMinOrderByAggregateInput = {
     pkid?: SortOrder
     nombre?: SortOrder
     nomenclatura?: SortOrder
+    fkid_tbl_departamentos?: SortOrder
   }
 
   export type tbl_municipiosSumOrderByAggregateInput = {
     pkid?: SortOrder
+    fkid_tbl_departamentos?: SortOrder
+  }
+
+  export type BigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedBigIntNullableFilter<$PrismaModel>
+    _min?: NestedBigIntNullableFilter<$PrismaModel>
+    _max?: NestedBigIntNullableFilter<$PrismaModel>
   }
 
   export type tbl_pedidosCountOrderByAggregateInput = {
@@ -17830,6 +18117,48 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type tbl_municipiosCreateNestedManyWithoutDepartamentoInput = {
+    create?: XOR<tbl_municipiosCreateWithoutDepartamentoInput, tbl_municipiosUncheckedCreateWithoutDepartamentoInput> | tbl_municipiosCreateWithoutDepartamentoInput[] | tbl_municipiosUncheckedCreateWithoutDepartamentoInput[]
+    connectOrCreate?: tbl_municipiosCreateOrConnectWithoutDepartamentoInput | tbl_municipiosCreateOrConnectWithoutDepartamentoInput[]
+    createMany?: tbl_municipiosCreateManyDepartamentoInputEnvelope
+    connect?: tbl_municipiosWhereUniqueInput | tbl_municipiosWhereUniqueInput[]
+  }
+
+  export type tbl_municipiosUncheckedCreateNestedManyWithoutDepartamentoInput = {
+    create?: XOR<tbl_municipiosCreateWithoutDepartamentoInput, tbl_municipiosUncheckedCreateWithoutDepartamentoInput> | tbl_municipiosCreateWithoutDepartamentoInput[] | tbl_municipiosUncheckedCreateWithoutDepartamentoInput[]
+    connectOrCreate?: tbl_municipiosCreateOrConnectWithoutDepartamentoInput | tbl_municipiosCreateOrConnectWithoutDepartamentoInput[]
+    createMany?: tbl_municipiosCreateManyDepartamentoInputEnvelope
+    connect?: tbl_municipiosWhereUniqueInput | tbl_municipiosWhereUniqueInput[]
+  }
+
+  export type tbl_municipiosUpdateManyWithoutDepartamentoNestedInput = {
+    create?: XOR<tbl_municipiosCreateWithoutDepartamentoInput, tbl_municipiosUncheckedCreateWithoutDepartamentoInput> | tbl_municipiosCreateWithoutDepartamentoInput[] | tbl_municipiosUncheckedCreateWithoutDepartamentoInput[]
+    connectOrCreate?: tbl_municipiosCreateOrConnectWithoutDepartamentoInput | tbl_municipiosCreateOrConnectWithoutDepartamentoInput[]
+    upsert?: tbl_municipiosUpsertWithWhereUniqueWithoutDepartamentoInput | tbl_municipiosUpsertWithWhereUniqueWithoutDepartamentoInput[]
+    createMany?: tbl_municipiosCreateManyDepartamentoInputEnvelope
+    set?: tbl_municipiosWhereUniqueInput | tbl_municipiosWhereUniqueInput[]
+    disconnect?: tbl_municipiosWhereUniqueInput | tbl_municipiosWhereUniqueInput[]
+    delete?: tbl_municipiosWhereUniqueInput | tbl_municipiosWhereUniqueInput[]
+    connect?: tbl_municipiosWhereUniqueInput | tbl_municipiosWhereUniqueInput[]
+    update?: tbl_municipiosUpdateWithWhereUniqueWithoutDepartamentoInput | tbl_municipiosUpdateWithWhereUniqueWithoutDepartamentoInput[]
+    updateMany?: tbl_municipiosUpdateManyWithWhereWithoutDepartamentoInput | tbl_municipiosUpdateManyWithWhereWithoutDepartamentoInput[]
+    deleteMany?: tbl_municipiosScalarWhereInput | tbl_municipiosScalarWhereInput[]
+  }
+
+  export type tbl_municipiosUncheckedUpdateManyWithoutDepartamentoNestedInput = {
+    create?: XOR<tbl_municipiosCreateWithoutDepartamentoInput, tbl_municipiosUncheckedCreateWithoutDepartamentoInput> | tbl_municipiosCreateWithoutDepartamentoInput[] | tbl_municipiosUncheckedCreateWithoutDepartamentoInput[]
+    connectOrCreate?: tbl_municipiosCreateOrConnectWithoutDepartamentoInput | tbl_municipiosCreateOrConnectWithoutDepartamentoInput[]
+    upsert?: tbl_municipiosUpsertWithWhereUniqueWithoutDepartamentoInput | tbl_municipiosUpsertWithWhereUniqueWithoutDepartamentoInput[]
+    createMany?: tbl_municipiosCreateManyDepartamentoInputEnvelope
+    set?: tbl_municipiosWhereUniqueInput | tbl_municipiosWhereUniqueInput[]
+    disconnect?: tbl_municipiosWhereUniqueInput | tbl_municipiosWhereUniqueInput[]
+    delete?: tbl_municipiosWhereUniqueInput | tbl_municipiosWhereUniqueInput[]
+    connect?: tbl_municipiosWhereUniqueInput | tbl_municipiosWhereUniqueInput[]
+    update?: tbl_municipiosUpdateWithWhereUniqueWithoutDepartamentoInput | tbl_municipiosUpdateWithWhereUniqueWithoutDepartamentoInput[]
+    updateMany?: tbl_municipiosUpdateManyWithWhereWithoutDepartamentoInput | tbl_municipiosUpdateManyWithWhereWithoutDepartamentoInput[]
+    deleteMany?: tbl_municipiosScalarWhereInput | tbl_municipiosScalarWhereInput[]
+  }
+
   export type tbl_usuariosCreateNestedManyWithoutEstadoInput = {
     create?: XOR<tbl_usuariosCreateWithoutEstadoInput, tbl_usuariosUncheckedCreateWithoutEstadoInput> | tbl_usuariosCreateWithoutEstadoInput[] | tbl_usuariosUncheckedCreateWithoutEstadoInput[]
     connectOrCreate?: tbl_usuariosCreateOrConnectWithoutEstadoInput | tbl_usuariosCreateOrConnectWithoutEstadoInput[]
@@ -17870,6 +18199,30 @@ export namespace Prisma {
     update?: tbl_usuariosUpdateWithWhereUniqueWithoutEstadoInput | tbl_usuariosUpdateWithWhereUniqueWithoutEstadoInput[]
     updateMany?: tbl_usuariosUpdateManyWithWhereWithoutEstadoInput | tbl_usuariosUpdateManyWithWhereWithoutEstadoInput[]
     deleteMany?: tbl_usuariosScalarWhereInput | tbl_usuariosScalarWhereInput[]
+  }
+
+  export type tbl_departamentosCreateNestedOneWithoutMunicipiosInput = {
+    create?: XOR<tbl_departamentosCreateWithoutMunicipiosInput, tbl_departamentosUncheckedCreateWithoutMunicipiosInput>
+    connectOrCreate?: tbl_departamentosCreateOrConnectWithoutMunicipiosInput
+    connect?: tbl_departamentosWhereUniqueInput
+  }
+
+  export type tbl_departamentosUpdateOneWithoutMunicipiosNestedInput = {
+    create?: XOR<tbl_departamentosCreateWithoutMunicipiosInput, tbl_departamentosUncheckedCreateWithoutMunicipiosInput>
+    connectOrCreate?: tbl_departamentosCreateOrConnectWithoutMunicipiosInput
+    upsert?: tbl_departamentosUpsertWithoutMunicipiosInput
+    disconnect?: tbl_departamentosWhereInput | boolean
+    delete?: tbl_departamentosWhereInput | boolean
+    connect?: tbl_departamentosWhereUniqueInput
+    update?: XOR<XOR<tbl_departamentosUpdateToOneWithWhereWithoutMunicipiosInput, tbl_departamentosUpdateWithoutMunicipiosInput>, tbl_departamentosUncheckedUpdateWithoutMunicipiosInput>
+  }
+
+  export type NullableBigIntFieldUpdateOperationsInput = {
+    set?: bigint | number | null
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
   }
 
   export type tbl_usuariosCreateNestedManyWithoutPersonaInput = {
@@ -18119,6 +18472,103 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedBigIntNullableFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
+  }
+
+  export type NestedBigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedBigIntNullableFilter<$PrismaModel>
+    _min?: NestedBigIntNullableFilter<$PrismaModel>
+    _max?: NestedBigIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type tbl_municipiosCreateWithoutDepartamentoInput = {
+    pkid?: bigint | number
+    nombre: string
+    nomenclatura: string
+  }
+
+  export type tbl_municipiosUncheckedCreateWithoutDepartamentoInput = {
+    pkid?: bigint | number
+    nombre: string
+    nomenclatura: string
+  }
+
+  export type tbl_municipiosCreateOrConnectWithoutDepartamentoInput = {
+    where: tbl_municipiosWhereUniqueInput
+    create: XOR<tbl_municipiosCreateWithoutDepartamentoInput, tbl_municipiosUncheckedCreateWithoutDepartamentoInput>
+  }
+
+  export type tbl_municipiosCreateManyDepartamentoInputEnvelope = {
+    data: tbl_municipiosCreateManyDepartamentoInput | tbl_municipiosCreateManyDepartamentoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type tbl_municipiosUpsertWithWhereUniqueWithoutDepartamentoInput = {
+    where: tbl_municipiosWhereUniqueInput
+    update: XOR<tbl_municipiosUpdateWithoutDepartamentoInput, tbl_municipiosUncheckedUpdateWithoutDepartamentoInput>
+    create: XOR<tbl_municipiosCreateWithoutDepartamentoInput, tbl_municipiosUncheckedCreateWithoutDepartamentoInput>
+  }
+
+  export type tbl_municipiosUpdateWithWhereUniqueWithoutDepartamentoInput = {
+    where: tbl_municipiosWhereUniqueInput
+    data: XOR<tbl_municipiosUpdateWithoutDepartamentoInput, tbl_municipiosUncheckedUpdateWithoutDepartamentoInput>
+  }
+
+  export type tbl_municipiosUpdateManyWithWhereWithoutDepartamentoInput = {
+    where: tbl_municipiosScalarWhereInput
+    data: XOR<tbl_municipiosUpdateManyMutationInput, tbl_municipiosUncheckedUpdateManyWithoutDepartamentoInput>
+  }
+
+  export type tbl_municipiosScalarWhereInput = {
+    AND?: tbl_municipiosScalarWhereInput | tbl_municipiosScalarWhereInput[]
+    OR?: tbl_municipiosScalarWhereInput[]
+    NOT?: tbl_municipiosScalarWhereInput | tbl_municipiosScalarWhereInput[]
+    pkid?: BigIntFilter<"tbl_municipios"> | bigint | number
+    nombre?: StringFilter<"tbl_municipios"> | string
+    nomenclatura?: StringFilter<"tbl_municipios"> | string
+    fkid_tbl_departamentos?: BigIntNullableFilter<"tbl_municipios"> | bigint | number | null
+  }
+
   export type tbl_usuariosCreateWithoutEstadoInput = {
     pkusuario: string
     contrase_a: string
@@ -18168,6 +18618,46 @@ export namespace Prisma {
     fkid_tbl_roles?: BigIntFilter<"tbl_usuarios"> | bigint | number
     fkid_tbl_estados_usuario?: BigIntFilter<"tbl_usuarios"> | bigint | number
     fkid_tbl_personas?: BigIntFilter<"tbl_usuarios"> | bigint | number
+  }
+
+  export type tbl_departamentosCreateWithoutMunicipiosInput = {
+    pkid?: bigint | number
+    nombre: string
+    nomenclatura: string
+  }
+
+  export type tbl_departamentosUncheckedCreateWithoutMunicipiosInput = {
+    pkid?: bigint | number
+    nombre: string
+    nomenclatura: string
+  }
+
+  export type tbl_departamentosCreateOrConnectWithoutMunicipiosInput = {
+    where: tbl_departamentosWhereUniqueInput
+    create: XOR<tbl_departamentosCreateWithoutMunicipiosInput, tbl_departamentosUncheckedCreateWithoutMunicipiosInput>
+  }
+
+  export type tbl_departamentosUpsertWithoutMunicipiosInput = {
+    update: XOR<tbl_departamentosUpdateWithoutMunicipiosInput, tbl_departamentosUncheckedUpdateWithoutMunicipiosInput>
+    create: XOR<tbl_departamentosCreateWithoutMunicipiosInput, tbl_departamentosUncheckedCreateWithoutMunicipiosInput>
+    where?: tbl_departamentosWhereInput
+  }
+
+  export type tbl_departamentosUpdateToOneWithWhereWithoutMunicipiosInput = {
+    where?: tbl_departamentosWhereInput
+    data: XOR<tbl_departamentosUpdateWithoutMunicipiosInput, tbl_departamentosUncheckedUpdateWithoutMunicipiosInput>
+  }
+
+  export type tbl_departamentosUpdateWithoutMunicipiosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type tbl_departamentosUncheckedUpdateWithoutMunicipiosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
   }
 
   export type tbl_usuariosCreateWithoutPersonaInput = {
@@ -18369,6 +18859,30 @@ export namespace Prisma {
   }
 
   export type tbl_estados_usuarioUncheckedUpdateWithoutUsuariosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type tbl_municipiosCreateManyDepartamentoInput = {
+    pkid?: bigint | number
+    nombre: string
+    nomenclatura: string
+  }
+
+  export type tbl_municipiosUpdateWithoutDepartamentoInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type tbl_municipiosUncheckedUpdateWithoutDepartamentoInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type tbl_municipiosUncheckedUpdateManyWithoutDepartamentoInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
