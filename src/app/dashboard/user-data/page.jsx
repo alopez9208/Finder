@@ -18,10 +18,10 @@ export default function DashboardPage() {
         const res = await fetch("/api/dashboard/user-data", { cache: "no-store" });
         const data = await res.json();
 
-        console.log("Datos recibidos:", data); 
+        console.log("Datos recibidos:", data);
 
         if (data.success) {
-          setUsuarios(data.usuarios); 
+          setUsuarios(data.usuarios);
           console.log("Usuarios:", data.usuarios);
         } else {
           console.error('No se encontraron usuarios');
@@ -135,9 +135,6 @@ export default function DashboardPage() {
               onChange={(e) => setSearchName(e.target.value)}
             />
           </div>
-          <button className="w-20 h-full bg-[#3E82FF] text-white py-2 rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer">
-            <span>Buscar</span>
-          </button>
         </div>
 
         {/* Tabla */}
