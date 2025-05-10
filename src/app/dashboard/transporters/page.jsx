@@ -202,21 +202,7 @@ export default function DashboardPage() {
               )}
             </tbody>
           </table>
-        </div>
-
-        {totalPages > 1 && (
-          <div className="mt-4 flex justify-center items-center space-x-2 text-gray-400">
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i + 1}
-                onClick={() => setCurrentPage(i + 1)}
-                className={`px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white ${currentPage === i + 1 ? "bg-blue-500 text-white" : ""}`}
-              >
-                {i + 1}
-              </button>
-            ))}
-          </div>
-        )}
+        </div>        
 
         {/* Paginación */}
         {totalPages > 1 && (
