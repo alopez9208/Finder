@@ -76,10 +76,21 @@ model tbl_personas {
 }
 
 model tbl_productos {
-  pkid   BigInt @id @default(autoincrement())
-  nombre String @db.VarChar(255)
-  costo  Float
-  valor  Float
+  pkid              BigInt        @id @default(autoincrement())
+  nombre            String        @db.VarChar(255)
+  costo             Float
+  valor             Float
+  fkid_tbl_empresas BigInt?
+  empresas          tbl_empresas? @relation(fields: [fkid_tbl_empresas], references: [pkid])
+}
+
+model tbl_empresas {
+  pkid      BigInt          @id @default(autoincrement())
+  nit       String          @db.VarChar(255)
+  nombre    String          @db.VarChar(255)
+  telefono  String          @db.VarChar(255)
+  correo    String          @db.VarChar(255)
+  productos tbl_productos[]
 }
 
 model tbl_roles {

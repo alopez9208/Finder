@@ -27,7 +27,7 @@ const useLogin = () => {
         console.log("🔄 Respuesta del servidor:", data); 
   
         if (data.success) {
-          window.location.href = "/dashboard";
+          window.location.href = "/dashboard-comercio";
         } else {
           alert(data.message);
         }

@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { GiRank3 } from "react-icons/gi";
-import { FaUserCog, FaUserTag, FaShoppingCart, FaHome } from "react-icons/fa";
+import { FaUserCog, FaShoppingCart, FaHome } from "react-icons/fa";
 import { AiOutlineBranches } from "react-icons/ai";
-import { BiWorld } from "react-icons/bi";
+import { BiWorld, BiBuildingHouse   } from "react-icons/bi";
 import { ImTruck } from "react-icons/im";
 import { IoLogOutOutline } from "react-icons/io5";
 
@@ -96,6 +96,12 @@ export default function Layout({ children }) {
               className={`flex items-center gap-1 rounded pl-4 p-1 mt-1 cursor-pointer ${isActive("/dashboard/products")}`}>
               <FaShoppingCart className="text-2xl" />
               <span className="text-lg">Productos</span>
+            </button>
+            <button
+              onClick={() => router.push("/dashboard/empresas")}
+              className={`flex items-center gap-1 rounded pl-4 p-1 mt-1 cursor-pointer ${isActive("/dashboard/empresas")}`}>
+              <BiBuildingHouse className="text-2xl" />
+              <span className="text-lg">Proveedores</span>
             </button>
 
             <div className="flex border-t border-white p-1 mt-2 opacity-50"></div>

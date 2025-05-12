@@ -182,7 +182,16 @@ exports.Prisma.Tbl_productosScalarFieldEnum = {
   pkid: 'pkid',
   nombre: 'nombre',
   costo: 'costo',
-  valor: 'valor'
+  valor: 'valor',
+  fkid_tbl_empresas: 'fkid_tbl_empresas'
+};
+
+exports.Prisma.Tbl_empresasScalarFieldEnum = {
+  pkid: 'pkid',
+  nit: 'nit',
+  nombre: 'nombre',
+  telefono: 'telefono',
+  correo: 'correo'
 };
 
 exports.Prisma.Tbl_rolesScalarFieldEnum = {
@@ -239,6 +248,7 @@ exports.Prisma.ModelName = {
   tbl_pedidos: 'tbl_pedidos',
   tbl_personas: 'tbl_personas',
   tbl_productos: 'tbl_productos',
+  tbl_empresas: 'tbl_empresas',
   tbl_roles: 'tbl_roles',
   tbl_comercios: 'tbl_comercios',
   tbl_transportadoras: 'tbl_transportadoras',
