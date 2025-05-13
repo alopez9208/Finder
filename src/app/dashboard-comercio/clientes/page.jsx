@@ -10,9 +10,8 @@ export default function ClientesPage() {
   const clientesPerPage = 5;
   const [clientes, setClientes] = useState([]);
   const [municipios, setMunicipios] = useState([]);
-  const [comercios, setComercios] = useState([]); // Estado para los departamentos
+  const [comercios, setComercios] = useState([]); 
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingCliente, setEditingCliente] = useState(null);
@@ -34,8 +33,10 @@ export default function ClientesPage() {
     try {
       const res = await fetch("/api/dashboard-comercio/clientes");
       const data = await res.json();
+      console.log("Respuesta del backend:", data);
       if (data.success) {
         setClientes(data.clientes);
+        console.log("Clientes recibidos:", data.clientes);
       } else {
         console.error("No se encontraron clientes");
       }
@@ -48,8 +49,10 @@ export default function ClientesPage() {
     try {
       const res = await fetch("/api/dashboard/municipios");
       const data = await res.json();
+      console.log("Respuesta del backend:", data);
       if (data.success) {
         setMunicipios(data.municipios);
+        console.log("Municipios recibidos:", data.municipios);
       } else {
         console.error("No se encontraron municipios");
       }
@@ -62,8 +65,10 @@ export default function ClientesPage() {
     try {
       const res = await fetch("/api/dashboard-comercio/comercios");
       const data = await res.json();
+      console.log("Respuesta del backend:", data);
       if (data.success) {
         setComercios(data.comercios);
+        console.log("Comercios recibidos:", data.comercios);
       } else {
         console.error("No se encontraron comercios");
       }
@@ -79,20 +84,20 @@ export default function ClientesPage() {
     setApellidos("");
     setCorreo("");    
     setDireccion("");
-    setSelectedMunicipio(""); // Reiniciar el departamento seleccionado
-    setSelectedComercio(""); // Reiniciar el departamento seleccionado
+    setSelectedMunicipio(""); 
+    setSelectedComercio(""); 
     setModalOpen(true);
   };
 
-  const openModalForEdit = (cliente) => {
-    setEditingCliente(cliente);
-    setTelefono(cliente.telefono);
-    setNombres(cliente.nombres);
-    setApellidos(cliente.apellidos);
-    setCorreo(cliente.correo);    
-    setDireccion(cliente.direccion);
-    setSelectedMunicipio(cliente.fkid_tbl_municipios); // Asignar el departamento del municipio
-    setSelectedComercio(cliente.fkid_tbl_comercios); // Asignar el departamento del municipio
+  const openModalForEdit = (clientes) => {
+    setEditingCliente(clientes);
+    setTelefono(clientes.telefono);
+    setNombres(clientes.nombres);
+    setApellidos(clientes.apellidos);
+    setCorreo(clientes.correo);    
+    setDireccion(clientes.direccion);
+    setSelectedMunicipio(clientes.fkid_tbl_municipios); 
+    setSelectedComercio(clientes.fkid_tbl_comercios); 
     setModalOpen(true);
   };
 
@@ -140,16 +145,13 @@ export default function ClientesPage() {
       const aVal = a[sortConfig.key];
       const bVal = b[sortConfig.key];
 
-      // Detectar si ambos valores son números
       const aNum = Number(aVal);
       const bNum = Number(bVal);
 
-      if (!isNaN(aNum) && !isNaN(bNum)) {
-        // Orden numérico
+      if (!isNaN(aNum) && !isNaN(bNum)) {    
         return sortConfig.direction === "asc" ? aNum - bNum : bNum - aNum;
       }
-
-      // Orden alfabético si no son números
+      
       const aStr = aVal?.toString().toLowerCase() || '';
       const bStr = bVal?.toString().toLowerCase() || '';
 
@@ -157,7 +159,6 @@ export default function ClientesPage() {
       if (aStr > bStr) return sortConfig.direction === "asc" ? 1 : -1;
       return 0;
     });
-
 
   const totalPages = Math.ceil(filteredClientes.length / clientesPerPage);
   const startIndex = (currentPage - 1) * clientesPerPage;
@@ -224,19 +225,19 @@ export default function ClientesPage() {
               </tr>
             </thead>
             <tbody>
-              {visibleClientes.map((cliente, index) => (
+              {visibleClientes.map((clientes, index) => (
                 <tr key={index} className="border-b">
-                  <td className="p-3">{cliente.pkid}</td>
-                  <td className="p-3">{cliente.telefono}</td>
-                  <td className="p-3">{cliente.nombres}</td>
-                  <td className="p-3">{cliente.apellidos}</td>
-                  <td className="p-3">{cliente.correo}</td>                 
-                  <td className="p-3">{cliente.direccion}</td>
-                  <td className="p-3">{cliente.nombre_municipio}</td>
-                  <td className="p-3">{cliente.nombre_comercio}</td>
+                  <td className="p-3">{clientes.pkid}</td>
+                  <td className="p-3">{clientes.telefono}</td>
+                  <td className="p-3">{clientes.nombres}</td>
+                  <td className="p-3">{clientes.apellidos}</td>
+                  <td className="p-3">{clientes.correo}</td>                 
+                  <td className="p-3">{clientes.direccion}</td>
+                  <td className="p-3">{clientes.nombre_municipio}</td>
+                  <td className="p-3">{clientes.nombre_comercio}</td>
                   <td className="p-3 text-right">
                     <button
-                      onClick={() => openModalForEdit(cliente)}
+                      onClick={() => openModalForEdit(clientes)}
                       className="bg-green-500 hover:bg-green-400 text-white px-3 py-2 rounded-lg inline-flex items-center space-x-2 cursor-pointer"
                     >
                       <FaEdit />
@@ -323,9 +324,11 @@ export default function ClientesPage() {
             </h3>
             <input type="text"
               placeholder="Telefono"
-              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
+              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white read-only:bg-[#f0ebff]"
               value={telefono}
               onChange={(e) => setTelefono(e.target.value)}
+              readOnly={editingCliente}
+              
             />                     
             <input
               type="text"
@@ -333,7 +336,7 @@ export default function ClientesPage() {
               className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white read-only:bg-[#f0ebff]"
               value={nombres}
               onChange={(e) => setNombres(e.target.value)}
-              readOnly={editingCliente}
+              
             />
             <input
               type="text"

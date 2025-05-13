@@ -355,7 +355,7 @@ export default function DashboardPage() {
               <label className="block text-gray-700">Usuario:</label>
               <input
                 type="text"
-                className="w-full mb-4 px-4 py-2 border rounded focus:outline-none"
+                className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white read-only:bg-[#f0ebff]"
                 value={userData.pkusuario}
                 readOnly
               />

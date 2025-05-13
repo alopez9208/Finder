@@ -290,15 +290,15 @@ export default function DashboardPage() {
               placeholder="Nombre"
               className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
               value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              readOnly={editingEmpresa}
+              onChange={(e) => setNombre(e.target.value)}             
             />
             <input
               type="text"
               placeholder="NIT"
-              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
+              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white read-only:bg-[#f0ebff]"
               value={nit}
               onChange={(e) => setNit(e.target.value)}
+              readOnly={editingEmpresa}
             />
             <input
               type="text"

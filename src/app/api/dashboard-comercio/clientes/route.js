@@ -102,7 +102,6 @@ export async function POST(request) {
 export async function PUT(request) {
     const { pkid, telefono, nombres, apellidos, correo, direccion, fkid_tbl_municipios, fkid_tbl_comercios } = await request.json();
 
-    // Preparamos el objeto de datos de actualización, solo con los campos que realmente se modifican
     const dataToUpdate = {
         telefono,
         nombres,
@@ -110,8 +109,7 @@ export async function PUT(request) {
         correo,
         direccion,
     };
-
-    // Solo añadir fkid_tbl_municipios si es necesario
+    
     if (fkid_tbl_municipios) {
         dataToUpdate.fkid_tbl_municipios = BigInt(fkid_tbl_municipios);
     }
@@ -119,11 +117,10 @@ export async function PUT(request) {
         dataToUpdate.fkid_tbl_comercios = BigInt(fkid_tbl_comercios);
     }
 
-
     try {
         const clienteActualizado = await prisma.tbl_clientes.update({
             where: { pkid: BigInt(pkid) },
-            data: dataToUpdate, // Solo enviamos lo que fue modificado
+            data: dataToUpdate, 
         });
 
         const serializado = {

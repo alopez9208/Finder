@@ -283,7 +283,7 @@ export default function DashboardPage() {
             <input
               type="text"
               placeholder="Nombre"
-              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none "
+              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white read-only:bg-[#f0ebff]"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
               readOnly={editingStatus}
