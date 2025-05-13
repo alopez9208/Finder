@@ -117,7 +117,7 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.Tbl_campa_asScalarFieldEnum = {
+exports.Prisma.Tbl_campaniasScalarFieldEnum = {
   pkid: 'pkid',
   nombre: 'nombre',
   presupuesto_gastado: 'presupuesto_gastado',
@@ -127,12 +127,12 @@ exports.Prisma.Tbl_campa_asScalarFieldEnum = {
 };
 
 exports.Prisma.Tbl_clientesScalarFieldEnum = {
-  pktelefono: 'pktelefono',
+  pkid: 'pkid',
+  telefono: 'telefono',
   nombres: 'nombres',
   apellidos: 'apellidos',
   correo: 'correo',
   direccion: 'direccion',
-  fkid_tbl_departamentos: 'fkid_tbl_departamentos',
   fkid_tbl_municipios: 'fkid_tbl_municipios',
   fkid_tbl_comercios: 'fkid_tbl_comercios'
 };
@@ -164,7 +164,7 @@ exports.Prisma.Tbl_municipiosScalarFieldEnum = {
 
 exports.Prisma.Tbl_pedidosScalarFieldEnum = {
   pkid: 'pkid',
-  fktelefono_tbl_clientes: 'fktelefono_tbl_clientes',
+  fkid_tbl_clientes: 'fkid_tbl_clientes',
   fkid_tbl_det_productos: 'fkid_tbl_det_productos',
   fkid_tbl_transportadoras: 'fkid_tbl_transportadoras',
   valor: 'valor',
@@ -239,7 +239,7 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  tbl_campa_as: 'tbl_campa_as',
+  tbl_campanias: 'tbl_campanias',
   tbl_clientes: 'tbl_clientes',
   tbl_departamentos: 'tbl_departamentos',
   tbl_det_productos: 'tbl_det_productos',

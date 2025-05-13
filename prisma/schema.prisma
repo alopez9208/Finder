@@ -8,26 +8,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model tbl_campa_as {
+model tbl_campanias {
   pkid                BigInt   @id @default(autoincrement())
   nombre              String   @db.VarChar(255)
   presupuesto_gastado Float
   fecha_inicio        DateTime @db.Date
   fecha_fin           DateTime @db.Date
-  fkid_tbl_comercios  BigInt
-
-  @@map("tbl_campañas")
+  fkid_tbl_comercios  BigInt?
+  comercio tbl_comercios? @relation(fields: [fkid_tbl_comercios], references: [pkid])
 }
 
 model tbl_clientes {
-  pktelefono             String @id @db.VarChar(255)
-  nombres                String @db.VarChar(255)
-  apellidos              String @db.VarChar(255)
-  correo                 String @db.VarChar(255)
-  direccion              String @db.VarChar(255)
-  fkid_tbl_departamentos BigInt
-  fkid_tbl_municipios    BigInt
-  fkid_tbl_comercios     BigInt
+  pkid                 BigInt           @id @default(autoincrement())
+  telefono             String           @unique @db.VarChar(255)
+  nombres                String           @db.VarChar(255)
+  apellidos              String           @db.VarChar(255)
+  correo                 String           @db.VarChar(255)
+  direccion              String           @db.VarChar(255)
+  fkid_tbl_municipios    BigInt?
+  fkid_tbl_comercios     BigInt?
+  municipios             tbl_municipios?  @relation(fields: [fkid_tbl_municipios], references: [pkid])
+  comercios              tbl_comercios?   @relation(fields: [fkid_tbl_comercios], references: [pkid])
+  pedidos tbl_pedidos[]
 }
 
 model tbl_departamentos {
@@ -40,7 +42,10 @@ model tbl_departamentos {
 model tbl_det_productos {
   pkid               BigInt @id @default(autoincrement())
   nombre             String @db.VarChar(255)
-  fkid_tbl_productos BigInt
+  fkid_tbl_productos BigInt?
+  productos tbl_productos? @relation(fields: [fkid_tbl_productos], references: [pkid])
+  pedidos tbl_pedidos[]
+
 }
 
 model tbl_estados_usuario {
@@ -56,15 +61,19 @@ model tbl_municipios {
   nomenclatura String @db.VarChar(255)
   fkid_tbl_departamentos BigInt?
   departamento tbl_departamentos? @relation(fields: [fkid_tbl_departamentos], references: [pkid])
+  clientes tbl_clientes[]
 }
 
 model tbl_pedidos {
   pkid                       BigInt   @id @default(autoincrement())
-  fktelefono_tbl_clientes    String   @db.VarChar(255)
-  fkid_tbl_det_productos     BigInt
-  fkid_tbl_transportadoras   BigInt
+  fkid_tbl_clientes          BigInt?
+  fkid_tbl_det_productos     BigInt?
+  fkid_tbl_transportadoras   BigInt?
   valor                      Float
   fecha                      DateTime @db.Date
+  clientes tbl_clientes? @relation(fields: [fkid_tbl_clientes], references: [pkid])
+  det_productos tbl_det_productos? @relation(fields: [fkid_tbl_det_productos], references: [pkid])
+  transportadoras tbl_transportadoras? @relation(fields: [fkid_tbl_transportadoras], references: [pkid])
 }
 
 model tbl_personas {
@@ -81,7 +90,8 @@ model tbl_productos {
   costo  Float
   valor  Float
   fkid_tbl_empresas BigInt?
-  empresas tbl_empresas? @relation(fields: [fkid_tbl_empresas], references: [pkid])  
+  empresas tbl_empresas? @relation(fields: [fkid_tbl_empresas], references: [pkid]) 
+  det_productos tbl_det_productos[]   
 }
 
 model tbl_empresas {
@@ -105,13 +115,17 @@ model tbl_comercios {
   nombre                 String @db.VarChar(255)
   telefono               String @db.VarChar(255)
   correo                 String @db.VarChar(255)
-  fkusuario_tbl_usuarios String @db.VarChar(255)
+  fkusuario_tbl_usuarios String?
+  usuarios tbl_usuarios? @relation(fields: [fkusuario_tbl_usuarios], references: [pkusuario])
+  campanias tbl_campanias[]
+  clientes tbl_clientes[]
 }
 
 model tbl_transportadoras {
   pkid         BigInt @id @default(autoincrement())
   nombre       String @db.VarChar(255)
   nomenclatura String @db.VarChar(255)
+  pedidos tbl_pedidos[]
 }
 
 model tbl_usuarios {
@@ -123,4 +137,5 @@ model tbl_usuarios {
   persona                   tbl_personas @relation(fields: [fkid_tbl_personas], references: [pkid])
   rol                       tbl_roles @relation(fields: [fkid_tbl_roles], references: [pkid])
   estado                    tbl_estados_usuario @relation(fields: [fkid_tbl_estados_usuario], references: [pkid])
+comercios tbl_comercios[]
 }

@@ -47,69 +47,69 @@ export default function Layout({ children }) {
             </button>
 
             <div className="flex items-center gap-1 border-white p-1 mb-1">
-              <span className="text-white text-sm">Administración General</span>
+              <span className="text-white text-sm ml-4">Administración General</span>
             </div>
 
             <button
               onClick={() => router.push("/dashboard/user-data")}
-              className={`flex items-center gap-1 rounded pl-4 p-1 cursor-pointer ${isActive("/dashboard/user-data")}`}>
+              className={`flex items-center gap-1 rounded pl-4 p-1 ml-4 cursor-pointer ${isActive("/dashboard/user-data")}`}>
               <FaUserCog className="text-2xl" />
               <span className="text-lg">Usuarios</span>
             </button>
 
             <button
               onClick={() => router.push("/dashboard/user-data/statuses")}
-              className={`flex items-center justify-center gap-1 pr-16 rounded p-1 cursor-pointer ${isActive("/dashboard/user-data/statuses")}`}>
+              className={`flex items-center justify-center gap-1 pr-16 rounded p-1 ml-4 cursor-pointer ${isActive("/dashboard/user-data/statuses")}`}>
               <MdAdminPanelSettings className="text-2xl" />
               <span className="text-lg">Estados</span>
             </button>
 
             <button
               onClick={() => router.push("/dashboard/user-data/roles")}
-              className={`flex items-center justify-center gap-1 pr-20 rounded p-1 cursor-pointer ${isActive("/dashboard/user-data/roles")}`}>
+              className={`flex items-center justify-center gap-1 pr-20 rounded p-1 ml-4 cursor-pointer ${isActive("/dashboard/user-data/roles")}`}>
               <GiRank3 className="text-2xl" />
               <span className="text-lg">Roles</span>
             </button>
 
             <div className="flex border-t border-white p-1 mt-2 opacity-50"></div>
-            <span className="text-white text-sm">Gestión de Clientes </span>
+            <span className="text-white text-sm ml-4">Gestión de Clientes </span>
 
             <button
               onClick={() => router.push("/dashboard/client-data/departamentos")}
-              className={`flex items-center gap-1 rounded pl-4 p-1 cursor-pointer ${isActive("/dashboard/client-data/departamentos")}`}>
+              className={`flex items-center gap-1 rounded pl-4 p-1 ml-4 cursor-pointer ${isActive("/dashboard/client-data/departamentos")}`}>
               <BiWorld className="text-2xl" />
               <span className="text-lg">Departamentos</span>
             </button>
 
             <button
               onClick={() => router.push("/dashboard/client-data/municipios")}
-              className={`flex items-center gap-1 rounded pl-4 p-1 cursor-pointer ${isActive("/dashboard/client-data/municipios")}`}>
+              className={`flex items-center gap-1 rounded pl-4 p-1 ml-4 cursor-pointer ${isActive("/dashboard/client-data/municipios")}`}>
               <AiOutlineBranches className="text-2xl" />
               <span className="text-lg">Municipios</span>
             </button>
 
             <div className="flex border-t border-white p-1 mt-2 opacity-50"></div>
-            <span className="text-white text-sm">Gestión de Productos</span>
+            <span className="text-white text-sm ml-4">Gestión de Productos</span>
 
             <button
               onClick={() => router.push("/dashboard/products")}
-              className={`flex items-center gap-1 rounded pl-4 p-1 mt-1 cursor-pointer ${isActive("/dashboard/products")}`}>
+              className={`flex items-center gap-1 rounded pl-4 p-1 mt-1 ml-4 cursor-pointer ${isActive("/dashboard/products")}`}>
               <FaShoppingCart className="text-2xl" />
               <span className="text-lg">Productos</span>
             </button>
             <button
               onClick={() => router.push("/dashboard/empresas")}
-              className={`flex items-center gap-1 rounded pl-4 p-1 mt-1 cursor-pointer ${isActive("/dashboard/empresas")}`}>
+              className={`flex items-center gap-1 rounded pl-4 p-1 mt-1 ml-4 cursor-pointer ${isActive("/dashboard/empresas")}`}>
               <BiBuildingHouse className="text-2xl" />
               <span className="text-lg">Proveedores</span>
             </button>
 
             <div className="flex border-t border-white p-1 mt-2 opacity-50"></div>
-            <span className="text-white text-sm">Logística</span>
+            <span className="text-white text-sm ml-4">Logística</span>
 
             <button
               onClick={() => router.push("/dashboard/transporters")}
-              className={`flex items-center gap-1 rounded pl-4 p-1 mt-1 cursor-pointer ${isActive("/dashboard/transporters")}`}>
+              className={`flex items-center gap-1 rounded pl-4 p-1 mt-1 ml-4 cursor-pointer ${isActive("/dashboard/transporters")}`}>
               <ImTruck className="text-2xl" />
               <span className="text-lg">Transportadoras</span>
             </button>
