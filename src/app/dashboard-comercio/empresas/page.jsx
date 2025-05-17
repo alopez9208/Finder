@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FaEdit } from "react-icons/fa";
-import { FaPlus } from "react-icons/fa6";
+import { FaEye } from "react-icons/fa";
 import { TbArrowsSort } from "react-icons/tb";
 
 export default function DashboardPage() {
@@ -156,21 +155,14 @@ export default function DashboardPage() {
             placeholder="Buscar por Nombre"
             value={searchNombre}
             onChange={(e) => setSearchNombre(e.target.value)}
-          />
-          <button
-            onClick={openModalForNew}
-            className="ml-4 flex items-center space-x-2 bg-[#3E82FF] text-white px-4 py-2 rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer"
-          >
-            <FaPlus />
-            <span>Nueva transportadora</span>
-          </button>
+          />          
         </div>
 
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto text-gray-800">
             <thead className="bg-gray-100">
               <tr>
-                {[{ key: "pkid", label: "ID" }, { key: "nombre", label: "Nombre" }, { key: "nomenclatura", label: "Nomenclatura" }].map(({ key, label }) => (
+                {[{ key: "pkid", label: "ID" },{ key: "nit", label: "Nit" }, { key: "nombre", label: "Nombre" }, { key: "telefono", label: "Teléfono" }, { key: "correo", label: "Correo" }].map(({ key, label }) => (
                   <th
                     key={key}
                     className="p-3 text-left cursor-pointer select-none"
@@ -186,22 +178,24 @@ export default function DashboardPage() {
               {visibleEmpresas.map((empresa, index) => (
                 <tr key={index} className="border-b">
                   <td className="p-3">{empresa.pkid}</td>
-                  <td className="p-3">{empresa.nombre}</td>
                   <td className="p-3">{empresa.nit}</td>
+                  <td className="p-3">{empresa.nombre}</td>
+                  <td className="p-3">{empresa.telefono}</td>
+                  <td className="p-3">{empresa.correo}</td>
                   <td className="p-3 text-right">
                     <button
                       onClick={() => openModalForEdit(empresa)}
                       className="bg-green-500 hover:bg-green-400 text-white px-3 py-2 rounded-lg inline-flex items-center space-x-2 cursor-pointer"
                     >
-                      <FaEdit />
-                      <span>Editar</span>
+                      <FaEye />
+                      <span>Ver</span>
                     </button>
                   </td>
                 </tr>
               ))}
               {visibleEmpresas.length === 0 && (
                 <tr>
-                  <td colSpan={4} className="p-4 text-center text-gray-500">
+                  <td colSpan={6} className="p-4 text-center text-gray-500">
                     No se encontraron empresas.
                   </td>
                 </tr>
@@ -281,43 +275,49 @@ export default function DashboardPage() {
         <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-[#f0ebff] p-6 rounded-xl shadow-xl w-full max-w-md relative text-gray-700 border">
             <h3 className="text-xl font-semibold mb-4">
-              {editingEmpresa ? "Editar Empresa" : "Nueva Empresa"}
+              {editingEmpresa ? "Productos" : "Nueva Empresa"}
             </h3>
-            <input
-              type="text"
-              placeholder="Nombre"
-              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              readOnly={editingEmpresa}
-            />
+
             <input
               type="text"
               placeholder="Nit"
               className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
               value={nit}
               onChange={(e) => setNit(e.target.value)}
+              readOnly={editingEmpresa}
             />
+            <input
+              type="text"
+              placeholder="Nombre"
+              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}              
+              readOnly={editingEmpresa}
+            />            
             <input
               type="text"
               placeholder="Teléfono"
               className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
               value={telefono}
               onChange={(e) => setTelefono(e.target.value)}
+              readOnly={editingEmpresa}
+              />
+            <input
+              type="text"
+              placeholder="Correo"
+              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
+              value={correo}
+              onChange={(e) => setCorreo(e.target.value)}
+              readOnly={editingEmpresa}
             />
             <div className="flex justify-end space-x-2">
               <button
                 onClick={() => setModalOpen(false)}
                 className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 cursor-pointer"
               >
-                Cancelar
+                Volver
               </button>
-              <button
-                onClick={handleSubmit}
-                className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 cursor-pointer"
-              >
-                {editingEmpresa ? "Actualizar" : "Crear"}
-              </button>
+              
             </div>
           </div>
         </div>

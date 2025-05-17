@@ -40,13 +40,17 @@ model tbl_departamentos {
 }
 
 model tbl_det_productos {
-  pkid               BigInt @id @default(autoincrement())
-  nombre             String @db.VarChar(255)
-  fkid_tbl_productos BigInt?
-  productos tbl_productos? @relation(fields: [fkid_tbl_productos], references: [pkid])
-  pedidos tbl_pedidos[]
+  pkid                    BigInt @id @default(autoincrement())
+  cantidad                Int
+  precio_venta_unitario   Float
+  costo_unitario          Float
+  fkid_tbl_productos      BigInt?
+  fkid_tbl_pedidos        BigInt?
 
+  productos tbl_productos? @relation(fields: [fkid_tbl_productos], references: [pkid])
+  pedidos tbl_pedidos?     @relation(fields: [fkid_tbl_pedidos], references: [pkid])
 }
+
 
 model tbl_estados_usuario {
   pkid         BigInt @id @default(autoincrement())
@@ -66,14 +70,13 @@ model tbl_municipios {
 
 model tbl_pedidos {
   pkid                       BigInt   @id @default(autoincrement())
-  fkid_tbl_clientes          BigInt?
-  fkid_tbl_det_productos     BigInt?
+  fkid_tbl_clientes          BigInt?  
   fkid_tbl_transportadoras   BigInt?
-  valor                      Float
-  fecha                      DateTime @db.Date
-  clientes tbl_clientes? @relation(fields: [fkid_tbl_clientes], references: [pkid])
-  det_productos tbl_det_productos? @relation(fields: [fkid_tbl_det_productos], references: [pkid])
+  valor_total                Float
+  fecha_creacion             DateTime @db.Date
+  clientes tbl_clientes? @relation(fields: [fkid_tbl_clientes], references: [pkid])  
   transportadoras tbl_transportadoras? @relation(fields: [fkid_tbl_transportadoras], references: [pkid])
+  det_productos tbl_det_productos[]
 }
 
 model tbl_personas {

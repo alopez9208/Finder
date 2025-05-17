@@ -6,7 +6,7 @@ import { TbArrowsSort } from "react-icons/tb";
 
 export default function ComerciosPage() {
   const [searchNombre, setsearchNombre] = useState("");
-  const [searchUsuario, setSearchUsuario] = useState("");
+  const [searchUsuario] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const comerciosPerPage = 5;
   const [comercios, setComercios] = useState([]);

@@ -326,8 +326,7 @@ export default function ClientesPage() {
               placeholder="Telefono"
               className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white read-only:bg-[#f0ebff]"
               value={telefono}
-              onChange={(e) => setTelefono(e.target.value)}
-              readOnly={editingCliente}
+              onChange={(e) => setTelefono(e.target.value)}              
               
             />                     
             <input

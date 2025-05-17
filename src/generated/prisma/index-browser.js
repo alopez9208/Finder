@@ -145,8 +145,11 @@ exports.Prisma.Tbl_departamentosScalarFieldEnum = {
 
 exports.Prisma.Tbl_det_productosScalarFieldEnum = {
   pkid: 'pkid',
-  nombre: 'nombre',
-  fkid_tbl_productos: 'fkid_tbl_productos'
+  cantidad: 'cantidad',
+  precio_venta_unitario: 'precio_venta_unitario',
+  costo_unitario: 'costo_unitario',
+  fkid_tbl_productos: 'fkid_tbl_productos',
+  fkid_tbl_pedidos: 'fkid_tbl_pedidos'
 };
 
 exports.Prisma.Tbl_estados_usuarioScalarFieldEnum = {
@@ -165,10 +168,9 @@ exports.Prisma.Tbl_municipiosScalarFieldEnum = {
 exports.Prisma.Tbl_pedidosScalarFieldEnum = {
   pkid: 'pkid',
   fkid_tbl_clientes: 'fkid_tbl_clientes',
-  fkid_tbl_det_productos: 'fkid_tbl_det_productos',
   fkid_tbl_transportadoras: 'fkid_tbl_transportadoras',
-  valor: 'valor',
-  fecha: 'fecha'
+  valor_total: 'valor_total',
+  fecha_creacion: 'fecha_creacion'
 };
 
 exports.Prisma.Tbl_personasScalarFieldEnum = {

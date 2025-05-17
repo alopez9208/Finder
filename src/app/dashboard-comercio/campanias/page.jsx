@@ -1,17 +1,16 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { TbArrowsSort } from "react-icons/tb";
 
 export default function CampaniasPage() {
-  const [searchNombre, setsearchNombre] = useState("");  
+  const [searchNombre, setsearchNombre] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const campaniasPerPage = 5;
   const [campanias, setcampanias] = useState([]);
-  const [comercios, setcomercios] = useState([]); // Estado para los comercios
+  const [comercios, setcomercios] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingcampania, setEditingcampania] = useState(null);
@@ -19,13 +18,37 @@ export default function CampaniasPage() {
   const [presupuesto_gastado, setPresupuesto_gastado] = useState("");
   const [fecha_inicio, setFecha_inicio] = useState("");
   const [fecha_fin, setFecha_fin] = useState("");
-  const [selectedcomercio, setSelectedcomercio] = useState(""); 
-
+  const [selectedcomercio, setSelectedcomercio] = useState("");
 
   useEffect(() => {
     fetchcampanias();
-    fetchcomercios(); 
-  }, []);
+    fetchcomercios();
+    const handleEsc = (e) => {
+      if (e.key === "Escape") setModalOpen(false);
+    };
+    if (modalOpen) {
+      window.addEventListener("keydown", handleEsc);
+    }
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [modalOpen]);
+
+  const modalRef = useRef();
+
+  const handleClickOutside = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      setModalOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (modalOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [modalOpen]);
+
 
   const fetchcampanias = async () => {
     try {
@@ -34,7 +57,7 @@ export default function CampaniasPage() {
       if (data.success) {
         setcampanias(data.campanias);
       } else {
-        console.error("No se encontraron campanias");
+        console.error("No se encontraron campanias:", data.error);
       }
     } catch (error) {
       console.error("Error al obtener campanias:", error);
@@ -46,9 +69,9 @@ export default function CampaniasPage() {
       const res = await fetch("/api/dashboard-comercio/comercios");
       const data = await res.json();
       if (data.success) {
-        setcomercios(data.comercios); 
+        setcomercios(data.comercios);
       } else {
-        console.error("No se encontraron comercios");
+        console.error("No se encontraron comercios:", data.error);
       }
     } catch (error) {
       console.error("Error al obtener comercios:", error);
@@ -61,32 +84,90 @@ export default function CampaniasPage() {
     setPresupuesto_gastado("");
     setFecha_inicio("");
     setFecha_fin("");
-    setSelectedcomercio(""); 
+    setSelectedcomercio("");
     setModalOpen(true);
+  };
+
+  const formatDateForInput = (isoString) => {
+    if (!isoString) return "";
+    const date = new Date(isoString);
+    // Obtiene la fecha en formato YYYY-MM-DD en tu zona horaria local
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
   };
 
   const openModalForEdit = (campania) => {
     setEditingcampania(campania);
     setNombre(campania.nombre);
     setPresupuesto_gastado(campania.presupuesto_gastado);
-    setFecha_inicio(campania.fecha_inicio);
-    setFecha_fin(campania.fecha_fin);
-    setSelectedcomercio(campania.fkid_tbl_comercios); 
+    setFecha_inicio(formatDateForInput(campania.fecha_inicio));
+    setFecha_fin(formatDateForInput(campania.fecha_fin));
+    setSelectedcomercio(campania.fkid_tbl_comercios);
     setModalOpen(true);
   };
 
+
+  const formatFecha = (isoString) => {
+    if (!isoString) return "";
+    const date = new Date(isoString);
+    const year = date.getFullYear().toString().slice();
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const parseDate = (dateValue, isStart = true) => {
+    if (!dateValue) return null;
+
+    // Si ya es objeto Date
+    if (dateValue instanceof Date) {
+      return dateValue.toISOString();
+    }
+
+    // Si es string ISO completo (fecha + hora)
+    if (dateValue.includes("T")) {
+      return new Date(dateValue).toISOString();
+    }
+
+    // Si es string 'YYYY-MM-DD', agrega hora según sea inicio o fin del día
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateValue)) {
+      return new Date(`${dateValue}T${isStart ? "00:00:00" : "23:59:59"}-05:00`).toISOString();
+    }
+
+    // Si no cumple, devuelve null o error
+    return null;
+  };
+
+
   const handleSubmit = async () => {
-    if (!nombre.trim() || !presupuesto_gastado.trim() || !fecha_inicio.trim() || !fecha_fin.trim() || !selectedcomercio) {
+
+    if (!nombre.trim() || !presupuesto_gastado || !fecha_inicio.trim() || !fecha_fin.trim() || !selectedcomercio) {
       alert("Por favor, completa todos los campos.");
+      return;
+    }
+    const localFechaInicio = parseDate(fecha_inicio, false);
+    const localFechaFin = parseDate(fecha_fin, false);
+
+    if (!localFechaInicio || !localFechaFin) {
+      alert("Formato de fecha inválido.");
       return;
     }
 
     const method = editingcampania ? "PUT" : "POST";
     const url = "/api/dashboard-comercio/campanias";
 
-    const payload = editingcampania
-      ? { pkid: editingcampania.pkid, nombre, presupuesto_gastado, fecha_inicio, fecha_fin, fkid_tbl_comercios: selectedcomercio }
-      : { nombre, presupuesto_gastado, fecha_inicio, fecha_fin, fkid_tbl_comercios: selectedcomercio };
+    const payload = {
+      nombre,
+      presupuesto_gastado: parseFloat(presupuesto_gastado),
+      fecha_inicio: localFechaInicio,
+      fecha_fin: localFechaFin,
+      fkid_tbl_comercios: parseInt(selectedcomercio),
+    };
+    if (editingcampania) {
+      payload.pkid = parseInt(editingcampania.pkid);
+    }
 
     try {
       const res = await fetch(url, {
@@ -100,37 +181,36 @@ export default function CampaniasPage() {
         setModalOpen(false);
         fetchcampanias();
       } else {
-        console.error("Error al guardar el campania");
+        console.error("Error al guardar la campaña (Respuesta API):", data.error);
+        alert(`Error al guardar la campaña: ${data.error || 'Error desconocido del servidor.'}`);
       }
     } catch (error) {
-      console.error("Error al enviar datos:", error);
+      console.error("Error al enviar datos (Catch del Frontend):", error);
+      alert("Error al enviar datos: " + error.message);
     }
   };
 
   const filteredcampanias = campanias
+
     .filter((campania) => {
       const nomen = campania.nombre?.toLowerCase() || '';
-      const comercio = campania.nombre_comercio?.toLowerCase() || '';
       const matchNomen = nomen.includes(searchNombre.toLowerCase());
-      const matchDep = comercio.includes(searchcomercio.toLowerCase());
-      return matchNomen && matchDep;
+      return matchNomen;
     })
+
     .sort((a, b) => {
       if (!sortConfig.key) return 0;
 
       const aVal = a[sortConfig.key];
       const bVal = b[sortConfig.key];
 
-      // Detectar si ambos valores son números
       const aNum = Number(aVal);
       const bNum = Number(bVal);
 
       if (!isNaN(aNum) && !isNaN(bNum)) {
-        // Orden numérico
         return sortConfig.direction === "asc" ? aNum - bNum : bNum - aNum;
       }
 
-      // Orden alfabético si no son números
       const aStr = aVal?.toString().toLowerCase() || '';
       const bStr = bVal?.toString().toLowerCase() || '';
 
@@ -138,7 +218,6 @@ export default function CampaniasPage() {
       if (aStr > bStr) return sortConfig.direction === "asc" ? 1 : -1;
       return 0;
     });
-
 
   const totalPages = Math.ceil(filteredcampanias.length / campaniasPerPage);
   const startIndex = (currentPage - 1) * campaniasPerPage;
@@ -166,7 +245,7 @@ export default function CampaniasPage() {
 
   return (
     <div className="m-12">
-      <h2 className="text-2xl text-gray-800 mb-8">Lista de campanias</h2>
+      <h2 className="text-2xl text-gray-800 mb-8">Lista de campañas</h2>
 
       <div className="bg-white p-6 rounded-2xl">
         <div className="flex justify-between items-center mb-4">
@@ -190,7 +269,7 @@ export default function CampaniasPage() {
           <table className="min-w-full table-auto text-gray-800">
             <thead className="bg-gray-100">
               <tr>
-                {[{ key: "pkid", label: "ID" }, { key: "nombre", label: "Nombre" }, { key: "presupuesto_gastado", label: "Presupuesto gastado" }, { key: "fecha_inicio", label: "Fecha inicio" }, { key: "fecha_fin", label: "Fecha fin" }, { key: "nombre_comercio", label: "comercio" }
+                {[{ key: "pkid", label: "ID" }, { key: "nombre", label: "Nombre" }, { key: "presupuesto_gastado", label: "Presupuesto gastado" }, { key: "fecha_inicio", label: "Fecha inicio" }, { key: "fecha_fin", label: "Fecha fin" }, { key: "nombre_comercio", label: "Comercio" }
                 ]
                   .map(({ key, label }) => (
                     <th
@@ -205,25 +284,29 @@ export default function CampaniasPage() {
               </tr>
             </thead>
             <tbody>
-              {visiblecampanias.map((campania, index) => (
-                <tr key={index} className="border-b">
-                  <td className="p-3">{campania.pkid}</td>
-                  <td className="p-3">{campania.nombre}</td>
-                  <td className="p-3">{campania.presupuesto_gastado}</td>
-                  <td className="p-3">{campania.fecha_inicio}</td>
-                  <td className="p-3">{campania.fecha_fin}</td>
-                  <td className="p-3">{campania.nombre_comercio}</td>
-                  <td className="p-3 text-right">
-                    <button
-                      onClick={() => openModalForEdit(campania)}
-                      className="bg-green-500 hover:bg-green-400 text-white px-3 py-2 rounded-lg inline-flex items-center space-x-2 cursor-pointer"
-                    >
-                      <FaEdit />
-                      <span>Editar</span>
-                    </button>
-                  </td>
-                </tr>
-              ))}
+
+              {visiblecampanias.map((campania, index) => {
+                console.log('Campaña en render:', campania);
+                return (
+                  <tr key={index} className="border-b">
+                    <td className="p-3">{campania.pkid}</td>
+                    <td className="p-3">{campania.nombre}</td>
+                    <td className="p-3">{campania.presupuesto_gastado}</td>
+                    <td className="p-3">{formatFecha(campania.fecha_inicio)}</td>
+                    <td className="p-3">{formatFecha(campania.fecha_fin)}</td>
+                    <td className="p-3">{campania.nombre_comercio}</td>
+                    <td className="p-3 text-right">
+                      <button
+                        onClick={() => openModalForEdit(campania)}
+                        className="bg-green-500 hover:bg-green-400 text-white px-3 py-2 rounded-lg inline-flex items-center space-x-2 cursor-pointer"
+                      >
+                        <FaEdit />
+                        <span>Editar</span>
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -296,7 +379,7 @@ export default function CampaniasPage() {
 
       {modalOpen && (
         <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-[#f0ebff] p-6 rounded-xl shadow-xl w-full max-w-md relative text-gray-700 border">
+          <div ref={modalRef} className="bg-[#f0ebff] p-6 rounded-xl shadow-xl w-full max-w-md relative text-gray-700 border">
             <h3 className="text-xl font-semibold mb-4">
               {editingcampania ? "Editar campaña" : "Nueva campaña"}
             </h3>
@@ -309,24 +392,24 @@ export default function CampaniasPage() {
               readOnly={editingcampania}
             />
             <input
-              type="text"
+              type="number"
               placeholder="Presupuesto gastado"
               className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
               value={presupuesto_gastado}
               onChange={(e) => setPresupuesto_gastado(e.target.value)}
             />
             <input
-              type="text"
+              type="date"
               placeholder="Fecha inicio"
               className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
-              value={fecha_inicio}
+              value={fecha_inicio ? fecha_inicio.substring(0, 10) : ""}
               onChange={(e) => setFecha_inicio(e.target.value)}
             />
             <input
-              type="text"
+              type="date"
               placeholder="Fecha fin"
               className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
-              value={fecha_fin}
+              value={fecha_fin ? fecha_fin.substring(0, 10) : ""}
               onChange={(e) => setFecha_fin(e.target.value)}
             />
             <select
@@ -359,7 +442,6 @@ export default function CampaniasPage() {
           </div>
         </div>
       )}
-
     </div>
   );
 }
