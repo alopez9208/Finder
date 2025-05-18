@@ -7,9 +7,7 @@ const useLogin = () => {
 
     const [usuario, setUsuario] = useState("");
     const [contrasena, setContrasena] = useState("");
-    const [mostrarContrasena, setMostrarContrasena] = useState(false);
-  
-  
+    const [mostrarContrasena, setMostrarContrasena] = useState(false);    
     const router = useRouter();
   
     const handleSubmit = async (e) => {

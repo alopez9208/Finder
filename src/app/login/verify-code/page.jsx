@@ -1,12 +1,13 @@
-"use client";
+'use client'
 
+import useVerifyCode from "./useVerify-code";
 import { FaUnlockAlt} from "react-icons/fa";
-import { useRouter } from "next/navigation";
 
-
-export default function LoginPage() {
+export default function VerifyCodePage() {
   
-  const router = useRouter();
+  const {
+    router
+  } = useVerifyCode()
 
   return (
     <div className="min-h-screen flex">
@@ -43,7 +44,6 @@ export default function LoginPage() {
           <br />
           Ingresa el código enviado a tu correo para restablecerla:</p>
 
-
         <div className="w-full max-w-sm">
           {/* Input Usuario */}
           <div className="relative mb-4">
@@ -54,7 +54,6 @@ export default function LoginPage() {
             />
             <FaUnlockAlt className="absolute top-3.5 left-3 text-gray-400" />
           </div>
-
 
           <button
             /*onClick={handleSubmit}*/
@@ -68,7 +67,6 @@ export default function LoginPage() {
             className="w-52 mx-auto border border-[#005AFE] py-2 text-blue-500 rounded hover:bg-[#1B96F3] hover:text-white transition mt-16 cursor-pointer block">
             Volver al inicio
           </button>
-
         </div>
       </div>
     </div>

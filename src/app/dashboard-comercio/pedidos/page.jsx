@@ -84,16 +84,16 @@ export default function PedidosPage() {
     try {
       const res = await fetch("/api/dashboard/products");
       const data = await res.json();
-      console.log("Respuesta de la API:", data); // Verifica esto en la consola del navegador
+      console.log("Respuesta de la API:", data); 
       if (data.success) {
-        setProductosDisponibles(data.products || []); // ✅  Asegura un array, incluso si data.products es null/undefined
+        setProductosDisponibles(data.products || []); 
       } else {
         console.error("No se encontraron productos");
-        setProductosDisponibles([]); // ✅ Establece explícitamente como []
+        setProductosDisponibles([]); 
       }
     } catch (error) {
       console.error("Error al obtener productos:", error);
-      setProductosDisponibles([]); // ✅ Establece explícitamente como [] en caso de error
+      setProductosDisponibles([]); 
     }
   };
 
@@ -112,7 +112,7 @@ export default function PedidosPage() {
     setFecha_creacion("");
     setSelectedCliente("");
     setSelectedTransportadora("");
-    setProductosSeleccionados([]); // Limpiar carrito
+    setProductosSeleccionados([]); 
     setModalOpen(true);
   };
 
@@ -121,8 +121,7 @@ export default function PedidosPage() {
     setValor_total(pedido.valor_total.toString());
     setFecha_creacion(formatDateForInput(pedido.fecha_creacion));
     setSelectedCliente(pedido.fkid_tbl_clientes);
-    setSelectedTransportadora(pedido.fkid_tbl_transportadoras);
-    // Cargar los detalles del pedido si es una edición
+    setSelectedTransportadora(pedido.fkid_tbl_transportadoras);    
     await loadDetalleProductosForEdit(pedido.pkid);
     setModalOpen(true);
   };
@@ -139,7 +138,6 @@ export default function PedidosPage() {
   const parseDate = (dateValue, isStart = true) => {
     if (!dateValue) return null;
 
-    // Si ya es objeto Date
     if (dateValue instanceof Date) {
       return dateValue.toISOString();
     }
@@ -177,17 +175,16 @@ export default function PedidosPage() {
         {
           pkid: selectedProductToAdd.pkid,
           nombre: selectedProductToAdd.nombre,
-          precio_unitario: selectedProductToAdd.valor, // Usa 'valor' de tu tbl_productos (el precio de venta)
-          costo_unitario: selectedProductToAdd.costo || 0, // Usa 'costo' de tu tbl_productos, o 0 si no existe/es opcional
+          precio_unitario: selectedProductToAdd.valor, 
+          costo_unitario: selectedProductToAdd.costo || 0, 
           cantidad: cantidadProducto,
         },
       ]);
     }
 
-    // Reiniciar la selección después de añadir
     setSelectedProductToAdd(null);
     setCantidadProducto(1);
-    setSearchProducto(""); // Limpiar la búsqueda después de añadir
+    setSearchProducto(""); 
   };
 
   const removeProductFromCart = (productId) => {
@@ -567,6 +564,7 @@ export default function PedidosPage() {
                   }}
                   className="flex-grow px-4 py-2 border rounded focus:outline-none bg-white"
                 >
+                  <option value="">Seleccione un Producto</option>
                   {productosDisponibles && Array.isArray(productosDisponibles) ? (
                     productosDisponibles
                       .filter(p => p.nombre.toLowerCase().includes(searchProducto.toLowerCase()))

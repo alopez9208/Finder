@@ -1,7 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import useSignUp from "./useSign-up";
 
 import {
   FaUser,
@@ -19,7 +18,6 @@ function PasswordInput({ password, setPassword }) {
   const isMinLength = password.length >= 8;
   const hasUpperCase = /[A-Z]/.test(password);
   const hasNumber = /\d/.test(password);
-
 
   return (
     <div className="w-full">
@@ -70,54 +68,27 @@ function PasswordInput({ password, setPassword }) {
   );
 }
 
-export default function LoginPage() {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const passwordMatch = password === confirmPassword;
-  const [mostrarValidarClave, setMostrarValidarClave] = useState(false);
-  const router = useRouter();
-  const [nombres, setNombres] = useState("");
-  const [apellidos, setApellidos] = useState("");
-  const [correo, setCorreo] = useState("");
-  const [usuario, setUsuario] = useState("");
-  const [error, setError] = useState("");
-  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+export default function SignUpPage() {
 
-
-  const handleRegistro = async (e) => {
-    e.preventDefault();
-  
-    if (!nombres || !apellidos || !correo || !usuario || !password || !confirmPassword) {
-      setError("Por favor, completa todos los campos.");
-      return;
-    }
-  
-    if (!isValidEmail(correo)) {
-      setError("El correo electrónico no es válido.");
-      return;
-    }
-  
-    if (!passwordMatch) {
-      setError("Las contraseñas no coinciden.");
-      return;
-    }
-  
-    const res = await fetch("/api/login/sign-up", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nombres, apellidos, correo, usuario, contraseña: password }),
-    }); 
-
-    const data = await res.json(); // Obtener la respuesta de la API
-  
-  if (res.ok) {    
-    alert("Usuario creado correctamente");
-    router.push("/login"); 
-  } else {    
-    setError(data.error || "Error al registrar usuario");
-  }
-    
-  };
+  const {
+    router,
+    handleRegistro,
+    nombres,
+    apellidos,
+    correo,
+    usuario,
+    password,
+    confirmPassword,
+    mostrarValidarClave,
+    setNombres,
+    setApellidos,
+    setCorreo,
+    setUsuario,
+    setPassword,
+    setConfirmPassword,
+    setMostrarValidarClave,
+    error
+  } = useSignUp()
 
   return (
     <div className="min-h-screen flex">

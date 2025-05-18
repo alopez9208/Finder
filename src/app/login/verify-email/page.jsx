@@ -1,15 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import useVerifyEmail from "./useVerify-email";
 import { FaEnvelope } from "react-icons/fa";
-import { useRouter } from "next/navigation";
 
-
-export default function LoginPage() {
-  const [usuario, setUsuario] = useState("");
-  const [contrasena, setContrasena] = useState("");
-  const [mostrarContrasena, setMostrarContrasena] = useState(false);
-  const router = useRouter();
+export default function VerifyEmailPage() {
+ 
+  const {
+    router
+  } = useVerifyEmail()
 
   return (
     <div className="min-h-screen flex">
@@ -55,9 +53,7 @@ export default function LoginPage() {
             <FaEnvelope className="absolute top-3.5 left-3 text-gray-400" />
           </div>
 
-
-          <button
-            /*onClick={handleSubmit}*/
+          <button           
             onClick={() => router.push("/login/verify-code")}
             className="w-full bg-[#3E82FF] text-white py-2 rounded hover:bg-[#005AFE] hover:opacity-40 transition mt-2 cursor-pointer">
             Enviar correo electrónico
