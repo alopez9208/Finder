@@ -1,10 +1,10 @@
 "use client";
 
 import useSignUp from "./useSign-up";
+import { useState } from "react";
 
 import {
   FaUser,
-  FaUnlockAlt,
   FaUserPlus,
   FaEnvelope,
   FaLock,
@@ -21,7 +21,6 @@ function PasswordInput({ password, setPassword }) {
 
   return (
     <div className="w-full">
-      {/* Input Password */}
       <div className="relative mb-2">
         <input
           type={mostrarClave ? "text" : "password"}
@@ -29,8 +28,9 @@ function PasswordInput({ password, setPassword }) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded focus:outline-none placeholder:text-gray-400 text-gray-800"
+
         />
-        <FaUnlockAlt className="absolute top-3.5 left-3 text-gray-400" />
+        <FaLock className="absolute top-3.5 left-3 text-gray-400" />
         <button
           type="button"
           onClick={() => setMostrarClave(!mostrarClave)}
@@ -40,31 +40,22 @@ function PasswordInput({ password, setPassword }) {
         </button>
       </div>
 
-      {/* Reglas de validación */}
       <div className="space-y-1 text-sm mt-1 ml-4">
-        <div
-          className={`flex items-center gap-2 ${isMinLength ? "text-green-500" : "text-gray-500"
-            }`}
-        >
+        <div className={`flex items-center gap-2 ${isMinLength ? "text-green-500" : "text-gray-500"}`}>
           <FaCheck />
           Mínimo 8 caracteres
         </div>
-        <div
-          className={`flex items-center gap-2 ${hasUpperCase ? "text-green-500" : "text-gray-500"
-            }`}
-        >
+        <div className={`flex items-center gap-2 ${hasUpperCase ? "text-green-500" : "text-gray-500"}`}>
           <FaCheck />
           Al menos una mayúscula
         </div>
-        <div
-          className={`flex items-center gap-2 ${hasNumber ? "text-green-500" : "text-gray-500"
-            }`}
-        >
+        <div className={`flex items-center gap-2 ${hasNumber ? "text-green-500" : "text-gray-500"}`}>
           <FaCheck />
           Al menos un número
         </div>
       </div>
     </div>
+
   );
 }
 
@@ -87,7 +78,8 @@ export default function SignUpPage() {
     setPassword,
     setConfirmPassword,
     setMostrarValidarClave,
-    error
+    error,
+    passwordMatch
   } = useSignUp()
 
   return (
@@ -201,12 +193,12 @@ export default function SignUpPage() {
               </span>
             )}
           </div>
-         
+
           {error && <p className="text-red-500 text-sm">{error}</p>}
-          
+
           <button
             type="submit"
-            onClick={handleRegistro}           
+            onClick={handleRegistro}
             className="w-full bg-[#3E82FF] text-white py-2 rounded hover:bg-[#005AFE] hover:opacity-40 transition mt-4 cursor-pointer"
           >
             Registrarse

@@ -17,7 +17,6 @@ export default function LoginPage() {
     router
   } = useLogin()
 
-
   return (
     <div className="min-h-screen flex">
       {/* Lado Izquierdo: Fondo azul */}

@@ -44,11 +44,11 @@ model tbl_det_productos {
   cantidad                Int
   precio_venta_unitario   Float
   costo_unitario          Float
-  fkid_tbl_productos      BigInt?
-  fkid_tbl_pedidos        BigInt?
+  fkid_tbl_productos      BigInt
+  fkid_tbl_pedidos        BigInt
 
-  productos tbl_productos? @relation(fields: [fkid_tbl_productos], references: [pkid])
-  pedidos tbl_pedidos?     @relation(fields: [fkid_tbl_pedidos], references: [pkid])
+  productos tbl_productos @relation(fields: [fkid_tbl_productos], references: [pkid])
+  pedidos tbl_pedidos     @relation(fields: [fkid_tbl_pedidos], references: [pkid])
 }
 
 
