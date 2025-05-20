@@ -21,6 +21,7 @@ const handleErrorResponse = (error, message, statusCode = 500) => {
             select: {
                 pkid: true,
                 valor_total: true,
+                valor_flete: true,
                 fecha_creacion: true,
                 fkid_tbl_clientes: true,
                 clientes: { // Mantenemos la anidación del cliente
@@ -32,6 +33,13 @@ const handleErrorResponse = (error, message, statusCode = 500) => {
                 transportadoras: { // Mantenemos la anidación de la transportadora
                     select: { nomenclatura: true },
                 },
+                fkid_tbl_municipios: true,
+                municipios: { // Mantenemos la anidación del municipio
+                    select: { 
+                        nombre: true,
+                        nomenclatura: true,
+                    },
+                },
             },
         });
 
@@ -39,6 +47,7 @@ const handleErrorResponse = (error, message, statusCode = 500) => {
         const pedidosSerializados = pedidos.map((item) => ({
             pkid: item.pkid.toString(),
             valor_total: item.valor_total,
+            valor_flete: item.valor_flete,
             fecha_creacion: item.fecha_creacion,
             fkid_tbl_clientes: item.fkid_tbl_clientes?.toString() ?? null,
             // Mantenemos la anidación para 'clientes'
@@ -49,6 +58,12 @@ const handleErrorResponse = (error, message, statusCode = 500) => {
             // Mantenemos la anidación para 'transportadoras'
             transportadoras: {
                 nomenclatura: item.transportadoras?.nomenclatura ?? null,
+            },
+            fkid_tbl_municipios: item.fkid_tbl_municipios?.toString() ?? null,
+            // Mantenemos la anidación para 'municipios'
+            municipios: {
+                nombre: item.municipios?.nombre ?? null,
+                nomenclatura: item.municipios?.nomenclatura ?? null,
             },
         }));
 
@@ -63,18 +78,20 @@ const handleErrorResponse = (error, message, statusCode = 500) => {
 
 export async function POST(request) {
     try {
-        const { valor_total, fecha_creacion, fkid_tbl_clientes, fkid_tbl_transportadoras } = await request.json();
+        const { valor_total, fecha_creacion, fkid_tbl_clientes, fkid_tbl_transportadoras, valor_flete, fkid_tbl_municipios } = await request.json();
 
-        if (!valor_total || !fecha_creacion) {
-            return handleErrorResponse(null, "Los campos valor_total y fecha_creacion son obligatorios.", 400);
+        if (!valor_total || !fecha_creacion || !valor_flete ) {
+            return handleErrorResponse(null, "Los campos valor_total, fecha_creacion y valor_flete son obligatorios.", 400);
         }
 
         const nuevoPedido = await prisma.tbl_pedidos.create({
             data: {
                 valor_total: parseFloat(valor_total), // Convertir a número
                 fecha_creacion,
+                valor_flete: parseFloat(valor_flete), // Convertir a número
                 fkid_tbl_clientes: validateAndConvertId(fkid_tbl_clientes),
                 fkid_tbl_transportadoras: validateAndConvertId(fkid_tbl_transportadoras),
+                fkid_tbl_municipios: validateAndConvertId(fkid_tbl_municipios),
             },
         });
 
@@ -83,6 +100,7 @@ export async function POST(request) {
             pkid: nuevoPedido.pkid.toString(),
             fkid_tbl_clientes: nuevoPedido.fkid_tbl_clientes?.toString() ?? null,
             fkid_tbl_transportadoras: nuevoPedido.fkid_tbl_transportadoras?.toString() ?? null,
+            fkid_tbl_municipios: nuevoPedido.fkid_tbl_municipios?.toString() ?? null,
         };
 
         return new Response(JSON.stringify({ success: true, pedido: serializado }), {
@@ -96,7 +114,7 @@ export async function POST(request) {
 
 export async function PUT(request) {
     try {
-        const { pkid, valor_total, fecha_creacion, fkid_tbl_clientes, fkid_tbl_transportadoras } = await request.json();
+        const { pkid, valor_total, fecha_creacion, fkid_tbl_clientes, fkid_tbl_transportadoras, valor_flete, fkid_tbl_municipios } = await request.json();
 
         if (!pkid) {
             return handleErrorResponse(null, "El campo pkid es obligatorio para la actualización.", 400);
@@ -105,8 +123,10 @@ export async function PUT(request) {
         const dataToUpdate = {
             valor_total: parseFloat(valor_total), // Convertir a número
             fecha_creacion,
+            valor_flete: parseFloat(valor_flete), // Convertir a número
             fkid_tbl_clientes: validateAndConvertId(fkid_tbl_clientes),
             fkid_tbl_transportadoras: validateAndConvertId(fkid_tbl_transportadoras),
+            fkid_tbl_municipios: validateAndConvertId(fkid_tbl_municipios),
         };
 
         const pedidoActualizado = await prisma.tbl_pedidos.update({
@@ -119,6 +139,7 @@ export async function PUT(request) {
             pkid: pedidoActualizado.pkid.toString(),
             fkid_tbl_clientes: pedidoActualizado.fkid_tbl_clientes?.toString() ?? null,
             fkid_tbl_transportadoras: pedidoActualizado.fkid_tbl_transportadoras?.toString() ?? null,
+            fkid_tbl_municipios: pedidoActualizado.fkid_tbl_municipios?.toString() ?? null,
         };
 
         return new Response(JSON.stringify({ success: true, pedido: serializado }), {

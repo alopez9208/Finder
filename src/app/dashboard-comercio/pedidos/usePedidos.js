@@ -9,14 +9,17 @@ const usePedidos = () => {
     const [pedidos, setPedidos] = useState([]);
     const [clientes, setClientes] = useState([]);
     const [transportadoras, setTransportadoras] = useState([]);
+    const [municipios, setMunicipios] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
     const [modalOpen, setModalOpen] = useState(false);
     const [editingPedido, setEditingPedido] = useState(null);
     const [valor_total, setValor_total] = useState("");
+    const [valor_flete, setValor_flete] = useState("");
     const [fecha_creacion, setFecha_creacion] = useState("");
     const [selectedTransportadora, setSelectedTransportadora] = useState("");
     const [selectedCliente, setSelectedCliente] = useState("");
+    const [selectedMunicipio, setSelectedMunicipio] = useState("");
 
     const [productosDisponibles, setProductosDisponibles] = useState([]);
     const [searchProducto, setSearchProducto] = useState("");
@@ -32,6 +35,7 @@ const usePedidos = () => {
         fetchTransporters();
         fetchClientes();
         fetchProductos();
+        fetchMunicipios();
     }, []);
 
     const fetchPedidos = async () => {
@@ -62,6 +66,22 @@ const usePedidos = () => {
         } catch (error) {
             setClientes([]);
             console.error("Error al obtener clientes:", error);
+        }
+    };
+
+    const fetchMunicipios = async () => {
+        try {
+            const res = await fetch("/api/dashboard/municipios");
+            const data = await res.json();
+            if (data.success) {
+                setMunicipios(data.municipios || []);
+            } else {
+                setMunicipios([]);
+                console.error("No se encontraron municipios");
+            }
+        } catch (error) {
+            setMunicipios([]);
+            console.error("Error al obtener municipios:", error);
         }
     };
 
@@ -110,19 +130,23 @@ const usePedidos = () => {
     const openModalForNew = () => {
         setEditingPedido(null);
         setValor_total("");
+        setValor_flete("");
         setFecha_creacion("");
         setSelectedCliente("");
         setSelectedTransportadora("");
         setProductosSeleccionados([]);
+        setSelectedMunicipio("");
         setModalOpen(true);
     };
 
     const openModalForEdit = async (pedido) => {
         setEditingPedido(pedido);
         setValor_total(pedido.valor_total.toString());
+        setValor_flete(pedido.valor_flete.toString());
         setFecha_creacion(formatDateForInput(pedido.fecha_creacion));
         setSelectedCliente(pedido.fkid_tbl_clientes);
         setSelectedTransportadora(pedido.fkid_tbl_transportadoras);
+        setSelectedMunicipio(pedido.fkid_tbl_municipios);
         await loadDetalleProductosForEdit(pedido.pkid);
         setModalOpen(true);
     };
@@ -226,8 +250,8 @@ const usePedidos = () => {
     const handleSubmit = async () => {
         const valorNumerico = parseFloat(valor_total);
 
-        if (isNaN(valorNumerico) || valorNumerico <= 0 || !fecha_creacion.trim() || !selectedTransportadora || !selectedCliente || productosSeleccionados.length === 0) {
-            alert("Por favor, completa todos los campos, asegúrate de que el Valor Total sea un número positivo y añade al menos un producto.");
+        if (isNaN(valorNumerico) || valorNumerico <= 0 || !fecha_creacion.trim() || !selectedTransportadora || !selectedMunicipio || !selectedCliente || productosSeleccionados.length === 0 || isNaN(valor_flete) || valor_flete <= 0) {
+            alert("Por favor, completa todos los campos, asegúrate de que el Valor Total, Valor Flete y el Valor Total sean un número positivo y añade al menos un producto.");
             return;
         }
 
@@ -241,8 +265,8 @@ const usePedidos = () => {
         const url = "/api/dashboard-comercio/pedidos";
 
         const payload = editingPedido
-            ? { pkid: editingPedido.pkid, valor_total: valorNumerico, fecha_creacion: localFecha_Creacion, fkid_tbl_transportadoras: selectedTransportadora, fkid_tbl_clientes: selectedCliente }
-            : { valor_total: valorNumerico, fecha_creacion: localFecha_Creacion, fkid_tbl_transportadoras: selectedTransportadora, fkid_tbl_clientes: selectedCliente };
+            ? { pkid: editingPedido.pkid, valor_total: valorNumerico, fecha_creacion: localFecha_Creacion, fkid_tbl_transportadoras: selectedTransportadora, fkid_tbl_clientes: selectedCliente, valor_flete: valor_flete, fkid_tbl_municipios: selectedMunicipio }
+            : { valor_total: valorNumerico, fecha_creacion: localFecha_Creacion, fkid_tbl_transportadoras: selectedTransportadora, fkid_tbl_clientes: selectedCliente, valor_flete: valor_flete, fkid_tbl_municipios: selectedMunicipio };
 
         try {
             const res = await fetch(url, {
@@ -394,7 +418,9 @@ const usePedidos = () => {
         modalOpen,
         editingPedido,
         setValor_total,
+        setValor_flete,
         valor_total,
+        valor_flete,
         fecha_creacion,
         setFecha_creacion,
         selectedCliente,
@@ -420,6 +446,9 @@ const usePedidos = () => {
         setSuccess,
         success,
         formatFecha,
+        municipios,
+        selectedMunicipio,
+        setSelectedMunicipio,
     };
 }
 

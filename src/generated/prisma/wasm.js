@@ -169,7 +169,9 @@ exports.Prisma.Tbl_pedidosScalarFieldEnum = {
   pkid: 'pkid',
   fkid_tbl_clientes: 'fkid_tbl_clientes',
   fkid_tbl_transportadoras: 'fkid_tbl_transportadoras',
+  fkid_tbl_municipios: 'fkid_tbl_municipios',
   valor_total: 'valor_total',
+  valor_flete: 'valor_flete',
   fecha_creacion: 'fecha_creacion'
 };
 

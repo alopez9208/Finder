@@ -25,16 +25,21 @@ export default function PedidosPage() {
     editingPedido,
     setValor_total,
     valor_total,
+    valor_flete,
+    setValor_flete,
     fecha_creacion,
     setFecha_creacion,
     selectedCliente,
     setSelectedCliente,
     selectedTransportadora,
     setSelectedTransportadora,
+    selectedMunicipio,
+    setSelectedMunicipio,
+    municipios,
     productosDisponibles,
     searchProducto,
     setSearchProducto,
-    productosSeleccionados, 
+    productosSeleccionados,
     setProductosSeleccionados,
     selectedProductToAdd,
     setSelectedProductToAdd,
@@ -78,7 +83,7 @@ export default function PedidosPage() {
           <table className="min-w-full table-auto text-gray-800">
             <thead className="bg-gray-100">
               <tr>
-                {[{ key: "pkid", label: "ID" }, { key: "clientes.telefono", label: "Telefono" }, { key: "fecha_creacion", label: "Fecha de Creación" }, { key: "transportadoras.nomenclatura", label: "Transportadora" }, { key: "valor_total", label: "Valor Total" },
+                {[{ key: "pkid", label: "ID" }, { key: "clientes.telefono", label: "Telefono" }, { key: "fecha_creacion", label: "Fecha de Creación" }, { key: "transportadoras.nomenclatura", label: "Transportadora" }, { key: "municipios.nombre", label: "Municipio" }, { key: "valor_total", label: "Valor Total" }, { key: "valor_flete", label: "Valor Flete" },
                 ]
                   .map(({ key, label }) => (
                     <th
@@ -99,7 +104,9 @@ export default function PedidosPage() {
                   <td className="p-3">{pedidos.clientes.telefono}</td>
                   <td className="p-3">{formatFecha(pedidos.fecha_creacion)}</td>
                   <td className="p-3">{pedidos.transportadoras.nomenclatura}</td>
+                  <td className="p-3">{pedidos.municipios.nombre}</td>
                   <td className="p-3">{pedidos.valor_total}</td>
+                  <td className="p-3">{pedidos.valor_flete}</td>
                   <td className="p-3 text-right">
                     <button
                       onClick={() => openModalForEdit(pedidos)}
@@ -193,6 +200,12 @@ export default function PedidosPage() {
               value={valor_total}
               onChange={(e) => setValor_total(e.target.value)}
             />
+            <input type="number"
+              placeholder="Valor Flete"
+              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white read-only:bg-[#f0ebff]"
+              value={valor_flete}
+              onChange={(e) => setValor_flete(e.target.value)}
+            />
             <input
               type="date"
               placeholder="Fecha de Creación"
@@ -213,16 +226,29 @@ export default function PedidosPage() {
                 </option>
               ))}
             </select>
+
             <select
               value={selectedTransportadora}
               onChange={(e) => setSelectedTransportadora(e.target.value)}
               className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white disabled:bg-[#f0ebff]"
-
             >
               <option value="">Seleccione una Transportadora</option>
               {transportadoras.map((transportadoras) => (
                 <option key={transportadoras.pkid} value={transportadoras.pkid}>
                   {transportadoras.nomenclatura}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={selectedMunicipio}
+              onChange={(e) => setSelectedMunicipio(e.target.value)}
+              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white disabled:bg-[#f0ebff]"
+            >
+              <option value="">Seleccione un Municipio</option>
+              {municipios.map((municipio) => (
+                <option key={municipio.pkid} value={municipio.pkid}>
+                  {municipio.nombre}
                 </option>
               ))}
             </select>

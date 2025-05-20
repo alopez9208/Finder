@@ -2146,10 +2146,12 @@ export namespace Prisma {
 
   export type Tbl_municipiosCountOutputType = {
     clientes: number
+    pedidos: number
   }
 
   export type Tbl_municipiosCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     clientes?: boolean | Tbl_municipiosCountOutputTypeCountClientesArgs
+    pedidos?: boolean | Tbl_municipiosCountOutputTypeCountPedidosArgs
   }
 
   // Custom InputTypes
@@ -2168,6 +2170,13 @@ export namespace Prisma {
    */
   export type Tbl_municipiosCountOutputTypeCountClientesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: tbl_clientesWhereInput
+  }
+
+  /**
+   * Tbl_municipiosCountOutputType without action
+   */
+  export type Tbl_municipiosCountOutputTypeCountPedidosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: tbl_pedidosWhereInput
   }
 
 
@@ -8264,6 +8273,7 @@ export namespace Prisma {
     fkid_tbl_departamentos?: boolean
     departamento?: boolean | tbl_municipios$departamentoArgs<ExtArgs>
     clientes?: boolean | tbl_municipios$clientesArgs<ExtArgs>
+    pedidos?: boolean | tbl_municipios$pedidosArgs<ExtArgs>
     _count?: boolean | Tbl_municipiosCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_municipios"]>
 
@@ -8294,6 +8304,7 @@ export namespace Prisma {
   export type tbl_municipiosInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     departamento?: boolean | tbl_municipios$departamentoArgs<ExtArgs>
     clientes?: boolean | tbl_municipios$clientesArgs<ExtArgs>
+    pedidos?: boolean | tbl_municipios$pedidosArgs<ExtArgs>
     _count?: boolean | Tbl_municipiosCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type tbl_municipiosIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8308,6 +8319,7 @@ export namespace Prisma {
     objects: {
       departamento: Prisma.$tbl_departamentosPayload<ExtArgs> | null
       clientes: Prisma.$tbl_clientesPayload<ExtArgs>[]
+      pedidos: Prisma.$tbl_pedidosPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       pkid: bigint
@@ -8710,6 +8722,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     departamento<T extends tbl_municipios$departamentoArgs<ExtArgs> = {}>(args?: Subset<T, tbl_municipios$departamentoArgs<ExtArgs>>): Prisma__tbl_departamentosClient<$Result.GetResult<Prisma.$tbl_departamentosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     clientes<T extends tbl_municipios$clientesArgs<ExtArgs> = {}>(args?: Subset<T, tbl_municipios$clientesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_clientesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    pedidos<T extends tbl_municipios$pedidosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_municipios$pedidosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_pedidosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9182,6 +9195,30 @@ export namespace Prisma {
   }
 
   /**
+   * tbl_municipios.pedidos
+   */
+  export type tbl_municipios$pedidosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_pedidos
+     */
+    select?: tbl_pedidosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_pedidos
+     */
+    omit?: tbl_pedidosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_pedidosInclude<ExtArgs> | null
+    where?: tbl_pedidosWhereInput
+    orderBy?: tbl_pedidosOrderByWithRelationInput | tbl_pedidosOrderByWithRelationInput[]
+    cursor?: tbl_pedidosWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Tbl_pedidosScalarFieldEnum | Tbl_pedidosScalarFieldEnum[]
+  }
+
+  /**
    * tbl_municipios without action
    */
   export type tbl_municipiosDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9216,21 +9253,27 @@ export namespace Prisma {
     pkid: number | null
     fkid_tbl_clientes: number | null
     fkid_tbl_transportadoras: number | null
+    fkid_tbl_municipios: number | null
     valor_total: number | null
+    valor_flete: number | null
   }
 
   export type Tbl_pedidosSumAggregateOutputType = {
     pkid: bigint | null
     fkid_tbl_clientes: bigint | null
     fkid_tbl_transportadoras: bigint | null
+    fkid_tbl_municipios: bigint | null
     valor_total: number | null
+    valor_flete: number | null
   }
 
   export type Tbl_pedidosMinAggregateOutputType = {
     pkid: bigint | null
     fkid_tbl_clientes: bigint | null
     fkid_tbl_transportadoras: bigint | null
+    fkid_tbl_municipios: bigint | null
     valor_total: number | null
+    valor_flete: number | null
     fecha_creacion: Date | null
   }
 
@@ -9238,7 +9281,9 @@ export namespace Prisma {
     pkid: bigint | null
     fkid_tbl_clientes: bigint | null
     fkid_tbl_transportadoras: bigint | null
+    fkid_tbl_municipios: bigint | null
     valor_total: number | null
+    valor_flete: number | null
     fecha_creacion: Date | null
   }
 
@@ -9246,7 +9291,9 @@ export namespace Prisma {
     pkid: number
     fkid_tbl_clientes: number
     fkid_tbl_transportadoras: number
+    fkid_tbl_municipios: number
     valor_total: number
+    valor_flete: number
     fecha_creacion: number
     _all: number
   }
@@ -9256,21 +9303,27 @@ export namespace Prisma {
     pkid?: true
     fkid_tbl_clientes?: true
     fkid_tbl_transportadoras?: true
+    fkid_tbl_municipios?: true
     valor_total?: true
+    valor_flete?: true
   }
 
   export type Tbl_pedidosSumAggregateInputType = {
     pkid?: true
     fkid_tbl_clientes?: true
     fkid_tbl_transportadoras?: true
+    fkid_tbl_municipios?: true
     valor_total?: true
+    valor_flete?: true
   }
 
   export type Tbl_pedidosMinAggregateInputType = {
     pkid?: true
     fkid_tbl_clientes?: true
     fkid_tbl_transportadoras?: true
+    fkid_tbl_municipios?: true
     valor_total?: true
+    valor_flete?: true
     fecha_creacion?: true
   }
 
@@ -9278,7 +9331,9 @@ export namespace Prisma {
     pkid?: true
     fkid_tbl_clientes?: true
     fkid_tbl_transportadoras?: true
+    fkid_tbl_municipios?: true
     valor_total?: true
+    valor_flete?: true
     fecha_creacion?: true
   }
 
@@ -9286,7 +9341,9 @@ export namespace Prisma {
     pkid?: true
     fkid_tbl_clientes?: true
     fkid_tbl_transportadoras?: true
+    fkid_tbl_municipios?: true
     valor_total?: true
+    valor_flete?: true
     fecha_creacion?: true
     _all?: true
   }
@@ -9381,7 +9438,9 @@ export namespace Prisma {
     pkid: bigint
     fkid_tbl_clientes: bigint | null
     fkid_tbl_transportadoras: bigint | null
+    fkid_tbl_municipios: bigint | null
     valor_total: number
+    valor_flete: number
     fecha_creacion: Date
     _count: Tbl_pedidosCountAggregateOutputType | null
     _avg: Tbl_pedidosAvgAggregateOutputType | null
@@ -9408,10 +9467,13 @@ export namespace Prisma {
     pkid?: boolean
     fkid_tbl_clientes?: boolean
     fkid_tbl_transportadoras?: boolean
+    fkid_tbl_municipios?: boolean
     valor_total?: boolean
+    valor_flete?: boolean
     fecha_creacion?: boolean
     clientes?: boolean | tbl_pedidos$clientesArgs<ExtArgs>
     transportadoras?: boolean | tbl_pedidos$transportadorasArgs<ExtArgs>
+    municipios?: boolean | tbl_pedidos$municipiosArgs<ExtArgs>
     det_productos?: boolean | tbl_pedidos$det_productosArgs<ExtArgs>
     _count?: boolean | Tbl_pedidosCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_pedidos"]>
@@ -9420,44 +9482,55 @@ export namespace Prisma {
     pkid?: boolean
     fkid_tbl_clientes?: boolean
     fkid_tbl_transportadoras?: boolean
+    fkid_tbl_municipios?: boolean
     valor_total?: boolean
+    valor_flete?: boolean
     fecha_creacion?: boolean
     clientes?: boolean | tbl_pedidos$clientesArgs<ExtArgs>
     transportadoras?: boolean | tbl_pedidos$transportadorasArgs<ExtArgs>
+    municipios?: boolean | tbl_pedidos$municipiosArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_pedidos"]>
 
   export type tbl_pedidosSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     pkid?: boolean
     fkid_tbl_clientes?: boolean
     fkid_tbl_transportadoras?: boolean
+    fkid_tbl_municipios?: boolean
     valor_total?: boolean
+    valor_flete?: boolean
     fecha_creacion?: boolean
     clientes?: boolean | tbl_pedidos$clientesArgs<ExtArgs>
     transportadoras?: boolean | tbl_pedidos$transportadorasArgs<ExtArgs>
+    municipios?: boolean | tbl_pedidos$municipiosArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_pedidos"]>
 
   export type tbl_pedidosSelectScalar = {
     pkid?: boolean
     fkid_tbl_clientes?: boolean
     fkid_tbl_transportadoras?: boolean
+    fkid_tbl_municipios?: boolean
     valor_total?: boolean
+    valor_flete?: boolean
     fecha_creacion?: boolean
   }
 
-  export type tbl_pedidosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "fkid_tbl_clientes" | "fkid_tbl_transportadoras" | "valor_total" | "fecha_creacion", ExtArgs["result"]["tbl_pedidos"]>
+  export type tbl_pedidosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "fkid_tbl_clientes" | "fkid_tbl_transportadoras" | "fkid_tbl_municipios" | "valor_total" | "valor_flete" | "fecha_creacion", ExtArgs["result"]["tbl_pedidos"]>
   export type tbl_pedidosInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     clientes?: boolean | tbl_pedidos$clientesArgs<ExtArgs>
     transportadoras?: boolean | tbl_pedidos$transportadorasArgs<ExtArgs>
+    municipios?: boolean | tbl_pedidos$municipiosArgs<ExtArgs>
     det_productos?: boolean | tbl_pedidos$det_productosArgs<ExtArgs>
     _count?: boolean | Tbl_pedidosCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type tbl_pedidosIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     clientes?: boolean | tbl_pedidos$clientesArgs<ExtArgs>
     transportadoras?: boolean | tbl_pedidos$transportadorasArgs<ExtArgs>
+    municipios?: boolean | tbl_pedidos$municipiosArgs<ExtArgs>
   }
   export type tbl_pedidosIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     clientes?: boolean | tbl_pedidos$clientesArgs<ExtArgs>
     transportadoras?: boolean | tbl_pedidos$transportadorasArgs<ExtArgs>
+    municipios?: boolean | tbl_pedidos$municipiosArgs<ExtArgs>
   }
 
   export type $tbl_pedidosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9465,13 +9538,16 @@ export namespace Prisma {
     objects: {
       clientes: Prisma.$tbl_clientesPayload<ExtArgs> | null
       transportadoras: Prisma.$tbl_transportadorasPayload<ExtArgs> | null
+      municipios: Prisma.$tbl_municipiosPayload<ExtArgs> | null
       det_productos: Prisma.$tbl_det_productosPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       pkid: bigint
       fkid_tbl_clientes: bigint | null
       fkid_tbl_transportadoras: bigint | null
+      fkid_tbl_municipios: bigint | null
       valor_total: number
+      valor_flete: number
       fecha_creacion: Date
     }, ExtArgs["result"]["tbl_pedidos"]>
     composites: {}
@@ -9869,6 +9945,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     clientes<T extends tbl_pedidos$clientesArgs<ExtArgs> = {}>(args?: Subset<T, tbl_pedidos$clientesArgs<ExtArgs>>): Prisma__tbl_clientesClient<$Result.GetResult<Prisma.$tbl_clientesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     transportadoras<T extends tbl_pedidos$transportadorasArgs<ExtArgs> = {}>(args?: Subset<T, tbl_pedidos$transportadorasArgs<ExtArgs>>): Prisma__tbl_transportadorasClient<$Result.GetResult<Prisma.$tbl_transportadorasPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    municipios<T extends tbl_pedidos$municipiosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_pedidos$municipiosArgs<ExtArgs>>): Prisma__tbl_municipiosClient<$Result.GetResult<Prisma.$tbl_municipiosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     det_productos<T extends tbl_pedidos$det_productosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_pedidos$det_productosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_det_productosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -9902,7 +9979,9 @@ export namespace Prisma {
     readonly pkid: FieldRef<"tbl_pedidos", 'BigInt'>
     readonly fkid_tbl_clientes: FieldRef<"tbl_pedidos", 'BigInt'>
     readonly fkid_tbl_transportadoras: FieldRef<"tbl_pedidos", 'BigInt'>
+    readonly fkid_tbl_municipios: FieldRef<"tbl_pedidos", 'BigInt'>
     readonly valor_total: FieldRef<"tbl_pedidos", 'Float'>
+    readonly valor_flete: FieldRef<"tbl_pedidos", 'Float'>
     readonly fecha_creacion: FieldRef<"tbl_pedidos", 'DateTime'>
   }
     
@@ -10335,6 +10414,25 @@ export namespace Prisma {
      */
     include?: tbl_transportadorasInclude<ExtArgs> | null
     where?: tbl_transportadorasWhereInput
+  }
+
+  /**
+   * tbl_pedidos.municipios
+   */
+  export type tbl_pedidos$municipiosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_municipios
+     */
+    select?: tbl_municipiosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_municipios
+     */
+    omit?: tbl_municipiosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_municipiosInclude<ExtArgs> | null
+    where?: tbl_municipiosWhereInput
   }
 
   /**
@@ -18283,7 +18381,9 @@ export namespace Prisma {
     pkid: 'pkid',
     fkid_tbl_clientes: 'fkid_tbl_clientes',
     fkid_tbl_transportadoras: 'fkid_tbl_transportadoras',
+    fkid_tbl_municipios: 'fkid_tbl_municipios',
     valor_total: 'valor_total',
+    valor_flete: 'valor_flete',
     fecha_creacion: 'fecha_creacion'
   };
 
@@ -18773,6 +18873,7 @@ export namespace Prisma {
     fkid_tbl_departamentos?: BigIntNullableFilter<"tbl_municipios"> | bigint | number | null
     departamento?: XOR<Tbl_departamentosNullableScalarRelationFilter, tbl_departamentosWhereInput> | null
     clientes?: Tbl_clientesListRelationFilter
+    pedidos?: Tbl_pedidosListRelationFilter
   }
 
   export type tbl_municipiosOrderByWithRelationInput = {
@@ -18782,6 +18883,7 @@ export namespace Prisma {
     fkid_tbl_departamentos?: SortOrderInput | SortOrder
     departamento?: tbl_departamentosOrderByWithRelationInput
     clientes?: tbl_clientesOrderByRelationAggregateInput
+    pedidos?: tbl_pedidosOrderByRelationAggregateInput
   }
 
   export type tbl_municipiosWhereUniqueInput = Prisma.AtLeast<{
@@ -18794,6 +18896,7 @@ export namespace Prisma {
     fkid_tbl_departamentos?: BigIntNullableFilter<"tbl_municipios"> | bigint | number | null
     departamento?: XOR<Tbl_departamentosNullableScalarRelationFilter, tbl_departamentosWhereInput> | null
     clientes?: Tbl_clientesListRelationFilter
+    pedidos?: Tbl_pedidosListRelationFilter
   }, "pkid">
 
   export type tbl_municipiosOrderByWithAggregationInput = {
@@ -18825,10 +18928,13 @@ export namespace Prisma {
     pkid?: BigIntFilter<"tbl_pedidos"> | bigint | number
     fkid_tbl_clientes?: BigIntNullableFilter<"tbl_pedidos"> | bigint | number | null
     fkid_tbl_transportadoras?: BigIntNullableFilter<"tbl_pedidos"> | bigint | number | null
+    fkid_tbl_municipios?: BigIntNullableFilter<"tbl_pedidos"> | bigint | number | null
     valor_total?: FloatFilter<"tbl_pedidos"> | number
+    valor_flete?: FloatFilter<"tbl_pedidos"> | number
     fecha_creacion?: DateTimeFilter<"tbl_pedidos"> | Date | string
     clientes?: XOR<Tbl_clientesNullableScalarRelationFilter, tbl_clientesWhereInput> | null
     transportadoras?: XOR<Tbl_transportadorasNullableScalarRelationFilter, tbl_transportadorasWhereInput> | null
+    municipios?: XOR<Tbl_municipiosNullableScalarRelationFilter, tbl_municipiosWhereInput> | null
     det_productos?: Tbl_det_productosListRelationFilter
   }
 
@@ -18836,10 +18942,13 @@ export namespace Prisma {
     pkid?: SortOrder
     fkid_tbl_clientes?: SortOrderInput | SortOrder
     fkid_tbl_transportadoras?: SortOrderInput | SortOrder
+    fkid_tbl_municipios?: SortOrderInput | SortOrder
     valor_total?: SortOrder
+    valor_flete?: SortOrder
     fecha_creacion?: SortOrder
     clientes?: tbl_clientesOrderByWithRelationInput
     transportadoras?: tbl_transportadorasOrderByWithRelationInput
+    municipios?: tbl_municipiosOrderByWithRelationInput
     det_productos?: tbl_det_productosOrderByRelationAggregateInput
   }
 
@@ -18850,10 +18959,13 @@ export namespace Prisma {
     NOT?: tbl_pedidosWhereInput | tbl_pedidosWhereInput[]
     fkid_tbl_clientes?: BigIntNullableFilter<"tbl_pedidos"> | bigint | number | null
     fkid_tbl_transportadoras?: BigIntNullableFilter<"tbl_pedidos"> | bigint | number | null
+    fkid_tbl_municipios?: BigIntNullableFilter<"tbl_pedidos"> | bigint | number | null
     valor_total?: FloatFilter<"tbl_pedidos"> | number
+    valor_flete?: FloatFilter<"tbl_pedidos"> | number
     fecha_creacion?: DateTimeFilter<"tbl_pedidos"> | Date | string
     clientes?: XOR<Tbl_clientesNullableScalarRelationFilter, tbl_clientesWhereInput> | null
     transportadoras?: XOR<Tbl_transportadorasNullableScalarRelationFilter, tbl_transportadorasWhereInput> | null
+    municipios?: XOR<Tbl_municipiosNullableScalarRelationFilter, tbl_municipiosWhereInput> | null
     det_productos?: Tbl_det_productosListRelationFilter
   }, "pkid">
 
@@ -18861,7 +18973,9 @@ export namespace Prisma {
     pkid?: SortOrder
     fkid_tbl_clientes?: SortOrderInput | SortOrder
     fkid_tbl_transportadoras?: SortOrderInput | SortOrder
+    fkid_tbl_municipios?: SortOrderInput | SortOrder
     valor_total?: SortOrder
+    valor_flete?: SortOrder
     fecha_creacion?: SortOrder
     _count?: tbl_pedidosCountOrderByAggregateInput
     _avg?: tbl_pedidosAvgOrderByAggregateInput
@@ -18877,7 +18991,9 @@ export namespace Prisma {
     pkid?: BigIntWithAggregatesFilter<"tbl_pedidos"> | bigint | number
     fkid_tbl_clientes?: BigIntNullableWithAggregatesFilter<"tbl_pedidos"> | bigint | number | null
     fkid_tbl_transportadoras?: BigIntNullableWithAggregatesFilter<"tbl_pedidos"> | bigint | number | null
+    fkid_tbl_municipios?: BigIntNullableWithAggregatesFilter<"tbl_pedidos"> | bigint | number | null
     valor_total?: FloatWithAggregatesFilter<"tbl_pedidos"> | number
+    valor_flete?: FloatWithAggregatesFilter<"tbl_pedidos"> | number
     fecha_creacion?: DateTimeWithAggregatesFilter<"tbl_pedidos"> | Date | string
   }
 
@@ -19573,6 +19689,7 @@ export namespace Prisma {
     nomenclatura: string
     departamento?: tbl_departamentosCreateNestedOneWithoutMunicipiosInput
     clientes?: tbl_clientesCreateNestedManyWithoutMunicipiosInput
+    pedidos?: tbl_pedidosCreateNestedManyWithoutMunicipiosInput
   }
 
   export type tbl_municipiosUncheckedCreateInput = {
@@ -19581,6 +19698,7 @@ export namespace Prisma {
     nomenclatura: string
     fkid_tbl_departamentos?: bigint | number | null
     clientes?: tbl_clientesUncheckedCreateNestedManyWithoutMunicipiosInput
+    pedidos?: tbl_pedidosUncheckedCreateNestedManyWithoutMunicipiosInput
   }
 
   export type tbl_municipiosUpdateInput = {
@@ -19589,6 +19707,7 @@ export namespace Prisma {
     nomenclatura?: StringFieldUpdateOperationsInput | string
     departamento?: tbl_departamentosUpdateOneWithoutMunicipiosNestedInput
     clientes?: tbl_clientesUpdateManyWithoutMunicipiosNestedInput
+    pedidos?: tbl_pedidosUpdateManyWithoutMunicipiosNestedInput
   }
 
   export type tbl_municipiosUncheckedUpdateInput = {
@@ -19597,6 +19716,7 @@ export namespace Prisma {
     nomenclatura?: StringFieldUpdateOperationsInput | string
     fkid_tbl_departamentos?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     clientes?: tbl_clientesUncheckedUpdateManyWithoutMunicipiosNestedInput
+    pedidos?: tbl_pedidosUncheckedUpdateManyWithoutMunicipiosNestedInput
   }
 
   export type tbl_municipiosCreateManyInput = {
@@ -19622,9 +19742,11 @@ export namespace Prisma {
   export type tbl_pedidosCreateInput = {
     pkid?: bigint | number
     valor_total: number
+    valor_flete: number
     fecha_creacion: Date | string
     clientes?: tbl_clientesCreateNestedOneWithoutPedidosInput
     transportadoras?: tbl_transportadorasCreateNestedOneWithoutPedidosInput
+    municipios?: tbl_municipiosCreateNestedOneWithoutPedidosInput
     det_productos?: tbl_det_productosCreateNestedManyWithoutPedidosInput
   }
 
@@ -19632,7 +19754,9 @@ export namespace Prisma {
     pkid?: bigint | number
     fkid_tbl_clientes?: bigint | number | null
     fkid_tbl_transportadoras?: bigint | number | null
+    fkid_tbl_municipios?: bigint | number | null
     valor_total: number
+    valor_flete: number
     fecha_creacion: Date | string
     det_productos?: tbl_det_productosUncheckedCreateNestedManyWithoutPedidosInput
   }
@@ -19640,9 +19764,11 @@ export namespace Prisma {
   export type tbl_pedidosUpdateInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     valor_total?: FloatFieldUpdateOperationsInput | number
+    valor_flete?: FloatFieldUpdateOperationsInput | number
     fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
     clientes?: tbl_clientesUpdateOneWithoutPedidosNestedInput
     transportadoras?: tbl_transportadorasUpdateOneWithoutPedidosNestedInput
+    municipios?: tbl_municipiosUpdateOneWithoutPedidosNestedInput
     det_productos?: tbl_det_productosUpdateManyWithoutPedidosNestedInput
   }
 
@@ -19650,7 +19776,9 @@ export namespace Prisma {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     fkid_tbl_clientes?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     fkid_tbl_transportadoras?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_municipios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     valor_total?: FloatFieldUpdateOperationsInput | number
+    valor_flete?: FloatFieldUpdateOperationsInput | number
     fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
     det_productos?: tbl_det_productosUncheckedUpdateManyWithoutPedidosNestedInput
   }
@@ -19659,13 +19787,16 @@ export namespace Prisma {
     pkid?: bigint | number
     fkid_tbl_clientes?: bigint | number | null
     fkid_tbl_transportadoras?: bigint | number | null
+    fkid_tbl_municipios?: bigint | number | null
     valor_total: number
+    valor_flete: number
     fecha_creacion: Date | string
   }
 
   export type tbl_pedidosUpdateManyMutationInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     valor_total?: FloatFieldUpdateOperationsInput | number
+    valor_flete?: FloatFieldUpdateOperationsInput | number
     fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -19673,7 +19804,9 @@ export namespace Prisma {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     fkid_tbl_clientes?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     fkid_tbl_transportadoras?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_municipios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     valor_total?: FloatFieldUpdateOperationsInput | number
+    valor_flete?: FloatFieldUpdateOperationsInput | number
     fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20533,7 +20666,9 @@ export namespace Prisma {
     pkid?: SortOrder
     fkid_tbl_clientes?: SortOrder
     fkid_tbl_transportadoras?: SortOrder
+    fkid_tbl_municipios?: SortOrder
     valor_total?: SortOrder
+    valor_flete?: SortOrder
     fecha_creacion?: SortOrder
   }
 
@@ -20541,14 +20676,18 @@ export namespace Prisma {
     pkid?: SortOrder
     fkid_tbl_clientes?: SortOrder
     fkid_tbl_transportadoras?: SortOrder
+    fkid_tbl_municipios?: SortOrder
     valor_total?: SortOrder
+    valor_flete?: SortOrder
   }
 
   export type tbl_pedidosMaxOrderByAggregateInput = {
     pkid?: SortOrder
     fkid_tbl_clientes?: SortOrder
     fkid_tbl_transportadoras?: SortOrder
+    fkid_tbl_municipios?: SortOrder
     valor_total?: SortOrder
+    valor_flete?: SortOrder
     fecha_creacion?: SortOrder
   }
 
@@ -20556,7 +20695,9 @@ export namespace Prisma {
     pkid?: SortOrder
     fkid_tbl_clientes?: SortOrder
     fkid_tbl_transportadoras?: SortOrder
+    fkid_tbl_municipios?: SortOrder
     valor_total?: SortOrder
+    valor_flete?: SortOrder
     fecha_creacion?: SortOrder
   }
 
@@ -20564,7 +20705,9 @@ export namespace Prisma {
     pkid?: SortOrder
     fkid_tbl_clientes?: SortOrder
     fkid_tbl_transportadoras?: SortOrder
+    fkid_tbl_municipios?: SortOrder
     valor_total?: SortOrder
+    valor_flete?: SortOrder
   }
 
   export type tbl_personasCountOrderByAggregateInput = {
@@ -21129,11 +21272,25 @@ export namespace Prisma {
     connect?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
   }
 
+  export type tbl_pedidosCreateNestedManyWithoutMunicipiosInput = {
+    create?: XOR<tbl_pedidosCreateWithoutMunicipiosInput, tbl_pedidosUncheckedCreateWithoutMunicipiosInput> | tbl_pedidosCreateWithoutMunicipiosInput[] | tbl_pedidosUncheckedCreateWithoutMunicipiosInput[]
+    connectOrCreate?: tbl_pedidosCreateOrConnectWithoutMunicipiosInput | tbl_pedidosCreateOrConnectWithoutMunicipiosInput[]
+    createMany?: tbl_pedidosCreateManyMunicipiosInputEnvelope
+    connect?: tbl_pedidosWhereUniqueInput | tbl_pedidosWhereUniqueInput[]
+  }
+
   export type tbl_clientesUncheckedCreateNestedManyWithoutMunicipiosInput = {
     create?: XOR<tbl_clientesCreateWithoutMunicipiosInput, tbl_clientesUncheckedCreateWithoutMunicipiosInput> | tbl_clientesCreateWithoutMunicipiosInput[] | tbl_clientesUncheckedCreateWithoutMunicipiosInput[]
     connectOrCreate?: tbl_clientesCreateOrConnectWithoutMunicipiosInput | tbl_clientesCreateOrConnectWithoutMunicipiosInput[]
     createMany?: tbl_clientesCreateManyMunicipiosInputEnvelope
     connect?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
+  }
+
+  export type tbl_pedidosUncheckedCreateNestedManyWithoutMunicipiosInput = {
+    create?: XOR<tbl_pedidosCreateWithoutMunicipiosInput, tbl_pedidosUncheckedCreateWithoutMunicipiosInput> | tbl_pedidosCreateWithoutMunicipiosInput[] | tbl_pedidosUncheckedCreateWithoutMunicipiosInput[]
+    connectOrCreate?: tbl_pedidosCreateOrConnectWithoutMunicipiosInput | tbl_pedidosCreateOrConnectWithoutMunicipiosInput[]
+    createMany?: tbl_pedidosCreateManyMunicipiosInputEnvelope
+    connect?: tbl_pedidosWhereUniqueInput | tbl_pedidosWhereUniqueInput[]
   }
 
   export type tbl_departamentosUpdateOneWithoutMunicipiosNestedInput = {
@@ -21160,6 +21317,20 @@ export namespace Prisma {
     deleteMany?: tbl_clientesScalarWhereInput | tbl_clientesScalarWhereInput[]
   }
 
+  export type tbl_pedidosUpdateManyWithoutMunicipiosNestedInput = {
+    create?: XOR<tbl_pedidosCreateWithoutMunicipiosInput, tbl_pedidosUncheckedCreateWithoutMunicipiosInput> | tbl_pedidosCreateWithoutMunicipiosInput[] | tbl_pedidosUncheckedCreateWithoutMunicipiosInput[]
+    connectOrCreate?: tbl_pedidosCreateOrConnectWithoutMunicipiosInput | tbl_pedidosCreateOrConnectWithoutMunicipiosInput[]
+    upsert?: tbl_pedidosUpsertWithWhereUniqueWithoutMunicipiosInput | tbl_pedidosUpsertWithWhereUniqueWithoutMunicipiosInput[]
+    createMany?: tbl_pedidosCreateManyMunicipiosInputEnvelope
+    set?: tbl_pedidosWhereUniqueInput | tbl_pedidosWhereUniqueInput[]
+    disconnect?: tbl_pedidosWhereUniqueInput | tbl_pedidosWhereUniqueInput[]
+    delete?: tbl_pedidosWhereUniqueInput | tbl_pedidosWhereUniqueInput[]
+    connect?: tbl_pedidosWhereUniqueInput | tbl_pedidosWhereUniqueInput[]
+    update?: tbl_pedidosUpdateWithWhereUniqueWithoutMunicipiosInput | tbl_pedidosUpdateWithWhereUniqueWithoutMunicipiosInput[]
+    updateMany?: tbl_pedidosUpdateManyWithWhereWithoutMunicipiosInput | tbl_pedidosUpdateManyWithWhereWithoutMunicipiosInput[]
+    deleteMany?: tbl_pedidosScalarWhereInput | tbl_pedidosScalarWhereInput[]
+  }
+
   export type tbl_clientesUncheckedUpdateManyWithoutMunicipiosNestedInput = {
     create?: XOR<tbl_clientesCreateWithoutMunicipiosInput, tbl_clientesUncheckedCreateWithoutMunicipiosInput> | tbl_clientesCreateWithoutMunicipiosInput[] | tbl_clientesUncheckedCreateWithoutMunicipiosInput[]
     connectOrCreate?: tbl_clientesCreateOrConnectWithoutMunicipiosInput | tbl_clientesCreateOrConnectWithoutMunicipiosInput[]
@@ -21174,6 +21345,20 @@ export namespace Prisma {
     deleteMany?: tbl_clientesScalarWhereInput | tbl_clientesScalarWhereInput[]
   }
 
+  export type tbl_pedidosUncheckedUpdateManyWithoutMunicipiosNestedInput = {
+    create?: XOR<tbl_pedidosCreateWithoutMunicipiosInput, tbl_pedidosUncheckedCreateWithoutMunicipiosInput> | tbl_pedidosCreateWithoutMunicipiosInput[] | tbl_pedidosUncheckedCreateWithoutMunicipiosInput[]
+    connectOrCreate?: tbl_pedidosCreateOrConnectWithoutMunicipiosInput | tbl_pedidosCreateOrConnectWithoutMunicipiosInput[]
+    upsert?: tbl_pedidosUpsertWithWhereUniqueWithoutMunicipiosInput | tbl_pedidosUpsertWithWhereUniqueWithoutMunicipiosInput[]
+    createMany?: tbl_pedidosCreateManyMunicipiosInputEnvelope
+    set?: tbl_pedidosWhereUniqueInput | tbl_pedidosWhereUniqueInput[]
+    disconnect?: tbl_pedidosWhereUniqueInput | tbl_pedidosWhereUniqueInput[]
+    delete?: tbl_pedidosWhereUniqueInput | tbl_pedidosWhereUniqueInput[]
+    connect?: tbl_pedidosWhereUniqueInput | tbl_pedidosWhereUniqueInput[]
+    update?: tbl_pedidosUpdateWithWhereUniqueWithoutMunicipiosInput | tbl_pedidosUpdateWithWhereUniqueWithoutMunicipiosInput[]
+    updateMany?: tbl_pedidosUpdateManyWithWhereWithoutMunicipiosInput | tbl_pedidosUpdateManyWithWhereWithoutMunicipiosInput[]
+    deleteMany?: tbl_pedidosScalarWhereInput | tbl_pedidosScalarWhereInput[]
+  }
+
   export type tbl_clientesCreateNestedOneWithoutPedidosInput = {
     create?: XOR<tbl_clientesCreateWithoutPedidosInput, tbl_clientesUncheckedCreateWithoutPedidosInput>
     connectOrCreate?: tbl_clientesCreateOrConnectWithoutPedidosInput
@@ -21184,6 +21369,12 @@ export namespace Prisma {
     create?: XOR<tbl_transportadorasCreateWithoutPedidosInput, tbl_transportadorasUncheckedCreateWithoutPedidosInput>
     connectOrCreate?: tbl_transportadorasCreateOrConnectWithoutPedidosInput
     connect?: tbl_transportadorasWhereUniqueInput
+  }
+
+  export type tbl_municipiosCreateNestedOneWithoutPedidosInput = {
+    create?: XOR<tbl_municipiosCreateWithoutPedidosInput, tbl_municipiosUncheckedCreateWithoutPedidosInput>
+    connectOrCreate?: tbl_municipiosCreateOrConnectWithoutPedidosInput
+    connect?: tbl_municipiosWhereUniqueInput
   }
 
   export type tbl_det_productosCreateNestedManyWithoutPedidosInput = {
@@ -21218,6 +21409,16 @@ export namespace Prisma {
     delete?: tbl_transportadorasWhereInput | boolean
     connect?: tbl_transportadorasWhereUniqueInput
     update?: XOR<XOR<tbl_transportadorasUpdateToOneWithWhereWithoutPedidosInput, tbl_transportadorasUpdateWithoutPedidosInput>, tbl_transportadorasUncheckedUpdateWithoutPedidosInput>
+  }
+
+  export type tbl_municipiosUpdateOneWithoutPedidosNestedInput = {
+    create?: XOR<tbl_municipiosCreateWithoutPedidosInput, tbl_municipiosUncheckedCreateWithoutPedidosInput>
+    connectOrCreate?: tbl_municipiosCreateOrConnectWithoutPedidosInput
+    upsert?: tbl_municipiosUpsertWithoutPedidosInput
+    disconnect?: tbl_municipiosWhereInput | boolean
+    delete?: tbl_municipiosWhereInput | boolean
+    connect?: tbl_municipiosWhereUniqueInput
+    update?: XOR<XOR<tbl_municipiosUpdateToOneWithWhereWithoutPedidosInput, tbl_municipiosUpdateWithoutPedidosInput>, tbl_municipiosUncheckedUpdateWithoutPedidosInput>
   }
 
   export type tbl_det_productosUpdateManyWithoutPedidosNestedInput = {
@@ -21936,6 +22137,7 @@ export namespace Prisma {
     nombre: string
     nomenclatura: string
     departamento?: tbl_departamentosCreateNestedOneWithoutMunicipiosInput
+    pedidos?: tbl_pedidosCreateNestedManyWithoutMunicipiosInput
   }
 
   export type tbl_municipiosUncheckedCreateWithoutClientesInput = {
@@ -21943,6 +22145,7 @@ export namespace Prisma {
     nombre: string
     nomenclatura: string
     fkid_tbl_departamentos?: bigint | number | null
+    pedidos?: tbl_pedidosUncheckedCreateNestedManyWithoutMunicipiosInput
   }
 
   export type tbl_municipiosCreateOrConnectWithoutClientesInput = {
@@ -21976,15 +22179,19 @@ export namespace Prisma {
   export type tbl_pedidosCreateWithoutClientesInput = {
     pkid?: bigint | number
     valor_total: number
+    valor_flete: number
     fecha_creacion: Date | string
     transportadoras?: tbl_transportadorasCreateNestedOneWithoutPedidosInput
+    municipios?: tbl_municipiosCreateNestedOneWithoutPedidosInput
     det_productos?: tbl_det_productosCreateNestedManyWithoutPedidosInput
   }
 
   export type tbl_pedidosUncheckedCreateWithoutClientesInput = {
     pkid?: bigint | number
     fkid_tbl_transportadoras?: bigint | number | null
+    fkid_tbl_municipios?: bigint | number | null
     valor_total: number
+    valor_flete: number
     fecha_creacion: Date | string
     det_productos?: tbl_det_productosUncheckedCreateNestedManyWithoutPedidosInput
   }
@@ -22015,6 +22222,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
     departamento?: tbl_departamentosUpdateOneWithoutMunicipiosNestedInput
+    pedidos?: tbl_pedidosUpdateManyWithoutMunicipiosNestedInput
   }
 
   export type tbl_municipiosUncheckedUpdateWithoutClientesInput = {
@@ -22022,6 +22230,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
     fkid_tbl_departamentos?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    pedidos?: tbl_pedidosUncheckedUpdateManyWithoutMunicipiosNestedInput
   }
 
   export type tbl_comerciosUpsertWithoutClientesInput = {
@@ -22076,7 +22285,9 @@ export namespace Prisma {
     pkid?: BigIntFilter<"tbl_pedidos"> | bigint | number
     fkid_tbl_clientes?: BigIntNullableFilter<"tbl_pedidos"> | bigint | number | null
     fkid_tbl_transportadoras?: BigIntNullableFilter<"tbl_pedidos"> | bigint | number | null
+    fkid_tbl_municipios?: BigIntNullableFilter<"tbl_pedidos"> | bigint | number | null
     valor_total?: FloatFilter<"tbl_pedidos"> | number
+    valor_flete?: FloatFilter<"tbl_pedidos"> | number
     fecha_creacion?: DateTimeFilter<"tbl_pedidos"> | Date | string
   }
 
@@ -22085,6 +22296,7 @@ export namespace Prisma {
     nombre: string
     nomenclatura: string
     clientes?: tbl_clientesCreateNestedManyWithoutMunicipiosInput
+    pedidos?: tbl_pedidosCreateNestedManyWithoutMunicipiosInput
   }
 
   export type tbl_municipiosUncheckedCreateWithoutDepartamentoInput = {
@@ -22092,6 +22304,7 @@ export namespace Prisma {
     nombre: string
     nomenclatura: string
     clientes?: tbl_clientesUncheckedCreateNestedManyWithoutMunicipiosInput
+    pedidos?: tbl_pedidosUncheckedCreateNestedManyWithoutMunicipiosInput
   }
 
   export type tbl_municipiosCreateOrConnectWithoutDepartamentoInput = {
@@ -22154,16 +22367,20 @@ export namespace Prisma {
   export type tbl_pedidosCreateWithoutDet_productosInput = {
     pkid?: bigint | number
     valor_total: number
+    valor_flete: number
     fecha_creacion: Date | string
     clientes?: tbl_clientesCreateNestedOneWithoutPedidosInput
     transportadoras?: tbl_transportadorasCreateNestedOneWithoutPedidosInput
+    municipios?: tbl_municipiosCreateNestedOneWithoutPedidosInput
   }
 
   export type tbl_pedidosUncheckedCreateWithoutDet_productosInput = {
     pkid?: bigint | number
     fkid_tbl_clientes?: bigint | number | null
     fkid_tbl_transportadoras?: bigint | number | null
+    fkid_tbl_municipios?: bigint | number | null
     valor_total: number
+    valor_flete: number
     fecha_creacion: Date | string
   }
 
@@ -22213,16 +22430,20 @@ export namespace Prisma {
   export type tbl_pedidosUpdateWithoutDet_productosInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     valor_total?: FloatFieldUpdateOperationsInput | number
+    valor_flete?: FloatFieldUpdateOperationsInput | number
     fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
     clientes?: tbl_clientesUpdateOneWithoutPedidosNestedInput
     transportadoras?: tbl_transportadorasUpdateOneWithoutPedidosNestedInput
+    municipios?: tbl_municipiosUpdateOneWithoutPedidosNestedInput
   }
 
   export type tbl_pedidosUncheckedUpdateWithoutDet_productosInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     fkid_tbl_clientes?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     fkid_tbl_transportadoras?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_municipios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     valor_total?: FloatFieldUpdateOperationsInput | number
+    valor_flete?: FloatFieldUpdateOperationsInput | number
     fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -22328,6 +22549,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type tbl_pedidosCreateWithoutMunicipiosInput = {
+    pkid?: bigint | number
+    valor_total: number
+    valor_flete: number
+    fecha_creacion: Date | string
+    clientes?: tbl_clientesCreateNestedOneWithoutPedidosInput
+    transportadoras?: tbl_transportadorasCreateNestedOneWithoutPedidosInput
+    det_productos?: tbl_det_productosCreateNestedManyWithoutPedidosInput
+  }
+
+  export type tbl_pedidosUncheckedCreateWithoutMunicipiosInput = {
+    pkid?: bigint | number
+    fkid_tbl_clientes?: bigint | number | null
+    fkid_tbl_transportadoras?: bigint | number | null
+    valor_total: number
+    valor_flete: number
+    fecha_creacion: Date | string
+    det_productos?: tbl_det_productosUncheckedCreateNestedManyWithoutPedidosInput
+  }
+
+  export type tbl_pedidosCreateOrConnectWithoutMunicipiosInput = {
+    where: tbl_pedidosWhereUniqueInput
+    create: XOR<tbl_pedidosCreateWithoutMunicipiosInput, tbl_pedidosUncheckedCreateWithoutMunicipiosInput>
+  }
+
+  export type tbl_pedidosCreateManyMunicipiosInputEnvelope = {
+    data: tbl_pedidosCreateManyMunicipiosInput | tbl_pedidosCreateManyMunicipiosInput[]
+    skipDuplicates?: boolean
+  }
+
   export type tbl_departamentosUpsertWithoutMunicipiosInput = {
     update: XOR<tbl_departamentosUpdateWithoutMunicipiosInput, tbl_departamentosUncheckedUpdateWithoutMunicipiosInput>
     create: XOR<tbl_departamentosCreateWithoutMunicipiosInput, tbl_departamentosUncheckedCreateWithoutMunicipiosInput>
@@ -22381,6 +22632,22 @@ export namespace Prisma {
     fkid_tbl_comercios?: BigIntNullableFilter<"tbl_clientes"> | bigint | number | null
   }
 
+  export type tbl_pedidosUpsertWithWhereUniqueWithoutMunicipiosInput = {
+    where: tbl_pedidosWhereUniqueInput
+    update: XOR<tbl_pedidosUpdateWithoutMunicipiosInput, tbl_pedidosUncheckedUpdateWithoutMunicipiosInput>
+    create: XOR<tbl_pedidosCreateWithoutMunicipiosInput, tbl_pedidosUncheckedCreateWithoutMunicipiosInput>
+  }
+
+  export type tbl_pedidosUpdateWithWhereUniqueWithoutMunicipiosInput = {
+    where: tbl_pedidosWhereUniqueInput
+    data: XOR<tbl_pedidosUpdateWithoutMunicipiosInput, tbl_pedidosUncheckedUpdateWithoutMunicipiosInput>
+  }
+
+  export type tbl_pedidosUpdateManyWithWhereWithoutMunicipiosInput = {
+    where: tbl_pedidosScalarWhereInput
+    data: XOR<tbl_pedidosUpdateManyMutationInput, tbl_pedidosUncheckedUpdateManyWithoutMunicipiosInput>
+  }
+
   export type tbl_clientesCreateWithoutPedidosInput = {
     pkid?: bigint | number
     telefono: string
@@ -22423,6 +22690,27 @@ export namespace Prisma {
   export type tbl_transportadorasCreateOrConnectWithoutPedidosInput = {
     where: tbl_transportadorasWhereUniqueInput
     create: XOR<tbl_transportadorasCreateWithoutPedidosInput, tbl_transportadorasUncheckedCreateWithoutPedidosInput>
+  }
+
+  export type tbl_municipiosCreateWithoutPedidosInput = {
+    pkid?: bigint | number
+    nombre: string
+    nomenclatura: string
+    departamento?: tbl_departamentosCreateNestedOneWithoutMunicipiosInput
+    clientes?: tbl_clientesCreateNestedManyWithoutMunicipiosInput
+  }
+
+  export type tbl_municipiosUncheckedCreateWithoutPedidosInput = {
+    pkid?: bigint | number
+    nombre: string
+    nomenclatura: string
+    fkid_tbl_departamentos?: bigint | number | null
+    clientes?: tbl_clientesUncheckedCreateNestedManyWithoutMunicipiosInput
+  }
+
+  export type tbl_municipiosCreateOrConnectWithoutPedidosInput = {
+    where: tbl_municipiosWhereUniqueInput
+    create: XOR<tbl_municipiosCreateWithoutPedidosInput, tbl_municipiosUncheckedCreateWithoutPedidosInput>
   }
 
   export type tbl_det_productosCreateWithoutPedidosInput = {
@@ -22505,6 +22793,33 @@ export namespace Prisma {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type tbl_municipiosUpsertWithoutPedidosInput = {
+    update: XOR<tbl_municipiosUpdateWithoutPedidosInput, tbl_municipiosUncheckedUpdateWithoutPedidosInput>
+    create: XOR<tbl_municipiosCreateWithoutPedidosInput, tbl_municipiosUncheckedCreateWithoutPedidosInput>
+    where?: tbl_municipiosWhereInput
+  }
+
+  export type tbl_municipiosUpdateToOneWithWhereWithoutPedidosInput = {
+    where?: tbl_municipiosWhereInput
+    data: XOR<tbl_municipiosUpdateWithoutPedidosInput, tbl_municipiosUncheckedUpdateWithoutPedidosInput>
+  }
+
+  export type tbl_municipiosUpdateWithoutPedidosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
+    departamento?: tbl_departamentosUpdateOneWithoutMunicipiosNestedInput
+    clientes?: tbl_clientesUpdateManyWithoutMunicipiosNestedInput
+  }
+
+  export type tbl_municipiosUncheckedUpdateWithoutPedidosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
+    fkid_tbl_departamentos?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    clientes?: tbl_clientesUncheckedUpdateManyWithoutMunicipiosNestedInput
   }
 
   export type tbl_det_productosUpsertWithWhereUniqueWithoutPedidosInput = {
@@ -22915,15 +23230,19 @@ export namespace Prisma {
   export type tbl_pedidosCreateWithoutTransportadorasInput = {
     pkid?: bigint | number
     valor_total: number
+    valor_flete: number
     fecha_creacion: Date | string
     clientes?: tbl_clientesCreateNestedOneWithoutPedidosInput
+    municipios?: tbl_municipiosCreateNestedOneWithoutPedidosInput
     det_productos?: tbl_det_productosCreateNestedManyWithoutPedidosInput
   }
 
   export type tbl_pedidosUncheckedCreateWithoutTransportadorasInput = {
     pkid?: bigint | number
     fkid_tbl_clientes?: bigint | number | null
+    fkid_tbl_municipios?: bigint | number | null
     valor_total: number
+    valor_flete: number
     fecha_creacion: Date | string
     det_productos?: tbl_det_productosUncheckedCreateNestedManyWithoutPedidosInput
   }
@@ -23136,22 +23455,28 @@ export namespace Prisma {
   export type tbl_pedidosCreateManyClientesInput = {
     pkid?: bigint | number
     fkid_tbl_transportadoras?: bigint | number | null
+    fkid_tbl_municipios?: bigint | number | null
     valor_total: number
+    valor_flete: number
     fecha_creacion: Date | string
   }
 
   export type tbl_pedidosUpdateWithoutClientesInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     valor_total?: FloatFieldUpdateOperationsInput | number
+    valor_flete?: FloatFieldUpdateOperationsInput | number
     fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
     transportadoras?: tbl_transportadorasUpdateOneWithoutPedidosNestedInput
+    municipios?: tbl_municipiosUpdateOneWithoutPedidosNestedInput
     det_productos?: tbl_det_productosUpdateManyWithoutPedidosNestedInput
   }
 
   export type tbl_pedidosUncheckedUpdateWithoutClientesInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     fkid_tbl_transportadoras?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_municipios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     valor_total?: FloatFieldUpdateOperationsInput | number
+    valor_flete?: FloatFieldUpdateOperationsInput | number
     fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
     det_productos?: tbl_det_productosUncheckedUpdateManyWithoutPedidosNestedInput
   }
@@ -23159,7 +23484,9 @@ export namespace Prisma {
   export type tbl_pedidosUncheckedUpdateManyWithoutClientesInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     fkid_tbl_transportadoras?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_municipios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     valor_total?: FloatFieldUpdateOperationsInput | number
+    valor_flete?: FloatFieldUpdateOperationsInput | number
     fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -23174,6 +23501,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
     clientes?: tbl_clientesUpdateManyWithoutMunicipiosNestedInput
+    pedidos?: tbl_pedidosUpdateManyWithoutMunicipiosNestedInput
   }
 
   export type tbl_municipiosUncheckedUpdateWithoutDepartamentoInput = {
@@ -23181,6 +23509,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
     clientes?: tbl_clientesUncheckedUpdateManyWithoutMunicipiosNestedInput
+    pedidos?: tbl_pedidosUncheckedUpdateManyWithoutMunicipiosNestedInput
   }
 
   export type tbl_municipiosUncheckedUpdateManyWithoutDepartamentoInput = {
@@ -23229,6 +23558,15 @@ export namespace Prisma {
     fkid_tbl_comercios?: bigint | number | null
   }
 
+  export type tbl_pedidosCreateManyMunicipiosInput = {
+    pkid?: bigint | number
+    fkid_tbl_clientes?: bigint | number | null
+    fkid_tbl_transportadoras?: bigint | number | null
+    valor_total: number
+    valor_flete: number
+    fecha_creacion: Date | string
+  }
+
   export type tbl_clientesUpdateWithoutMunicipiosInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     telefono?: StringFieldUpdateOperationsInput | string
@@ -23259,6 +23597,35 @@ export namespace Prisma {
     correo?: StringFieldUpdateOperationsInput | string
     direccion?: StringFieldUpdateOperationsInput | string
     fkid_tbl_comercios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  }
+
+  export type tbl_pedidosUpdateWithoutMunicipiosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    valor_total?: FloatFieldUpdateOperationsInput | number
+    valor_flete?: FloatFieldUpdateOperationsInput | number
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    clientes?: tbl_clientesUpdateOneWithoutPedidosNestedInput
+    transportadoras?: tbl_transportadorasUpdateOneWithoutPedidosNestedInput
+    det_productos?: tbl_det_productosUpdateManyWithoutPedidosNestedInput
+  }
+
+  export type tbl_pedidosUncheckedUpdateWithoutMunicipiosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    fkid_tbl_clientes?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_transportadoras?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    valor_total?: FloatFieldUpdateOperationsInput | number
+    valor_flete?: FloatFieldUpdateOperationsInput | number
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    det_productos?: tbl_det_productosUncheckedUpdateManyWithoutPedidosNestedInput
+  }
+
+  export type tbl_pedidosUncheckedUpdateManyWithoutMunicipiosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    fkid_tbl_clientes?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_transportadoras?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    valor_total?: FloatFieldUpdateOperationsInput | number
+    valor_flete?: FloatFieldUpdateOperationsInput | number
+    fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type tbl_det_productosCreateManyPedidosInput = {
@@ -23492,22 +23859,28 @@ export namespace Prisma {
   export type tbl_pedidosCreateManyTransportadorasInput = {
     pkid?: bigint | number
     fkid_tbl_clientes?: bigint | number | null
+    fkid_tbl_municipios?: bigint | number | null
     valor_total: number
+    valor_flete: number
     fecha_creacion: Date | string
   }
 
   export type tbl_pedidosUpdateWithoutTransportadorasInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     valor_total?: FloatFieldUpdateOperationsInput | number
+    valor_flete?: FloatFieldUpdateOperationsInput | number
     fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
     clientes?: tbl_clientesUpdateOneWithoutPedidosNestedInput
+    municipios?: tbl_municipiosUpdateOneWithoutPedidosNestedInput
     det_productos?: tbl_det_productosUpdateManyWithoutPedidosNestedInput
   }
 
   export type tbl_pedidosUncheckedUpdateWithoutTransportadorasInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     fkid_tbl_clientes?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_municipios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     valor_total?: FloatFieldUpdateOperationsInput | number
+    valor_flete?: FloatFieldUpdateOperationsInput | number
     fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
     det_productos?: tbl_det_productosUncheckedUpdateManyWithoutPedidosNestedInput
   }
@@ -23515,7 +23888,9 @@ export namespace Prisma {
   export type tbl_pedidosUncheckedUpdateManyWithoutTransportadorasInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     fkid_tbl_clientes?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_municipios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     valor_total?: FloatFieldUpdateOperationsInput | number
+    valor_flete?: FloatFieldUpdateOperationsInput | number
     fecha_creacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

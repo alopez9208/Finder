@@ -65,16 +65,20 @@ model tbl_municipios {
   fkid_tbl_departamentos BigInt?
   departamento           tbl_departamentos? @relation(fields: [fkid_tbl_departamentos], references: [pkid])
   clientes               tbl_clientes[]
+  pedidos                tbl_pedidos[]
 }
 
 model tbl_pedidos {
   pkid                     BigInt               @id @default(autoincrement())
   fkid_tbl_clientes        BigInt?
   fkid_tbl_transportadoras BigInt?
+  fkid_tbl_municipios      BigInt?
   valor_total              Float
+  valor_flete              Float
   fecha_creacion           DateTime             @db.Date
   clientes                 tbl_clientes?        @relation(fields: [fkid_tbl_clientes], references: [pkid])
   transportadoras          tbl_transportadoras? @relation(fields: [fkid_tbl_transportadoras], references: [pkid])
+  municipios               tbl_municipios?      @relation(fields: [fkid_tbl_municipios], references: [pkid])
   det_productos            tbl_det_productos[]
 }
 
