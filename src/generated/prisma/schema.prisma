@@ -59,8 +59,8 @@ model tbl_estados_usuario {
 
 model tbl_municipios {
   pkid                   BigInt             @id @default(autoincrement())
-  nombre                 String             @db.VarChar(255)
-  nomenclatura           String             @db.VarChar(255)
+  nombre                 String             @unique @db.VarChar(255)
+  nomenclatura           String             @unique @db.VarChar(255)
   fkid_tbl_departamentos BigInt?
   clientes               tbl_clientes[]
   departamento           tbl_departamentos? @relation(fields: [fkid_tbl_departamentos], references: [pkid])
@@ -91,7 +91,7 @@ model tbl_personas {
 
 model tbl_productos {
   pkid              BigInt              @id @default(autoincrement())
-  nombre            String              @db.VarChar(255)
+  nombre            String              @unique @db.VarChar(255)
   costo             Float
   valor             Float
   fkid_tbl_empresas BigInt?
@@ -101,7 +101,7 @@ model tbl_productos {
 
 model tbl_empresas {
   pkid      BigInt          @id @default(autoincrement())
-  nit       String          @db.VarChar(255)
+  nit       String          @unique @db.VarChar(255)
   nombre    String          @db.VarChar(255)
   telefono  String          @db.VarChar(255)
   correo    String          @db.VarChar(255)
@@ -110,14 +110,14 @@ model tbl_empresas {
 
 model tbl_roles {
   pkid         BigInt         @id @default(autoincrement())
-  nombre       String         @db.VarChar(255)
-  nomenclatura String         @db.VarChar(255)
+  nombre       String         @unique @db.VarChar(255)
+  nomenclatura String         @unique @db.VarChar(255)
   usuarios     tbl_usuarios[]
 }
 
 model tbl_comercios {
   pkid                   BigInt          @id @default(autoincrement())
-  nombre                 String          @db.VarChar(255)
+  nombre                 String          @unique @db.VarChar(255)
   telefono               String          @db.VarChar(255)
   correo                 String          @db.VarChar(255)
   fkusuario_tbl_usuarios String?
@@ -128,8 +128,8 @@ model tbl_comercios {
 
 model tbl_transportadoras {
   pkid         BigInt        @id @default(autoincrement())
-  nombre       String        @db.VarChar(255)
-  nomenclatura String        @db.VarChar(255)
+  nombre       String        @unique @db.VarChar(255)
+  nomenclatura String        @unique @db.VarChar(255)
   pedidos      tbl_pedidos[]
 }
 

@@ -18888,16 +18888,16 @@ export namespace Prisma {
 
   export type tbl_municipiosWhereUniqueInput = Prisma.AtLeast<{
     pkid?: bigint | number
+    nombre?: string
+    nomenclatura?: string
     AND?: tbl_municipiosWhereInput | tbl_municipiosWhereInput[]
     OR?: tbl_municipiosWhereInput[]
     NOT?: tbl_municipiosWhereInput | tbl_municipiosWhereInput[]
-    nombre?: StringFilter<"tbl_municipios"> | string
-    nomenclatura?: StringFilter<"tbl_municipios"> | string
     fkid_tbl_departamentos?: BigIntNullableFilter<"tbl_municipios"> | bigint | number | null
     clientes?: Tbl_clientesListRelationFilter
     departamento?: XOR<Tbl_departamentosNullableScalarRelationFilter, tbl_departamentosWhereInput> | null
     pedidos?: Tbl_pedidosListRelationFilter
-  }, "pkid">
+  }, "pkid" | "nombre" | "nomenclatura">
 
   export type tbl_municipiosOrderByWithAggregationInput = {
     pkid?: SortOrder
@@ -19074,16 +19074,16 @@ export namespace Prisma {
 
   export type tbl_productosWhereUniqueInput = Prisma.AtLeast<{
     pkid?: bigint | number
+    nombre?: string
     AND?: tbl_productosWhereInput | tbl_productosWhereInput[]
     OR?: tbl_productosWhereInput[]
     NOT?: tbl_productosWhereInput | tbl_productosWhereInput[]
-    nombre?: StringFilter<"tbl_productos"> | string
     costo?: FloatFilter<"tbl_productos"> | number
     valor?: FloatFilter<"tbl_productos"> | number
     fkid_tbl_empresas?: BigIntNullableFilter<"tbl_productos"> | bigint | number | null
     det_productos?: Tbl_det_productosListRelationFilter
     empresas?: XOR<Tbl_empresasNullableScalarRelationFilter, tbl_empresasWhereInput> | null
-  }, "pkid">
+  }, "pkid" | "nombre">
 
   export type tbl_productosOrderByWithAggregationInput = {
     pkid?: SortOrder
@@ -19132,15 +19132,15 @@ export namespace Prisma {
 
   export type tbl_empresasWhereUniqueInput = Prisma.AtLeast<{
     pkid?: bigint | number
+    nit?: string
     AND?: tbl_empresasWhereInput | tbl_empresasWhereInput[]
     OR?: tbl_empresasWhereInput[]
     NOT?: tbl_empresasWhereInput | tbl_empresasWhereInput[]
-    nit?: StringFilter<"tbl_empresas"> | string
     nombre?: StringFilter<"tbl_empresas"> | string
     telefono?: StringFilter<"tbl_empresas"> | string
     correo?: StringFilter<"tbl_empresas"> | string
     productos?: Tbl_productosListRelationFilter
-  }, "pkid">
+  }, "pkid" | "nit">
 
   export type tbl_empresasOrderByWithAggregationInput = {
     pkid?: SortOrder
@@ -19185,13 +19185,13 @@ export namespace Prisma {
 
   export type tbl_rolesWhereUniqueInput = Prisma.AtLeast<{
     pkid?: bigint | number
+    nombre?: string
+    nomenclatura?: string
     AND?: tbl_rolesWhereInput | tbl_rolesWhereInput[]
     OR?: tbl_rolesWhereInput[]
     NOT?: tbl_rolesWhereInput | tbl_rolesWhereInput[]
-    nombre?: StringFilter<"tbl_roles"> | string
-    nomenclatura?: StringFilter<"tbl_roles"> | string
     usuarios?: Tbl_usuariosListRelationFilter
-  }, "pkid">
+  }, "pkid" | "nombre" | "nomenclatura">
 
   export type tbl_rolesOrderByWithAggregationInput = {
     pkid?: SortOrder
@@ -19240,17 +19240,17 @@ export namespace Prisma {
 
   export type tbl_comerciosWhereUniqueInput = Prisma.AtLeast<{
     pkid?: bigint | number
+    nombre?: string
     AND?: tbl_comerciosWhereInput | tbl_comerciosWhereInput[]
     OR?: tbl_comerciosWhereInput[]
     NOT?: tbl_comerciosWhereInput | tbl_comerciosWhereInput[]
-    nombre?: StringFilter<"tbl_comercios"> | string
     telefono?: StringFilter<"tbl_comercios"> | string
     correo?: StringFilter<"tbl_comercios"> | string
     fkusuario_tbl_usuarios?: StringNullableFilter<"tbl_comercios"> | string | null
     campanias?: Tbl_campaniasListRelationFilter
     clientes?: Tbl_clientesListRelationFilter
     usuarios?: XOR<Tbl_usuariosNullableScalarRelationFilter, tbl_usuariosWhereInput> | null
-  }, "pkid">
+  }, "pkid" | "nombre">
 
   export type tbl_comerciosOrderByWithAggregationInput = {
     pkid?: SortOrder
@@ -19295,13 +19295,13 @@ export namespace Prisma {
 
   export type tbl_transportadorasWhereUniqueInput = Prisma.AtLeast<{
     pkid?: bigint | number
+    nombre?: string
+    nomenclatura?: string
     AND?: tbl_transportadorasWhereInput | tbl_transportadorasWhereInput[]
     OR?: tbl_transportadorasWhereInput[]
     NOT?: tbl_transportadorasWhereInput | tbl_transportadorasWhereInput[]
-    nombre?: StringFilter<"tbl_transportadoras"> | string
-    nomenclatura?: StringFilter<"tbl_transportadoras"> | string
     pedidos?: Tbl_pedidosListRelationFilter
-  }, "pkid">
+  }, "pkid" | "nombre" | "nomenclatura">
 
   export type tbl_transportadorasOrderByWithAggregationInput = {
     pkid?: SortOrder
