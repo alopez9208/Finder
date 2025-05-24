@@ -6,61 +6,45 @@ import { TbArrowsSort } from "react-icons/tb";
 
 export default function ComerciosPage() {
   const [searchNombre, setsearchNombre] = useState("");
-  const [searchUsuario] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const comerciosPerPage = 5;
-  const [comercios, setComercios] = useState([]);
-  const [usuarios, setUsuarios] = useState([]);
+  const [comercios, setComercio] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-
-
   const [modalOpen, setModalOpen] = useState(false);
   const [editingComercio, setEditingComercio] = useState(null);
   const [nombre, setNombre] = useState("");
   const [telefono, setTelefono] = useState("");
-  const [correo, setCorreo] = useState("");
-  const [selectedUsuario, setSelectedUsuario] = useState(""); // Estado para el usuario seleccionado
-
+  const [correo, setCorreo] = useState("");  
 
   useEffect(() => {
     fetchComercios();
-    fetchUsuarios(); // Llamar a la función para obtener los usuarios
   }, []);
-
+  
   const fetchComercios = async () => {
-    try {
-      const res = await fetch("/api/dashboard-comercio/comercios");
-      const data = await res.json();
-      if (data.success) {
-        setComercios(data.comercios);
-      } else {
-        console.error("No se encontraron comercios");
+      const usuario = JSON.parse(localStorage.getItem("usuario"));
+      const usuarioId = usuario?.pkusuario;
+    
+      try {
+        const response = await fetch("/api/dashboard-comercio/comercios", {
+          headers: {
+            "x-usuario-id": usuarioId ? usuarioId.toString() : "",  // Envías el id como string
+          },
+        });
+    
+        const data = await response.json();
+        if (data.success && data.comercios.length > 0) {
+          setComercio(data.comercios);         
+        }
+      } catch (error) {
+        console.error("Error al cargar comercios:", error);
       }
-    } catch (error) {
-      console.error("Error al obtener comercios:", error);
-    }
-  };
-
-  const fetchUsuarios = async () => {
-    try {
-      const res = await fetch("/api/dashboard/user-data");
-      const data = await res.json();
-      if (data.success) {
-        setUsuarios(data.usuarios); // Guardar los usuarios en el estado
-      } else {
-        console.error("No se encontraron usuarios");
-      }
-    } catch (error) {
-      console.error("Error al obtener usuarios:", error);
-    }
-  };
+    }  
 
   const openModalForNew = () => {
     setEditingComercio(null);
     setNombre("");
     setTelefono("");
-    setCorreo("");
-    setSelectedUsuario(""); // Reiniciar el usuario seleccionado
+    setCorreo("");  
     setModalOpen(true);
   };
 
@@ -69,22 +53,25 @@ export default function ComerciosPage() {
     setNombre(comercio.nombre);
     setTelefono(comercio.telefono);
     setCorreo(comercio.correo);
-    setSelectedUsuario(comercio.fkusuario_tbl_usuarios); // Asignar el usuario del comercio
-    setModalOpen(true);
+    setModalOpen(true);    
   };
 
   const handleSubmit = async () => {
-    if (!nombre.trim() || !telefono.trim() || !correo.trim() || !selectedUsuario) {
+    if (!nombre.trim() || !telefono.trim() || !correo.trim()) {
       alert("Por favor, completa todos los campos.");
       return;
     }
+
+    // Obtener el ID del usuario del localStorage
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    const usuarioId = usuario?.pkusuario;
 
     const method = editingComercio ? "PUT" : "POST";
     const url = "/api/dashboard-comercio/comercios";
 
     const payload = editingComercio
-      ? { pkid: editingComercio.pkid, nombre, telefono, correo, fkusuario_tbl_usuarios: selectedUsuario }
-      : { nombre, telefono, correo, fkusuario_tbl_usuarios: selectedUsuario };
+      ? { pkid: editingComercio.pkid, nombre, telefono, correo, fkusuario_tbl_usuarios: usuarioId }
+      : { nombre, telefono, correo, fkusuario_tbl_usuarios: usuarioId };
 
     try {
       const res = await fetch(url, {
@@ -108,10 +95,8 @@ export default function ComerciosPage() {
   const filteredComercios = comercios
     .filter((comercio) => {
       const nombre = comercio.nombre?.toLowerCase() || '';
-      const usuario = comercio.nombre_usuario?.toLowerCase() || '';
       const matchNombre = nombre.includes(searchNombre.toLowerCase());
-      const matchUsuario = usuario.includes(searchUsuario.toLowerCase());
-      return matchNombre && matchUsuario;
+      return matchNombre;
     })
     .sort((a, b) => {
       if (!sortConfig.key) return 0;
@@ -188,7 +173,7 @@ export default function ComerciosPage() {
           <table className="min-w-full table-auto text-gray-800">
             <thead className="bg-gray-100">
               <tr>
-                {[{ key: "pkid", label: "ID" }, { key: "nombre", label: "Nombre" }, { key: "telefono", label: "Teléfono" }, { key: "correo", label: "Correo" }, { key: "nombre_usuario", label: "Usuario" }
+                {[{ key: "pkid", label: "ID" }, { key: "nombre", label: "Nombre" }, { key: "telefono", label: "Teléfono" }, { key: "correo", label: "Correo" }
                 ]
                   .map(({ key, label }) => (
                     <th
@@ -209,7 +194,6 @@ export default function ComerciosPage() {
                   <td className="p-3">{comercio.nombre}</td>
                   <td className="p-3">{comercio.telefono}</td>
                   <td className="p-3">{comercio.correo}</td>
-                  <td className="p-3">{comercio.nombre_usuario}</td>
                   <td className="p-3 text-right">
                     <button
                       onClick={() => openModalForEdit(comercio)}
@@ -318,19 +302,6 @@ export default function ComerciosPage() {
               value={correo}
               onChange={(e) => setCorreo(e.target.value)}
             />
-            <select
-              value={selectedUsuario}
-              onChange={(e) => setSelectedUsuario(e.target.value)}
-              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white disabled:bg-[#f0ebff]"
-              disabled={!!editingComercio}
-            >
-              <option value="">Seleccione un Usuario</option>
-              {usuarios.map((usuarios) => (  
-                <option key={usuarios.pkusuario} value={usuarios.pkusuario}>
-                  {usuarios.pkusuario}
-                </option>
-              ))}
-            </select>
             <div className="flex justify-end space-x-2">
               <button
                 onClick={() => setModalOpen(false)}

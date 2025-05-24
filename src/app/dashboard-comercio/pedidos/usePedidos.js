@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { TbArrowsSort } from "react-icons/tb";
 
 const usePedidos = () => {
@@ -13,6 +13,7 @@ const usePedidos = () => {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
     const [modalOpen, setModalOpen] = useState(false);
+    const modalRef = useRef();
     const [editingPedido, setEditingPedido] = useState(null);
     const [valor_total, setValor_total] = useState("");
     const [valor_flete, setValor_flete] = useState("");
@@ -36,11 +37,54 @@ const usePedidos = () => {
         fetchClientes();
         fetchProductos();
         fetchMunicipios();
-    }, []);
+    const handleEsc = (e) => {
+      if (e.key === "Escape") setModalOpen(false);
+  };
+  if (modalOpen) {
+      window.addEventListener("keydown", handleEsc);
+  }
+  return () => window.removeEventListener("keydown", handleEsc);
+}, [modalOpen]);
+
+const handleClickOutside = (e) => {
+  if (modalRef.current && !modalRef.current.contains(e.target)) {
+      setModalOpen(false);
+  }
+};
+
+useEffect(() => {
+  if (modalOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+  }
+  return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, [modalOpen]);
+
+  // Obtener comercioSeleccionado de localStorage
+  const getComercioSeleccionado = () => {
+    // Si en localStorage tienes "comercioSeleccionado" guardado como string, úsalo así:
+    const comercioSeleccionado = localStorage.getItem("comercioSeleccionado");
+    console.log("comercioSeleccionado desde localStorage:", comercioSeleccionado);
+    return comercioSeleccionado;
+  };
 
     const fetchPedidos = async () => {
         try {
-            const res = await fetch("/api/dashboard-comercio/pedidos");
+            const comercioId = getComercioSeleccionado();
+
+            const res = await fetch("/api/dashboard-comercio/pedidos", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-comercio-id": comercioId,
+                },
+            });
+
+            if (!res.ok) {
+                throw new Error("Error al obtener pedidos");
+              }
+
             const data = await res.json();
             if (data.success) {
                 setPedidos(data.pedidos);
@@ -53,21 +97,33 @@ const usePedidos = () => {
     };
 
     const fetchClientes = async () => {
-        try {
-            const res = await fetch("/api/dashboard-comercio/clientes");
-            const data = await res.json();
-            console.log("Respuesta del backend:", data);
-            if (data.success) {
-                setClientes(data.clientes || []);
-            } else {
-                setClientes([]);
-                console.error("No se encontraron clientes");
-            }
-        } catch (error) {
-            setClientes([]);
-            console.error("Error al obtener clientes:", error);
+        const comercioId = getComercioSeleccionado();
+    
+        if (!comercioId) {
+          console.warn("No se encontró 'comercioSeleccionado' en localStorage.");
+          return;
         }
-    };
+    
+        try {
+          const res = await fetch("/api/dashboard-comercio/clientes", {
+            headers: {
+              "x-comercio-id": comercioId,
+            },
+          });
+    
+          const data = await res.json();
+          console.log("Respuesta del backend:", data);
+    
+          if (data.success) {
+            setClientes(data.clientes);
+            console.log("Clientes recibidos:", data.clientes);
+          } else {
+            console.error("No se encontraron clientes", data.error);
+          }
+        } catch (error) {
+          console.error("Error al obtener clientes:", error);
+        }
+      };
 
     const fetchMunicipios = async () => {
         try {
@@ -416,6 +472,7 @@ const usePedidos = () => {
         handlePageChange,
         openModalForEdit,
         modalOpen,
+        modalRef,
         editingPedido,
         setValor_total,
         setValor_flete,
@@ -449,6 +506,7 @@ const usePedidos = () => {
         municipios,
         selectedMunicipio,
         setSelectedMunicipio,
+        getComercioSeleccionado,
     };
 }
 

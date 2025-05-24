@@ -3,17 +3,17 @@
 import useLogin from "./useLogin";
 import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 
-
 export default function LoginPage() {
 
   const {
     handleSubmit,
-    setUsuario,
+    setPkusuario,
     setContrasena,
-    usuario,
+    pkusuario,
     contrasena,
     mostrarContrasena,
     setMostrarContrasena,
+    error,
     router
   } = useLogin()
 
@@ -36,7 +36,6 @@ export default function LoginPage() {
           className="w-[700px] max-w-none absolute right-[-120px] top-1/2 mt-12 transform -translate-y-1/2 z-10"
         />
       </div>
-
 
       {/* Lado Derecho: Fondo blanco */}
       <div className="w-1/2 bg-white flex flex-col justify-center items-center px-10 relative">
@@ -62,8 +61,8 @@ export default function LoginPage() {
               type="text"
               placeholder="Usuario"
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded focus:outline-none placeholder:text-gray-400 text-gray-800"
-              value={usuario}
-              onChange={(e) => setUsuario(e.target.value)}
+              value={pkusuario}
+              onChange={(e) => setPkusuario(e.target.value)}
             />
             <FaUser className="absolute top-3.5 left-3 text-gray-400" />
           </div>
@@ -88,6 +87,8 @@ export default function LoginPage() {
               {mostrarContrasena ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
+
+          {error && <p className="text-red-500 text-sm">{error}</p>}
 
           <button
             onClick={handleSubmit}

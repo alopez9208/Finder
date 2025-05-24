@@ -9,140 +9,138 @@ datasource db {
 }
 
 model tbl_campanias {
-  pkid                BigInt   @id @default(autoincrement())
-  nombre              String   @db.VarChar(255)
+  pkid                BigInt         @id @default(autoincrement())
+  nombre              String         @db.VarChar(255)
   presupuesto_gastado Float
-  fecha_inicio        DateTime @db.Date
-  fecha_fin           DateTime @db.Date
+  fecha_inicio        DateTime       @db.Date
+  fecha_fin           DateTime       @db.Date
   fkid_tbl_comercios  BigInt?
-  comercio tbl_comercios? @relation(fields: [fkid_tbl_comercios], references: [pkid])
+  comercio            tbl_comercios? @relation(fields: [fkid_tbl_comercios], references: [pkid])
 }
 
 model tbl_clientes {
-  pkid                 BigInt           @id @default(autoincrement())
-  telefono             String           @unique @db.VarChar(255)
-  nombres                String           @db.VarChar(255)
-  apellidos              String           @db.VarChar(255)
-  correo                 String           @db.VarChar(255)
-  direccion              String           @db.VarChar(255)
-  fkid_tbl_municipios    BigInt?
-  fkid_tbl_comercios     BigInt?
-  municipios             tbl_municipios?  @relation(fields: [fkid_tbl_municipios], references: [pkid])
-  comercios              tbl_comercios?   @relation(fields: [fkid_tbl_comercios], references: [pkid])
-  pedidos tbl_pedidos[]
+  nombres             String          @db.VarChar(255)
+  apellidos           String          @db.VarChar(255)
+  correo              String          @db.VarChar(255)
+  direccion           String          @db.VarChar(255)
+  fkid_tbl_municipios BigInt?
+  fkid_tbl_comercios  BigInt?
+  pkid                BigInt          @id @default(autoincrement())
+  telefono            String          @unique @db.VarChar(255)
+  comercios           tbl_comercios?  @relation(fields: [fkid_tbl_comercios], references: [pkid])
+  municipios          tbl_municipios? @relation(fields: [fkid_tbl_municipios], references: [pkid])
+  pedidos             tbl_pedidos[]
 }
 
 model tbl_departamentos {
-  pkid   BigInt @id @default(autoincrement())
-  nombre String @db.VarChar(255)
-  nomenclatura String @db.VarChar(255)
-  municipios tbl_municipios[]
+  pkid         BigInt           @id @default(autoincrement())
+  nombre       String           @db.VarChar(255)
+  nomenclatura String           @db.VarChar(255)
+  municipios   tbl_municipios[]
 }
 
 model tbl_det_productos {
-  pkid                    BigInt @id @default(autoincrement())
-  cantidad                Int
-  precio_venta_unitario   Float
-  costo_unitario          Float
-  fkid_tbl_productos      BigInt
-  fkid_tbl_pedidos        BigInt
-
-  productos tbl_productos @relation(fields: [fkid_tbl_productos], references: [pkid])
-  pedidos tbl_pedidos     @relation(fields: [fkid_tbl_pedidos], references: [pkid])
+  pkid                  BigInt        @id @default(autoincrement())
+  fkid_tbl_productos    BigInt
+  cantidad              Int
+  fkid_tbl_pedidos      BigInt
+  costo_unitario        Float
+  precio_venta_unitario Float
+  pedidos               tbl_pedidos   @relation(fields: [fkid_tbl_pedidos], references: [pkid])
+  productos             tbl_productos @relation(fields: [fkid_tbl_productos], references: [pkid])
 }
 
-
 model tbl_estados_usuario {
-  pkid         BigInt @id @default(autoincrement())
-  nombre       String @db.VarChar(255)
-  nomenclatura String @db.VarChar(255)
-  usuarios  tbl_usuarios[]
+  pkid         BigInt         @id @default(autoincrement())
+  nombre       String         @db.VarChar(255)
+  nomenclatura String         @db.VarChar(255)
+  usuarios     tbl_usuarios[]
 }
 
 model tbl_municipios {
-  pkid   BigInt @id @default(autoincrement())
-  nombre String @db.VarChar(255)
-  nomenclatura String @db.VarChar(255)
+  pkid                   BigInt             @id @default(autoincrement())
+  nombre                 String             @db.VarChar(255)
+  nomenclatura           String             @db.VarChar(255)
   fkid_tbl_departamentos BigInt?
-  departamento tbl_departamentos? @relation(fields: [fkid_tbl_departamentos], references: [pkid])
-  clientes tbl_clientes[]
-  pedidos tbl_pedidos[]
+  clientes               tbl_clientes[]
+  departamento           tbl_departamentos? @relation(fields: [fkid_tbl_departamentos], references: [pkid])
+  pedidos                tbl_pedidos[]
 }
 
 model tbl_pedidos {
-  pkid                       BigInt   @id @default(autoincrement())
-  fkid_tbl_clientes          BigInt?  
-  fkid_tbl_transportadoras   BigInt?
-  fkid_tbl_municipios        BigInt?
-  valor_total                Float
-  valor_flete                Float
-  fecha_creacion             DateTime @db.Date
-  clientes tbl_clientes? @relation(fields: [fkid_tbl_clientes], references: [pkid])  
-  transportadoras tbl_transportadoras? @relation(fields: [fkid_tbl_transportadoras], references: [pkid])
-  municipios tbl_municipios? @relation(fields: [fkid_tbl_municipios], references: [pkid])
-  det_productos tbl_det_productos[]
+  pkid                     BigInt               @id @default(autoincrement())
+  fkid_tbl_transportadoras BigInt?
+  fkid_tbl_clientes        BigInt?
+  fecha_creacion           DateTime             @db.Date
+  valor_total              Float
+  valor_flete              Float
+  fkid_tbl_municipios      BigInt?
+  det_productos            tbl_det_productos[]
+  clientes                 tbl_clientes?        @relation(fields: [fkid_tbl_clientes], references: [pkid])
+  municipios               tbl_municipios?      @relation(fields: [fkid_tbl_municipios], references: [pkid])
+  transportadoras          tbl_transportadoras? @relation(fields: [fkid_tbl_transportadoras], references: [pkid])
 }
 
 model tbl_personas {
-  pkid      BigInt @id @default(autoincrement())
-  nombres   String @db.VarChar(255)
-  apellidos String @db.VarChar(255)
-  correo    String @db.VarChar(255)
+  pkid      BigInt         @id @default(autoincrement())
+  nombres   String         @db.VarChar(255)
+  apellidos String         @db.VarChar(255)
+  correo    String         @db.VarChar(255)
   usuarios  tbl_usuarios[]
 }
 
 model tbl_productos {
-  pkid   BigInt @id @default(autoincrement())
-  nombre String @db.VarChar(255)
-  costo  Float
-  valor  Float
+  pkid              BigInt              @id @default(autoincrement())
+  nombre            String              @db.VarChar(255)
+  costo             Float
+  valor             Float
   fkid_tbl_empresas BigInt?
-  empresas tbl_empresas? @relation(fields: [fkid_tbl_empresas], references: [pkid]) 
-  det_productos tbl_det_productos[]   
+  det_productos     tbl_det_productos[]
+  empresas          tbl_empresas?       @relation(fields: [fkid_tbl_empresas], references: [pkid])
 }
 
 model tbl_empresas {
-  pkid      BigInt @id @default(autoincrement())
-  nit       String @db.VarChar(255)
-  nombre    String @db.VarChar(255)
-  telefono  String @db.VarChar(255)
-  correo    String @db.VarChar(255)
+  pkid      BigInt          @id @default(autoincrement())
+  nit       String          @db.VarChar(255)
+  nombre    String          @db.VarChar(255)
+  telefono  String          @db.VarChar(255)
+  correo    String          @db.VarChar(255)
   productos tbl_productos[]
 }
 
 model tbl_roles {
-  pkid         BigInt @id @default(autoincrement())
-  nombre       String @db.VarChar(255)
-  nomenclatura String @db.VarChar(255)
-  usuarios  tbl_usuarios[]
+  pkid         BigInt         @id @default(autoincrement())
+  nombre       String         @db.VarChar(255)
+  nomenclatura String         @db.VarChar(255)
+  usuarios     tbl_usuarios[]
 }
 
 model tbl_comercios {
-  pkid                   BigInt @id @default(autoincrement())
-  nombre                 String @db.VarChar(255)
-  telefono               String @db.VarChar(255)
-  correo                 String @db.VarChar(255)
+  pkid                   BigInt          @id @default(autoincrement())
+  nombre                 String          @db.VarChar(255)
+  telefono               String          @db.VarChar(255)
+  correo                 String          @db.VarChar(255)
   fkusuario_tbl_usuarios String?
-  usuarios tbl_usuarios? @relation(fields: [fkusuario_tbl_usuarios], references: [pkusuario])
-  campanias tbl_campanias[]
-  clientes tbl_clientes[]
+  campanias              tbl_campanias[]
+  clientes               tbl_clientes[]
+  usuarios               tbl_usuarios?   @relation(fields: [fkusuario_tbl_usuarios], references: [pkusuario])
 }
 
 model tbl_transportadoras {
-  pkid         BigInt @id @default(autoincrement())
-  nombre       String @db.VarChar(255)
-  nomenclatura String @db.VarChar(255)
-  pedidos tbl_pedidos[]
+  pkid         BigInt        @id @default(autoincrement())
+  nombre       String        @db.VarChar(255)
+  nomenclatura String        @db.VarChar(255)
+  pedidos      tbl_pedidos[]
 }
 
 model tbl_usuarios {
-  pkusuario                 String @id @db.VarChar(255)
-  contrase_a                String @map("contraseña") @db.VarChar(255)
-  fkid_tbl_roles            BigInt
-  fkid_tbl_estados_usuario  BigInt
-  fkid_tbl_personas         BigInt
-  persona                   tbl_personas @relation(fields: [fkid_tbl_personas], references: [pkid])
-  rol                       tbl_roles @relation(fields: [fkid_tbl_roles], references: [pkid])
-  estado                    tbl_estados_usuario @relation(fields: [fkid_tbl_estados_usuario], references: [pkid])
-comercios tbl_comercios[]
+  pkusuario                String              @id @db.VarChar(255)
+  contrasena               String              @db.VarChar(255)
+  fkid_tbl_roles           BigInt
+  fkid_tbl_estados_usuario BigInt
+  fkid_tbl_personas        BigInt
+  comercios                tbl_comercios[]
+  estado                   tbl_estados_usuario @relation(fields: [fkid_tbl_estados_usuario], references: [pkid])
+  persona                  tbl_personas        @relation(fields: [fkid_tbl_personas], references: [pkid])
+  rol                      tbl_roles           @relation(fields: [fkid_tbl_roles], references: [pkid])
 }

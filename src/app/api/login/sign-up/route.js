@@ -21,7 +21,7 @@ export async function POST(request) {
     const nuevoUsuario = await prisma.tbl_usuarios.create({
       data: {
         pkusuario: usuario,
-        contrase_a: contraseña,
+        contrasena: contraseña,
         fkid_tbl_personas: persona.pkid,
         fkid_tbl_roles: 2, // Rol Comercio
         fkid_tbl_estados_usuario: 1, // Activo

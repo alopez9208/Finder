@@ -1,19 +1,26 @@
 import prisma from "@/lib/prisma";
 
-export async function GET() {
+export async function GET(req) {
   try {
+    const usuarioId = req.headers.get("x-usuario-id");    
+    const cleanedUsuarioId = usuarioId ? usuarioId.trim() : null;    
+
+    if (!cleanedUsuarioId) {
+      return new Response(
+        JSON.stringify({ success: false, message: "Usuario no autenticado o ID inválido" }),
+        { status: 401, headers: { "Content-Type": "application/json" } }
+      );
+    }  
+
     const comercios = await prisma.tbl_comercios.findMany({
+      where: {
+        fkusuario_tbl_usuarios: cleanedUsuarioId,
+      },
       select: {
-        pkid: true,        
-        nombre: true,       
+        pkid: true,
+        nombre: true,
         telefono: true,
         correo: true,
-        fkusuario_tbl_usuarios: true,
-        usuarios: {
-          select: {
-            pkusuario: true,
-          },
-        },
       },
     });
 
@@ -22,8 +29,6 @@ export async function GET() {
       nombre: item.nombre,
       telefono: item.telefono,
       correo: item.correo,
-      fkusuario_tbl_usuarios: item.fkusuario_tbl_usuarios?.toString() ?? null,
-      nombre_usuario: item.usuarios?.pkusuario ?? null,
     }));
 
     return new Response(
@@ -34,9 +39,9 @@ export async function GET() {
       }
     );
   } catch (error) {
-    console.error("Error al obtener comercios:", error);
+    console.error("Error al obtener comercios:", error.message);
     return new Response(
-      JSON.stringify({ success: false, message: error.message }),
+      JSON.stringify({ success: false, message: "Error interno del servidor" }),
       {
         status: 500,
         headers: { "Content-Type": "application/json" },

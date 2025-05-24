@@ -6,14 +6,13 @@ import { MdOutlineSell } from "react-icons/md";
 import { FaShoppingCart, FaHome } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
 import { RiAdvertisementLine } from "react-icons/ri";
-import { BiBuildingHouse } from "react-icons/bi";
 import { IoLogOutOutline } from "react-icons/io5";
 
 export default function DashboardComercioLayout({ children }) {
   const pathname = usePathname();
   const router = useRouter();
   const [fechaActual, setFechaActual] = useState("");
-  const [comercios, setComercio] = useState([]); 
+  const [comercios, setComercio] = useState([]);
   const [selectedComercio, setSelectedComercio] = useState("");
 
   useEffect(() => {
@@ -27,35 +26,56 @@ export default function DashboardComercioLayout({ children }) {
       const fecha = new Date().toLocaleDateString("es-ES", opciones);
       setFechaActual(fecha);
     };
+
+    async function fetchComercios() {
+      const usuario = JSON.parse(localStorage.getItem("usuario"));
+      const usuarioId = usuario?.pkusuario;
+
+      try {
+        const response = await fetch("/api/dashboard-comercio/comercios", {
+          headers: {
+            "x-usuario-id": usuarioId ? usuarioId.toString() : "",  // Envías el id como string
+          },
+        });
+
+        const data = await response.json();
+        if (data.success && data.comercios.length > 0) {
+          setComercio(data.comercios);
+
+          const comercioGuardado = localStorage.getItem("comercioSeleccionado");
+
+          if (comercioGuardado && data.comercios.some(c => c.pkid === comercioGuardado)) {
+            setSelectedComercio(comercioGuardado);
+          } else {
+            // Si no hay comercio guardado o el guardado no está en la lista, selecciona el primero y lo guarda
+            const primerComercio = data.comercios[0].pkid;
+            setSelectedComercio(primerComercio);
+            localStorage.setItem("comercioSeleccionado", primerComercio);
+          }
+        }
+      } catch (error) {
+        console.error("Error al cargar comercios:", error);
+      }
+    }
+
     obtenerFecha();
     fetchComercios();
   }, []);
-
-  const fetchComercios = async () => {
-    try {
-      const res = await fetch("/api/dashboard-comercio/comercios");
-      const data = await res.json();
-      if (data.success) {
-        setComercio(data.comercios); 
-      } else {
-        console.error("No se encontraron comercios");
-      }
-    } catch (error) {
-      console.error("Error al obtener comercios:", error);
-    }
-  };
 
   const isActive = (path) =>
     pathname === path ? "bg-[#2D9EE8]" : "hover:bg-[#2D9EE8]";
 
   const handleChange = (e) => {
     const value = e.target.value;
-    setSelectedComercio(value);
+
     if (value === "administrar_comercios") {
       router.push("/dashboard-comercio/comercios");
-    } else if (value){
-      router.push("/dashboard-comercio")
-      console.log("Comercio seleccionado:", value);
+    } else {
+      setSelectedComercio(value);
+      localStorage.setItem("comercioSeleccionado", value);
+      if (pathname !== "/dashboard-comercio") {
+        router.push("/dashboard-comercio");
+      }
     }
   };
 
@@ -84,9 +104,12 @@ export default function DashboardComercioLayout({ children }) {
               <select
                 value={selectedComercio}
                 onChange={handleChange}
+
                 className="w-full p-2 rounded bg-[#2D9EE8] text-white focus:outline-none text-center text-lg"
               >
+                <option disabled value="">Selecciona un comercio</option>
                 {comercios.map((comercio) => (
+
                   <option key={comercio.pkid} value={comercio.pkid}>
                     {comercio.nombre}
                   </option>
@@ -140,15 +163,6 @@ export default function DashboardComercioLayout({ children }) {
             >
               <FaShoppingCart className="text-2xl" />
               <span className="text-lg">Productos</span>
-            </button>
-            <button
-              onClick={() => router.push("/dashboard-comercio/empresas")}
-              className={`flex items-center gap-1 rounded pl-4 p-1 mt-1 ml-4 cursor-pointer ${isActive(
-                "/dashboard-comercio/empresas"
-              )}`}
-            >
-              <BiBuildingHouse className="text-2xl" />
-              <span className="text-lg">Proveedores</span>
             </button>
 
             <div className="flex border-t border-white p-1 mt-2 opacity-50"></div>

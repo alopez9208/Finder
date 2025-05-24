@@ -79,7 +79,8 @@ export default function SignUpPage() {
     setConfirmPassword,
     setMostrarValidarClave,
     error,
-    passwordMatch
+    passwordMatch,
+    handleUsuarioChange
   } = useSignUp()
 
   return (

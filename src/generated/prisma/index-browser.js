@@ -127,14 +127,14 @@ exports.Prisma.Tbl_campaniasScalarFieldEnum = {
 };
 
 exports.Prisma.Tbl_clientesScalarFieldEnum = {
-  pkid: 'pkid',
-  telefono: 'telefono',
   nombres: 'nombres',
   apellidos: 'apellidos',
   correo: 'correo',
   direccion: 'direccion',
   fkid_tbl_municipios: 'fkid_tbl_municipios',
-  fkid_tbl_comercios: 'fkid_tbl_comercios'
+  fkid_tbl_comercios: 'fkid_tbl_comercios',
+  pkid: 'pkid',
+  telefono: 'telefono'
 };
 
 exports.Prisma.Tbl_departamentosScalarFieldEnum = {
@@ -145,11 +145,11 @@ exports.Prisma.Tbl_departamentosScalarFieldEnum = {
 
 exports.Prisma.Tbl_det_productosScalarFieldEnum = {
   pkid: 'pkid',
-  cantidad: 'cantidad',
-  precio_venta_unitario: 'precio_venta_unitario',
-  costo_unitario: 'costo_unitario',
   fkid_tbl_productos: 'fkid_tbl_productos',
-  fkid_tbl_pedidos: 'fkid_tbl_pedidos'
+  cantidad: 'cantidad',
+  fkid_tbl_pedidos: 'fkid_tbl_pedidos',
+  costo_unitario: 'costo_unitario',
+  precio_venta_unitario: 'precio_venta_unitario'
 };
 
 exports.Prisma.Tbl_estados_usuarioScalarFieldEnum = {
@@ -167,12 +167,12 @@ exports.Prisma.Tbl_municipiosScalarFieldEnum = {
 
 exports.Prisma.Tbl_pedidosScalarFieldEnum = {
   pkid: 'pkid',
-  fkid_tbl_clientes: 'fkid_tbl_clientes',
   fkid_tbl_transportadoras: 'fkid_tbl_transportadoras',
-  fkid_tbl_municipios: 'fkid_tbl_municipios',
+  fkid_tbl_clientes: 'fkid_tbl_clientes',
+  fecha_creacion: 'fecha_creacion',
   valor_total: 'valor_total',
   valor_flete: 'valor_flete',
-  fecha_creacion: 'fecha_creacion'
+  fkid_tbl_municipios: 'fkid_tbl_municipios'
 };
 
 exports.Prisma.Tbl_personasScalarFieldEnum = {
@@ -220,7 +220,7 @@ exports.Prisma.Tbl_transportadorasScalarFieldEnum = {
 
 exports.Prisma.Tbl_usuariosScalarFieldEnum = {
   pkusuario: 'pkusuario',
-  contrase_a: 'contrase_a',
+  contrasena: 'contrasena',
   fkid_tbl_roles: 'fkid_tbl_roles',
   fkid_tbl_estados_usuario: 'fkid_tbl_estados_usuario',
   fkid_tbl_personas: 'fkid_tbl_personas'

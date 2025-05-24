@@ -1,8 +1,20 @@
 import prisma from "@/lib/prisma";
+import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request) {
+    const comercioId = request.headers.get("x-comercio-id");
+
+    if (!comercioId) {
+        return NextResponse.json(
+            { success: false, message: "ID de comercio no proporcionado" },
+            { status: 400 }
+        );
+    }
     try {
         const campanias = await prisma.tbl_campanias.findMany({
+            where: {
+                fkid_tbl_comercios: BigInt(comercioId),
+            },
             select: {
                 pkid: true,
                 nombre: true,
@@ -12,7 +24,7 @@ export async function GET() {
                 fkid_tbl_comercios: true,
                 comercio: {
                     select: {
-                        nombre: true, 
+                        nombre: true,
                     },
                 },
             },
@@ -25,7 +37,7 @@ export async function GET() {
             fecha_inicio: item.fecha_inicio,
             fecha_fin: item.fecha_fin,
             fkid_tbl_comercios: item.fkid_tbl_comercios?.toString() ?? null,
-            nombre_comercio: item.comercio?.nombre ?? null, 
+            nombre_comercio: item.comercio?.nombre ?? null,
         }));
 
         return new Response(
@@ -48,7 +60,14 @@ export async function GET() {
 }
 
 export async function POST(request) {
-    const { nombre, presupuesto_gastado: valorString, fecha_inicio, fecha_fin, fkid_tbl_comercios } = await request.json();   
+    const { nombre, presupuesto_gastado: valorString, fecha_inicio, fecha_fin, fkid_tbl_comercios } = await request.json();
+
+    if (!fkid_tbl_comercios) {
+        return new Response(
+            JSON.stringify({ success: false, message: "fkid_tbl_comercios es requerido" }),
+            { status: 400 }
+        );
+    }
 
     try {
 
@@ -108,22 +127,17 @@ export async function PUT(request) {
                 JSON.stringify({ success: false, message: "El campo presupuesto_gastado debe ser un número válido." }),
                 { status: 400, headers: { "Content-Type": "application/json" } }
             );
-        }
-
-        const dataToUpdate = {
-            nombre,
-            presupuesto_gastado: valorString,
-            fecha_inicio,
-            fecha_fin,
-        };
-
-        if (fkid_tbl_comercios) {
-            dataToUpdate.fkid_tbl_comercios = BigInt(fkid_tbl_comercios);
-        }
+        }            
 
         const campaniaActualizada = await prisma.tbl_campanias.update({
             where: { pkid: BigInt(pkid) },
-            data: dataToUpdate, 
+            data: {
+                nombre,
+                presupuesto_gastado,
+                fecha_inicio,
+                fecha_fin,
+                fkid_tbl_comercios: BigInt(fkid_tbl_comercios),
+            },
         });
 
         const serializado = {

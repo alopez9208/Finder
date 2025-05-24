@@ -15,9 +15,20 @@ const handleErrorResponse = (error, message, statusCode = 500) => {
     );
   };
 
-  export async function GET() {
+  export async function GET(request) {
     try {
+        const comercioId = request.headers.get("x-comercio-id");
+
+        if (!comercioId) {
+            return handleErrorResponse(null, "El campo x-comercio-id es obligatorio.", 400);
+        }
+
         const pedidos = await prisma.tbl_pedidos.findMany({
+            where: {
+                clientes: {
+                    fkid_tbl_comercios: BigInt(comercioId),
+                },
+            },
             select: {
                 pkid: true,
                 valor_total: true,
@@ -42,25 +53,21 @@ const handleErrorResponse = (error, message, statusCode = 500) => {
                 },
             },
         });
-
-        // La serialización debe mantener la estructura anidada para clientes y transportadoras
+       
         const pedidosSerializados = pedidos.map((item) => ({
             pkid: item.pkid.toString(),
             valor_total: item.valor_total,
             valor_flete: item.valor_flete,
             fecha_creacion: item.fecha_creacion,
             fkid_tbl_clientes: item.fkid_tbl_clientes?.toString() ?? null,
-            // Mantenemos la anidación para 'clientes'
             clientes: {
                 telefono: item.clientes?.telefono ?? null,
             },
             fkid_tbl_transportadoras: item.fkid_tbl_transportadoras?.toString() ?? null,
-            // Mantenemos la anidación para 'transportadoras'
             transportadoras: {
                 nomenclatura: item.transportadoras?.nomenclatura ?? null,
             },
             fkid_tbl_municipios: item.fkid_tbl_municipios?.toString() ?? null,
-            // Mantenemos la anidación para 'municipios'
             municipios: {
                 nombre: item.municipios?.nombre ?? null,
                 nomenclatura: item.municipios?.nomenclatura ?? null,

@@ -1,199 +1,59 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import useClientes from "./useClientes";
 import { FaEdit } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
-import { TbArrowsSort } from "react-icons/tb";
 
 export default function ClientesPage() {
-  const [searchTelefono, setsearchTelefono] = useState("");  
-  const [currentPage, setCurrentPage] = useState(1);
-  const clientesPerPage = 5;
-  const [clientes, setClientes] = useState([]);
-  const [municipios, setMunicipios] = useState([]);
-  const [comercios, setComercios] = useState([]); 
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-
-  const [modalOpen, setModalOpen] = useState(false);
-  const [editingCliente, setEditingCliente] = useState(null);
-  const [nombres, setNombres] = useState("");
-  const [apellidos, setApellidos] = useState("");
-  const [correo, setCorreo] = useState("");
-  const [telefono, setTelefono] = useState("");
-  const [direccion, setDireccion] = useState("");
-  const [selectedMunicipio, setSelectedMunicipio] = useState(""); 
-  const [selectedComercio, setSelectedComercio] = useState(""); 
-
-  useEffect(() => {
-    fetchClientes();
-    fetchMunicipios();
-    fetchComercios(); 
-  }, []);
-
-  const fetchClientes = async () => {
-    try {
-      const res = await fetch("/api/dashboard-comercio/clientes");
-      const data = await res.json();
-      console.log("Respuesta del backend:", data);
-      if (data.success) {
-        setClientes(data.clientes);
-        console.log("Clientes recibidos:", data.clientes);
-      } else {
-        console.error("No se encontraron clientes");
-      }
-    } catch (error) {
-      console.error("Error al obtener clientes:", error);
-    }
-  };
-
-  const fetchMunicipios = async () => {
-    try {
-      const res = await fetch("/api/dashboard/municipios");
-      const data = await res.json();
-      console.log("Respuesta del backend:", data);
-      if (data.success) {
-        setMunicipios(data.municipios);
-        console.log("Municipios recibidos:", data.municipios);
-      } else {
-        console.error("No se encontraron municipios");
-      }
-    } catch (error) {
-      console.error("Error al obtener municipios:", error);
-    }
-  } 
-
-  const fetchComercios = async () => {
-    try {
-      const res = await fetch("/api/dashboard-comercio/comercios");
-      const data = await res.json();
-      console.log("Respuesta del backend:", data);
-      if (data.success) {
-        setComercios(data.comercios);
-        console.log("Comercios recibidos:", data.comercios);
-      } else {
-        console.error("No se encontraron comercios");
-      }
-    } catch (error) {
-      console.error("Error al obtener comercios:", error);
-    }
-  };
-
-  const openModalForNew = () => {
-    setEditingCliente(null);
-    setTelefono("");
-    setNombres("");
-    setApellidos("");
-    setCorreo("");    
-    setDireccion("");
-    setSelectedMunicipio(""); 
-    setSelectedComercio(""); 
-    setModalOpen(true);
-  };
-
-  const openModalForEdit = (clientes) => {
-    setEditingCliente(clientes);
-    setTelefono(clientes.telefono);
-    setNombres(clientes.nombres);
-    setApellidos(clientes.apellidos);
-    setCorreo(clientes.correo);    
-    setDireccion(clientes.direccion);
-    setSelectedMunicipio(clientes.fkid_tbl_municipios); 
-    setSelectedComercio(clientes.fkid_tbl_comercios); 
-    setModalOpen(true);
-  };
-
-  const handleSubmit = async () => {
-    if (!telefono.trim() || !nombres.trim() || !apellidos.trim() || !correo.trim() || !direccion.trim() || !selectedMunicipio || !selectedComercio) {
-      alert("Por favor, completa todos los campos.");
-      return;
-    }
-
-    const method = editingCliente ? "PUT" : "POST";
-    const url = "/api/dashboard-comercio/clientes";
-
-    const payload = editingCliente
-      ? { pkid: editingCliente.pkid, telefono, nombres, apellidos, correo, direccion, fkid_tbl_municipios: selectedMunicipio, fkid_tbl_comercios: selectedComercio }
-      : { telefono, nombres, apellidos, correo, direccion, fkid_tbl_municipios: selectedMunicipio, fkid_tbl_comercios: selectedComercio };
-
-    try {
-      const res = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-      if (data.success) {
-        setModalOpen(false);
-        fetchClientes();
-      } else {
-        console.error("Error al guardar el cliente");
-      }
-    } catch (error) {
-      console.error("Error al enviar datos:", error);
-    }
-  };
-
-  const filteredClientes = clientes
-    .filter((cliente) => {
-      const telefono = cliente.telefono?.toLowerCase() || '';      
-      const matchTel = telefono.includes(searchTelefono.toLowerCase());     
-      return matchTel;
-    })
-    .sort((a, b) => {
-      if (!sortConfig.key) return 0;
-
-      const aVal = a[sortConfig.key];
-      const bVal = b[sortConfig.key];
-
-      const aNum = Number(aVal);
-      const bNum = Number(bVal);
-
-      if (!isNaN(aNum) && !isNaN(bNum)) {    
-        return sortConfig.direction === "asc" ? aNum - bNum : bNum - aNum;
-      }
-      
-      const aStr = aVal?.toString().toLowerCase() || '';
-      const bStr = bVal?.toString().toLowerCase() || '';
-
-      if (aStr < bStr) return sortConfig.direction === "asc" ? -1 : 1;
-      if (aStr > bStr) return sortConfig.direction === "asc" ? 1 : -1;
-      return 0;
-    });
-
-  const totalPages = Math.ceil(filteredClientes.length / clientesPerPage);
-  const startIndex = (currentPage - 1) * clientesPerPage;
-  const visibleClientes = filteredClientes.slice(startIndex, startIndex + clientesPerPage);
-
-  const handleSort = (key) => {
-    setSortConfig((prev) => ({
-      key,
-      direction: prev.key === key && prev.direction === "asc" ? "desc" : "asc",
-    }));
-  };
-
-  const renderSortIcon = (key) => {
-    if (sortConfig.key !== key) return <TbArrowsSort className="inline ml-1 text-gray-400" />;
-    return sortConfig.direction === "asc" ? (
-      <TbArrowsSort className="inline ml-1 text-blue-500 rotate-180" />
-    ) : (
-      <TbArrowsSort className="inline ml-1 text-blue-500 rotate-0" />
-    );
-  };
-
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) setCurrentPage(page);
-  };
+  const {
+    searchTelefono,
+    setsearchTelefono,
+    currentPage,
+    setCurrentPage,
+    municipios,
+    comercios,
+    sortConfig,
+    setSortConfig,
+    modalOpen,
+    setModalOpen,
+    editingCliente,
+    setEditingCliente,
+    nombres,
+    setNombres,
+    apellidos,
+    setApellidos,
+    correo,
+    setCorreo,
+    telefono,
+    setTelefono,
+    direccion,
+    setDireccion,
+    selectedMunicipio,
+    setSelectedMunicipio,
+    selectedComercio,
+    setSelectedComercio,
+    handleSubmit,
+    handleSort,
+    renderSortIcon,
+    handlePageChange,
+    totalPages,
+    visibleClientes,
+    openModalForNew,
+    openModalForEdit,
+    modalRef,
+  } = useClientes();
 
   return (
     <div className="m-12">
       <h2 className="text-2xl text-gray-800 mb-8">Lista de Clientes</h2>
 
       <div className="bg-white p-6 rounded-2xl">
+        {/* Buscador + botón nuevo */}
         <div className="flex justify-between items-center mb-4">
           <input
             type="text"
             className="w-full max-w-md pl-4 pr-4 py-2 border border-gray-300 rounded focus:outline-none text-gray-800"
-            placeholder="Buscar por Telefono"
+            placeholder="Buscar por Teléfono"
             value={searchTelefono}
             onChange={(e) => setsearchTelefono(e.target.value)}
           />
@@ -206,38 +66,42 @@ export default function ClientesPage() {
           </button>
         </div>
 
+        {/* Tabla de clientes */}
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto text-gray-800">
             <thead className="bg-gray-100">
               <tr>
-                {[{ key: "pkid", label: "ID" },{ key: "telefono", label: "Teléfono" }, { key: "nombres", label: "Nombres" }, { key: "apellidos", label: "Apellidos" }, { key: "correo", label: "Correo" },  { key: "direccion", label: "Direccion" }, { key: "nombre_municipio", label: "Municipio" }, { key: "nombre_comercio", label: "Comercio" }
-                ]
-                  .map(({ key, label }) => (
-                    <th
-                      key={key}
-                      className="p-3 text-left cursor-pointer select-none"
-                      onClick={() => handleSort(key)}
-                    >
-                      {label} {renderSortIcon(key)}
-                    </th>
-                  ))}
+                {[
+                  { key: "pkid", label: "ID" },
+                  { key: "telefono", label: "Teléfono" },
+                  { key: "nombres", label: "Nombres" },
+                  { key: "apellidos", label: "Apellidos" },
+                  { key: "correo", label: "Correo" },
+                  { key: "nombre_municipio", label: "Municipio" },                  
+                ].map(({ key, label }) => (
+                  <th
+                    key={key}
+                    className="p-3 text-left cursor-pointer select-none"
+                    onClick={() => handleSort(key)}
+                  >
+                    {label} {renderSortIcon(key)}
+                  </th>
+                ))}
                 <th className="p-3 text-right w-40">Acción</th>
               </tr>
             </thead>
             <tbody>
-              {visibleClientes.map((clientes, index) => (
+              {visibleClientes.map((cliente, index) => (
                 <tr key={index} className="border-b">
-                  <td className="p-3">{clientes.pkid}</td>
-                  <td className="p-3">{clientes.telefono}</td>
-                  <td className="p-3">{clientes.nombres}</td>
-                  <td className="p-3">{clientes.apellidos}</td>
-                  <td className="p-3">{clientes.correo}</td>                 
-                  <td className="p-3">{clientes.direccion}</td>
-                  <td className="p-3">{clientes.nombre_municipio}</td>
-                  <td className="p-3">{clientes.nombre_comercio}</td>
+                  <td className="p-3">{cliente.pkid}</td>
+                  <td className="p-3">{cliente.telefono}</td>
+                  <td className="p-3">{cliente.nombres}</td>
+                  <td className="p-3">{cliente.apellidos}</td>
+                  <td className="p-3">{cliente.correo}</td>                 
+                  <td className="p-3">{cliente.nombre_municipio}</td>                 
                   <td className="p-3 text-right">
                     <button
-                      onClick={() => openModalForEdit(clientes)}
+                      onClick={() => openModalForEdit(cliente)}
                       className="bg-green-500 hover:bg-green-400 text-white px-3 py-2 rounded-lg inline-flex items-center space-x-2 cursor-pointer"
                     >
                       <FaEdit />
@@ -255,60 +119,55 @@ export default function ClientesPage() {
           <div className="mt-4 flex justify-center items-center space-x-2 text-gray-400">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
               disabled={currentPage === 1}
+              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 hover:text-white"
             >
               Anterior
             </button>
 
-            {/* Mostrar la primera página si no estamos en ella y el rango es mayor a 3 */}
             {currentPage > 3 && (
-              <button
-                onClick={() => handlePageChange(1)}
-                className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              >
-                1
-              </button>
+              <>
+                <button
+                  onClick={() => handlePageChange(1)}
+                  className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 hover:text-white"
+                >
+                  1
+                </button>
+                {currentPage > 4 && <span className="px-3 py-1">...</span>}
+              </>
             )}
 
-            {/* Si hay más de 4 páginas anteriores a la actual, mostrar "..." */}
-            {currentPage > 4 && <span className="px-3 py-1">...</span>}
-
-            {/* Páginas alrededor de la página actual */}
             {Array.from({ length: 5 }, (_, i) => {
-              const pageNumber = currentPage - 2 + i;
-              if (pageNumber > 0 && pageNumber <= totalPages) {
-                return (
-                  <button
-                    key={pageNumber}
-                    onClick={() => handlePageChange(pageNumber)}
-                    className={`px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white ${currentPage === pageNumber ? "bg-blue-500 text-white" : ""
-                      }`}
-                  >
-                    {pageNumber}
-                  </button>
-                );
-              }
-              return null; // No renderizar números fuera del rango
+              const page = currentPage - 2 + i;
+              return page > 0 && page <= totalPages ? (
+                <button
+                  key={page}
+                  onClick={() => handlePageChange(page)}
+                  className={`px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 hover:text-white ${
+                    currentPage === page ? "bg-blue-500 text-white" : ""
+                  }`}
+                >
+                  {page}
+                </button>
+              ) : null;
             })}
 
-            {/* Si hay más de 3 páginas posteriores a la actual, mostrar "..." */}
-            {currentPage < totalPages - 3 && <span className="px-3 py-1">...</span>}
-
-            {/* Mostrar la última página si no estamos en ella */}
-            {currentPage < totalPages - 2 && (
-              <button
-                onClick={() => handlePageChange(totalPages)}
-                className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              >
-                {totalPages}
-              </button>
+            {currentPage < totalPages - 3 && (
+              <>
+                <span className="px-3 py-1">...</span>
+                <button
+                  onClick={() => handlePageChange(totalPages)}
+                  className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 hover:text-white"
+                >
+                  {totalPages}
+                </button>
+              </>
             )}
 
             <button
               onClick={() => handlePageChange(currentPage + 1)}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
               disabled={currentPage === totalPages}
+              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 hover:text-white"
             >
               Siguiente
             </button>
@@ -316,82 +175,74 @@ export default function ClientesPage() {
         )}
       </div>
 
+      {/* Modal de Crear/Editar */}
       {modalOpen && (
         <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-[#f0ebff] p-6 rounded-xl shadow-xl w-full max-w-md relative text-gray-700 border">
+          <div ref={modalRef} className="bg-[#f0ebff] p-6 rounded-xl shadow-xl w-full max-w-md relative text-gray-700 border">
             <h3 className="text-xl font-semibold mb-4">
               {editingCliente ? "Editar Cliente" : "Nuevo Cliente"}
             </h3>
-            <input type="text"
-              placeholder="Telefono"
-              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white read-only:bg-[#f0ebff]"
+
+            <input
+              type="text"
+              placeholder="Teléfono"
+              className="w-full mb-4 px-4 py-2 border rounded"
               value={telefono}
-              onChange={(e) => setTelefono(e.target.value)}              
-              
-            />                     
+              onChange={(e) => setTelefono(e.target.value)}
+            />
             <input
               type="text"
               placeholder="Nombre"
-              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white read-only:bg-[#f0ebff]"
+              className="w-full mb-4 px-4 py-2 border rounded"
               value={nombres}
               onChange={(e) => setNombres(e.target.value)}
-              
             />
             <input
               type="text"
               placeholder="Apellidos"
-              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
+              className="w-full mb-4 px-4 py-2 border rounded"
               value={apellidos}
               onChange={(e) => setApellidos(e.target.value)}
             />
-            <input type="text"
+            <input
+              type="text"
               placeholder="Correo"
-              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
+              className="w-full mb-4 px-4 py-2 border rounded"
               value={correo}
               onChange={(e) => setCorreo(e.target.value)}
             />
-            <input type="text"
-              placeholder="Direccion"
-              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
+            <input
+              type="text"
+              placeholder="Dirección"
+              className="w-full mb-4 px-4 py-2 border rounded"
               value={direccion}
               onChange={(e) => setDireccion(e.target.value)}
             />
+
             <select
               value={selectedMunicipio}
               onChange={(e) => setSelectedMunicipio(e.target.value)}
-              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white disabled:bg-[#f0ebff]"
+              className="w-full mb-4 px-4 py-2 border rounded"
               disabled={!!editingCliente}
             >
               <option value="">Seleccione un Municipio</option>
-              {municipios.map((municipio) => (
-                <option key={municipio.pkid} value={municipio.pkid}>
-                  {municipio.nombre}
+              {municipios.map((muni) => (
+                <option key={muni.pkid} value={muni.pkid}>
+                  {muni.nombre}
                 </option>
               ))}
-            </select>
-            <select
-              value={selectedComercio}
-              onChange={(e) => setSelectedComercio(e.target.value)}
-              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white disabled:bg-[#f0ebff]"
-              disabled={!!editingCliente}
-            >
-              <option value="">Seleccione un Comercio</option>
-              {comercios.map((comercio) => (
-                <option key={comercio.pkid} value={comercio.pkid}>
-                  {comercio.nombre}
-                </option>
-              ))}
-            </select>
+            </select>            
+
             <div className="flex justify-end space-x-2">
               <button
                 onClick={() => setModalOpen(false)}
-                className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 cursor-pointer"
+                className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleSubmit}
-                className="px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600 cursor-pointer"
+                className="px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600"
               >
                 Guardar
               </button>
@@ -399,7 +250,6 @@ export default function ClientesPage() {
           </div>
         </div>
       )}
-
     </div>
   );
 }

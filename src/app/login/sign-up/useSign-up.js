@@ -20,9 +20,13 @@ const useSignUp = () => {
   const hasNumber = /\d/.test(password);
   const isValid = isMinLength && hasUpperCase && hasNumber;
 
+  const handleUsuarioChange = (value) => {
+    setUsuario(value.toLowerCase());
+  };
+
   const handleRegistro = async (e) => {
     e.preventDefault();
-    setError(""); // Limpiar errores previos
+    setError("");
 
     if (!nombres || !apellidos || !correo || !usuario || !password || !confirmPassword) {
       return setError("Por favor, completa todos los campos.");
@@ -41,10 +45,12 @@ const useSignUp = () => {
     }
 
     try {
+      const usuarioNormalizado = usuario.trim().toLowerCase();
+
       const res = await fetch("/api/login/sign-up", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombres, apellidos, correo, usuario, contraseña: password }),
+        body: JSON.stringify({ nombres, apellidos, correo, usuario: usuarioNormalizado, contraseña: password }),
       });
 
       const data = await res.json();
@@ -82,7 +88,8 @@ const useSignUp = () => {
     isValid,
     isMinLength,
     hasUpperCase,
-    hasNumber
+    hasNumber,
+    handleUsuarioChange
   };
 };
 

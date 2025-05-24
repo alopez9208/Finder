@@ -9,12 +9,8 @@ export default function PedidosPage() {
     searchTelefono,
     setsearchTelefono,
     currentPage,
-    setCurrentPage,
-    pedidosPerPage,
-    pedidos,
     clientes,
-    transportadoras,
-    sortConfig,
+    transportadoras,    
     handleSort,
     renderSortIcon,
     visiblepedidos,
@@ -22,6 +18,7 @@ export default function PedidosPage() {
     handlePageChange,
     openModalForEdit,
     modalOpen,
+    modalRef,
     editingPedido,
     setValor_total,
     valor_total,
@@ -39,8 +36,7 @@ export default function PedidosPage() {
     productosDisponibles,
     searchProducto,
     setSearchProducto,
-    productosSeleccionados,
-    setProductosSeleccionados,
+    productosSeleccionados,    
     selectedProductToAdd,
     setSelectedProductToAdd,
     cantidadProducto,
@@ -49,12 +45,9 @@ export default function PedidosPage() {
     removeProductFromCart,
     openModalForNew,
     setModalOpen,
-    handleSubmit,
-    setError,
-    error,
-    setSuccess,
-    success,
+    handleSubmit,        
     formatFecha,
+
   } = usePedidos();
 
   return (
@@ -83,7 +76,7 @@ export default function PedidosPage() {
           <table className="min-w-full table-auto text-gray-800">
             <thead className="bg-gray-100">
               <tr>
-                {[{ key: "pkid", label: "ID" }, { key: "clientes.telefono", label: "Telefono" }, { key: "fecha_creacion", label: "Fecha de Creación" }, { key: "transportadoras.nomenclatura", label: "Transportadora" }, { key: "municipios.nombre", label: "Municipio" }, { key: "valor_total", label: "Valor Total" }, { key: "valor_flete", label: "Valor Flete" },
+                {[{ key: "pkid", label: "ID" }, { key: "clientes.telefono", label: "Telefono" }, { key: "fecha_creacion", label: "Fecha de Creación" }, { key: "transportadoras.nomenclatura", label: "Transportadora" }, { key: "municipios.nombre", label: "Municipio" }, { key: "valor_total", label: "Recaudo" }, { key: "valor_flete", label: "Valor Flete" },
                 ]
                   .map(({ key, label }) => (
                     <th
@@ -190,12 +183,12 @@ export default function PedidosPage() {
 
       {modalOpen && (
         <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-[#f0ebff] p-6 rounded-xl shadow-xl w-full max-w-md relative text-gray-700 border">
+          <div ref={modalRef} className="bg-[#f0ebff] p-6 rounded-xl shadow-xl w-full max-w-md relative text-gray-700 border">
             <h3 className="text-xl font-semibold mb-4">
               {editingPedido ? "Editar Pedido" : "Nuevo Pedido"}
             </h3>
             <input type="number"
-              placeholder="Valor Total"
+              placeholder="Recaudo"
               className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white read-only:bg-[#f0ebff]"
               value={valor_total}
               onChange={(e) => setValor_total(e.target.value)}
