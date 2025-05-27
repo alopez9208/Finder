@@ -5,7 +5,7 @@ const validateAndConvertId = (id) => {
 };
 
 const handleErrorResponse = (error, message, statusCode = 500) => {
-    console.error(message, error); // Log the error for debugging
+    console.error(message, error); 
     return new Response(
       JSON.stringify({ success: false, error: message }),
       {
@@ -35,7 +35,7 @@ const handleErrorResponse = (error, message, statusCode = 500) => {
                 valor_flete: true,
                 fecha_creacion: true,
                 fkid_tbl_clientes: true,
-                clientes: { // Mantenemos la anidación del cliente
+                clientes: { 
                     select: {
                         nombres: true,
                         apellidos: true,
@@ -45,14 +45,14 @@ const handleErrorResponse = (error, message, statusCode = 500) => {
                     },
                 },
                 fkid_tbl_transportadoras: true,
-                transportadoras: { // Mantenemos la anidación de la transportadora
+                transportadoras: { 
                     select: { 
                         nombre: true,
                         nomenclatura: true 
                     },
                 },
                 fkid_tbl_municipios: true,
-                municipios: { // Mantenemos la anidación del municipio
+                municipios: { 
                     select: { 
                         nombre: true,
                         nomenclatura: true,
@@ -105,9 +105,9 @@ export async function POST(request) {
 
         const nuevoPedido = await prisma.tbl_pedidos.create({
             data: {
-                valor_total: parseFloat(valor_total), // Convertir a número
+                valor_total: parseFloat(valor_total), 
                 fecha_creacion,
-                valor_flete: parseFloat(valor_flete), // Convertir a número
+                valor_flete: parseFloat(valor_flete), 
                 fkid_tbl_clientes: validateAndConvertId(fkid_tbl_clientes),
                 fkid_tbl_transportadoras: validateAndConvertId(fkid_tbl_transportadoras),
                 fkid_tbl_municipios: validateAndConvertId(fkid_tbl_municipios),
@@ -140,9 +140,9 @@ export async function PUT(request) {
         }
 
         const dataToUpdate = {
-            valor_total: parseFloat(valor_total), // Convertir a número
+            valor_total: parseFloat(valor_total), 
             fecha_creacion,
-            valor_flete: parseFloat(valor_flete), // Convertir a número
+            valor_flete: parseFloat(valor_flete), 
             fkid_tbl_clientes: validateAndConvertId(fkid_tbl_clientes),
             fkid_tbl_transportadoras: validateAndConvertId(fkid_tbl_transportadoras),
             fkid_tbl_municipios: validateAndConvertId(fkid_tbl_municipios),

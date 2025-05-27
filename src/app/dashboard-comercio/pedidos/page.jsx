@@ -1,7 +1,7 @@
 'use client'
 
 import usePedidos from "./usePedidos";
-import { FaEdit, FaPlus, FaEye } from "react-icons/fa";
+import { FaEdit, FaPlus, FaEye, FaDollarSign } from "react-icons/fa";
 
 export default function PedidosPage() {
 
@@ -49,6 +49,7 @@ export default function PedidosPage() {
     removeProductFromCart,
     openModalForNew,
     openModalForView,
+    openModalForViewCosto,
     setModalOpen,
     modalMode,
     handleSubmit,
@@ -62,6 +63,7 @@ export default function PedidosPage() {
     setSelectedMunicipio,
     getComercioSeleccionado,
     viewPedido,
+    viewCosto,
   } = usePedidos();
 
   return (
@@ -128,6 +130,12 @@ export default function PedidosPage() {
                     >
                       <FaEye />
                     </button>
+                    <button
+                      onClick={() => openModalForViewCosto(pedidos)}
+                      className="bg-green-500 hover:bg-green-400 text-white px-3 py-2 rounded-lg inline-flex items-center space-x-2 cursor-pointer"
+                    >
+                      <FaDollarSign />
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -146,7 +154,6 @@ export default function PedidosPage() {
               Anterior
             </button>
 
-            {/* Mostrar la primera página si no estamos en ella y el rango es mayor a 3 */}
             {currentPage > 3 && (
               <button
                 onClick={() => handlePageChange(1)}
@@ -156,10 +163,8 @@ export default function PedidosPage() {
               </button>
             )}
 
-            {/* Si hay más de 4 páginas anteriores a la actual, mostrar "..." */}
             {currentPage > 4 && <span className="px-3 py-1">...</span>}
 
-            {/* Páginas alrededor de la página actual */}
             {Array.from({ length: 5 }, (_, i) => {
               const pageNumber = currentPage - 2 + i;
               if (pageNumber > 0 && pageNumber <= totalPages) {
@@ -174,13 +179,11 @@ export default function PedidosPage() {
                   </button>
                 );
               }
-              return null; // No renderizar números fuera del rango
+              return null;
             })}
 
-            {/* Si hay más de 3 páginas posteriores a la actual, mostrar "..." */}
             {currentPage < totalPages - 3 && <span className="px-3 py-1">...</span>}
 
-            {/* Mostrar la última página si no estamos en ella */}
             {currentPage < totalPages - 2 && (
               <button
                 onClick={() => handlePageChange(totalPages)}
@@ -210,31 +213,53 @@ export default function PedidosPage() {
             {modalMode === "view" ? (
               // MODO FACTURA
               <div className="text-sm text-gray-800 ml-12 text-center">
-                <h2 className="text-2xl font-bold mb-4">Factura del Pedido</h2>
-                <p><strong>Código:</strong> {pkid_pedido}</p>
-                <p><strong>Fecha de creación:</strong> {fecha_creacion?.substring(0, 10)}</p>
-                <p><strong>Teléfono:</strong> {clientes.find(c => c.pkid === selectedCliente)?.telefono || "N/A"}</p>
-                <p><strong>Nombre:</strong> {clientes.find(c => c.pkid === selectedCliente)?.nombres || "N/A"} {clientes.find(c => c.pkid === selectedCliente)?.apellidos || "N/A"}</p>
-                <p><strong>Dirección:</strong> {clientes.find(c => c.pkid === selectedCliente)?.direccion || "N/A"}</p>
-                <p><strong>Correo:</strong> {clientes.find(c => c.pkid === selectedCliente)?.correo || "N/A"}</p>
-                <p><strong>Municipio:</strong> {municipios.find(m => m.pkid === selectedMunicipio)?.nombre || "N/A"}</p>
-                <p><strong>Recaudo:</strong> ${valor_total}</p>
-                <p><strong>Transportadora:</strong> {transportadoras.find(t => t.pkid === selectedTransportadora)?.nombre || "N/A"}</p>
-                <p><strong>Valor Flete:</strong> ${valor_flete}</p>
+                <h2 className="text-2xl font-bold mb-4">Factura del Pedido  <span className="text-xl"># {pkid_pedido}</span></h2>
+                <div className="border-t pt-4">
+                  <p className="font-semibold text-lg mb-2">Datos del cliente</p>
+                  <p><strong>Nombre:</strong> {clientes.find(c => c.pkid === selectedCliente)?.nombres || "N/A"} {clientes.find(c => c.pkid === selectedCliente)?.apellidos || "N/A"}</p>
+                  <p><strong>Teléfono:</strong> {clientes.find(c => c.pkid === selectedCliente)?.telefono || "N/A"}</p>
+                  <p><strong>Dirección:</strong> {clientes.find(c => c.pkid === selectedCliente)?.direccion || "N/A"}</p>
+                  <p><strong>Municipio:</strong> {municipios.find(m => m.pkid === selectedMunicipio)?.nombre || "N/A"}</p>
+                </div>
+                <div className="border-t mt-4 pt-4">
+                  <p className="font-semibold text-lg mb-2">Datos de la transportadora</p>
+                  <p><strong>Transportadora:</strong> {transportadoras.find(t => t.pkid === selectedTransportadora)?.nombre || "N/A"}</p>
+                  <p><strong>Valor Flete:</strong> ${valor_flete}</p>
+                </div>
 
                 <div className="mt-4 border-t pt-4">
-                  <h4 className="font-semibold text-lg mb-2">Productos:</h4>
+                  <h4 className="font-semibold text-lg mb-2">Productos</h4>
                   {productosSeleccionados.length > 0 ? (
-                    <ul className="list-disc list-inside space-y-1">
-                      {productosSeleccionados.map((item) => (
-                        <li key={item.pkid}>
-                          {item.cantidad} x {item.nombre} (${item.precio_unitario} c/u)
-                        </li>
-                      ))}
-                    </ul>
+                    <table className="min-w-full">
+                      <thead>
+                        <tr className="bg-gray-100">
+                          <th className="px-4 py-2 border">Descripción</th>
+                          <th className="px-4 py-2 border">Unid</th>
+                          <th className="px-4 py-2 border">Precio c/u</th>
+                          <th className="px-4 py-2 border">Importe</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {productosSeleccionados.map((item) => (
+                          <tr key={item.pkid} className="text-center">
+                            <td className="px-4 py-2 border">{item.nombre}</td>
+                            <td className="px-4 py-2 border">{item.cantidad}x</td>
+                            <td className="px-4 py-2 border">${item.precio_unitario}</td>
+                            <td className="px-4 py-2 border">${item.precio_unitario * item.cantidad}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+
                   ) : (
                     <p>No hay productos en este pedido.</p>
                   )}
+                </div>
+                <div className="mt-4 pt-4 text-2xl">
+                  <p><strong>Recaudo:</strong> ${valor_total}</p>
+                </div>
+                <div className="mt-4 pt-4">
+                  <p><strong>Fecha de creación:</strong> {fecha_creacion?.substring(0, 10)}</p>
                 </div>
               </div>
             ) : (
@@ -371,43 +396,58 @@ export default function PedidosPage() {
 
                   {productosSeleccionados.length > 0 ? (
                     <div className="mb-4 border rounded p-3 bg-white">
-                      <h5 className="font-medium mb-2">Detalles del Pedido:</h5>
-                      {productosSeleccionados.map((item) => (
-                        <div
-                          key={item.pkid}
-                          className="flex justify-between items-center mb-2 last:mb-0"
-                        >
-                          <span>
-                            {item.cantidad} x {item.nombre} (${item.precio_unitario} c/u)
-                          </span>
-                          <button
-                            onClick={() => removeProductFromCart(item.pkid)}
-                            className="text-red-500 hover:text-red-700 text-sm"
-                          >
-                            Eliminar
-                          </button>
-                        </div>
-                      ))}
+                      <h5 className="block mb-1 font-semibold text-gray-700 text-lg">Detalles del Pedido:</h5>
+                      <table className="w-full table-auto text-sm">
+                        <thead>
+                          <tr className="text-left border-b font-medium text-gray-700">
+                            <th className="py-1">Descripción</th>
+                            <th className="py-1">Unid</th>
+                            <th className="py-1">Precio c/u</th>
+                            <th className="py-1"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {productosSeleccionados.map((item) => (
+                            <tr key={item.pkid} className="border-b last:border-b-0">
+
+                              <td className="py-1">{item.nombre}</td>
+                              <td className="py-1">{item.cantidad}x</td>
+                              <td className="py-1">${item.precio_unitario}</td>
+
+                              <td className="py-1 text-right">
+                                <button
+                                  onClick={() => removeProductFromCart(item.pkid)}
+                                  className="text-red-500 hover:text-red-700 text-sm cursor-pointer"
+                                >
+                                  X
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
+
                   ) : (
                     <p className="text-gray-500 mb-4">No hay productos añadidos.</p>
                   )}
                 </div>
               </div>
-            )}
+            )
+            }
 
             {/* BOTONES FOOTER */}
             <div className="flex justify-end space-x-2 mt-6">
               <button
                 onClick={() => setModalOpen(false)}
-                className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600"
+                className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 cursor-pointer"
               >
                 {modalMode === "view" ? "Cerrar" : "Cancelar"}
               </button>
               {modalMode !== "view" && (
                 <button
                   onClick={handleSubmit}
-                  className="px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600"
+                  className="px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600 cursor-pointer"
                 >
                   {modalMode === "view" ? "Cerrar" : "Guardar"}
                 </button>
@@ -416,7 +456,6 @@ export default function PedidosPage() {
           </div>
         </div>
       )}
-
     </div>
   );
 }

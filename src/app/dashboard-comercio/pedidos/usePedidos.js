@@ -17,6 +17,7 @@ const usePedidos = () => {
     const [modalMode, setModalMode] = useState("new");
     const [editingPedido, setEditingPedido] = useState(null);
     const [viewPedido, setViewPedido] = useState(null);
+    const [viewCosto, setViewCosto] = useState(null);
     const [pkid_pedido, setPKID_pedido] = useState("");
     const [valor_total, setValor_total] = useState("");
     const [valor_flete, setValor_flete] = useState("");
@@ -215,6 +216,20 @@ useEffect(() => {
     const openModalForView = async (pedido) => {
         setModalMode("view");
         setViewPedido(pedido);
+        setPKID_pedido(pedido.pkid);
+        setValor_total(pedido.valor_total.toString());
+        setValor_flete(pedido.valor_flete.toString());
+        setFecha_creacion(formatDateForInput(pedido.fecha_creacion));
+        setSelectedCliente(pedido.fkid_tbl_clientes);
+        setSelectedTransportadora(pedido.fkid_tbl_transportadoras);
+        setSelectedMunicipio(pedido.fkid_tbl_municipios);
+        await loadDetalleProductosForEdit(pedido.pkid);
+        setModalOpen(true);
+    };
+
+    const openModalForViewCosto = async (pedido) => {
+        setModalMode("costo");
+        setViewCosto(pedido);
         setPKID_pedido(pedido.pkid);
         setValor_total(pedido.valor_total.toString());
         setValor_flete(pedido.valor_flete.toString());
@@ -518,6 +533,7 @@ useEffect(() => {
         removeProductFromCart,
         openModalForNew,
         openModalForView,
+        openModalForViewCosto,
         setModalOpen,
         modalMode,
         handleSubmit,
@@ -530,7 +546,8 @@ useEffect(() => {
         selectedMunicipio,
         setSelectedMunicipio,
         getComercioSeleccionado,               
-        viewPedido,              
+        viewPedido,
+        viewCosto,
     };
 }
 

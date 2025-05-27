@@ -1,7 +1,6 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from 'next/server';
 
-// Función para manejar solicitudes GET: Obtener detalles de un pedido específico
 export async function GET(request, { params }) {
   const pedidoId = params.id;
 
@@ -26,12 +25,10 @@ export async function GET(request, { params }) {
       },
     });
 
-    // Verifica que hay detalles para el pedido
     if (!detalles.length) {
       return NextResponse.json({ success: false, message: "No se encontraron detalles para este pedido." }, { status: 404 });
     }
 
-    // Serializa los detalles
     const detallesSerializados = detalles.map(det => ({
       pkid: det.pkid.toString(),
       cantidad: det.cantidad,
@@ -57,16 +54,14 @@ export async function GET(request, { params }) {
   }
 }
 
-// Función para manejar solicitudes DELETE: Eliminar detalles de un pedido específico
 export async function DELETE(request, { params }) {
-  const pedidoId = params.id; // Captura el ID del pedido de la URL
+  const pedidoId = params.id; 
 
   if (!pedidoId) {
     return NextResponse.json({ success: false, message: "ID de pedido no proporcionado para eliminar." }, { status: 400 });
   }
 
   try {
-    // Elimina todos los detalles de productos asociados a este pedido
     const deleteResult = await prisma.tbl_det_productos.deleteMany({
       where: {
         fkid_tbl_pedidos: BigInt(pedidoId),
