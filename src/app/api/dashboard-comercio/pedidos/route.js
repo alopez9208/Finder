@@ -37,12 +37,19 @@ const handleErrorResponse = (error, message, statusCode = 500) => {
                 fkid_tbl_clientes: true,
                 clientes: { // Mantenemos la anidación del cliente
                     select: {
+                        nombres: true,
+                        apellidos: true,
                         telefono: true,
+                        direccion: true,
+                        correo: true,
                     },
                 },
                 fkid_tbl_transportadoras: true,
                 transportadoras: { // Mantenemos la anidación de la transportadora
-                    select: { nomenclatura: true },
+                    select: { 
+                        nombre: true,
+                        nomenclatura: true 
+                    },
                 },
                 fkid_tbl_municipios: true,
                 municipios: { // Mantenemos la anidación del municipio
@@ -61,10 +68,15 @@ const handleErrorResponse = (error, message, statusCode = 500) => {
             fecha_creacion: item.fecha_creacion,
             fkid_tbl_clientes: item.fkid_tbl_clientes?.toString() ?? null,
             clientes: {
+                nombres: item.clientes?.nombres ?? null,
+                apellidos: item.clientes?.apellidos ?? null,
                 telefono: item.clientes?.telefono ?? null,
+                direccion: item.clientes?.direccion ?? null,
+                correo: item.clientes?.correo ?? null,
             },
             fkid_tbl_transportadoras: item.fkid_tbl_transportadoras?.toString() ?? null,
             transportadoras: {
+                nombre: item.transportadoras?.nombre ?? null,
                 nomenclatura: item.transportadoras?.nomenclatura ?? null,
             },
             fkid_tbl_municipios: item.fkid_tbl_municipios?.toString() ?? null,

@@ -277,6 +277,7 @@ export default function DashboardPage() {
             <h3 className="text-xl font-semibold mb-4">
               {editingTransporter ? "Editar Transportadora" : "Nueva Transportadora"}
             </h3>
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Nombre:</label>
             <input
               type="text"
               placeholder="Nombre"
@@ -284,7 +285,8 @@ export default function DashboardPage() {
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
               readOnly={editingTransporter}
-            />
+              />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Nomenclatura:</label>
             <input
               type="text"
               placeholder="Nomenclatura"

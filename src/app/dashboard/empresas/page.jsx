@@ -285,6 +285,7 @@ export default function DashboardPage() {
             <h3 className="text-xl font-semibold mb-4">
               {editingEmpresa ? "Editar Empresa" : "Nueva Empresa"}
             </h3>
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Nombre:</label>
             <input
               type="text"
               placeholder="Nombre"
@@ -292,6 +293,7 @@ export default function DashboardPage() {
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}             
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">NIT:</label>
             <input
               type="text"
               placeholder="NIT"
@@ -300,6 +302,7 @@ export default function DashboardPage() {
               onChange={(e) => setNit(e.target.value)}
               readOnly={editingEmpresa}
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Teléfono:</label>
             <input
               type="text"
               placeholder="Teléfono"
@@ -307,6 +310,7 @@ export default function DashboardPage() {
               value={telefono}
               onChange={(e) => setTelefono(e.target.value)}
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Correo:</label>
             <input
               type="text"
               placeholder="Correo"

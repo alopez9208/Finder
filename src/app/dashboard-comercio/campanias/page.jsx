@@ -183,6 +183,7 @@ export default function CampaniasPage() {
             <h3 className="text-xl font-semibold mb-4">
               {editingcampania ? "Editar campaña" : "Nueva campaña"}
             </h3>
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Nombre:</label>
             <input
               type="text"
               placeholder="Nombre"
@@ -190,6 +191,7 @@ export default function CampaniasPage() {
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}              
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Presupuesto gastado:</label>
             <input
               type="number"
               placeholder="Presupuesto gastado"
@@ -197,6 +199,7 @@ export default function CampaniasPage() {
               value={presupuesto_gastado}
               onChange={(e) => setPresupuesto_gastado(e.target.value)}
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Fecha inicio:</label>
             <input
               type="date"
               placeholder="Fecha inicio"
@@ -204,6 +207,7 @@ export default function CampaniasPage() {
               value={fecha_inicio ? fecha_inicio.substring(0, 10) : ""}
               onChange={(e) => setFecha_inicio(e.target.value)}
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Fecha fin:</label>
             <input
               type="date"
               placeholder="Fecha fin"

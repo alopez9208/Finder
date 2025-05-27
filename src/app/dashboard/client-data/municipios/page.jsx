@@ -293,6 +293,7 @@ export default function MunicipiosPage() {
             <h3 className="text-xl font-semibold mb-4">
               {editingMunicipio ? "Editar Municipio" : "Nuevo Municipio"}
             </h3>
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Nombre:</label>
             <input
               type="text"
               placeholder="Nombre"
@@ -301,6 +302,7 @@ export default function MunicipiosPage() {
               onChange={(e) => setNombre(e.target.value)}
               readOnly={editingMunicipio}
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Nomenclatura:</label>
             <input
               type="text"
               placeholder="Nomenclatura"
@@ -308,6 +310,7 @@ export default function MunicipiosPage() {
               value={nomenclatura}
               onChange={(e) => setNomenclatura(e.target.value)}
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Departamento:</label>
             <select
               value={selectedDepartamento}
               onChange={(e) => setSelectedDepartamento(e.target.value)}

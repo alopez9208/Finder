@@ -182,47 +182,51 @@ export default function ClientesPage() {
             <h3 className="text-xl font-semibold mb-4">
               {editingCliente ? "Editar Cliente" : "Nuevo Cliente"}
             </h3>
-
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Teléfono:</label>
             <input
               type="text"
               placeholder="Teléfono"
-              className="w-full mb-4 px-4 py-2 border rounded"
+              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
               value={telefono}
               onChange={(e) => setTelefono(e.target.value)}
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Nombres:</label>
             <input
               type="text"
               placeholder="Nombre"
-              className="w-full mb-4 px-4 py-2 border rounded"
+              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
               value={nombres}
               onChange={(e) => setNombres(e.target.value)}
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Apellidos:</label>
             <input
               type="text"
               placeholder="Apellidos"
-              className="w-full mb-4 px-4 py-2 border rounded"
+              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
               value={apellidos}
               onChange={(e) => setApellidos(e.target.value)}
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Correo:</label>
             <input
               type="text"
               placeholder="Correo"
-              className="w-full mb-4 px-4 py-2 border rounded"
+              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
               value={correo}
               onChange={(e) => setCorreo(e.target.value)}
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Dirección:</label>
             <input
               type="text"
               placeholder="Dirección"
-              className="w-full mb-4 px-4 py-2 border rounded"
+              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
               value={direccion}
               onChange={(e) => setDireccion(e.target.value)}
             />
-
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Municipio:</label>
             <select
               value={selectedMunicipio}
               onChange={(e) => setSelectedMunicipio(e.target.value)}
-              className="w-full mb-4 px-4 py-2 border rounded"
+              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
               disabled={!!editingCliente}
             >
               <option value="">Seleccione un Municipio</option>

@@ -23,7 +23,7 @@ export async function GET() {
       costo: item.costo,
       valor: item.valor,
       fkid_tbl_empresas: item.fkid_tbl_empresas?.toString() ?? null,
-      nombre_empresa: item.empresas?.nombre ?? null, // ✅ Incluye la nomenclatura de la empresa
+      nombre_empresa: item.empresas?.nombre ?? null, 
     }));
 
     return new Response(

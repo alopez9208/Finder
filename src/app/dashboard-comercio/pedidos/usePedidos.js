@@ -13,8 +13,11 @@ const usePedidos = () => {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
     const [modalOpen, setModalOpen] = useState(false);
-    const modalRef = useRef();
+    const modalRef = useRef();   
+    const [modalMode, setModalMode] = useState("new");
     const [editingPedido, setEditingPedido] = useState(null);
+    const [viewPedido, setViewPedido] = useState(null);
+    const [pkid_pedido, setPKID_pedido] = useState("");
     const [valor_total, setValor_total] = useState("");
     const [valor_flete, setValor_flete] = useState("");
     const [fecha_creacion, setFecha_creacion] = useState("");
@@ -38,7 +41,7 @@ const usePedidos = () => {
         fetchProductos();
         fetchMunicipios();
     const handleEsc = (e) => {
-      if (e.key === "Escape") setModalOpen(false);
+      if (e.key === "Escape") setModalOpen(false);      
   };
   if (modalOpen) {
       window.addEventListener("keydown", handleEsc);
@@ -184,6 +187,7 @@ useEffect(() => {
     };
 
     const openModalForNew = () => {
+        setModalMode("new");
         setEditingPedido(null);
         setValor_total("");
         setValor_flete("");
@@ -193,10 +197,25 @@ useEffect(() => {
         setProductosSeleccionados([]);
         setSelectedMunicipio("");
         setModalOpen(true);
-    };
+    };    
 
     const openModalForEdit = async (pedido) => {
+        setModalMode("edit");
         setEditingPedido(pedido);
+        setValor_total(pedido.valor_total.toString());
+        setValor_flete(pedido.valor_flete.toString());
+        setFecha_creacion(formatDateForInput(pedido.fecha_creacion));
+        setSelectedCliente(pedido.fkid_tbl_clientes);
+        setSelectedTransportadora(pedido.fkid_tbl_transportadoras);
+        setSelectedMunicipio(pedido.fkid_tbl_municipios);
+        await loadDetalleProductosForEdit(pedido.pkid);
+        setModalOpen(true);
+    };
+
+    const openModalForView = async (pedido) => {
+        setModalMode("view");
+        setViewPedido(pedido);
+        setPKID_pedido(pedido.pkid);
         setValor_total(pedido.valor_total.toString());
         setValor_flete(pedido.valor_flete.toString());
         setFecha_creacion(formatDateForInput(pedido.fecha_creacion));
@@ -470,10 +489,12 @@ useEffect(() => {
         visiblepedidos,
         totalPages,
         handlePageChange,
-        openModalForEdit,
-        modalOpen,
+        openModalForEdit,        
         modalRef,
+        modalOpen,
         editingPedido,
+        pkid_pedido,
+        setPKID_pedido,
         setValor_total,
         setValor_flete,
         valor_total,
@@ -496,7 +517,9 @@ useEffect(() => {
         addProductToCart,
         removeProductFromCart,
         openModalForNew,
+        openModalForView,
         setModalOpen,
+        modalMode,
         handleSubmit,
         setError,
         error,
@@ -506,7 +529,8 @@ useEffect(() => {
         municipios,
         selectedMunicipio,
         setSelectedMunicipio,
-        getComercioSeleccionado,
+        getComercioSeleccionado,               
+        viewPedido,              
     };
 }
 

@@ -115,9 +115,9 @@ export default function DashboardPage() {
         apellidos: userData.apellidos,
         correo: userData.correo
       };
-  
+
       console.log("Datos a enviar:", dataToSend);
-  
+
       const res = await fetch(`/api/dashboard/user-data/`, {
         method: "PUT",
         headers: {
@@ -352,10 +352,10 @@ export default function DashboardPage() {
 
             {/* Usuario (No editable) */}
             <div className="mb-4">
-              <label className="block text-gray-700">Usuario:</label>
+              <label className="block mb-1 font-semibold text-gray-700 text-sm">Usuario:</label>
               <input
                 type="text"
-                className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white read-only:bg-[#f0ebff]"
+                className="w-full px-4 py-2 border rounded focus:outline-none bg-white read-only:bg-[#f0ebff]"
                 value={userData.pkusuario}
                 readOnly
               />
@@ -363,10 +363,10 @@ export default function DashboardPage() {
 
             {/* Selección de Rol */}
             <div className="mb-4">
-              <label className="block text-gray-700">Rol:</label>
+              <label className="block mb-1 font-semibold text-gray-700 text-sm">Rol:</label>
               <select
                 name="rol"
-                className="w-full p-2 mt-2 border rounded bg-white"
+                className="w-full p-2 border rounded bg-white"
                 value={userData.rol || ""} // Si `rol` es undefined, se asigna una cadena vacía para evitar problemas
                 onChange={handleChange}
               >
@@ -384,10 +384,10 @@ export default function DashboardPage() {
 
             {/* Selección de Estado */}
             <div className="mb-4">
-              <label className="block text-gray-700">Estado:</label>
+              <label className="block mb-1 font-semibold text-gray-700 text-sm">Estado:</label>
               <select
                 name="estado"
-                className="w-full p-2 mt-2 border rounded bg-white"
+                className="w-full p-2 border rounded bg-white"
                 value={userData.estado || ""} // Lo mismo aquí para el estado
                 onChange={handleChange}
               >
@@ -402,15 +402,13 @@ export default function DashboardPage() {
                 )}
               </select>
             </div>
-
-
-
+            
             {/* Nombres */}
             <div className="mb-4">
-              <label className="block text-gray-700">Nombre:</label>
+              <label className="block mb-1 font-semibold text-gray-700 text-sm">Nombre:</label>
               <input
                 type="text"
-                className="w-full p-2 mt-2 border rounded bg-white"
+                className="w-full p-2 border rounded bg-white"
                 value={userData.nombres}
                 onChange={handleChange}
                 name="nombres"
@@ -419,10 +417,10 @@ export default function DashboardPage() {
 
             {/* Apellidos */}
             <div className="mb-4">
-              <label className="block text-gray-700">Apellido:</label>
+              <label className="block mb-1 font-semibold text-gray-700 text-sm">Apellido:</label>
               <input
                 type="text"
-                className="w-full p-2 mt-2 border rounded bg-white"
+                className="w-full p-2 border rounded bg-white"
                 value={userData.apellidos}
                 onChange={handleChange}
                 name="apellidos"
@@ -431,10 +429,10 @@ export default function DashboardPage() {
 
             {/* Correo */}
             <div className="mb-4">
-              <label className="block text-gray-700">Correo:</label>
+              <label className="block mb-1 font-semibold text-gray-700 text-sm">Correo:</label>
               <input
                 type="text"
-                className="w-full p-2 mt-2 border rounded"
+                className="w-full p-2 border rounded"
                 value={userData.correo}
                 onChange={handleChange}
                 name="correo"

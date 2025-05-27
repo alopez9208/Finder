@@ -10,21 +10,22 @@ export default function ProductosPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const productosPerPage = 5;
   const [productos, setProductos] = useState([]);
-  const [empresas, setEmpresas] = useState([]); // Estado para las empresas
+  const [empresas, setEmpresas] = useState([]); 
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingProducto, setEditingProducto] = useState(null);
+
   const [nombre, setNombre] = useState("");
   const [costo, setCosto] = useState("");
   const [valor, setValor] = useState("");
-  const [selectedEmpresa, setSelectedEmpresa] = useState(""); // Estado para el departamento seleccionado
+  const [selectedEmpresa, setSelectedEmpresa] = useState(""); 
 
 
   useEffect(() => {
     fetchProductos();
-    fetchEmpresas(); // Llamar a la función para obtener las empresas
+    fetchEmpresas(); 
   }, []);
 
   const fetchProductos = async () => {
@@ -297,6 +298,7 @@ export default function ProductosPage() {
             <h3 className="text-xl font-semibold mb-4">
               {editingProducto ? "Editar Producto" : "Nuevo Producto"}
             </h3>
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Nombre:</label>
             <input
               type="text"
               placeholder="Nombre"
@@ -304,6 +306,7 @@ export default function ProductosPage() {
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}              
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Costo:</label>
             <input
               type="number"
               placeholder="Costo"
@@ -311,6 +314,7 @@ export default function ProductosPage() {
               value={costo}
               onChange={(e) => setCosto(e.target.value)}
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Valor:</label>
             <input
               type="number"
               placeholder="Valor"
@@ -318,6 +322,7 @@ export default function ProductosPage() {
               value={valor}
               onChange={(e) => setValor(e.target.value)}
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Empresa:</label>
             <select
               value={selectedEmpresa}
               onChange={(e) => setSelectedEmpresa(e.target.value)}

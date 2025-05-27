@@ -265,6 +265,7 @@ export default function RolesPage() {
         <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-[#f0ebff] p-6 rounded-xl shadow-xl w-full max-w-md relative text-gray-700 border">
             <h3 className="text-xl font-semibold mb-4">{editingRole ? "Editar Rol" : "Nuevo Rol"}</h3>
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Nombre:</label>
             <input
               type="text"
               placeholder="Nombre"
@@ -273,6 +274,7 @@ export default function RolesPage() {
               onChange={(e) => setNombre(e.target.value)}
               readOnly={editingRole}
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Nomenclatura:</label>
             <input
               type="text"
               placeholder="Nomenclatura"

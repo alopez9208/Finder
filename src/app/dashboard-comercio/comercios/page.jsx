@@ -281,6 +281,7 @@ export default function ComerciosPage() {
             <h3 className="text-xl font-semibold mb-4">
               {editingComercio ? "Editar Comercio" : "Nuevo Comercio"}
             </h3>
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Nombre:</label>
             <input
               type="text"
               placeholder="Nombre"
@@ -288,6 +289,7 @@ export default function ComerciosPage() {
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}              
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Teléfono:</label>
             <input
               type="text"
               placeholder="Teléfono"
@@ -295,6 +297,7 @@ export default function ComerciosPage() {
               value={telefono}
               onChange={(e) => setTelefono(e.target.value)}
             />
+            <label className="block mb-1 font-semibold text-gray-700 text-sm">Correo:</label>
             <input
               type="text"
               placeholder="Correo"
