@@ -196,6 +196,11 @@ const useCampanias = () => {
             alert("Formato de fecha inválido.");
             return;
         }
+        
+        if (new Date(localFechaInicio) > new Date(localFechaFin)) {
+            alert("La fecha de inicio no puede ser posterior a la fecha de fin.");
+            return;
+        }
 
         const comercioData = {
             nombre,
