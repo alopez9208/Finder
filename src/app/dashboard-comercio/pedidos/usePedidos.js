@@ -13,7 +13,7 @@ const usePedidos = () => {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
     const [modalOpen, setModalOpen] = useState(false);
-    const modalRef = useRef();   
+    const modalRef = useRef();
     const [modalMode, setModalMode] = useState("new");
     const [editingPedido, setEditingPedido] = useState(null);
     const [viewPedido, setViewPedido] = useState(null);
@@ -41,37 +41,37 @@ const usePedidos = () => {
         fetchClientes();
         fetchProductos();
         fetchMunicipios();
-    const handleEsc = (e) => {
-      if (e.key === "Escape") setModalOpen(false);      
-  };
-  if (modalOpen) {
-      window.addEventListener("keydown", handleEsc);
-  }
-  return () => window.removeEventListener("keydown", handleEsc);
-}, [modalOpen]);
+        const handleEsc = (e) => {
+            if (e.key === "Escape") setModalOpen(false);
+        };
+        if (modalOpen) {
+            window.addEventListener("keydown", handleEsc);
+        }
+        return () => window.removeEventListener("keydown", handleEsc);
+    }, [modalOpen]);
 
-const handleClickOutside = (e) => {
-  if (modalRef.current && !modalRef.current.contains(e.target)) {
-      setModalOpen(false);
-  }
-};
+    const handleClickOutside = (e) => {
+        if (modalRef.current && !modalRef.current.contains(e.target)) {
+            setModalOpen(false);
+        }
+    };
 
-useEffect(() => {
-  if (modalOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-  }
-  return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-  };
-}, [modalOpen]);
+    useEffect(() => {
+        if (modalOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [modalOpen]);
 
-  // Obtener comercioSeleccionado de localStorage
-  const getComercioSeleccionado = () => {
-    // Si en localStorage tienes "comercioSeleccionado" guardado como string, úsalo así:
-    const comercioSeleccionado = localStorage.getItem("comercioSeleccionado");
-    console.log("comercioSeleccionado desde localStorage:", comercioSeleccionado);
-    return comercioSeleccionado;
-  };
+    // Obtener comercioSeleccionado de localStorage
+    const getComercioSeleccionado = () => {
+        // Si en localStorage tienes "comercioSeleccionado" guardado como string, úsalo así:
+        const comercioSeleccionado = localStorage.getItem("comercioSeleccionado");
+        console.log("comercioSeleccionado desde localStorage:", comercioSeleccionado);
+        return comercioSeleccionado;
+    };
 
     const fetchPedidos = async () => {
         try {
@@ -87,7 +87,7 @@ useEffect(() => {
 
             if (!res.ok) {
                 throw new Error("Error al obtener pedidos");
-              }
+            }
 
             const data = await res.json();
             if (data.success) {
@@ -102,32 +102,32 @@ useEffect(() => {
 
     const fetchClientes = async () => {
         const comercioId = getComercioSeleccionado();
-    
+
         if (!comercioId) {
-          console.warn("No se encontró 'comercioSeleccionado' en localStorage.");
-          return;
+            console.warn("No se encontró 'comercioSeleccionado' en localStorage.");
+            return;
         }
-    
+
         try {
-          const res = await fetch("/api/dashboard-comercio/clientes", {
-            headers: {
-              "x-comercio-id": comercioId,
-            },
-          });
-    
-          const data = await res.json();
-          console.log("Respuesta del backend:", data);
-    
-          if (data.success) {
-            setClientes(data.clientes);
-            console.log("Clientes recibidos:", data.clientes);
-          } else {
-            console.error("No se encontraron clientes", data.error);
-          }
+            const res = await fetch("/api/dashboard-comercio/clientes", {
+                headers: {
+                    "x-comercio-id": comercioId,
+                },
+            });
+
+            const data = await res.json();
+            console.log("Respuesta del backend:", data);
+
+            if (data.success) {
+                setClientes(data.clientes);
+                console.log("Clientes recibidos:", data.clientes);
+            } else {
+                console.error("No se encontraron clientes", data.error);
+            }
         } catch (error) {
-          console.error("Error al obtener clientes:", error);
+            console.error("Error al obtener clientes:", error);
         }
-      };
+    };
 
     const fetchMunicipios = async () => {
         try {
@@ -178,6 +178,20 @@ useEffect(() => {
         }
     };
 
+    function formatearNumero(valor) {
+        if (typeof valor !== 'number') valor = Number(valor);
+      
+        const formateado = valor.toLocaleString('de-DE'); // ejemplo: "2.233.000" o "78.000"
+      
+        if (valor < 1000000) {
+          // Para menos de un millón, solo retorna con puntos
+          return formateado;
+        } else {
+          // Para un millón o más, reemplaza solo el primer punto por comilla
+          return formateado.replace('.', "'");
+        }
+      }      
+
     const formatDateForInput = (isoString) => {
         if (!isoString) return "";
         const date = new Date(isoString);
@@ -198,7 +212,7 @@ useEffect(() => {
         setProductosSeleccionados([]);
         setSelectedMunicipio("");
         setModalOpen(true);
-    };    
+    };
 
     const openModalForEdit = async (pedido) => {
         setModalMode("edit");
@@ -504,7 +518,7 @@ useEffect(() => {
         visiblepedidos,
         totalPages,
         handlePageChange,
-        openModalForEdit,        
+        openModalForEdit,
         modalRef,
         modalOpen,
         editingPedido,
@@ -545,9 +559,10 @@ useEffect(() => {
         municipios,
         selectedMunicipio,
         setSelectedMunicipio,
-        getComercioSeleccionado,               
+        getComercioSeleccionado,
         viewPedido,
         viewCosto,
+        formatearNumero
     };
 }
 

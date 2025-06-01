@@ -64,6 +64,7 @@ export default function PedidosPage() {
     getComercioSeleccionado,
     viewPedido,
     viewCosto,
+    formatearNumero
   } = usePedidos();
 
   return (
@@ -114,8 +115,8 @@ export default function PedidosPage() {
                   <td className="p-3">{formatFecha(pedidos.fecha_creacion)}</td>
                   <td className="p-3">{pedidos.transportadoras.nombre}</td>
                   <td className="p-3">{pedidos.municipios.nombre}</td>
-                  <td className="p-3">{pedidos.valor_total}</td>
-                  <td className="p-3">{pedidos.valor_flete}</td>
+                  <td className="p-3">{formatearNumero(pedidos.valor_total)}</td>
+                  <td className="p-3">{formatearNumero(pedidos.valor_flete)}</td>
                   <td className="flex justify-end gap-2 p-3 text-right">
                     <button
                       onClick={() => openModalForEdit(pedidos)}

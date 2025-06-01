@@ -240,13 +240,13 @@ export default function ClientesPage() {
             <div className="flex justify-end space-x-2">
               <button
                 onClick={() => setModalOpen(false)}
-                className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600"
+                className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 cursor-pointer"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleSubmit}
-                className="px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600"
+                className="px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600 cursor-pointer"
               >
                 Guardar
               </button>

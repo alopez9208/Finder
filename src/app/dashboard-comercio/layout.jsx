@@ -1,6 +1,7 @@
-"use client";
+'use client'
 
-import React, { useEffect, useState } from "react";
+import { ComercioProvider, useComercio } from "@/context/ComercioContext";
+import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { MdOutlineSell } from "react-icons/md";
 import { FaShoppingCart, FaHome } from "react-icons/fa";
@@ -9,75 +10,42 @@ import { RiAdvertisementLine } from "react-icons/ri";
 import { IoLogOutOutline } from "react-icons/io5";
 
 export default function DashboardComercioLayout({ children }) {
+  return (
+    <ComercioProvider>
+      <LayoutInterno>{children}</LayoutInterno>
+    </ComercioProvider>
+  );
+}
+
+function LayoutInterno({ children }) {
+  const { comercios, selectedComercio, cambiarComercio } = useComercio();
+  const [fechaActual, setFechaActual] = useState("");
   const pathname = usePathname();
   const router = useRouter();
-  const [fechaActual, setFechaActual] = useState("");
-  const [comercios, setComercio] = useState([]);
-  const [selectedComercio, setSelectedComercio] = useState("");
 
   useEffect(() => {
-    const obtenerFecha = () => {
-      const opciones = {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      };
-      const fecha = new Date().toLocaleDateString("es-ES", opciones);
-      setFechaActual(fecha);
-    };
-
-    async function fetchComercios() {
-      const usuario = JSON.parse(localStorage.getItem("usuario"));
-      const usuarioId = usuario?.pkusuario;
-
-      try {
-        const response = await fetch("/api/dashboard-comercio/comercios", {
-          headers: {
-            "x-usuario-id": usuarioId ? usuarioId.toString() : "",  // Envías el id como string
-          },
-        });
-
-        const data = await response.json();
-        if (data.success && data.comercios.length > 0) {
-          setComercio(data.comercios);
-
-          const comercioGuardado = localStorage.getItem("comercioSeleccionado");
-
-          if (comercioGuardado && data.comercios.some(c => c.pkid === comercioGuardado)) {
-            setSelectedComercio(comercioGuardado);
-          } else {
-            // Si no hay comercio guardado o el guardado no está en la lista, selecciona el primero y lo guarda
-            const primerComercio = data.comercios[0].pkid;
-            setSelectedComercio(primerComercio);
-            localStorage.setItem("comercioSeleccionado", primerComercio);
-          }
-        }
-      } catch (error) {
-        console.error("Error al cargar comercios:", error);
-      }
-    }
-
-    obtenerFecha();
-    fetchComercios();
+    const fecha = new Date().toLocaleDateString("es-ES", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    setFechaActual(fecha);
   }, []);
-
-  const isActive = (path) =>
-    pathname === path ? "bg-[#2D9EE8]" : "hover:bg-[#2D9EE8]";
 
   const handleChange = (e) => {
     const value = e.target.value;
-
     if (value === "administrar_comercios") {
       router.push("/dashboard-comercio/comercios");
     } else {
-      setSelectedComercio(value);
-      localStorage.setItem("comercioSeleccionado", value);
+      cambiarComercio(value);
       if (pathname !== "/dashboard-comercio") {
         router.push("/dashboard-comercio");
       }
     }
   };
+
+  const isActive = (path) => (pathname === path ? "bg-[#2D9EE8]" : "hover:bg-[#2D9EE8]");
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -104,30 +72,26 @@ export default function DashboardComercioLayout({ children }) {
               <select
                 value={selectedComercio}
                 onChange={handleChange}
-
                 className="w-full p-2 rounded bg-[#2D9EE8] text-white focus:outline-none text-center text-lg"
               >
-                <option disabled value="">Selecciona un comercio</option>
+                <option disabled value="">
+                  Selecciona un comercio
+                </option>
                 {comercios.map((comercio) => (
-
                   <option key={comercio.pkid} value={comercio.pkid}>
                     {comercio.nombre}
                   </option>
                 ))}
-                <option disabled className="border-t border-white text-[#FAF0E6]">_____________</option>
-                <option
-                  value="administrar_comercios"
-                  className="border-t border-white pt-2"
-                >
-                  Administrar Comercios
+                <option disabled className="border-t border-white text-[#FAF0E6]">
+                  _____________
                 </option>
+                <option value="administrar_comercios">Administrar Comercios</option>
               </select>
             </div>
 
             <div className="flex items-center gap-1 border-white p-1 mb-1">
               <span className="text-white text-sm ml-4">Administración General</span>
             </div>
-
 
             <button
               onClick={() => router.push("/dashboard-comercio/pedidos")}
@@ -195,17 +159,20 @@ export default function DashboardComercioLayout({ children }) {
 
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto bg-[#F0EBFF]">
-        {/* Topbar */}
         <div className="flex justify-end items-center mb-4 h-[80px] px-8 space-x-4">
           <div className="flex items-center space-x-16">
             <p className="text-gray-500 text-lg">{fechaActual}</p>
             <button className="cursor-pointer">
-              <img src="/avatarhombre.png" className="w-15 h-15 rounded-full" alt="Avatar" />
+              <img
+                src="/avatarhombre.png"
+                className="w-15 h-15 rounded-full"
+                alt="Avatar"
+              />
             </button>
           </div>
         </div>
 
-        {/* Contenido que cambia */}
+        {/* Contenido dinámico */}
         <div className="px-12">{children}</div>
       </main>
     </div>
