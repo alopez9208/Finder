@@ -8,40 +8,43 @@ export default function CampaniasPage() {
 
   const {
     searchNombre,
-    setsearchNombre,
-    currentPage,
-    setCurrentPage,
-    campanias,
-    comercios,
-    sortConfig,
-    setSortConfig,
-    modalOpen,
-    setModalOpen,
-    editingcampania,
-    setEditingcampania,
-    nombre,
-    setNombre,
-    presupuesto_gastado,
-    setPresupuesto_gastado,
-    fecha_inicio,
-    setFecha_inicio,
-    fecha_fin,
-    setFecha_fin,
-    selectedcomercio,
-    setSelectedcomercio,
-    handleSubmit,
-    openModalForNew,  
-    openModalForEdit,
-    handleSort,
-    renderSortIcon,
-    handlePageChange,
-    totalPages,
-    visiblecampanias,
-    fetchCampanias,
-    fetchComercios,
-    formatFecha,
-    modalRef,
-
+        setsearchNombre,
+        currentPage,
+        setCurrentPage,
+        campaniasPerPage,
+        campanias,
+        comercios,
+        sortConfig,
+        setSortConfig,
+        modalOpen,
+        setModalOpen,
+        editingcampania,
+        setEditingcampania,
+        nombre,
+        setNombre,
+        presupuesto_gastado,
+        setPresupuesto_gastado,
+        fecha_inicio,
+        setFecha_inicio,
+        fecha_fin,
+        setFecha_fin,
+        selectedcomercio,
+        setSelectedcomercio,
+        handleSubmit,
+        openModalForNew,
+        openModalForEdit,
+        handleSort,
+        renderSortIcon,
+        handlePageChange,
+        totalPages,
+        visiblecampanias,
+        fetchCampanias,
+        fetchComercios,
+        formatFecha,
+        modalRef,
+        formatearNumero,
+        hasFetchedRef,    
+        comercioSeleccionado,
   } = useCampanias();
 
   return (
@@ -85,14 +88,13 @@ export default function CampaniasPage() {
               </tr>
             </thead>
             <tbody>
-
               {visiblecampanias.map((campania, index) => {
                 console.log('Campaña en render:', campania);
                 return (
                   <tr key={index} className="border-b">
                     <td className="p-3">{campania.pkid}</td>
                     <td className="p-3">{campania.nombre}</td>
-                    <td className="p-3">{campania.presupuesto_gastado}</td>
+                    <td className="p-3">{formatearNumero(campania.presupuesto_gastado)}</td>
                     <td className="p-3">{formatFecha(campania.fecha_inicio)}</td>
                     <td className="p-3">{formatFecha(campania.fecha_fin)}</td>                   
                     <td className="p-3 text-right">
@@ -223,7 +225,7 @@ export default function CampaniasPage() {
                 Cancelar
               </button>
               <button
-                onClick={handleSubmit}
+                onClick={handleSubmit}                
                 className="px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600 cursor-pointer"
               >
                 Guardar

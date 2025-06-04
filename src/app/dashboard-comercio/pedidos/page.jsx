@@ -61,10 +61,12 @@ export default function PedidosPage() {
     municipios,
     selectedMunicipio,
     setSelectedMunicipio,
-    getComercioSeleccionado,
     viewPedido,
     viewCosto,
-    formatearNumero
+    formatearNumero,
+    handleFileUpload,
+    comercioSeleccionado,
+    hasFetchedRef,
   } = usePedidos();
 
   return (
@@ -80,6 +82,17 @@ export default function PedidosPage() {
             value={searchTelefono}
             onChange={(e) => setsearchTelefono(e.target.value)}
           />
+          <div className="p-4">
+            <label className="block mb-2 text-sm font-medium text-gray-700">
+              Importar pedidos desde Excel
+            </label>
+            <input
+              type="file"
+              accept=".xlsx"
+              onChange={handleFileUpload}
+              className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            />
+          </div>
           <button
             onClick={openModalForNew}
             className="ml-4 flex items-center space-x-2 bg-[#3E82FF] text-white px-4 py-2 rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer"

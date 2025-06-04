@@ -42,6 +42,18 @@ export default function ProductosPage() {
     }
   };
 
+  function formatearNumero(valor) {
+    if (typeof valor !== 'number') valor = Number(valor);
+
+    const formateado = valor.toLocaleString('de-DE');
+
+    if (valor < 1000000) {
+        return formateado;
+    } else {
+        return formateado.replace('.', "'");
+    }
+}
+
   const fetchEmpresas = async () => {
     try {
       const res = await fetch("/api/dashboard/empresas");
@@ -208,8 +220,8 @@ export default function ProductosPage() {
                 <tr key={index} className="border-b">
                   <td className="p-3">{producto.pkid}</td>
                   <td className="p-3">{producto.nombre}</td>
-                  <td className="p-3">{producto.costo}</td>
-                  <td className="p-3">{producto.valor}</td>
+                  <td className="p-3">{formatearNumero(producto.costo)}</td>
+                  <td className="p-3">{formatearNumero(producto.valor)}</td>
                   <td className="p-3">{producto.nombre_empresa}</td>
                   <td className="p-3 text-right">
                     <button

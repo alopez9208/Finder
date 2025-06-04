@@ -5,37 +5,64 @@ const validateAndConvertId = (id) => {
 };
 
 const handleErrorResponse = (error, message, statusCode = 500) => {
-    console.error(message, error); 
+    console.error(message, error);
     return new Response(
-      JSON.stringify({ success: false, error: message }),
-      {
-        status: statusCode,
-        headers: { "Content-Type": "application/json" },
-      },
+        JSON.stringify({ success: false, error: message }),
+        {
+            status: statusCode,
+            headers: { "Content-Type": "application/json" },
+        },
     );
-  };
+};
 
-  export async function GET(request) {
+export async function GET(request) {
     try {
+        const { searchParams } = new URL(request.url);
+        const fecha_inicio = searchParams.get("fecha_inicio");
+        const fecha_fin = searchParams.get("fecha_fin");
         const comercioId = request.headers.get("x-comercio-id");
+
+        const fechaInicio = fecha_inicio ? new Date(fecha_inicio) : null;
+        const fechaFin = fecha_fin ? new Date(fecha_fin) : null;
+
+        if (fechaFin) {
+            fechaFin.setDate(fechaFin.getDate() + 1);
+        }
 
         if (!comercioId) {
             return handleErrorResponse(null, "El campo x-comercio-id es obligatorio.", 400);
         }
 
-        const pedidos = await prisma.tbl_pedidos.findMany({
-            where: {
-                clientes: {
-                    fkid_tbl_comercios: BigInt(comercioId),
-                },
+        const whereClause = {
+            clientes: {
+                fkid_tbl_comercios: BigInt(comercioId),
             },
+        };
+
+        if (fechaInicio && fechaFin) {
+            whereClause.fecha_creacion = {
+                gte: fechaInicio,
+                lt: fechaFin, 
+            };
+        } else if (fechaInicio) {
+            whereClause.fecha_creacion = {
+                gte: fechaInicio,
+            };
+        } else if (fechaFin) {
+            whereClause.fecha_creacion = {
+                lt: fechaFin,
+            };
+        }
+
+        const pedidos = await prisma.tbl_pedidos.findMany({
+            where: whereClause,
             select: {
                 pkid: true,
                 valor_total: true,
                 valor_flete: true,
                 fecha_creacion: true,
                 fkid_tbl_clientes: true,
-                clientes: { 
+                clientes: {
                     select: {
                         nombres: true,
                         apellidos: true,
@@ -45,22 +72,22 @@ const handleErrorResponse = (error, message, statusCode = 500) => {
                     },
                 },
                 fkid_tbl_transportadoras: true,
-                transportadoras: { 
-                    select: { 
+                transportadoras: {
+                    select: {
                         nombre: true,
-                        nomenclatura: true 
+                        nomenclatura: true,
                     },
                 },
                 fkid_tbl_municipios: true,
-                municipios: { 
-                    select: { 
+                municipios: {
+                    select: {
                         nombre: true,
                         nomenclatura: true,
                     },
                 },
             },
         });
-       
+
         const pedidosSerializados = pedidos.map((item) => ({
             pkid: item.pkid.toString(),
             valor_total: item.valor_total,
@@ -95,19 +122,23 @@ const handleErrorResponse = (error, message, statusCode = 500) => {
     }
 }
 
+
 export async function POST(request) {
     try {
-        const { valor_total, fecha_creacion, fkid_tbl_clientes, fkid_tbl_transportadoras, valor_flete, fkid_tbl_municipios } = await request.json();
+        const { valor_total, fkid_tbl_clientes, fkid_tbl_transportadoras, valor_flete, fkid_tbl_municipios } = await request.json();
 
-        if (!valor_total || !fecha_creacion || !valor_flete ) {
-            return handleErrorResponse(null, "Los campos valor_total, fecha_creacion y valor_flete son obligatorios.", 400);
+        if (!valor_total || !valor_flete) {
+            return handleErrorResponse(null, "Los campos valor_total y valor_flete son obligatorios.", 400);
         }
+
+        const fecha_creacion = new Date();
+        fecha_creacion.setDate(fecha_creacion.getDate());
 
         const nuevoPedido = await prisma.tbl_pedidos.create({
             data: {
-                valor_total: parseFloat(valor_total), 
-                fecha_creacion,
-                valor_flete: parseFloat(valor_flete), 
+                valor_total: parseFloat(valor_total),
+                fecha_creacion: fecha_creacion,
+                valor_flete: parseFloat(valor_flete),
                 fkid_tbl_clientes: validateAndConvertId(fkid_tbl_clientes),
                 fkid_tbl_transportadoras: validateAndConvertId(fkid_tbl_transportadoras),
                 fkid_tbl_municipios: validateAndConvertId(fkid_tbl_municipios),
@@ -140,9 +171,9 @@ export async function PUT(request) {
         }
 
         const dataToUpdate = {
-            valor_total: parseFloat(valor_total), 
+            valor_total: parseFloat(valor_total),
             fecha_creacion,
-            valor_flete: parseFloat(valor_flete), 
+            valor_flete: parseFloat(valor_flete),
             fkid_tbl_clientes: validateAndConvertId(fkid_tbl_clientes),
             fkid_tbl_transportadoras: validateAndConvertId(fkid_tbl_transportadoras),
             fkid_tbl_municipios: validateAndConvertId(fkid_tbl_municipios),

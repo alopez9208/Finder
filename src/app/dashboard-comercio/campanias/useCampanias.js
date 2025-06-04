@@ -1,6 +1,10 @@
 'use client'
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useModalCloseEvents } from "@/app/hooks/useModalCloseEvents";
+import { useComercioSeleccionado } from "@/app/hooks/useComercioSeleccionado";
+import { formatDateForInput, parseDate, formatFecha } from "@/app/utils/dateUtils";
+import { formatearNumero } from "@/app/utils/numberUtils";
 import { TbArrowsSort } from "react-icons/tb";
 
 const useCampanias = () => {
@@ -19,46 +23,22 @@ const useCampanias = () => {
     const [fecha_inicio, setFecha_inicio] = useState("");
     const [fecha_fin, setFecha_fin] = useState("");
     const [selectedcomercio, setSelectedcomercio] = useState("");
-    const modalRef = useRef();
+    const comercioSeleccionado = useComercioSeleccionado();
+    const modalRef = useRef();    
+    const hasFetchedRef = useRef(false);    
 
+    useModalCloseEvents({ modalOpen, setModalOpen, modalRef }); 
+      
     useEffect(() => {
-        fetchCampanias();
-        fetchComercios();
-
-        const handleEsc = (e) => {
-            if (e.key === "Escape") setModalOpen(false);
-        };
-        if (modalOpen) {
-            window.addEventListener("keydown", handleEsc);
+        if (comercioSeleccionado && !hasFetchedRef.current) {
+          fetchCampanias(comercioSeleccionado);
+          fetchComercios();
+          hasFetchedRef.current = true;
         }
-        return () => window.removeEventListener("keydown", handleEsc);
-    }, [modalOpen]);
+      }, [comercioSeleccionado]);
+   
 
-    const handleClickOutside = (e) => {
-        if (modalRef.current && !modalRef.current.contains(e.target)) {
-            setModalOpen(false);
-        }
-    };
-
-    useEffect(() => {
-        if (modalOpen) {
-            document.addEventListener("mousedown", handleClickOutside);
-        }
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [modalOpen]);
-
-    // Obtener comercioSeleccionado de localStorage
-    const getComercioSeleccionado = () => {
-        // Si en localStorage tienes "comercioSeleccionado" guardado como string, úsalo así:
-        const comercioSeleccionado = localStorage.getItem("comercioSeleccionado");
-        console.log("comercioSeleccionado desde localStorage:", comercioSeleccionado);
-        return comercioSeleccionado;
-    };
-
-    const fetchCampanias = async () => {
-        const comercioId = getComercioSeleccionado();
+    const fetchCampanias = async (comercioId) => {        
 
         if (!comercioId) {
             console.warn("No se encontró 'comercioSeleccionado' en localStorage.");
@@ -123,17 +103,7 @@ const useCampanias = () => {
         setFecha_inicio("");
         setFecha_fin("");
         setModalOpen(true);
-    };
-
-    const formatDateForInput = (isoString) => {
-        if (!isoString) return "";
-        const date = new Date(isoString);
-        // Obtiene la fecha en formato YYYY-MM-DD en tu zona horaria local
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-    };
+    };    
 
     const openModalForEdit = (campania) => {
         setEditingcampania(campania);
@@ -142,41 +112,10 @@ const useCampanias = () => {
         setFecha_inicio(formatDateForInput(campania.fecha_inicio));
         setFecha_fin(formatDateForInput(campania.fecha_fin));
         setModalOpen(true);
-    };
-
-    const formatFecha = (isoString) => {
-        if (!isoString) return "";
-        const date = new Date(isoString);
-        const year = date.getFullYear().toString().slice();
-        const day = date.getDate().toString().padStart(2, "0");
-        const month = (date.getMonth() + 1).toString().padStart(2, "0");
-        return `${year}-${month}-${day}`;
-    };
-
-    const parseDate = (dateValue, isStart = true) => {
-        if (!dateValue) return null;
-
-        // Si ya es objeto Date
-        if (dateValue instanceof Date) {
-            return dateValue.toISOString();
-        }
-
-        // Si es string ISO completo (fecha + hora)
-        if (dateValue.includes("T")) {
-            return new Date(dateValue).toISOString();
-        }
-
-        // Si es string 'YYYY-MM-DD', agrega hora según sea inicio o fin del día
-        if (/^\d{4}-\d{2}-\d{2}$/.test(dateValue)) {
-            return new Date(`${dateValue}T${isStart ? "00:00:00" : "23:59:59"}-05:00`).toISOString();
-        }
-
-        // Si no cumple, devuelve null o error
-        return null;
-    };
+    };     
 
     const handleSubmit = async () => {
-        const comercioId = getComercioSeleccionado();
+        const comercioId = comercioSeleccionado;
 
         console.log("comercioId: ", comercioId)
 
@@ -228,7 +167,7 @@ const useCampanias = () => {
             }
 
             setModalOpen(false);
-            fetchCampanias();
+            fetchCampanias(comercioSeleccionado);
         } catch (error) {
             console.error("Error:", error.message);
         }
@@ -285,7 +224,7 @@ const useCampanias = () => {
 
     const handlePageChange = (page) => {
         if (page >= 1 && page <= totalPages) setCurrentPage(page);
-    };
+    };   
 
     return {
         searchNombre,
@@ -323,6 +262,9 @@ const useCampanias = () => {
         fetchComercios,
         formatFecha,
         modalRef,
+        formatearNumero,
+        hasFetchedRef,
+        comercioSeleccionado,
     };
 };
 

@@ -1,15 +1,7 @@
 import prisma from "@/lib/prisma";
-import { NextResponse } from "next/server";
 
 export async function GET(request) {
-  const comercioId = request.headers.get("x-comercio-id");
-
-  if (!comercioId) {
-    return NextResponse.json(
-      { success: false, message: "ID de comercio no proporcionado" },
-      { status: 400 }
-    );
-  }
+  const comercioId = request.headers.get("x-comercio-id"); 
 
   try {
     const clientes = await prisma.tbl_clientes.findMany({

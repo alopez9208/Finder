@@ -3,6 +3,7 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import useAuthRol from '@/app/hooks/useAuthRol'
 import { useComercio } from '@/context/ComercioContext';
+import { formatearNumero } from '@/app/utils/numberUtils';
 
 const useDashboardComercio = () => {
     const [pedidos, setPedidos] = useState([]);
@@ -19,6 +20,8 @@ const useDashboardComercio = () => {
     const [contador_inter, setContadorInter] = useState(0);
     const [contador_envia, setContadorEnvia] = useState(0);
     const [contador_swayp, setContadorSwayp] = useState(0);
+    const [fecha_inicio, setFecha_inicio] = useState("");
+    const [fecha_fin, setFecha_fin] = useState("");
 
     const {
         nombre,
@@ -28,24 +31,18 @@ const useDashboardComercio = () => {
     const getComercioSeleccionado = () => {
         const comercioSeleccionado = localStorage.getItem("comercioSeleccionado");
         return comercioSeleccionado;
-    };
+    };    
 
-    function formatearNumero(valor) {
-        if (typeof valor !== 'number') valor = Number(valor);
-
-        const formateado = valor.toLocaleString('de-DE');
-
-        if (valor < 1000000) {
-            return formateado;
-        } else {
-            return formateado.replace('.', "'");
-        }
-    }
-
-    const fetchPedidos = async () => {
+    const fetchPedidos = async (fecha_inicio = null, fecha_fin = null) => {
         try {
             const comercioId = getComercioSeleccionado();
-            const res = await fetch("/api/dashboard-comercio/pedidos", {
+            let url = `/api/dashboard-comercio/pedidos`;
+
+            if (fecha_inicio && fecha_fin) {
+                url += `?fecha_inicio=${fecha_inicio}&fecha_fin=${fecha_fin}`;
+            }
+
+            const res = await fetch(url, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -56,7 +53,8 @@ const useDashboardComercio = () => {
             if (!res.ok) throw new Error("Error al obtener pedidos");
 
             const data = await res.json();
-            if (data.success) {
+
+            if (data.success && Array.isArray(data.pedidos)) {
                 setPedidos(data.pedidos);
                 setCantidadPedidos(data.pedidos.length);
 
@@ -69,36 +67,27 @@ const useDashboardComercio = () => {
                     const id = Number(pedido.fkid_tbl_transportadoras);
                     switch (id) {
                         case 1:
-                          servi++;
-                          break;
+                            servi++;
+                            break;
                         case 2:
-                          inter++;
-                          break;
+                            inter++;
+                            break;
                         case 3:
-                          envia++;
-                          break;
+                            envia++;
+                            break;
                         case 4:
-                          swayp++;
-                          break;
+                            swayp++;
+                            break;
                         default:
-                          console.warn("Transportadora desconocida o nula:", id);
-                          break;
-                      }
-                    });
+                            console.warn("Transportadora desconocida o nula:", id);
+                            break;
+                    }
+                });
 
                 setContadorServi(servi);
                 setContadorInter(inter);
                 setContadorEnvia(envia);
                 setContadorSwayp(swayp);
-
-                console.log("Contadores:");
-                console.log("Servi:", servi);
-                console.log("Inter:", inter);
-                console.log("Envia:", envia);
-                console.log("Swayp:", swayp);
-
-
-                console.log(contador_servi, contador_inter, contador_envia, contador_swayp);
 
                 const parseNumber = (val) => {
                     if (typeof val === 'number') return val;
@@ -121,68 +110,115 @@ const useDashboardComercio = () => {
                 setValor_total(suma_total.toString());
                 setValor_flete(suma_flete.toString());
 
+                return data.pedidos;
             } else {
-                console.error("No se encontraron pedidos");
+                console.error("No hay pedidos o data.pedidos no es un array:", data.pedidos);
+                return [];
             }
         } catch (error) {
             console.error("Error al obtener pedidos:", error);
+            return [];
         }
     };
 
-    const fetchCostoTotal = async () => {
+    const fetchCostoTotal = async (pedidoIds) => {
         try {
             const comercioId = getComercioSeleccionado();
-
-            const res = await fetch(`/api/dashboard-comercio/stats?comercioId=${comercioId}`);
-            if (!res.ok) throw new Error("Error al obtener el costo total");
-
+            if (!comercioId) {
+                console.warn("No se encontró 'comercioSeleccionado' en localStorage.");
+                return;
+            }    
+            
+            if (pedidoIds && pedidoIds.length === 0) {
+                setCostoTotal(0);
+                return;
+            }
+    
+            let url = `/api/dashboard-comercio/stats?comercioId=${comercioId}`;
+            if (pedidoIds && pedidoIds.length > 0) {
+                url += `&pedidoIds=${pedidoIds.join(',')}`;
+            }
+    
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('Error al obtener costo total');
+    
             const data = await res.json();
-
-            if (data.success) {
+            if (data.success && typeof data.costoTotal === 'number') {
                 setCostoTotal(data.costoTotal);
             } else {
-                console.error("No se pudo obtener el costo total");
+                setCostoTotal(0);
             }
         } catch (error) {
-            console.error("Error al obtener el costo total:", error);
+            console.error('Error al obtener costo total:', error);
+            setCostoTotal(0);
         }
-    };
+    };    
 
     const fetchCampanias = async () => {
         const comercioId = getComercioSeleccionado();
-
+    
         if (!comercioId) {
             console.warn("No se encontró 'comercioSeleccionado' en localStorage.");
             return;
         }
-
+    
         try {
             const res = await fetch("/api/dashboard-comercio/campanias", {
                 headers: {
                     "x-comercio-id": comercioId,
                 },
             });
-
+    
             const data = await res.json();
             console.log("Respuesta del backend:", data);
-
+    
             if (data.success) {
                 setCampanias(data.campanias);
-
-                // 🔢 Sumar presupuesto_gastado
-                const sumaPresupuestoGastado = data.campanias.reduce((acc, campania) => {
-                    const valor = typeof campania.presupuesto_gastado === 'number'
+    
+                // Convertir estados string a Date, solo si tienen valor
+                const fechaFiltroInicio = fecha_inicio ? new Date(fecha_inicio) : null;
+                const fechaFiltroFin = fecha_fin ? new Date(fecha_fin) : null;
+    
+                // Si no hay filtro definido, sumar todo (o manejar como prefieras)
+                if (!fechaFiltroInicio || !fechaFiltroFin) {
+                    const sumaPresupuestoGastado = data.campanias.reduce((acc, campania) => {
+                        const valor = typeof campania.presupuesto_gastado === 'number'
+                            ? campania.presupuesto_gastado
+                            : Number(campania.presupuesto_gastado) || 0;
+                        return acc + valor;
+                    }, 0);
+    
+                    setSumaPresupuestoGastado(sumaPresupuestoGastado);
+                    return;
+                }
+    
+                // Cálculo proporcional según filtro
+                const sumaPresupuestoEnRango = data.campanias.reduce((acc, campania) => {
+                    const presupuesto = typeof campania.presupuesto_gastado === 'number'
                         ? campania.presupuesto_gastado
                         : Number(campania.presupuesto_gastado) || 0;
-
-                    return acc + valor;
+    
+                    const campaniaInicio = new Date(campania.fecha_inicio);
+                    const campaniaFin = new Date(campania.fecha_fin);
+    
+                    // Días campaña
+                    const diasCampania = (campaniaFin - campaniaInicio) / (1000 * 60 * 60 * 24) +1 ;
+                    const gastoDiario = presupuesto / diasCampania;
+    
+                    // Intersección con filtro
+                    const fechaInicioReal = campaniaInicio > fechaFiltroInicio ? campaniaInicio : fechaFiltroInicio;
+                    const fechaFinReal = campaniaFin < fechaFiltroFin ? campaniaFin : fechaFiltroFin;
+    
+                    if (fechaInicioReal > fechaFinReal) return acc;
+    
+                    const diasEnRango = (fechaFinReal - fechaInicioReal) / (1000 * 60 * 60 * 24) + 1;
+    
+                    return acc + gastoDiario * diasEnRango;
+    
                 }, 0);
-
-                console.log("Presupuesto gastado total:", sumaPresupuestoGastado);
-
-                // Aquí puedes setearlo en un estado si lo necesitas
-                setSumaPresupuestoGastado(sumaPresupuestoGastado);
-
+    
+                setSumaPresupuestoGastado(sumaPresupuestoEnRango);
+    
             } else {
                 console.error("No se encontraron campanias:", data.error);
             }
@@ -190,8 +226,7 @@ const useDashboardComercio = () => {
             console.error("Error al obtener campanias:", error);
         }
     };
-
-
+    
 
     useEffect(() => {
         if (!loading && selectedComercio) {
@@ -220,7 +255,13 @@ const useDashboardComercio = () => {
         contador_servi,
         contador_inter,
         contador_envia,
-        contador_swayp
+        contador_swayp,
+        fecha_inicio,
+        fecha_fin,
+        setFecha_inicio,
+        setFecha_fin,
+        fetchCostoTotal,
+        fetchCampanias
     };
 };
 

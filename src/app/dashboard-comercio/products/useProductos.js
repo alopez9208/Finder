@@ -21,6 +21,7 @@ const useProductos = () => {
     const [valor, setValor] = useState("");
     const [selectedEmpresa, setSelectedEmpresa] = useState("");   
     const [nombre_empresa, setNombre_empresa] = useState("");
+    const hasFetchedRef = useRef(false);
 
     const modalRef = useRef();
 
@@ -150,6 +151,17 @@ const useProductos = () => {
     if (page >= 1 && page <= totalPages) setCurrentPage(page);
   };
 
+  function formatearNumero(valor) {
+    if (typeof valor !== 'number') valor = Number(valor);
+
+    const formateado = valor.toLocaleString('de-DE');
+
+    if (valor < 1000000) {
+        return formateado;
+    } else {
+        return formateado.replace('.', "'");
+    }
+}
     return {
         searchNombre,
         setsearchNombre,
@@ -185,6 +197,7 @@ const useProductos = () => {
         modalRef,
         nombre_empresa,
         setNombre_empresa,
+        formatearNumero,
     };
 };
 

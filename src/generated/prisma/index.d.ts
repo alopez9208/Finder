@@ -18659,7 +18659,6 @@ export namespace Prisma {
 
   export type tbl_clientesWhereUniqueInput = Prisma.AtLeast<{
     pkid?: bigint | number
-    telefono?: string
     AND?: tbl_clientesWhereInput | tbl_clientesWhereInput[]
     OR?: tbl_clientesWhereInput[]
     NOT?: tbl_clientesWhereInput | tbl_clientesWhereInput[]
@@ -18669,10 +18668,11 @@ export namespace Prisma {
     direccion?: StringFilter<"tbl_clientes"> | string
     fkid_tbl_municipios?: BigIntNullableFilter<"tbl_clientes"> | bigint | number | null
     fkid_tbl_comercios?: BigIntNullableFilter<"tbl_clientes"> | bigint | number | null
+    telefono?: StringFilter<"tbl_clientes"> | string
     comercios?: XOR<Tbl_comerciosNullableScalarRelationFilter, tbl_comerciosWhereInput> | null
     municipios?: XOR<Tbl_municipiosNullableScalarRelationFilter, tbl_municipiosWhereInput> | null
     pedidos?: Tbl_pedidosListRelationFilter
-  }, "pkid" | "telefono">
+  }, "pkid">
 
   export type tbl_clientesOrderByWithAggregationInput = {
     nombres?: SortOrder

@@ -1,6 +1,11 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { formatDateForInput, formatFecha } from "@/app/utils/dateUtils";
+import { useModalCloseEvents } from "@/app/hooks/useModalCloseEvents";
+import { formatearNumero } from "@/app/utils/numberUtils";
+import { useComercioSeleccionado } from "@/app/hooks/useComercioSeleccionado";
 import { TbArrowsSort } from "react-icons/tb";
+import * as XLSX from "xlsx";
 
 const usePedidos = () => {
     const [searchTelefono, setsearchTelefono] = useState("");
@@ -11,7 +16,6 @@ const usePedidos = () => {
     const [transportadoras, setTransportadoras] = useState([]);
     const [municipios, setMunicipios] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-
     const [modalOpen, setModalOpen] = useState(false);
     const modalRef = useRef();
     const [modalMode, setModalMode] = useState("new");
@@ -31,51 +35,54 @@ const usePedidos = () => {
     const [productosSeleccionados, setProductosSeleccionados] = useState([]);
     const [selectedProductToAdd, setSelectedProductToAdd] = useState(null);
     const [cantidadProducto, setCantidadProducto] = useState(1);
+    const comercioSeleccionado = useComercioSeleccionado();
+    const hasFetchedRef = useRef(false);    
+
+    useModalCloseEvents({ modalOpen, setModalOpen, modalRef }); 
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
+    const handleFileUpload = async (event) => {
+        const comercioId = comercioSeleccionado;
+        const file = event.target.files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+      
+        try {
+          const res = await fetch("/api/dashboard-comercio/pedidos/importar", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "x-comercio-id": comercioId,
+            },
+          });
+      
+          const data = await res.json();
+          if (data.success) {
+            alert(`Pedidos importados correctamente: ${data.cantidad}`);
+            fetchPedidos();
+          }
+          console.log(data);
+        } catch (err) {
+          console.error("Error al importar pedidos:", err);
+        }
+      };           
+
     useEffect(() => {
-        fetchPedidos();
-        fetchTransporters();
-        fetchClientes();
-        fetchProductos();
-        fetchMunicipios();
-        const handleEsc = (e) => {
-            if (e.key === "Escape") setModalOpen(false);
-        };
-        if (modalOpen) {
-            window.addEventListener("keydown", handleEsc);
+        if (comercioSeleccionado && !hasFetchedRef.current) {
+            fetchPedidos();
+            fetchTransporters();
+            fetchClientes();
+            fetchProductos();
+            fetchMunicipios();
+            hasFetchedRef.current = true;
         }
-        return () => window.removeEventListener("keydown", handleEsc);
-    }, [modalOpen]);
-
-    const handleClickOutside = (e) => {
-        if (modalRef.current && !modalRef.current.contains(e.target)) {
-            setModalOpen(false);
-        }
-    };
-
-    useEffect(() => {
-        if (modalOpen) {
-            document.addEventListener("mousedown", handleClickOutside);
-        }
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [modalOpen]);
-
-    // Obtener comercioSeleccionado de localStorage
-    const getComercioSeleccionado = () => {
-        // Si en localStorage tienes "comercioSeleccionado" guardado como string, úsalo así:
-        const comercioSeleccionado = localStorage.getItem("comercioSeleccionado");
-        console.log("comercioSeleccionado desde localStorage:", comercioSeleccionado);
-        return comercioSeleccionado;
-    };
+    }, [comercioSeleccionado]);       
 
     const fetchPedidos = async () => {
         try {
-            const comercioId = getComercioSeleccionado();
+            const comercioId = comercioSeleccionado;
 
             const res = await fetch("/api/dashboard-comercio/pedidos", {
                 method: "GET",
@@ -101,7 +108,7 @@ const usePedidos = () => {
     };
 
     const fetchClientes = async () => {
-        const comercioId = getComercioSeleccionado();
+        const comercioId = comercioSeleccionado;
 
         if (!comercioId) {
             console.warn("No se encontró 'comercioSeleccionado' en localStorage.");
@@ -176,30 +183,7 @@ const usePedidos = () => {
             console.error("Error al obtener productos:", error);
             setProductosDisponibles([]);
         }
-    };
-
-    function formatearNumero(valor) {
-        if (typeof valor !== 'number') valor = Number(valor);
-      
-        const formateado = valor.toLocaleString('de-DE'); // ejemplo: "2.233.000" o "78.000"
-      
-        if (valor < 1000000) {
-          // Para menos de un millón, solo retorna con puntos
-          return formateado;
-        } else {
-          // Para un millón o más, reemplaza solo el primer punto por comilla
-          return formateado.replace('.', "'");
-        }
-      }      
-
-    const formatDateForInput = (isoString) => {
-        if (!isoString) return "";
-        const date = new Date(isoString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-    };
+    };    
 
     const openModalForNew = () => {
         setModalMode("new");
@@ -219,7 +203,7 @@ const usePedidos = () => {
         setEditingPedido(pedido);
         setValor_total(pedido.valor_total.toString());
         setValor_flete(pedido.valor_flete.toString());
-        setFecha_creacion(formatDateForInput(pedido.fecha_creacion));
+        setFecha_creacion(formatFecha(pedido.fecha_creacion));
         setSelectedCliente(pedido.fkid_tbl_clientes);
         setSelectedTransportadora(pedido.fkid_tbl_transportadoras);
         setSelectedMunicipio(pedido.fkid_tbl_municipios);
@@ -233,7 +217,7 @@ const usePedidos = () => {
         setPKID_pedido(pedido.pkid);
         setValor_total(pedido.valor_total.toString());
         setValor_flete(pedido.valor_flete.toString());
-        setFecha_creacion(formatDateForInput(pedido.fecha_creacion));
+        setFecha_creacion(formatFecha(pedido.fecha_creacion));
         setSelectedCliente(pedido.fkid_tbl_clientes);
         setSelectedTransportadora(pedido.fkid_tbl_transportadoras);
         setSelectedMunicipio(pedido.fkid_tbl_municipios);
@@ -247,38 +231,26 @@ const usePedidos = () => {
         setPKID_pedido(pedido.pkid);
         setValor_total(pedido.valor_total.toString());
         setValor_flete(pedido.valor_flete.toString());
-        setFecha_creacion(formatDateForInput(pedido.fecha_creacion));
+        setFecha_creacion(formatFecha(pedido.fecha_creacion));
         setSelectedCliente(pedido.fkid_tbl_clientes);
         setSelectedTransportadora(pedido.fkid_tbl_transportadoras);
         setSelectedMunicipio(pedido.fkid_tbl_municipios);
         await loadDetalleProductosForEdit(pedido.pkid);
         setModalOpen(true);
     };
-
-    const formatFecha = (isoString) => {
-        if (!isoString) return "";
-        const date = new Date(isoString);
-        const year = date.getFullYear().toString().slice();
-        const day = date.getDate().toString().padStart(2, "0");
-        const month = (date.getMonth() + 1).toString().padStart(2, "0");
-        return `${year}-${month}-${day}`;
-    };
-
+    
     const parseDate = (dateValue, isStart = true) => {
         if (!dateValue) return null;
 
         if (dateValue instanceof Date) {
             return dateValue.toISOString();
         }
-        // Si es string ISO completo (fecha + hora)
         if (dateValue.includes("T")) {
             return new Date(dateValue).toISOString();
         }
-        // Si es string 'YYYY-MM-DD', agrega hora según sea inicio o fin del día
         if (/^\d{4}-\d{2}-\d{2}$/.test(dateValue)) {
             return new Date(`${dateValue}T${isStart ? "00:00:00" : "23:59:59"}-05:00`).toISOString();
         }
-        // Si no cumple, devuelve null o error
         return null;
     };
 
@@ -383,7 +355,6 @@ const usePedidos = () => {
             if (data.success) {
                 const pedidoPkid = editingPedido ? editingPedido.pkid : data.pedido.pkid; // Obtener el PKID del pedido (nuevo o existente)
 
-                // Ahora, guardar los detalles de los productos
                 await saveDetalleProductos(pedidoPkid);
 
                 setModalOpen(false);
@@ -401,7 +372,6 @@ const usePedidos = () => {
     const saveDetalleProductos = async (pedidoPkid) => {
         if (editingPedido) {
             try {
-                // Tu API DELETE de pedidos/[id] espera el ID en la URL
                 const deleteRes = await fetch(`/api/dashboard-comercio/pedidos/${pedidoPkid}`, {
                     method: 'DELETE',
                 });
@@ -412,23 +382,20 @@ const usePedidos = () => {
             } catch (error) {
                 console.error("Error al eliminar detalles de pedido existentes:", error);
                 alert(`No se pudieron eliminar los detalles de productos anteriores. Error: ${error.message}`);
-                return; // Detiene la ejecución si falla la eliminación para evitar inconsistencias
+                return; 
             }
         }
 
         if (productosSeleccionados.length === 0) {
-            console.log("No hay productos seleccionados para guardar en el detalle.");
-            // Puedes decidir si esto es un error o una operación válida (ej. un pedido sin productos)
+            console.log("No hay productos seleccionados para guardar en el detalle.");            
             return;
         }
-
-        // Mapear los productos seleccionados a la estructura esperada por la API POST de detalle-pedidos
         const detallesToSave = productosSeleccionados.map(prod => ({
             cantidad: prod.cantidad,
-            precio_venta_unitario: prod.precio_unitario, // Mapea del carrito al nombre del campo de tu DB
-            costo_unitario: prod.costo_unitario, // Mapea del carrito al nombre del campo de tu DB
-            fkid_tbl_productos: prod.pkid.toString(), // Convertir a string para BigInt en el backend si viene como number
-            fkid_tbl_pedidos: pedidoPkid.toString(), // Convertir a string para BigInt en el backend
+            precio_venta_unitario: prod.precio_unitario, 
+            costo_unitario: prod.costo_unitario, 
+            fkid_tbl_productos: prod.pkid.toString(), 
+            fkid_tbl_pedidos: pedidoPkid.toString(), 
         }));
 
         try {
@@ -559,11 +526,13 @@ const usePedidos = () => {
         municipios,
         selectedMunicipio,
         setSelectedMunicipio,
-        getComercioSeleccionado,
+        comercioSeleccionado,
         viewPedido,
         viewCosto,
-        formatearNumero
+        formatearNumero,
+        handleFileUpload,
+        hasFetchedRef,
+        useModalCloseEvents        
     };
 }
-
 export default usePedidos;

@@ -23,7 +23,13 @@ export default function DashboardComercioPage() {
     contador_servi,
     contador_inter,
     contador_envia,
-    contador_swayp
+    contador_swayp,
+    fecha_inicio,
+    fecha_fin,
+    setFecha_inicio,
+    setFecha_fin,
+    fetchCostoTotal,
+    fetchCampanias
   } = useDashboardComercio()
 
   if (loading) {
@@ -70,9 +76,40 @@ export default function DashboardComercioPage() {
         </div>
       </div>
 
-
       <div className="w-1/3 max-w-xl bg-white p-4 rounded-2xl text-gray-800 font-sans">
+
         <h2 className="text-2xl font-semibold mb-4">Estadísticas del mes</h2>
+
+        <div className="flex items-center gap-4 max-w-md mx-auto mb-4">
+          <input
+            type="date"
+            value={fecha_inicio}
+            onChange={(e) => setFecha_inicio(e.target.value)}
+            className="border border-gray-300 rounded-md p-2"
+          />
+
+          <input
+            type="date"
+            value={fecha_fin}
+            onChange={(e) => setFecha_fin(e.target.value)}
+            className="border border-gray-300 rounded-md p-2"
+          />
+
+          <button
+            className="bg-[#1987DA] text-white px-6 py-2 rounded-md hover:bg-[#2D9EE8] transition-colors duration-200 cursor-pointer"
+            onClick={async () => {
+
+              await fetchCampanias();
+
+              const pedidosFiltrados = await fetchPedidos(fecha_inicio, fecha_fin);
+
+              const pedidoIds = pedidosFiltrados.map((p) => p.pkid);
+              fetchCostoTotal(pedidoIds);
+            }}
+          >
+            Filtrar
+          </button>
+        </div>
 
         {/* Caja azul de utilidad */}
         <div className="bg-[#1987DA] text-white p-4 rounded-xl flex justify-between items-center mb-6">
@@ -105,7 +142,7 @@ export default function DashboardComercioPage() {
                 <FaCheckCircle className="text-[#1987DA] text-xl" /> Fletes
               </span>
               <span className="text-red-600">- ${formatearNumero(valor_flete)}</span>
-            </li>           
+            </li>
             <li className="flex justify-between">
               <span className="flex items-center gap-2 text-lg">
                 <FaCheckCircle className="text-[#1987DA] text-xl" /> Publicidad

@@ -26,7 +26,7 @@ model tbl_clientes {
   fkid_tbl_municipios BigInt?
   fkid_tbl_comercios  BigInt?
   pkid                BigInt          @id @default(autoincrement())
-  telefono            String          @unique @db.VarChar(255)
+  telefono            String          @db.VarChar(255)
   comercios           tbl_comercios?  @relation(fields: [fkid_tbl_comercios], references: [pkid])
   municipios          tbl_municipios? @relation(fields: [fkid_tbl_municipios], references: [pkid])
   pedidos             tbl_pedidos[]

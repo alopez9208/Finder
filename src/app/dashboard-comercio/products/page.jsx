@@ -35,6 +35,7 @@ export default function ProductsPage() {
         nombre_empresa,
         setNombre_empresa,
         empresas,
+        formatearNumero,
     } = useProductos();
 
     return (
@@ -87,8 +88,8 @@ export default function ProductsPage() {
                                 <tr key={index} className="border-b">
                                     <td className="p-3">{producto.pkid}</td>
                                     <td className="p-3">{producto.nombre}</td>
-                                    <td className="p-3">{producto.costo}</td>
-                                    <td className="p-3">{producto.valor}</td>
+                                    <td className="p-3">{formatearNumero(producto.costo)}</td>
+                                    <td className="p-3">{formatearNumero(producto.valor)}</td>
                                     <td className="p-3">{producto.nombre_empresa}</td>
                                     <td className="p-3 text-right">
                                         <button

@@ -10,6 +10,8 @@ export default function ClientesPage() {
     setsearchTelefono,
     currentPage,
     setCurrentPage,
+    clientesPerPage,
+    clientes,
     municipios,
     comercios,
     sortConfig,
@@ -30,17 +32,20 @@ export default function ClientesPage() {
     setDireccion,
     selectedMunicipio,
     setSelectedMunicipio,
-    selectedComercio,
-    setSelectedComercio,
     handleSubmit,
+    openModalForNew,
+    openModalForEdit,
+    totalPages,
+    visibleClientes,
+    fetchClientes,
+    fetchMunicipios,
+    fetchComercios,
     handleSort,
     renderSortIcon,
     handlePageChange,
-    totalPages,
-    visibleClientes,
-    openModalForNew,
-    openModalForEdit,
     modalRef,
+    comercioSeleccionado,
+    hasFetchedRef,
   } = useClientes();
 
   return (
@@ -76,7 +81,6 @@ export default function ClientesPage() {
                   { key: "telefono", label: "Teléfono" },
                   { key: "nombres", label: "Nombres" },
                   { key: "apellidos", label: "Apellidos" },
-                  { key: "correo", label: "Correo" },
                   { key: "nombre_municipio", label: "Municipio" },                  
                 ].map(({ key, label }) => (
                   <th
@@ -96,8 +100,7 @@ export default function ClientesPage() {
                   <td className="p-3">{cliente.pkid}</td>
                   <td className="p-3">{cliente.telefono}</td>
                   <td className="p-3">{cliente.nombres}</td>
-                  <td className="p-3">{cliente.apellidos}</td>
-                  <td className="p-3">{cliente.correo}</td>                 
+                  <td className="p-3">{cliente.apellidos}</td>                                
                   <td className="p-3">{cliente.nombre_municipio}</td>                 
                   <td className="p-3 text-right">
                     <button

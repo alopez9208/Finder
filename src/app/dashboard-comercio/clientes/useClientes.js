@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, useRef } from "react";
+import { useModalCloseEvents } from "@/app/hooks/useModalCloseEvents";
+import { useComercioSeleccionado } from "@/app/hooks/useComercioSeleccionado";
 import { TbArrowsSort } from "react-icons/tb";
 
 const useClientes = () => {
@@ -23,47 +25,22 @@ const useClientes = () => {
   const [selectedMunicipio, setSelectedMunicipio] = useState("");
   const [selectedComercio, setSelectedComercio] = useState("");
   const modalRef = useRef();
+  const comercioSeleccionado = useComercioSeleccionado();
+  const hasFetchedRef = useRef(false);
 
-  // Carga inicial
+  useModalCloseEvents({ modalOpen, setModalOpen, modalRef });
+
   useEffect(() => {
-    fetchClientes();
-    fetchMunicipios();
-    fetchComercios();
-
-    const handleEsc = (e) => {
-      if (e.key === "Escape") setModalOpen(false);
-  };
-  if (modalOpen) {
-      window.addEventListener("keydown", handleEsc);
-  }
-  return () => window.removeEventListener("keydown", handleEsc);
-}, [modalOpen]);
-
-const handleClickOutside = (e) => {
-  if (modalRef.current && !modalRef.current.contains(e.target)) {
-      setModalOpen(false);
-  }
-};
-
-useEffect(() => {
-  if (modalOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-  }
-  return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-  };
-}, [modalOpen]);
-
-  // Obtener comercioSeleccionado de localStorage
-  const getComercioSeleccionado = () => {
-    // Si en localStorage tienes "comercioSeleccionado" guardado como string, úsalo así:
-    const comercioSeleccionado = localStorage.getItem("comercioSeleccionado");
-    console.log("comercioSeleccionado desde localStorage:", comercioSeleccionado);
-    return comercioSeleccionado;
-  };
+    if (comercioSeleccionado && !hasFetchedRef.current) {
+      fetchClientes();
+      fetchMunicipios();
+      fetchComercios();
+      hasFetchedRef.current = true;
+    }
+  }, [comercioSeleccionado]);    
 
   const fetchClientes = async () => {
-    const comercioId = getComercioSeleccionado();
+    const comercioId = comercioSeleccionado;
 
     if (!comercioId) {
       console.warn("No se encontró 'comercioSeleccionado' en localStorage.");
@@ -160,7 +137,7 @@ useEffect(() => {
   };
 
   const handleSubmit = async () => {
-    const comercioId = getComercioSeleccionado();
+    const comercioId = comercioSeleccionado;
 
     console.log("comercioId:", comercioId);
 
@@ -291,8 +268,6 @@ useEffect(() => {
     setDireccion,
     selectedMunicipio,
     setSelectedMunicipio,
-    selectedComercio,
-    setSelectedComercio,
     handleSubmit,
     openModalForNew,
     openModalForEdit,
@@ -304,14 +279,9 @@ useEffect(() => {
     fetchClientes,
     fetchMunicipios,
     fetchComercios,
-    openModalForNew,
-    openModalForEdit,
-    handleSubmit,
-    handleSort,
-    renderSortIcon,
-    handlePageChange,
     modalRef,
+    comercioSeleccionado,
+    hasFetchedRef,
   };
 };
-
 export default useClientes;
