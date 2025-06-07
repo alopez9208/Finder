@@ -48,9 +48,7 @@ export default function CampaniasPage() {
   } = useCampanias();
 
   return (
-    <div className="m-12">
-      <h2 className="text-2xl text-gray-800 mb-8">Lista de campañas</h2>
-
+    <div className="m-4">
       <div className="bg-white p-6 rounded-2xl">
         <div className="flex justify-between items-center mb-4">
           <input

@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { TbArrowsSort } from "react-icons/tb";
+import { useComercio } from "@/context/ComercioContext";
 
-export default function ComerciosPage() {
+export default function ComerciosPage(onComercioCreado) {
   const [searchNombre, setsearchNombre] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const comerciosPerPage = 5;
@@ -15,6 +16,7 @@ export default function ComerciosPage() {
   const [nombre, setNombre] = useState("");
   const [telefono, setTelefono] = useState("");
   const [correo, setCorreo] = useState("");  
+  const { obtenerComercios } = useComercio();
 
   useEffect(() => {
     fetchComercios();
@@ -56,41 +58,41 @@ export default function ComerciosPage() {
     setModalOpen(true);    
   };
 
-  const handleSubmit = async () => {
-    if (!nombre.trim() || !telefono.trim() || !correo.trim()) {
-      alert("Por favor, completa todos los campos.");
-      return;
+const handleSubmit = async () => {
+  if (!nombre.trim() || !telefono.trim() || !correo.trim()) {
+    alert("Por favor, completa todos los campos.");
+    return;
+  }
+
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  const usuarioId = usuario?.pkusuario;
+
+  const method = editingComercio ? "PUT" : "POST";
+  const url = "/api/dashboard-comercio/comercios";
+
+  const payload = editingComercio
+    ? { pkid: editingComercio.pkid, nombre, telefono, correo, fkusuario_tbl_usuarios: usuarioId }
+    : { nombre, telefono, correo, fkusuario_tbl_usuarios: usuarioId };
+
+  try {
+    const res = await fetch(url, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      setModalOpen(false);
+      await obtenerComercios();  
+      fetchComercios();       
+    } else {
+      console.error("Error al guardar el comercio");
     }
-
-    // Obtener el ID del usuario del localStorage
-    const usuario = JSON.parse(localStorage.getItem("usuario"));
-    const usuarioId = usuario?.pkusuario;
-
-    const method = editingComercio ? "PUT" : "POST";
-    const url = "/api/dashboard-comercio/comercios";
-
-    const payload = editingComercio
-      ? { pkid: editingComercio.pkid, nombre, telefono, correo, fkusuario_tbl_usuarios: usuarioId }
-      : { nombre, telefono, correo, fkusuario_tbl_usuarios: usuarioId };
-
-    try {
-      const res = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-      if (data.success) {
-        setModalOpen(false);
-        fetchComercios();
-      } else {
-        console.error("Error al guardar el comercio");
-      }
-    } catch (error) {
-      console.error("Error al enviar datos:", error);
-    }
-  };
+  } catch (error) {
+    console.error("Error al enviar datos:", error);
+  }
+};
 
   const filteredComercios = comercios
     .filter((comercio) => {
@@ -148,9 +150,7 @@ export default function ComerciosPage() {
   };
 
   return (
-    <div className="m-12">
-      <h2 className="text-2xl text-gray-800 mb-8">Lista de Comercios</h2>
-
+    <div className="m-12">  
       <div className="bg-white p-6 rounded-2xl">
         <div className="flex justify-between items-center mb-4">
           <input

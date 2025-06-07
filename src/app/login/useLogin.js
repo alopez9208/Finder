@@ -47,7 +47,7 @@ const useLogin = () => {
         if (rol === 1) {
           router.push("/dashboard");
         } else if (rol === 2) {
-          router.push("/dashboard-comercio");
+          router.push("/dashboard-comercio/comercio");
         } else {
           setError("Rol no válido");
         }
@@ -56,8 +56,7 @@ const useLogin = () => {
       setError("Error al conectarse con el servidor.");
     }
   };
-
-  // Ocultar el error automáticamente después de 5 segundos
+  
   useEffect(() => {
     if (error) {
       const timer = setTimeout(() => setError(null), 5000);

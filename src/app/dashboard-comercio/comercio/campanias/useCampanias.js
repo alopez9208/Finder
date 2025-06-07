@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useModalCloseEvents } from "@/app/hooks/useModalCloseEvents";
 import { useComercioSeleccionado } from "@/app/hooks/useComercioSeleccionado";
-import { formatDateForInput, parseDate, formatFecha } from "@/app/utils/dateUtils";
+import { formatFecha } from "@/app/utils/dateUtils";
 import { formatearNumero } from "@/app/utils/numberUtils";
 import { TbArrowsSort } from "react-icons/tb";
 
@@ -11,7 +11,7 @@ const useCampanias = () => {
 
     const [searchNombre, setsearchNombre] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const campaniasPerPage = 5;
+    const campaniasPerPage = 10;
     const [campanias, setCampanias] = useState([]);
     const [comercios, setComercios] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
@@ -38,26 +38,24 @@ const useCampanias = () => {
       }, [comercioSeleccionado]);
    
 
-    const fetchCampanias = async (comercioId) => {        
-
-        if (!comercioId) {
-            console.warn("No se encontró 'comercioSeleccionado' en localStorage.");
-            return;
-        }
-
+    const fetchCampanias = async () => {  
         try {
+            const comercioId = comercioSeleccionado;
+
             const res = await fetch("/api/dashboard-comercio/campanias", {
                 headers: {
+                    "Content-Type": "application/json",
                     "x-comercio-id": comercioId,
                 },
             });
 
-            const data = await res.json();
-            console.log("Respuesta del backend:", data);
+            if (!res.ok) {
+                throw new Error("Error al obtener campanias");
+            }
 
+            const data = await res.json();
             if (data.success) {
                 setCampanias(data.campanias);
-                console.log("Campania recibidos:", data.campanias);
             } else {
                 console.error("No se encontraron campanias:", data.error);
             }
@@ -109,27 +107,21 @@ const useCampanias = () => {
         setEditingcampania(campania);
         setNombre(campania.nombre);
         setPresupuesto_gastado(campania.presupuesto_gastado);
-        setFecha_inicio(formatDateForInput(campania.fecha_inicio));
-        setFecha_fin(formatDateForInput(campania.fecha_fin));
+        setFecha_inicio(formatFecha(campania.fecha_inicio));
+        setFecha_fin(formatFecha(campania.fecha_fin));
         setModalOpen(true);
     };     
 
     const handleSubmit = async () => {
-        const comercioId = comercioSeleccionado;
-
-        console.log("comercioId: ", comercioId)
-
-        if (!comercioId) {
-            alert("No se encontró el comercio. Por favor inicia sesión nuevamente.");
-            return;
-        }
+        const comercioId = comercioSeleccionado; 
 
         if (!nombre.trim() || !presupuesto_gastado || !fecha_inicio.trim() || !fecha_fin.trim()) {
             alert("Por favor, completa todos los campos.");
             return;
         }
-        const localFechaInicio = parseDate(fecha_inicio, false);
-        const localFechaFin = parseDate(fecha_fin, false);
+       
+        const localFechaInicio = fecha_inicio;
+        const localFechaFin = fecha_fin;
 
         if (!localFechaInicio || !localFechaFin) {
             alert("Formato de fecha inválido.");
@@ -147,9 +139,7 @@ const useCampanias = () => {
             fecha_inicio: localFechaInicio,
             fecha_fin: localFechaFin,
             fkid_tbl_comercios: (comercioId),
-        }
-
-        console.log("comercioData: ", comercioData)
+        }       
 
         try {
             const response = await fetch("/api/dashboard-comercio/campanias", {

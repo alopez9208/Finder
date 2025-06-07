@@ -1,16 +1,16 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { formatDateForInput, formatFecha } from "@/app/utils/dateUtils";
+import { formatDateForInput, formatFecha, parseDate } from "@/app/utils/dateUtils";
 import { useModalCloseEvents } from "@/app/hooks/useModalCloseEvents";
 import { formatearNumero } from "@/app/utils/numberUtils";
+import { contarDiasDesde } from "@/app/utils/contarDiasDesde";
 import { useComercioSeleccionado } from "@/app/hooks/useComercioSeleccionado";
 import { TbArrowsSort } from "react-icons/tb";
-import * as XLSX from "xlsx";
 
 const usePedidos = () => {
     const [searchTelefono, setsearchTelefono] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const pedidosPerPage = 5;
+    const pedidosPerPage = 20;
     const [pedidos, setPedidos] = useState([]);
     const [clientes, setClientes] = useState([]);
     const [transportadoras, setTransportadoras] = useState([]);
@@ -36,7 +36,7 @@ const usePedidos = () => {
     const [selectedProductToAdd, setSelectedProductToAdd] = useState(null);
     const [cantidadProducto, setCantidadProducto] = useState(1);
     const comercioSeleccionado = useComercioSeleccionado();
-    const hasFetchedRef = useRef(false);    
+    const hasFetchedRef = useRef(false);       
 
     useModalCloseEvents({ modalOpen, setModalOpen, modalRef }); 
 
@@ -237,22 +237,7 @@ const usePedidos = () => {
         setSelectedMunicipio(pedido.fkid_tbl_municipios);
         await loadDetalleProductosForEdit(pedido.pkid);
         setModalOpen(true);
-    };
-    
-    const parseDate = (dateValue, isStart = true) => {
-        if (!dateValue) return null;
-
-        if (dateValue instanceof Date) {
-            return dateValue.toISOString();
-        }
-        if (dateValue.includes("T")) {
-            return new Date(dateValue).toISOString();
-        }
-        if (/^\d{4}-\d{2}-\d{2}$/.test(dateValue)) {
-            return new Date(`${dateValue}T${isStart ? "00:00:00" : "23:59:59"}-05:00`).toISOString();
-        }
-        return null;
-    };
+    };       
 
     const addProductToCart = () => {
         console.log("Valor de productosSeleccionados antes de addProductToCart:", productosSeleccionados);
@@ -320,8 +305,7 @@ const usePedidos = () => {
             console.error("Error al cargar detalles de pedido:", error);
             setProductosSeleccionados([]);
         }
-    };
-
+    };  
 
     const handleSubmit = async () => {
         const valorNumerico = parseFloat(valor_total);
@@ -331,7 +315,7 @@ const usePedidos = () => {
             return;
         }
 
-        const localFecha_Creacion = parseDate(fecha_creacion, false);
+        const localFecha_Creacion = fecha_creacion;
         if (!localFecha_Creacion) {
             alert("Formato de fecha inválido.");
             return;
@@ -532,7 +516,8 @@ const usePedidos = () => {
         formatearNumero,
         handleFileUpload,
         hasFetchedRef,
-        useModalCloseEvents        
+        useModalCloseEvents,
+        contarDiasDesde,        
     };
 }
 export default usePedidos;

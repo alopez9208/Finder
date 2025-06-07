@@ -42,7 +42,7 @@ export async function GET(request) {
         if (fechaInicio && fechaFin) {
             whereClause.fecha_creacion = {
                 gte: fechaInicio,
-                lt: fechaFin, 
+                lt: fechaFin,
             };
         } else if (fechaInicio) {
             whereClause.fecha_creacion = {
@@ -122,22 +122,27 @@ export async function GET(request) {
     }
 }
 
-
 export async function POST(request) {
     try {
-        const { valor_total, fkid_tbl_clientes, fkid_tbl_transportadoras, valor_flete, fkid_tbl_municipios } = await request.json();
+        const {
+            valor_total,
+            fkid_tbl_clientes,
+            fkid_tbl_transportadoras,
+            valor_flete,
+            fkid_tbl_municipios,
+            fecha_creacion,
+        } = await request.json();
 
-        if (!valor_total || !valor_flete) {
-            return handleErrorResponse(null, "Los campos valor_total y valor_flete son obligatorios.", 400);
+        if (!valor_total || !valor_flete || !fecha_creacion) {
+            return handleErrorResponse(null, "Los campos valor_total, valor_flete y fecha_creacion son obligatorios.", 400);
         }
 
-        const fecha_creacion = new Date();
-        fecha_creacion.setDate(fecha_creacion.getDate());
+        const fechaCreacionDate = new Date(`${fecha_creacion}T00:00:00-05:00`);
 
         const nuevoPedido = await prisma.tbl_pedidos.create({
             data: {
                 valor_total: parseFloat(valor_total),
-                fecha_creacion: fecha_creacion,
+                fecha_creacion: fechaCreacionDate,
                 valor_flete: parseFloat(valor_flete),
                 fkid_tbl_clientes: validateAndConvertId(fkid_tbl_clientes),
                 fkid_tbl_transportadoras: validateAndConvertId(fkid_tbl_transportadoras),
@@ -164,15 +169,25 @@ export async function POST(request) {
 
 export async function PUT(request) {
     try {
-        const { pkid, valor_total, fecha_creacion, fkid_tbl_clientes, fkid_tbl_transportadoras, valor_flete, fkid_tbl_municipios } = await request.json();
+        const {
+            pkid,
+            valor_total,
+            fecha_creacion,
+            fkid_tbl_clientes,
+            fkid_tbl_transportadoras,
+            valor_flete,
+            fkid_tbl_municipios
+        } = await request.json();        
 
-        if (!pkid) {
-            return handleErrorResponse(null, "El campo pkid es obligatorio para la actualización.", 400);
+        if (!fecha_creacion) {
+            return handleErrorResponse(null, "El campo fecha_creacion es obligatorio.", 400);
         }
+
+        const fechaCreacionDate = new Date(`${fecha_creacion}T00:00:00-05:00`);
 
         const dataToUpdate = {
             valor_total: parseFloat(valor_total),
-            fecha_creacion,
+            fecha_creacion: fechaCreacionDate,
             valor_flete: parseFloat(valor_flete),
             fkid_tbl_clientes: validateAndConvertId(fkid_tbl_clientes),
             fkid_tbl_transportadoras: validateAndConvertId(fkid_tbl_transportadoras),

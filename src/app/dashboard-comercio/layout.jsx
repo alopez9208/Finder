@@ -1,13 +1,13 @@
 'use client'
 
 import { ComercioProvider, useComercio } from "@/context/ComercioContext";
-import { useState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { MdOutlineSell } from "react-icons/md";
-import { FaShoppingCart, FaHome } from "react-icons/fa";
-import { FaUserGroup } from "react-icons/fa6";
-import { RiAdvertisementLine } from "react-icons/ri";
-import { IoLogOutOutline } from "react-icons/io5";
+import SidebarComercio from "../components/sidebardashboard-comercio";
+import { useState, useEffect, useRef } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { IoLogOutOutline, IoSettingsOutline, IoMenuOutline } from "react-icons/io5";
+import { LuStore } from "react-icons/lu";
+import { FaRegUserCircle } from "react-icons/fa";
+import useAuthRol from "@/app/hooks/useAuthRol";
 
 export default function DashboardComercioLayout({ children }) {
   return (
@@ -18,10 +18,50 @@ export default function DashboardComercioLayout({ children }) {
 }
 
 function LayoutInterno({ children }) {
-  const { comercios, selectedComercio, cambiarComercio } = useComercio();
+
   const [fechaActual, setFechaActual] = useState("");
-  const pathname = usePathname();
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useRef(null);
+  const { nombre } = useAuthRol({ rolPermitido: 2, estadoPermitido: 1 });
+  const [sidebarVisible, setSidebarVisible] = useState(true);
+  const toggleModal = () => setIsOpen(!isOpen);
+  const { comercios, selectedComercio, cambiarComercio } = useComercio();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
+
+  const handleMiCuenta = () => {
+    router.push("/mi-cuenta");
+    setIsOpen(false);
+  };
+
+  const handleSalir = () => {
+    router.push("/login");
+    setIsOpen(false);
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    cambiarComercio(value);
+    if (pathname !== "/dashboard-comercio") {
+      router.push("/dashboard-comercio/comercio");
+    }
+  };
+
+  const isActive = (path) => (pathname === path ? "bg-[#2D9EE8]" : "hover:bg-[#2D9EE8]");
 
   useEffect(() => {
     const fecha = new Date().toLocaleDateString("es-ES", {
@@ -33,147 +73,107 @@ function LayoutInterno({ children }) {
     setFechaActual(fecha);
   }, []);
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    if (value === "administrar_comercios") {
-      router.push("/dashboard-comercio/comercios");
-    } else {
-      cambiarComercio(value);
-      if (pathname !== "/dashboard-comercio") {
-        router.push("/dashboard-comercio");
-      }
-    }
-  };
-
-  const isActive = (path) => (pathname === path ? "bg-[#2D9EE8]" : "hover:bg-[#2D9EE8]");
-
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
-      <aside className="w-70 bg-[#1987DA] text-white p-2 flex flex-col justify-between rounded-r-2xl">
-        <div>
-          <div className="flex justify-center m-6">
-            <img src="/logo.png" alt="Logo" className="w-25 h-25" />
-          </div>
-
-          <nav className="flex flex-col gap-1 w-full">
-            <button
-              onClick={() => router.push("/dashboard-comercio")}
-              className={`flex items-center gap-1 rounded p-1 cursor-pointer mb-4 justify-center ${isActive(
-                "/dashboard-comercio"
-              )}`}
-            >
-              <FaHome className="text-2xl" />
-              <span className="text-xl">Dashboard</span>
-            </button>
-
-            {/* Selector de Comercios */}
-            <div className="mb-4">
+    <div className="h-screen bg-[#1987DA] flex flex-col">
+      {/* Main Content */}
+      <main className="flex-1 overflow-y-auto bg-[#1987DA] pr-4 flex flex-col">
+        <div className="m-6  mr-2 mt-2 h-[60px]">
+          <div className="flex justify-between items-center">
+            {/* Sección izquierda: Logo + Botón */}
+            <div className="flex items-center space-x-8 ml-16">
+              <img src="/logo.png" alt="Logo" className="w-22 h-22" />
+              <button
+                onClick={() => setSidebarVisible(!sidebarVisible)}
+                className="cursor-pointer hover:bg-white bg-gray-200 rounded-lg px-2 py-2 transition duration-200 flex items-center justify-center text-gray-500"
+              >
+                {sidebarVisible ? <IoMenuOutline className="text-2xl" /> : <IoMenuOutline className="text-2xl" />}
+              </button>
               <select
                 value={selectedComercio}
                 onChange={handleChange}
-                className="w-full p-2 rounded bg-[#2D9EE8] text-white focus:outline-none text-center text-lg"
+                className="w-2/3 pr-8 pl-8 p-2 rounded bg-[#2D9EE8] text-white focus:outline-none text-center text-lg"
               >
-                <option disabled value="">
-                  Selecciona un comercio
-                </option>
+                {comercios.length === 0 && (
+                  <option value="">No hay comercios</option>
+                )}
                 {comercios.map((comercio) => (
                   <option key={comercio.pkid} value={comercio.pkid}>
                     {comercio.nombre}
                   </option>
                 ))}
-                <option disabled className="border-t border-white text-[#FAF0E6]">
-                  _____________
-                </option>
-                <option value="administrar_comercios">Administrar Comercios</option>
               </select>
             </div>
 
-            <div className="flex items-center gap-1 border-white p-1 mb-1">
-              <span className="text-white text-sm ml-4">Administración General</span>
+            {/* Sección derecha: Fecha + Avatar */}
+            <div className="flex items-center space-x-8">
+              <p className="text-white text-lg">{fechaActual}</p>
+              <div className="relative inline-block">
+                <button
+                  onClick={toggleModal}
+                  className="cursor-pointer hover:bg-white bg-gray-200 rounded-full px-4 py-2 transition duration-200 flex items-center justify-center"
+                >
+                  <FaRegUserCircle className="text-2xl text-gray-500 bg-white rounded-full" />
+                </button>
+
+                {isOpen && (
+                  <div
+                    ref={modalRef}
+                    className="absolute right-0 w-80 bg-white rounded-lg shadow-2xl ring-1 ring-black ring-opacity-5"
+                  >
+                    <div className="flex p-4">
+                      <span className="text-lg text-black">Hola, <strong>{nombre}</strong></span>
+                    </div>
+                    <div className="border-t border-gray-300 m-2"></div>
+                    <div className="flex flex-col gap-2 m-4">
+                      <button
+                        onClick={() => {
+                          setIsOpen(false);                         
+                        }}
+                        className="flex items-center gap-2 block w-full text-left px-4 py-2 text-gray-700 cursor-pointer hover:bg-[#3E82FF] transition duration-200 hover:text-white rounded-md py-4"
+                      >
+                        <IoSettingsOutline className="text-2xl" />
+                        Mi cuenta
+                      </button>
+                      <button
+                        onClick={() => {                          
+                          router.push("/dashboard-comercio/mis-comercios");
+                          setIsOpen(false);
+                        }}
+                        className="flex items-center gap-2 block w-full text-left px-4 py-2 text-gray-700 cursor-pointer hover:bg-[#3E82FF] transition duration-200 hover:text-white rounded-md py-4"                        
+                      >
+                        <LuStore className="text-2xl" />
+                        Mis Comercios
+                        
+                      </button>
+                      <button
+                        onClick={handleSalir}
+                        className="flex items-center gap-2 block w-full text-left px-4 py-2 text-gray-700 cursor-pointer hover:bg-[#3E82FF] transition duration-200 hover:text-white rounded-md py-4"
+                      >
+                        <IoLogOutOutline className="text-2xl" />
+                        Salir
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-
-            <button
-              onClick={() => router.push("/dashboard-comercio/pedidos")}
-              className={`flex items-center gap-1 rounded pl-4 p-1 ml-4 cursor-pointer ${isActive(
-                "/dashboard-comercio/pedidos"
-              )}`}
-            >
-              <MdOutlineSell className="text-2xl" />
-              <span className="text-lg">Pedidos</span>
-            </button>
-
-            <div className="flex border-t border-white p-1 mt-2 opacity-50"></div>
-            <span className="text-white text-sm ml-4">Gestión de Clientes </span>
-
-            <button
-              onClick={() => router.push("/dashboard-comercio/clientes")}
-              className={`flex items-center gap-1 rounded pl-4 p-1 ml-4 cursor-pointer ${isActive(
-                "/dashboard-comercio/clientes"
-              )}`}
-            >
-              <FaUserGroup className="text-2xl" />
-              <span className="text-lg">Clientes</span>
-            </button>
-
-            <div className="flex border-t border-white p-1 mt-2 opacity-50 "></div>
-            <span className="text-white text-sm ml-4">Gestión de Productos</span>
-
-            <button
-              onClick={() => router.push("/dashboard-comercio/products")}
-              className={`flex items-center gap-1 rounded pl-4 p-1 mt-1 ml-4 cursor-pointer ${isActive(
-                "/dashboard-comercio/products"
-              )}`}
-            >
-              <FaShoppingCart className="text-2xl" />
-              <span className="text-lg">Productos</span>
-            </button>
-
-            <div className="flex border-t border-white p-1 mt-2 opacity-50"></div>
-            <span className="text-white text-sm ml-4">Gestión de Publicidad</span>
-
-            <button
-              onClick={() => router.push("/dashboard-comercio/campanias")}
-              className={`flex items-center gap-1 rounded pl-4 p-1 mt-1 ml-4 cursor-pointer ${isActive(
-                "/dashboard-comercio/campanias"
-              )}`}
-            >
-              <RiAdvertisementLine className="text-2xl" />
-              <span className="text-lg">Campañas</span>
-            </button>
-          </nav>
-        </div>
-
-        <button
-          onClick={() => router.push("/login")}
-          className="flex items-center justify-center gap-1 hover:bg-[#2D9EE8] rounded p-1 cursor-pointer mt-8"
-        >
-          <IoLogOutOutline className="text-2xl" />
-          <span className="text-xl">Desconectarme</span>
-        </button>
-
-        <div className="w-full text-center py-4 text-white mb-6">
-          <span className="text-xs text-white">© 2025 Finder</span>
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 overflow-y-auto bg-[#F0EBFF]">
-        <div className="flex justify-end items-center mb-4 h-[80px] px-8 space-x-4">
-          <div className="flex items-center space-x-16">
-            <p className="text-gray-500 text-lg">{fechaActual}</p>
-            <button className="cursor-pointer">
-              <img
-                src="/avatarhombre.png"
-                className="w-15 h-15 rounded-full"
-                alt="Avatar"
-              />
-            </button>
           </div>
         </div>
 
         {/* Contenido dinámico */}
-        <div className="px-12">{children}</div>
+        <div className=" flex flex-1 h-full">
+          <div
+            className={`transition-all duration-300 overflow-hidden ${sidebarVisible ? 'w-64' : 'w-0'
+              }`}
+          >
+            <SidebarComercio />
+          </div>
+          <div className={`flex flex-col flex-1 transition-all duration-300 ${sidebarVisible ? 'ml-0' : 'ml-0'}`}>
+            <div className="flex-1 px-8 bg-gray-100 pt-4 border rounded-lg overflow-y-auto">
+              {children}
+            </div>
+          </div>
+        </div>
       </main>
     </div>
   );

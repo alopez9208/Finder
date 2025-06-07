@@ -16,7 +16,7 @@ const useAuthRol = ({ rolPermitido, estadoPermitido = 1, rutaRedireccion = "/log
       usuario.fkid_tbl_roles !== rolPermitido ||
       usuario.fkid_tbl_estados_usuario !== estadoPermitido
     ) {
-      localStorage.clear(); // Limpia cualquier dato residual antes de redirigir
+      localStorage.clear(); 
       router.push(rutaRedireccion)
     } else {
       setNombre(usuario.nombre)

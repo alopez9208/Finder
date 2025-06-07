@@ -49,9 +49,7 @@ export default function ClientesPage() {
   } = useClientes();
 
   return (
-    <div className="m-12">
-      <h2 className="text-2xl text-gray-800 mb-8">Lista de Clientes</h2>
-
+    <div className="m-12">      
       <div className="bg-white p-6 rounded-2xl">
         {/* Buscador + botón nuevo */}
         <div className="flex justify-between items-center mb-4">

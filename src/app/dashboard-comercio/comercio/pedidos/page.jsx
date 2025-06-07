@@ -67,13 +67,12 @@ export default function PedidosPage() {
     handleFileUpload,
     comercioSeleccionado,
     hasFetchedRef,
+    contarDiasDesde
   } = usePedidos();
 
   return (
-    <div className="m-12">
-      <h2 className="text-2xl text-gray-800 mb-8">Lista de Pedidos</h2>
-
-      <div className="bg-white p-6 rounded-2xl">
+    <div className="h-[calc(100vh-200px)] overflow-y-auto pr-2 w-full">
+      <div className="bg-white p-6 rounded-2xl min-h-full">
         <div className="flex justify-between items-center mb-4">
           <input
             type="text"
@@ -82,31 +81,35 @@ export default function PedidosPage() {
             value={searchTelefono}
             onChange={(e) => setsearchTelefono(e.target.value)}
           />
-          <div className="p-4">
-            <label className="block mb-2 text-sm font-medium text-gray-700">
-              Importar pedidos desde Excel
+          <div className="flex items-center gap-2">
+            <label
+              htmlFor="upload"
+              className="bg-[#3E82FF] text-white px-4 py-2 rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer"
+            >
+              Importar XLSX
             </label>
             <input
+              id="upload"
               type="file"
               accept=".xlsx"
               onChange={handleFileUpload}
-              className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              className="hidden"
             />
+            <button
+              onClick={openModalForNew}
+              className="flex items-center space-x-2 bg-[#3E82FF] text-white px-4 py-2 rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer"
+            >
+              <span>Nuevo Pedido</span>
+            </button>
           </div>
-          <button
-            onClick={openModalForNew}
-            className="ml-4 flex items-center space-x-2 bg-[#3E82FF] text-white px-4 py-2 rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer"
-          >
-            <FaPlus />
-            <span>Nuevo Pedido</span>
-          </button>
+
         </div>
 
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto text-gray-800">
             <thead className="bg-gray-100">
               <tr>
-                {[{ key: "pkid", label: "ID" }, { key: "clientes.telefono", label: "Telefono" }, { key: "fecha_creacion", label: "Fecha de Creación" }, { key: "transportadoras.nombre", label: "Transportadora" }, { key: "municipios.nombre", label: "Municipio" }, { key: "valor_total", label: "Recaudo" }, { key: "valor_flete", label: "Valor Flete" },
+                {[{ key: "pkid", label: "ID" }, { key: "fecha_creacion", label: "Fecha" }, { key: "clientes.nombres", label: "Cliente" }, { key: "clientes.telefono", label: "Telefono Cliente" }, { key: "municipios.nombre", label: "Ciudad Destino" }, { key: "valor_total", label: "Recaudo" },
                 ]
                   .map(({ key, label }) => (
                     <th
@@ -121,39 +124,47 @@ export default function PedidosPage() {
               </tr>
             </thead>
             <tbody>
-              {visiblepedidos.map((pedidos, index) => (
-                <tr key={index} className="border-b">
-                  <td className="p-3">{pedidos.pkid}</td>
-                  <td className="p-3">{pedidos.clientes.telefono}</td>
-                  <td className="p-3">{formatFecha(pedidos.fecha_creacion)}</td>
-                  <td className="p-3">{pedidos.transportadoras.nombre}</td>
-                  <td className="p-3">{pedidos.municipios.nombre}</td>
-                  <td className="p-3">{formatearNumero(pedidos.valor_total)}</td>
-                  <td className="p-3">{formatearNumero(pedidos.valor_flete)}</td>
-                  <td className="flex justify-end gap-2 p-3 text-right">
-                    <button
-                      onClick={() => openModalForEdit(pedidos)}
-                      className="bg-green-500 hover:bg-green-400 text-white px-3 py-2 rounded-lg inline-flex items-center space-x-2 cursor-pointer"
-                    >
-                      <FaEdit />
-                      <span>Editar</span>
-                    </button>
-                    <button
-                      onClick={() => openModalForView(pedidos)}
-                      className="bg-green-500 hover:bg-green-400 text-white px-3 py-2 rounded-lg inline-flex items-center space-x-2 cursor-pointer"
-                    >
-                      <FaEye />
-                    </button>
-                    <button
-                      onClick={() => openModalForViewCosto(pedidos)}
-                      className="bg-green-500 hover:bg-green-400 text-white px-3 py-2 rounded-lg inline-flex items-center space-x-2 cursor-pointer"
-                    >
-                      <FaDollarSign />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {visiblepedidos.map((pedidos, index) => {
+                const diasDesdeCreacion = contarDiasDesde(pedidos.fecha_creacion);
+                const desactivarEditar = diasDesdeCreacion > 7;
+
+                return (
+                  <tr key={index} className="border-b">
+                    <td className="p-3">{pedidos.pkid}</td>
+                    <td className="p-3">{formatFecha(pedidos.fecha_creacion)}</td>
+                    <td className="p-3">{pedidos.clientes.nombres} {pedidos.clientes.apellidos}</td>
+                    <td className="p-3">{pedidos.clientes.telefono}</td>
+                    <td className="p-3">{pedidos.municipios.nombre} </td>
+                    <td className="p-3">$ {formatearNumero(pedidos.valor_total)}</td>
+                    <td className="flex justify-end gap-2 p-3 text-right">
+                      <button
+                        onClick={() => openModalForEdit(pedidos)}
+                        disabled={desactivarEditar}
+                        className={`px-3 py-2 rounded-lg inline-flex items-center space-x-2 ${desactivarEditar
+                          ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                          : "bg-green-500 hover:bg-green-400 text-white cursor-pointer"
+                          }`}
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        onClick={() => openModalForView(pedidos)}
+                        className="bg-green-500 hover:bg-green-400 text-white px-3 py-2 rounded-lg inline-flex items-center space-x-2 cursor-pointer"
+                      >
+                        <FaEye />
+                      </button>
+                      <button
+                        onClick={() => openModalForViewCosto(pedidos)}
+                        className="bg-green-500 hover:bg-green-400 text-white px-3 py-2 rounded-lg inline-flex items-center space-x-2 cursor-pointer"
+                      >
+                        <FaDollarSign />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
+
           </table>
         </div>
 
@@ -238,7 +249,7 @@ export default function PedidosPage() {
                 <div className="border-t mt-4 pt-4">
                   <p className="font-semibold text-lg mb-2">Datos de la transportadora</p>
                   <p><strong>Transportadora:</strong> {transportadoras.find(t => t.pkid === selectedTransportadora)?.nombre || "N/A"}</p>
-                  <p><strong>Valor Flete:</strong> ${valor_flete}</p>
+                  <p><strong>Valor Flete:</strong> ${formatearNumero(valor_flete)}</p>
                 </div>
 
                 <div className="mt-4 border-t pt-4">
@@ -258,8 +269,8 @@ export default function PedidosPage() {
                           <tr key={item.pkid} className="text-center">
                             <td className="px-4 py-2 border">{item.nombre}</td>
                             <td className="px-4 py-2 border">{item.cantidad}x</td>
-                            <td className="px-4 py-2 border">${item.precio_unitario}</td>
-                            <td className="px-4 py-2 border">${item.precio_unitario * item.cantidad}</td>
+                            <td className="px-4 py-2 border">${formatearNumero(item.precio_unitario)}</td>
+                            <td className="px-4 py-2 border">${formatearNumero(item.precio_unitario * item.cantidad)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -270,7 +281,7 @@ export default function PedidosPage() {
                   )}
                 </div>
                 <div className="mt-4 pt-4 text-2xl">
-                  <p><strong>Recaudo:</strong> ${valor_total}</p>
+                  <p><strong>Recaudo:</strong> ${formatearNumero(valor_total)}</p>
                 </div>
                 <div className="mt-4 pt-4">
                   <p><strong>Fecha de creación:</strong> {fecha_creacion?.substring(0, 10)}</p>
@@ -369,7 +380,7 @@ export default function PedidosPage() {
                           );
                           setSelectedProductToAdd(product);
                         }}
-                        className="flex-grow px-4 py-2 border rounded focus:outline-none bg-white"
+                        className="flex-grow px-4 py-2 border rounded focus:outline-none bg-white w-full"
                       >
                         <option value="">Seleccione un Producto</option>
                         {productosDisponibles
@@ -378,7 +389,7 @@ export default function PedidosPage() {
                           )
                           .map((prod) => (
                             <option key={prod.pkid} value={prod.pkid}>
-                              {prod.nombre} - ${prod.precio_base}
+                              {prod.nombre}
                             </option>
                           ))}
                       </select>
@@ -393,7 +404,7 @@ export default function PedidosPage() {
 
                       <button
                         onClick={addProductToCart}
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition cursor-pointer"
                       >
                         Añadir
                       </button>
@@ -426,7 +437,7 @@ export default function PedidosPage() {
 
                               <td className="py-1">{item.nombre}</td>
                               <td className="py-1">{item.cantidad}x</td>
-                              <td className="py-1">${item.precio_unitario}</td>
+                              <td className="py-1">$ {formatearNumero(item.precio_unitario)}</td>
 
                               <td className="py-1 text-right">
                                 <button

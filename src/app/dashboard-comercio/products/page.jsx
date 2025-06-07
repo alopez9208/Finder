@@ -39,9 +39,7 @@ export default function ProductsPage() {
     } = useProductos();
 
     return (
-        <div className="m-12">
-            <h2 className="text-2xl text-gray-800 mb-8">Lista de Productos</h2>
-
+        <div className="h-[calc(100vh-130px)] overflow-y-auto pr-2 w-full">
             {/* Buscadores */}
             <div className="bg-white p-6 rounded-2xl">
                 <div className="mb-4 flex space-x-4">

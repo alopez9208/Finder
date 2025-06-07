@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { handleErrorResponse } from "@/app/utils/errores";
 
 export async function GET(request) {
     const comercioId = request.headers.get("x-comercio-id");
@@ -60,32 +61,29 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-    const { nombre, presupuesto_gastado: valorString, fecha_inicio, fecha_fin, fkid_tbl_comercios } = await request.json();
-
-    if (!fkid_tbl_comercios) {
-        return new Response(
-            JSON.stringify({ success: false, message: "fkid_tbl_comercios es requerido" }),
-            { status: 400 }
-        );
-    }
-
     try {
+        const { nombre,
+            presupuesto_gastado: valorString,
+            fecha_inicio,
+            fecha_fin,
+            fkid_tbl_comercios
+        } = await request.json();
 
         const presupuesto_gastado = parseFloat(valorString);
 
-        if (isNaN(presupuesto_gastado)) {
-            return new Response(
-                JSON.stringify({ success: false, message: "El campo presupuesto_gastado debe ser un número válido." }),
-                { status: 400, headers: { "Content-Type": "application/json" } }
-            );
+        if (!nombre || isNaN(presupuesto_gastado) || !fecha_inicio || !fecha_fin || !fkid_tbl_comercios) {
+            return handleErrorResponse(null, "Todos los campos son requeridos y válidos", 400);
         }
+
+        const fechaInicioDate = new Date(`${fecha_inicio}T00:00:00-05:00`);
+        const fechaFinDate = new Date(`${fecha_fin}T00:00:00-05:00`);
 
         const nuevaCampania = await prisma.tbl_campanias.create({
             data: {
                 nombre,
                 presupuesto_gastado,
-                fecha_inicio,
-                fecha_fin,
+                fecha_inicio: fechaInicioDate,
+                fecha_fin: fechaFinDate,
                 fkid_tbl_comercios: BigInt(fkid_tbl_comercios),
             },
         });
@@ -104,40 +102,47 @@ export async function POST(request) {
             }
         );
     } catch (error) {
-        console.error("Error al crear campania:", error);
-        return new Response(
-            JSON.stringify({ success: false, message: error.message }),
-            {
-                status: 500,
-                headers: { "Content-Type": "application/json" },
-            }
-        );
+        return handleErrorResponse(error, "Error al crear campania", 500);
     }
 }
 
 export async function PUT(request) {
-    const { pkid, nombre, presupuesto_gastado: valorString, fecha_inicio, fecha_fin, fkid_tbl_comercios } = await request.json();
-
     try {
+        const { pkid,
+            nombre,
+            presupuesto_gastado: valorString,
+            fecha_inicio,
+            fecha_fin,
+            fkid_tbl_comercios
+        } = await request.json();
+
+        if (!fecha_inicio) {
+            return handleErrorResponse(null, "El campo fecha_inicio es obligatorio", 400);
+        }
+
+        if (!fecha_fin) {
+            return handleErrorResponse(null, "El campo fecha_fin es obligatorio", 400);
+        }
 
         const presupuesto_gastado = parseFloat(valorString);
 
-        if (isNaN(presupuesto_gastado)) {
-            return new Response(
-                JSON.stringify({ success: false, message: "El campo presupuesto_gastado debe ser un número válido." }),
-                { status: 400, headers: { "Content-Type": "application/json" } }
-            );
-        }            
+        if (!nombre || isNaN(presupuesto_gastado) || !fecha_inicio || !fecha_fin || !fkid_tbl_comercios) {
+            return handleErrorResponse(null, "Todos los campos son requeridos y válidos", 400);
+        }        
 
+        const fechaInicioDate = new Date(`${fecha_inicio}T00:00:00-05:00`);
+        const fechaFinDate = new Date(`${fecha_fin}T00:00:00-05:00`);
+
+        const dataToUpdate = {
+            nombre,
+            presupuesto_gastado,
+            fecha_inicio: fechaInicioDate,
+            fecha_fin: fechaFinDate,
+            fkid_tbl_comercios: BigInt(fkid_tbl_comercios),
+        };
         const campaniaActualizada = await prisma.tbl_campanias.update({
             where: { pkid: BigInt(pkid) },
-            data: {
-                nombre,
-                presupuesto_gastado,
-                fecha_inicio,
-                fecha_fin,
-                fkid_tbl_comercios: BigInt(fkid_tbl_comercios),
-            },
+            data: dataToUpdate,
         });
 
         const serializado = {
@@ -148,14 +153,13 @@ export async function PUT(request) {
 
         return new Response(
             JSON.stringify({ success: true, campania: serializado }),
-            { status: 200, headers: { "Content-Type": "application/json" } }
+            {
+                status: 200,
+                headers: { "Content-Type": "application/json" }
+            }
         );
     } catch (error) {
-        console.error("Error al actualizar campania:", error);
-        return new Response(
-            JSON.stringify({ success: false, message: error.message }),
-            { status: 500, headers: { "Content-Type": "application/json" } }
-        );
+        return handleErrorResponse(error, "Error al actualizar campania", 500);
     }
 }
 
