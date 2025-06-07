@@ -17,7 +17,7 @@ export default function SidebarComercio() {
           <button
             onClick={() => router.push("/dashboard-comercio/comercio")}
             className={`flex items-center gap-1 rounded p-1 cursor-pointer mb-4 justify-center ${isActive(
-              "/dashboard-comercio"
+              "/dashboard-comercio/comercio"
             )}`}
           >
             <FaHome className="text-2xl" />
@@ -29,7 +29,7 @@ export default function SidebarComercio() {
 
           <button
             onClick={() => router.push("/dashboard-comercio/products")}
-            className={`flex items-center gap-1 rounded pl-4 p-1 mt-1 ml-4 cursor-pointer ${isActive(
+            className={`flex items-center gap-1 mt-1 rounded p-1 cursor-pointer mb-2 justify-center ${isActive(
               "/dashboard-comercio/products"
             )}`}
           >
@@ -41,8 +41,8 @@ export default function SidebarComercio() {
           <span className="text-white text-sm ml-4">Usuario</span>
 
           <button
-            onClick={() => router.push("/dashboard-comercio/mi-cuenta")}
-            className={`flex items-center gap-1 rounded pl-4 p-1 mt-1 ml-4 cursor-pointer ${isActive(
+            
+            className={`flex items-center gap-1 mt-1 rounded p-1 cursor-pointer mb-2 justify-center ${isActive(
               "/dashboard-comercio/mi-cuenta"
             )}`}
           >

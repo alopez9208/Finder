@@ -29,20 +29,6 @@ function LayoutInterno({ children }) {
   const { comercios, selectedComercio, cambiarComercio } = useComercio();
   const pathname = usePathname();
 
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    }
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isOpen]);
-
   const handleMiCuenta = () => {
     router.push("/mi-cuenta");
     setIsOpen(false);
@@ -61,8 +47,6 @@ function LayoutInterno({ children }) {
     }
   };
 
-  const isActive = (path) => (pathname === path ? "bg-[#2D9EE8]" : "hover:bg-[#2D9EE8]");
-
   useEffect(() => {
     const fecha = new Date().toLocaleDateString("es-ES", {
       weekday: "long",
@@ -76,7 +60,7 @@ function LayoutInterno({ children }) {
   return (
     <div className="h-screen bg-[#1987DA] flex flex-col">
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto bg-[#1987DA] pr-4 flex flex-col">
+      <main className="flex-1 overflow-y-auto bg-[#1987DA] pr-2 flex flex-col">
         <div className="m-6  mr-2 mt-2 h-[60px]">
           <div className="flex justify-between items-center">
             {/* Sección izquierda: Logo + Botón */}
@@ -86,7 +70,7 @@ function LayoutInterno({ children }) {
                 onClick={() => setSidebarVisible(!sidebarVisible)}
                 className="cursor-pointer hover:bg-white bg-gray-200 rounded-lg px-2 py-2 transition duration-200 flex items-center justify-center text-gray-500"
               >
-                {sidebarVisible ? <IoMenuOutline className="text-2xl" /> : <IoMenuOutline className="text-2xl" />}
+                {sidebarVisible ? <IoMenuOutline className="text-xl" /> : <IoMenuOutline className="text-xl" />}
               </button>
               <select
                 value={selectedComercio}
@@ -127,7 +111,7 @@ function LayoutInterno({ children }) {
                     <div className="flex flex-col gap-2 m-4">
                       <button
                         onClick={() => {
-                          setIsOpen(false);                         
+                          setIsOpen(false);
                         }}
                         className="flex items-center gap-2 block w-full text-left px-4 py-2 text-gray-700 cursor-pointer hover:bg-[#3E82FF] transition duration-200 hover:text-white rounded-md py-4"
                       >
@@ -135,15 +119,15 @@ function LayoutInterno({ children }) {
                         Mi cuenta
                       </button>
                       <button
-                        onClick={() => {                          
+                        onClick={() => {
                           router.push("/dashboard-comercio/mis-comercios");
                           setIsOpen(false);
                         }}
-                        className="flex items-center gap-2 block w-full text-left px-4 py-2 text-gray-700 cursor-pointer hover:bg-[#3E82FF] transition duration-200 hover:text-white rounded-md py-4"                        
+                        className="flex items-center gap-2 block w-full text-left px-4 py-2 text-gray-700 cursor-pointer hover:bg-[#3E82FF] transition duration-200 hover:text-white rounded-md py-4"
                       >
                         <LuStore className="text-2xl" />
                         Mis Comercios
-                        
+
                       </button>
                       <button
                         onClick={handleSalir}
@@ -169,7 +153,7 @@ function LayoutInterno({ children }) {
             <SidebarComercio />
           </div>
           <div className={`flex flex-col flex-1 transition-all duration-300 ${sidebarVisible ? 'ml-0' : 'ml-0'}`}>
-            <div className="flex-1 px-8 bg-gray-100 pt-4 border rounded-lg overflow-y-auto">
+            <div className="flex-1 px-8 bg-gray-100 pt-4 border rounded-lg overflow-y-auto ml-2">
               {children}
             </div>
           </div>
