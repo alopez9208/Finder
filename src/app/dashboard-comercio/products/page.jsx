@@ -1,6 +1,7 @@
 "use client";
 
 import useProductos from "./useProductos";
+import Pagination from "@/app/components/pagination";
 import { FaEye } from "react-icons/fa";
 
 export default function ProductsPage() {
@@ -104,64 +105,11 @@ export default function ProductsPage() {
                     </table>
                 </div>
 
-                {/* Paginación */}
-                {totalPages > 1 && (
-                    <div className="mt-4 flex justify-center items-center space-x-2 text-gray-400">
-                        <button
-                            onClick={() => handlePageChange(currentPage - 1)}
-                            disabled={currentPage === 1}
-                            className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 hover:text-white"
-                        >
-                            Anterior
-                        </button>
-
-                        {currentPage > 3 && (
-                            <>
-                                <button
-                                    onClick={() => handlePageChange(1)}
-                                    className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 hover:text-white"
-                                >
-                                    1
-                                </button>
-                                {currentPage > 4 && <span className="px-3 py-1">...</span>}
-                            </>
-                        )}
-
-                        {Array.from({ length: 5 }, (_, i) => {
-                            const page = currentPage - 2 + i;
-                            return page > 0 && page <= totalPages ? (
-                                <button
-                                    key={page}
-                                    onClick={() => handlePageChange(page)}
-                                    className={`px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 hover:text-white ${currentPage === page ? "bg-blue-500 text-white" : ""
-                                        }`}
-                                >
-                                    {page}
-                                </button>
-                            ) : null;
-                        })}
-
-                        {currentPage < totalPages - 3 && (
-                            <>
-                                <span className="px-3 py-1">...</span>
-                                <button
-                                    onClick={() => handlePageChange(totalPages)}
-                                    className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 hover:text-white"
-                                >
-                                    {totalPages}
-                                </button>
-                            </>
-                        )}
-
-                        <button
-                            onClick={() => handlePageChange(currentPage + 1)}
-                            disabled={currentPage === totalPages}
-                            className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 hover:text-white"
-                        >
-                            Siguiente
-                        </button>
-                    </div>
-                )}
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    handlePageChange={handlePageChange}
+                />
             </div>
 
             {/* Modal de Ver */}
@@ -173,28 +121,28 @@ export default function ProductsPage() {
                         </h3>
                         <label className="block mb-1 font-semibold text-gray-700 text-sm">Nombre:</label>
                         <input
-                            type="text"                           
+                            type="text"
                             className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
                             value={nombre}
                             readOnly
                         />
                         <label className="block mb-1 font-semibold text-gray-700 text-sm">Costo:</label>
                         <input
-                            type="text"                           
+                            type="text"
                             className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
                             value={costo}
                             readOnly
                         />
                         <label className="block mb-1 font-semibold text-gray-700 text-sm">Valor:</label>
                         <input
-                            type="text"                            
+                            type="text"
                             className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
                             value={valor}
                             readOnly
                         />
                         <label className="block mb-1 font-semibold text-gray-700 text-sm">Empresa:</label>
                         <input
-                            type="text"                            
+                            type="text"
                             className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
                             value={nombre_empresa}
                             readOnly

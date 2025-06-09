@@ -1,8 +1,10 @@
 "use client";
 
 import useClientes from "./useClientes";
+import Pagination from "@/app/components/pagination";
 import { FaEdit } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
+
 
 export default function ClientesPage() {
   const {
@@ -49,7 +51,7 @@ export default function ClientesPage() {
   } = useClientes();
 
   return (
-    <div className="m-12">      
+    <div className="h-[calc(100vh-200px)] overflow-y-auto pr-2 w-full">
       <div className="bg-white p-6 rounded-2xl">
         {/* Buscador + botón nuevo */}
         <div className="flex justify-between items-center mb-4">
@@ -79,7 +81,7 @@ export default function ClientesPage() {
                   { key: "telefono", label: "Teléfono" },
                   { key: "nombres", label: "Nombres" },
                   { key: "apellidos", label: "Apellidos" },
-                  { key: "nombre_municipio", label: "Municipio" },                  
+                  { key: "nombre_municipio", label: "Municipio" },
                 ].map(({ key, label }) => (
                   <th
                     key={key}
@@ -98,8 +100,8 @@ export default function ClientesPage() {
                   <td className="p-3">{cliente.pkid}</td>
                   <td className="p-3">{cliente.telefono}</td>
                   <td className="p-3">{cliente.nombres}</td>
-                  <td className="p-3">{cliente.apellidos}</td>                                
-                  <td className="p-3">{cliente.nombre_municipio}</td>                 
+                  <td className="p-3">{cliente.apellidos}</td>
+                  <td className="p-3">{cliente.nombre_municipio}</td>
                   <td className="p-3 text-right">
                     <button
                       onClick={() => openModalForEdit(cliente)}
@@ -115,65 +117,11 @@ export default function ClientesPage() {
           </table>
         </div>
 
-        {/* Paginación */}
-        {totalPages > 1 && (
-          <div className="mt-4 flex justify-center items-center space-x-2 text-gray-400">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 hover:text-white"
-            >
-              Anterior
-            </button>
-
-            {currentPage > 3 && (
-              <>
-                <button
-                  onClick={() => handlePageChange(1)}
-                  className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 hover:text-white"
-                >
-                  1
-                </button>
-                {currentPage > 4 && <span className="px-3 py-1">...</span>}
-              </>
-            )}
-
-            {Array.from({ length: 5 }, (_, i) => {
-              const page = currentPage - 2 + i;
-              return page > 0 && page <= totalPages ? (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  className={`px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 hover:text-white ${
-                    currentPage === page ? "bg-blue-500 text-white" : ""
-                  }`}
-                >
-                  {page}
-                </button>
-              ) : null;
-            })}
-
-            {currentPage < totalPages - 3 && (
-              <>
-                <span className="px-3 py-1">...</span>
-                <button
-                  onClick={() => handlePageChange(totalPages)}
-                  className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 hover:text-white"
-                >
-                  {totalPages}
-                </button>
-              </>
-            )}
-
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 hover:text-white"
-            >
-              Siguiente
-            </button>
-          </div>
-        )}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
+        />
       </div>
 
       {/* Modal de Crear/Editar */}
@@ -236,7 +184,7 @@ export default function ClientesPage() {
                   {muni.nombre}
                 </option>
               ))}
-            </select>            
+            </select>
 
             <div className="flex justify-end space-x-2">
               <button

@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Pagination from "@/app/components/pagination";
 import { FaEdit } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { TbArrowsSort } from "react-icons/tb";
@@ -15,38 +16,38 @@ export default function ComerciosPage(onComercioCreado) {
   const [editingComercio, setEditingComercio] = useState(null);
   const [nombre, setNombre] = useState("");
   const [telefono, setTelefono] = useState("");
-  const [correo, setCorreo] = useState("");  
+  const [correo, setCorreo] = useState("");
   const { obtenerComercios } = useComercio();
 
   useEffect(() => {
     fetchComercios();
   }, []);
-  
+
   const fetchComercios = async () => {
-      const usuario = JSON.parse(localStorage.getItem("usuario"));
-      const usuarioId = usuario?.pkusuario;
-    
-      try {
-        const response = await fetch("/api/dashboard-comercio/comercios", {
-          headers: {
-            "x-usuario-id": usuarioId ? usuarioId.toString() : "",  // Envías el id como string
-          },
-        });
-    
-        const data = await response.json();
-        if (data.success && data.comercios.length > 0) {
-          setComercio(data.comercios);         
-        }
-      } catch (error) {
-        console.error("Error al cargar comercios:", error);
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    const usuarioId = usuario?.pkusuario;
+
+    try {
+      const response = await fetch("/api/dashboard-comercio/comercios", {
+        headers: {
+          "x-usuario-id": usuarioId ? usuarioId.toString() : "",  // Envías el id como string
+        },
+      });
+
+      const data = await response.json();
+      if (data.success && data.comercios.length > 0) {
+        setComercio(data.comercios);
       }
-    }  
+    } catch (error) {
+      console.error("Error al cargar comercios:", error);
+    }
+  }
 
   const openModalForNew = () => {
     setEditingComercio(null);
     setNombre("");
     setTelefono("");
-    setCorreo("");  
+    setCorreo("");
     setModalOpen(true);
   };
 
@@ -55,44 +56,44 @@ export default function ComerciosPage(onComercioCreado) {
     setNombre(comercio.nombre);
     setTelefono(comercio.telefono);
     setCorreo(comercio.correo);
-    setModalOpen(true);    
+    setModalOpen(true);
   };
 
-const handleSubmit = async () => {
-  if (!nombre.trim() || !telefono.trim() || !correo.trim()) {
-    alert("Por favor, completa todos los campos.");
-    return;
-  }
-
-  const usuario = JSON.parse(localStorage.getItem("usuario"));
-  const usuarioId = usuario?.pkusuario;
-
-  const method = editingComercio ? "PUT" : "POST";
-  const url = "/api/dashboard-comercio/comercios";
-
-  const payload = editingComercio
-    ? { pkid: editingComercio.pkid, nombre, telefono, correo, fkusuario_tbl_usuarios: usuarioId }
-    : { nombre, telefono, correo, fkusuario_tbl_usuarios: usuarioId };
-
-  try {
-    const res = await fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    const data = await res.json();
-    if (data.success) {
-      setModalOpen(false);
-      await obtenerComercios();  
-      fetchComercios();       
-    } else {
-      console.error("Error al guardar el comercio");
+  const handleSubmit = async () => {
+    if (!nombre.trim() || !telefono.trim() || !correo.trim()) {
+      alert("Por favor, completa todos los campos.");
+      return;
     }
-  } catch (error) {
-    console.error("Error al enviar datos:", error);
-  }
-};
+
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    const usuarioId = usuario?.pkusuario;
+
+    const method = editingComercio ? "PUT" : "POST";
+    const url = "/api/dashboard-comercio/comercios";
+
+    const payload = editingComercio
+      ? { pkid: editingComercio.pkid, nombre, telefono, correo, fkusuario_tbl_usuarios: usuarioId }
+      : { nombre, telefono, correo, fkusuario_tbl_usuarios: usuarioId };
+
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setModalOpen(false);
+        await obtenerComercios();
+        fetchComercios();
+      } else {
+        console.error("Error al guardar el comercio");
+      }
+    } catch (error) {
+      console.error("Error al enviar datos:", error);
+    }
+  };
 
   const filteredComercios = comercios
     .filter((comercio) => {
@@ -150,7 +151,7 @@ const handleSubmit = async () => {
   };
 
   return (
-    <div className="m-12">  
+    <div className="m-12">
       <div className="bg-white p-6 rounded-2xl">
         <div className="flex justify-between items-center mb-4">
           <input
@@ -209,70 +210,11 @@ const handleSubmit = async () => {
           </table>
         </div>
 
-        {/* Paginación */}
-        {totalPages > 1 && (
-          <div className="mt-4 flex justify-center items-center space-x-2 text-gray-400">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              disabled={currentPage === 1}
-            >
-              Anterior
-            </button>
-
-            {/* Mostrar la primera página si no estamos en ella y el rango es mayor a 3 */}
-            {currentPage > 3 && (
-              <button
-                onClick={() => handlePageChange(1)}
-                className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              >
-                1
-              </button>
-            )}
-
-            {/* Si hay más de 4 páginas anteriores a la actual, mostrar "..." */}
-            {currentPage > 4 && <span className="px-3 py-1">...</span>}
-
-            {/* Páginas alrededor de la página actual */}
-            {Array.from({ length: 5 }, (_, i) => {
-              const pageNumber = currentPage - 2 + i;
-              if (pageNumber > 0 && pageNumber <= totalPages) {
-                return (
-                  <button
-                    key={pageNumber}
-                    onClick={() => handlePageChange(pageNumber)}
-                    className={`px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white ${currentPage === pageNumber ? "bg-blue-500 text-white" : ""
-                      }`}
-                  >
-                    {pageNumber}
-                  </button>
-                );
-              }
-              return null; // No renderizar números fuera del rango
-            })}
-
-            {/* Si hay más de 3 páginas posteriores a la actual, mostrar "..." */}
-            {currentPage < totalPages - 3 && <span className="px-3 py-1">...</span>}
-
-            {/* Mostrar la última página si no estamos en ella */}
-            {currentPage < totalPages - 2 && (
-              <button
-                onClick={() => handlePageChange(totalPages)}
-                className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              >
-                {totalPages}
-              </button>
-            )}
-
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              disabled={currentPage === totalPages}
-            >
-              Siguiente
-            </button>
-          </div>
-        )}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
+        />
       </div>
 
       {modalOpen && (
@@ -287,7 +229,7 @@ const handleSubmit = async () => {
               placeholder="Nombre"
               className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white read-only:bg-[#f0ebff]"
               value={nombre}
-              onChange={(e) => setNombre(e.target.value)}              
+              onChange={(e) => setNombre(e.target.value)}
             />
             <label className="block mb-1 font-semibold text-gray-700 text-sm">Teléfono:</label>
             <input

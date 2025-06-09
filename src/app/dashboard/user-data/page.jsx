@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Pagination from "@/app/components/pagination";
 import { FaEye } from "react-icons/fa";
 import { TbArrowsSort } from "react-icons/tb";
 
@@ -314,34 +315,11 @@ export default function DashboardPage() {
           </table>
         </div>
 
-        {/* Paginación */}
-        {totalPages > 1 && (
-          <div className="mt-4 flex justify-center items-center space-x-2 text-gray-400">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              disabled={currentPage === 1}
-            >
-              Anterior
-            </button>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i + 1}
-                onClick={() => handlePageChange(i + 1)}
-                className={`px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer ${currentPage === i + 1 ? 'bg-[#005AFE] text-white' : ''}`}
-              >
-                {i + 1}
-              </button>
-            ))}
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              disabled={currentPage === totalPages}
-            >
-              Siguiente
-            </button>
-          </div>
-        )}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
+        />
       </div>
 
       {/* Modal */}
@@ -402,7 +380,7 @@ export default function DashboardPage() {
                 )}
               </select>
             </div>
-            
+
             {/* Nombres */}
             <div className="mb-4">
               <label className="block mb-1 font-semibold text-gray-700 text-sm">Nombre:</label>

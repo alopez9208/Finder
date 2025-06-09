@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Pagination from "@/app/components/pagination";
 import { FaEdit } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { TbArrowsSort } from "react-icons/tb";
@@ -221,70 +222,11 @@ export default function MunicipiosPage() {
           </table>
         </div>
 
-        {/* Paginación */}
-        {totalPages > 1 && (
-          <div className="mt-4 flex justify-center items-center space-x-2 text-gray-400">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              disabled={currentPage === 1}
-            >
-              Anterior
-            </button>
-
-            {/* Mostrar la primera página si no estamos en ella y el rango es mayor a 3 */}
-            {currentPage > 3 && (
-              <button
-                onClick={() => handlePageChange(1)}
-                className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              >
-                1
-              </button>
-            )}
-
-            {/* Si hay más de 4 páginas anteriores a la actual, mostrar "..." */}
-            {currentPage > 4 && <span className="px-3 py-1">...</span>}
-
-            {/* Páginas alrededor de la página actual */}
-            {Array.from({ length: 5 }, (_, i) => {
-              const pageNumber = currentPage - 2 + i;
-              if (pageNumber > 0 && pageNumber <= totalPages) {
-                return (
-                  <button
-                    key={pageNumber}
-                    onClick={() => handlePageChange(pageNumber)}
-                    className={`px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white ${currentPage === pageNumber ? "bg-blue-500 text-white" : ""
-                      }`}
-                  >
-                    {pageNumber}
-                  </button>
-                );
-              }
-              return null; // No renderizar números fuera del rango
-            })}
-
-            {/* Si hay más de 3 páginas posteriores a la actual, mostrar "..." */}
-            {currentPage < totalPages - 3 && <span className="px-3 py-1">...</span>}
-
-            {/* Mostrar la última página si no estamos en ella */}
-            {currentPage < totalPages - 2 && (
-              <button
-                onClick={() => handlePageChange(totalPages)}
-                className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              >
-                {totalPages}
-              </button>
-            )}
-
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              disabled={currentPage === totalPages}
-            >
-              Siguiente
-            </button>
-          </div>
-        )}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
+        />
       </div>
 
       {modalOpen && (

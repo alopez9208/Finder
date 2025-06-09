@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Pagination from "@/app/components/pagination";
 import { FaEdit } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { TbArrowsSort } from "react-icons/tb";
@@ -10,7 +11,7 @@ export default function ProductosPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const productosPerPage = 5;
   const [productos, setProductos] = useState([]);
-  const [empresas, setEmpresas] = useState([]); 
+  const [empresas, setEmpresas] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
 
@@ -20,12 +21,12 @@ export default function ProductosPage() {
   const [nombre, setNombre] = useState("");
   const [costo, setCosto] = useState("");
   const [valor, setValor] = useState("");
-  const [selectedEmpresa, setSelectedEmpresa] = useState(""); 
+  const [selectedEmpresa, setSelectedEmpresa] = useState("");
 
 
   useEffect(() => {
     fetchProductos();
-    fetchEmpresas(); 
+    fetchEmpresas();
   }, []);
 
   const fetchProductos = async () => {
@@ -48,11 +49,11 @@ export default function ProductosPage() {
     const formateado = valor.toLocaleString('de-DE');
 
     if (valor < 1000000) {
-        return formateado;
+      return formateado;
     } else {
-        return formateado.replace('.', "'");
+      return formateado.replace('.', "'");
     }
-}
+  }
 
   const fetchEmpresas = async () => {
     try {
@@ -238,70 +239,11 @@ export default function ProductosPage() {
           </table>
         </div>
 
-        {/* Paginación */}
-        {totalPages > 1 && (
-          <div className="mt-4 flex justify-center items-center space-x-2 text-gray-400">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              disabled={currentPage === 1}
-            >
-              Anterior
-            </button>
-
-            {/* Mostrar la primera página si no estamos en ella y el rango es mayor a 3 */}
-            {currentPage > 3 && (
-              <button
-                onClick={() => handlePageChange(1)}
-                className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              >
-                1
-              </button>
-            )}
-
-            {/* Si hay más de 4 páginas anteriores a la actual, mostrar "..." */}
-            {currentPage > 4 && <span className="px-3 py-1">...</span>}
-
-            {/* Páginas alrededor de la página actual */}
-            {Array.from({ length: 5 }, (_, i) => {
-              const pageNumber = currentPage - 2 + i;
-              if (pageNumber > 0 && pageNumber <= totalPages) {
-                return (
-                  <button
-                    key={pageNumber}
-                    onClick={() => handlePageChange(pageNumber)}
-                    className={`px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white ${currentPage === pageNumber ? "bg-blue-500 text-white" : ""
-                      }`}
-                  >
-                    {pageNumber}
-                  </button>
-                );
-              }
-              return null; // No renderizar números fuera del rango
-            })}
-
-            {/* Si hay más de 3 páginas posteriores a la actual, mostrar "..." */}
-            {currentPage < totalPages - 3 && <span className="px-3 py-1">...</span>}
-
-            {/* Mostrar la última página si no estamos en ella */}
-            {currentPage < totalPages - 2 && (
-              <button
-                onClick={() => handlePageChange(totalPages)}
-                className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              >
-                {totalPages}
-              </button>
-            )}
-
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              disabled={currentPage === totalPages}
-            >
-              Siguiente
-            </button>
-          </div>
-        )}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
+        />
       </div>
 
       {modalOpen && (
@@ -316,7 +258,7 @@ export default function ProductosPage() {
               placeholder="Nombre"
               className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white read-only:bg-[#f0ebff]"
               value={nombre}
-              onChange={(e) => setNombre(e.target.value)}              
+              onChange={(e) => setNombre(e.target.value)}
             />
             <label className="block mb-1 font-semibold text-gray-700 text-sm">Costo:</label>
             <input
@@ -338,7 +280,7 @@ export default function ProductosPage() {
             <select
               value={selectedEmpresa}
               onChange={(e) => setSelectedEmpresa(e.target.value)}
-              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white disabled:bg-[#f0ebff]"              
+              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white disabled:bg-[#f0ebff]"
             >
               <option value="">Seleccione una Empresa</option>
               {empresas.map((empresas) => (

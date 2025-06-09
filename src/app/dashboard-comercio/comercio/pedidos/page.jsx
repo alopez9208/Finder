@@ -2,6 +2,7 @@
 
 import usePedidos from "./usePedidos";
 import { FaEdit, FaPlus, FaEye, FaDollarSign } from "react-icons/fa";
+import Pagination from "@/app/components/pagination";
 
 export default function PedidosPage() {
 
@@ -67,7 +68,9 @@ export default function PedidosPage() {
     handleFileUpload,
     comercioSeleccionado,
     hasFetchedRef,
-    contarDiasDesde
+    contarDiasDesde,
+    guia,
+    setGuia,
   } = usePedidos();
 
   return (
@@ -109,7 +112,7 @@ export default function PedidosPage() {
           <table className="min-w-full table-auto text-gray-800">
             <thead className="bg-gray-100">
               <tr>
-                {[{ key: "pkid", label: "ID" }, { key: "fecha_creacion", label: "Fecha" }, { key: "clientes.nombres", label: "Cliente" }, { key: "clientes.telefono", label: "Telefono Cliente" }, { key: "municipios.nombre", label: "Ciudad Destino" }, { key: "valor_total", label: "Recaudo" },
+                {[{ key: "pkid", label: "ID" }, { key: "guia", label: "Guía" }, { key: "fecha_creacion", label: "Fecha" }, { key: "clientes.nombres", label: "Cliente" }, { key: "clientes.telefono", label: "Telefono Cliente" }, { key: "municipios.nombre", label: "Ciudad Destino" }, { key: "valor_total", label: "Recaudo" },
                 ]
                   .map(({ key, label }) => (
                     <th
@@ -131,6 +134,7 @@ export default function PedidosPage() {
                 return (
                   <tr key={index} className="border-b">
                     <td className="p-3">{pedidos.pkid}</td>
+                    <td className="p-3">{pedidos.guia}</td>
                     <td className="p-3">{formatFecha(pedidos.fecha_creacion)}</td>
                     <td className="p-3">{pedidos.clientes.nombres} {pedidos.clientes.apellidos}</td>
                     <td className="p-3">{pedidos.clientes.telefono}</td>
@@ -168,65 +172,11 @@ export default function PedidosPage() {
           </table>
         </div>
 
-        {/* Paginación */}
-        {totalPages > 1 && (
-          <div className="mt-4 flex justify-center items-center space-x-2 text-gray-400">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              disabled={currentPage === 1}
-            >
-              Anterior
-            </button>
-
-            {currentPage > 3 && (
-              <button
-                onClick={() => handlePageChange(1)}
-                className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              >
-                1
-              </button>
-            )}
-
-            {currentPage > 4 && <span className="px-3 py-1">...</span>}
-
-            {Array.from({ length: 5 }, (_, i) => {
-              const pageNumber = currentPage - 2 + i;
-              if (pageNumber > 0 && pageNumber <= totalPages) {
-                return (
-                  <button
-                    key={pageNumber}
-                    onClick={() => handlePageChange(pageNumber)}
-                    className={`px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white ${currentPage === pageNumber ? "bg-blue-500 text-white" : ""
-                      }`}
-                  >
-                    {pageNumber}
-                  </button>
-                );
-              }
-              return null;
-            })}
-
-            {currentPage < totalPages - 3 && <span className="px-3 py-1">...</span>}
-
-            {currentPage < totalPages - 2 && (
-              <button
-                onClick={() => handlePageChange(totalPages)}
-                className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              >
-                {totalPages}
-              </button>
-            )}
-
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              disabled={currentPage === totalPages}
-            >
-              Siguiente
-            </button>
-          </div>
-        )}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
+        />
       </div>
 
       {modalOpen && (
@@ -238,7 +188,7 @@ export default function PedidosPage() {
             {modalMode === "view" ? (
               // MODO FACTURA
               <div className="text-sm text-gray-800 ml-12 text-center">
-                <h2 className="text-2xl font-bold mb-4">Factura del Pedido  <span className="text-xl"># {pkid_pedido}</span></h2>
+                <h2 className="text-2xl font-bold mb-4">Factura del Pedido  <span className="text-xl">#{guia}</span></h2>
                 <div className="border-t pt-4">
                   <p className="font-semibold text-lg mb-2">Datos del cliente</p>
                   <p><strong>Nombre:</strong> {clientes.find(c => c.pkid === selectedCliente)?.nombres || "N/A"} {clientes.find(c => c.pkid === selectedCliente)?.apellidos || "N/A"}</p>
@@ -294,6 +244,15 @@ export default function PedidosPage() {
                   <h3 className="text-xl font-semibold mb-4">
                     {modalMode === "edit" ? "Editar Pedido" : "Nuevo Pedido"}
                   </h3>
+
+                  <label className="block mb-1 font-semibold text-gray-700 text-sm">Guía:</label>
+                  <input
+                    type="text"
+                    placeholder="Guía"
+                    className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
+                    value={guia}
+                    onChange={(e) => setGuia(e.target.value)}
+                  />
 
                   <label className="block mb-1 font-semibold text-gray-700 text-sm">Recaudo:</label>
                   <input

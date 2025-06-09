@@ -23,6 +23,7 @@ const usePedidos = () => {
     const [viewPedido, setViewPedido] = useState(null);
     const [viewCosto, setViewCosto] = useState(null);
     const [pkid_pedido, setPKID_pedido] = useState("");
+    const [guia, setGuia] = useState("");
     const [valor_total, setValor_total] = useState("");
     const [valor_flete, setValor_flete] = useState("");
     const [fecha_creacion, setFecha_creacion] = useState("");
@@ -188,6 +189,7 @@ const usePedidos = () => {
     const openModalForNew = () => {
         setModalMode("new");
         setEditingPedido(null);
+        setGuia("");
         setValor_total("");
         setValor_flete("");
         setFecha_creacion("");
@@ -201,6 +203,7 @@ const usePedidos = () => {
     const openModalForEdit = async (pedido) => {
         setModalMode("edit");
         setEditingPedido(pedido);
+        setGuia(pedido.guia);
         setValor_total(pedido.valor_total.toString());
         setValor_flete(pedido.valor_flete.toString());
         setFecha_creacion(formatFecha(pedido.fecha_creacion));
@@ -215,6 +218,7 @@ const usePedidos = () => {
         setModalMode("view");
         setViewPedido(pedido);
         setPKID_pedido(pedido.pkid);
+        setGuia(pedido.guia);
         setValor_total(pedido.valor_total.toString());
         setValor_flete(pedido.valor_flete.toString());
         setFecha_creacion(formatFecha(pedido.fecha_creacion));
@@ -229,6 +233,7 @@ const usePedidos = () => {
         setModalMode("costo");
         setViewCosto(pedido);
         setPKID_pedido(pedido.pkid);
+        setGuia(pedido.guia);
         setValor_total(pedido.valor_total.toString());
         setValor_flete(pedido.valor_flete.toString());
         setFecha_creacion(formatFecha(pedido.fecha_creacion));
@@ -325,8 +330,8 @@ const usePedidos = () => {
         const url = "/api/dashboard-comercio/pedidos";
 
         const payload = editingPedido
-            ? { pkid: editingPedido.pkid, valor_total: valorNumerico, fecha_creacion: localFecha_Creacion, fkid_tbl_transportadoras: selectedTransportadora, fkid_tbl_clientes: selectedCliente, valor_flete: valor_flete, fkid_tbl_municipios: selectedMunicipio }
-            : { valor_total: valorNumerico, fecha_creacion: localFecha_Creacion, fkid_tbl_transportadoras: selectedTransportadora, fkid_tbl_clientes: selectedCliente, valor_flete: valor_flete, fkid_tbl_municipios: selectedMunicipio };
+            ? { pkid: editingPedido.pkid, guia: guia, valor_total: valorNumerico, fecha_creacion: localFecha_Creacion, fkid_tbl_transportadoras: selectedTransportadora, fkid_tbl_clientes: selectedCliente, valor_flete: valor_flete, fkid_tbl_municipios: selectedMunicipio }
+            : { guia: guia, valor_total: valorNumerico, fecha_creacion: localFecha_Creacion, fkid_tbl_transportadoras: selectedTransportadora, fkid_tbl_clientes: selectedCliente, valor_flete: valor_flete, fkid_tbl_municipios: selectedMunicipio };
 
         try {
             const res = await fetch(url, {
@@ -337,7 +342,7 @@ const usePedidos = () => {
 
             const data = await res.json();
             if (data.success) {
-                const pedidoPkid = editingPedido ? editingPedido.pkid : data.pedido.pkid; // Obtener el PKID del pedido (nuevo o existente)
+                const pedidoPkid = editingPedido ? editingPedido.pkid : data.pedido.pkid; 
 
                 await saveDetalleProductos(pedidoPkid);
 
@@ -475,6 +480,8 @@ const usePedidos = () => {
         editingPedido,
         pkid_pedido,
         setPKID_pedido,
+        guia,
+        setGuia,
         setValor_total,
         setValor_flete,
         valor_total,

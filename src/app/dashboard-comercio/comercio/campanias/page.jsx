@@ -3,52 +3,53 @@
 import useCampanias from "./useCampanias";
 import { FaEdit } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
+import Pagination from "@/app/components/pagination";
 
 export default function CampaniasPage() {
 
   const {
     searchNombre,
-        setsearchNombre,
-        currentPage,
-        setCurrentPage,
-        campaniasPerPage,
-        campanias,
-        comercios,
-        sortConfig,
-        setSortConfig,
-        modalOpen,
-        setModalOpen,
-        editingcampania,
-        setEditingcampania,
-        nombre,
-        setNombre,
-        presupuesto_gastado,
-        setPresupuesto_gastado,
-        fecha_inicio,
-        setFecha_inicio,
-        fecha_fin,
-        setFecha_fin,
-        selectedcomercio,
-        setSelectedcomercio,
-        handleSubmit,
-        openModalForNew,
-        openModalForEdit,
-        handleSort,
-        renderSortIcon,
-        handlePageChange,
-        totalPages,
-        visiblecampanias,
-        fetchCampanias,
-        fetchComercios,
-        formatFecha,
-        modalRef,
-        formatearNumero,
-        hasFetchedRef,    
-        comercioSeleccionado,
+    setsearchNombre,
+    currentPage,
+    setCurrentPage,
+    campaniasPerPage,
+    campanias,
+    comercios,
+    sortConfig,
+    setSortConfig,
+    modalOpen,
+    setModalOpen,
+    editingcampania,
+    setEditingcampania,
+    nombre,
+    setNombre,
+    presupuesto_gastado,
+    setPresupuesto_gastado,
+    fecha_inicio,
+    setFecha_inicio,
+    fecha_fin,
+    setFecha_fin,
+    selectedcomercio,
+    setSelectedcomercio,
+    handleSubmit,
+    openModalForNew,
+    openModalForEdit,
+    handleSort,
+    renderSortIcon,
+    handlePageChange,
+    totalPages,
+    visiblecampanias,
+    fetchCampanias,
+    fetchComercios,
+    formatFecha,
+    modalRef,
+    formatearNumero,
+    hasFetchedRef,
+    comercioSeleccionado,
   } = useCampanias();
 
   return (
-    <div className="m-4">
+    <div className="h-[calc(100vh-200px)] overflow-y-auto pr-2 w-full">
       <div className="bg-white p-6 rounded-2xl">
         <div className="flex justify-between items-center mb-4">
           <input
@@ -94,7 +95,7 @@ export default function CampaniasPage() {
                     <td className="p-3">{campania.nombre}</td>
                     <td className="p-3">{formatearNumero(campania.presupuesto_gastado)}</td>
                     <td className="p-3">{formatFecha(campania.fecha_inicio)}</td>
-                    <td className="p-3">{formatFecha(campania.fecha_fin)}</td>                   
+                    <td className="p-3">{formatFecha(campania.fecha_fin)}</td>
                     <td className="p-3 text-right">
                       <button
                         onClick={() => openModalForEdit(campania)}
@@ -111,70 +112,11 @@ export default function CampaniasPage() {
           </table>
         </div>
 
-        {/* Paginación */}
-        {totalPages > 1 && (
-          <div className="mt-4 flex justify-center items-center space-x-2 text-gray-400">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              disabled={currentPage === 1}
-            >
-              Anterior
-            </button>
-
-            {/* Mostrar la primera página si no estamos en ella y el rango es mayor a 3 */}
-            {currentPage > 3 && (
-              <button
-                onClick={() => handlePageChange(1)}
-                className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              >
-                1
-              </button>
-            )}
-
-            {/* Si hay más de 4 páginas anteriores a la actual, mostrar "..." */}
-            {currentPage > 4 && <span className="px-3 py-1">...</span>}
-
-            {/* Páginas alrededor de la página actual */}
-            {Array.from({ length: 5 }, (_, i) => {
-              const pageNumber = currentPage - 2 + i;
-              if (pageNumber > 0 && pageNumber <= totalPages) {
-                return (
-                  <button
-                    key={pageNumber}
-                    onClick={() => handlePageChange(pageNumber)}
-                    className={`px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white ${currentPage === pageNumber ? "bg-blue-500 text-white" : ""
-                      }`}
-                  >
-                    {pageNumber}
-                  </button>
-                );
-              }
-              return null; // No renderizar números fuera del rango
-            })}
-
-            {/* Si hay más de 3 páginas posteriores a la actual, mostrar "..." */}
-            {currentPage < totalPages - 3 && <span className="px-3 py-1">...</span>}
-
-            {/* Mostrar la última página si no estamos en ella */}
-            {currentPage < totalPages - 2 && (
-              <button
-                onClick={() => handlePageChange(totalPages)}
-                className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              >
-                {totalPages}
-              </button>
-            )}
-
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              className="px-3 py-1 border rounded hover:bg-[#005AFE] hover:opacity-40 transition cursor-pointer hover:text-white"
-              disabled={currentPage === totalPages}
-            >
-              Siguiente
-            </button>
-          </div>
-        )}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
+        />
       </div>
 
       {modalOpen && (
@@ -189,7 +131,7 @@ export default function CampaniasPage() {
               placeholder="Nombre"
               className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white read-only:bg-[#f0ebff]"
               value={nombre}
-              onChange={(e) => setNombre(e.target.value)}              
+              onChange={(e) => setNombre(e.target.value)}
             />
             <label className="block mb-1 font-semibold text-gray-700 text-sm">Presupuesto gastado:</label>
             <input
@@ -214,7 +156,7 @@ export default function CampaniasPage() {
               className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
               value={fecha_fin ? fecha_fin.substring(0, 10) : ""}
               onChange={(e) => setFecha_fin(e.target.value)}
-            />            
+            />
             <div className="flex justify-end space-x-2">
               <button
                 onClick={() => setModalOpen(false)}
@@ -223,7 +165,7 @@ export default function CampaniasPage() {
                 Cancelar
               </button>
               <button
-                onClick={handleSubmit}                
+                onClick={handleSubmit}
                 className="px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600 cursor-pointer"
               >
                 Guardar

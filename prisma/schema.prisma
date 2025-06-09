@@ -74,6 +74,7 @@ model tbl_pedidos {
   fecha_creacion           DateTime             @db.Date
   valor_total              Float
   valor_flete              Float
+  guia                     String?               @unique @db.VarChar(255)
   fkid_tbl_municipios      BigInt?
   det_productos            tbl_det_productos[]
   clientes                 tbl_clientes?        @relation(fields: [fkid_tbl_clientes], references: [pkid])

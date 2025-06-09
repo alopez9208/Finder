@@ -58,6 +58,7 @@ export async function GET(request) {
             where: whereClause,
             select: {
                 pkid: true,
+                guia: true,
                 valor_total: true,
                 valor_flete: true,
                 fecha_creacion: true,
@@ -90,6 +91,7 @@ export async function GET(request) {
 
         const pedidosSerializados = pedidos.map((item) => ({
             pkid: item.pkid.toString(),
+            guia: item.guia,
             valor_total: item.valor_total,
             valor_flete: item.valor_flete,
             fecha_creacion: item.fecha_creacion,
@@ -125,6 +127,7 @@ export async function GET(request) {
 export async function POST(request) {
     try {
         const {
+            guia,
             valor_total,
             fkid_tbl_clientes,
             fkid_tbl_transportadoras,
@@ -141,6 +144,7 @@ export async function POST(request) {
 
         const nuevoPedido = await prisma.tbl_pedidos.create({
             data: {
+                guia,
                 valor_total: parseFloat(valor_total),
                 fecha_creacion: fechaCreacionDate,
                 valor_flete: parseFloat(valor_flete),
@@ -171,6 +175,7 @@ export async function PUT(request) {
     try {
         const {
             pkid,
+            guia,
             valor_total,
             fecha_creacion,
             fkid_tbl_clientes,
@@ -186,6 +191,7 @@ export async function PUT(request) {
         const fechaCreacionDate = new Date(`${fecha_creacion}T00:00:00-05:00`);
 
         const dataToUpdate = {
+            guia,
             valor_total: parseFloat(valor_total),
             fecha_creacion: fechaCreacionDate,
             valor_flete: parseFloat(valor_flete),

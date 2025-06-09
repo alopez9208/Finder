@@ -63,6 +63,7 @@ export async function POST(request) {
 
             const pedido = await prisma.tbl_pedidos.create({
                 data: {
+                    guia: row.guia,
                     fkid_tbl_clientes: cliente.pkid,
                     fkid_tbl_municipios: municipio?.pkid,
                     fkid_tbl_transportadoras: transportadora?.pkid,
