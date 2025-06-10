@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { formatDateForInput, formatFecha, parseDate } from "@/app/utils/dateUtils";
+import { formatFecha } from "@/app/utils/dateUtils";
 import { useModalCloseEvents } from "@/app/hooks/useModalCloseEvents";
 import { formatearNumero } from "@/app/utils/numberUtils";
 import { contarDiasDesde } from "@/app/utils/contarDiasDesde";
-import { useComercioSeleccionado } from "@/app/hooks/useComercioSeleccionado";
+import { useRelacionSeleccionada } from "@/app/hooks/useRelacionSeleccionada";
 import { TbArrowsSort } from "react-icons/tb";
 
 const usePedidos = () => {
@@ -36,42 +36,41 @@ const usePedidos = () => {
     const [productosSeleccionados, setProductosSeleccionados] = useState([]);
     const [selectedProductToAdd, setSelectedProductToAdd] = useState(null);
     const [cantidadProducto, setCantidadProducto] = useState(1);
-    const comercioSeleccionado = useComercioSeleccionado();
-    const hasFetchedRef = useRef(false);       
+    const relacionSeleccionada = useRelacionSeleccionada();
+    const hasFetchedRef = useRef(false);
 
-    useModalCloseEvents({ modalOpen, setModalOpen, modalRef }); 
+    useModalCloseEvents({ modalOpen, setModalOpen, modalRef });
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
-    const handleFileUpload = async (event) => {
-        const comercioId = comercioSeleccionado;
+    const handleFileUpload = async (event) => {       
         const file = event.target.files[0];
         const formData = new FormData();
         formData.append("file", file);
-      
+
         try {
-          const res = await fetch("/api/dashboard-comercio/pedidos/importar", {
-            method: "POST",
-            body: formData,
-            headers: {
-                "x-comercio-id": comercioId,
-            },
-          });
-      
-          const data = await res.json();
-          if (data.success) {
-            alert(`Pedidos importados correctamente: ${data.cantidad}`);
-            fetchPedidos();
-          }
-          console.log(data);
+            const res = await fetch("/api/dashboard-comercio/pedidos/importar", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "x-comercio-id": relacionSeleccionada.pkidRelacion.toString(),
+                },
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                alert(`Pedidos importados correctamente: ${data.cantidad}`);
+                fetchPedidos();
+            }
+            console.log(data);
         } catch (err) {
-          console.error("Error al importar pedidos:", err);
+            console.error("Error al importar pedidos:", err);
         }
-      };           
+    };
 
     useEffect(() => {
-        if (comercioSeleccionado && !hasFetchedRef.current) {
+        if (relacionSeleccionada && !hasFetchedRef.current) {
             fetchPedidos();
             fetchTransporters();
             fetchClientes();
@@ -79,23 +78,17 @@ const usePedidos = () => {
             fetchMunicipios();
             hasFetchedRef.current = true;
         }
-    }, [comercioSeleccionado]);       
+    }, [relacionSeleccionada]);
 
     const fetchPedidos = async () => {
-        try {
-            const comercioId = comercioSeleccionado;
+        if (!relacionSeleccionada) return;
 
-            const res = await fetch("/api/dashboard-comercio/pedidos", {
-                method: "GET",
+        try {
+            const res = await fetch(`/api/dashboard-comercio/pedidos?comercioId=${relacionSeleccionada.pkidRelacion}`, {
                 headers: {
-                    "Content-Type": "application/json",
-                    "x-comercio-id": comercioId,
+                    "x-comercio-id": relacionSeleccionada.pkidRelacion.toString(),
                 },
             });
-
-            if (!res.ok) {
-                throw new Error("Error al obtener pedidos");
-            }
 
             const data = await res.json();
             if (data.success) {
@@ -109,31 +102,20 @@ const usePedidos = () => {
     };
 
     const fetchClientes = async () => {
-        const comercioId = comercioSeleccionado;
-
-        if (!comercioId) {
-            console.warn("No se encontró 'comercioSeleccionado' en localStorage.");
-            return;
-        }
+        if (!relacionSeleccionada) return;
 
         try {
-            const res = await fetch("/api/dashboard-comercio/clientes", {
+            const res = await fetch(`/api/dashboard-comercio/clientes?comercioId=${relacionSeleccionada.pkidRelacion}`, {
                 headers: {
-                    "x-comercio-id": comercioId,
+                    "x-comercio-id": relacionSeleccionada.pkidRelacion.toString(),
                 },
             });
-
             const data = await res.json();
-            console.log("Respuesta del backend:", data);
-
             if (data.success) {
                 setClientes(data.clientes);
-                console.log("Clientes recibidos:", data.clientes);
-            } else {
-                console.error("No se encontraron clientes", data.error);
             }
         } catch (error) {
-            console.error("Error al obtener clientes:", error);
+            console.error("Error fetching clientes:", error);
         }
     };
 
@@ -142,13 +124,11 @@ const usePedidos = () => {
             const res = await fetch("/api/dashboard/municipios");
             const data = await res.json();
             if (data.success) {
-                setMunicipios(data.municipios || []);
+                setMunicipios(data.municipios);
             } else {
-                setMunicipios([]);
                 console.error("No se encontraron municipios");
             }
         } catch (error) {
-            setMunicipios([]);
             console.error("Error al obtener municipios:", error);
         }
     };
@@ -184,7 +164,7 @@ const usePedidos = () => {
             console.error("Error al obtener productos:", error);
             setProductosDisponibles([]);
         }
-    };    
+    };
 
     const openModalForNew = () => {
         setModalMode("new");
@@ -242,7 +222,7 @@ const usePedidos = () => {
         setSelectedMunicipio(pedido.fkid_tbl_municipios);
         await loadDetalleProductosForEdit(pedido.pkid);
         setModalOpen(true);
-    };       
+    };
 
     const addProductToCart = () => {
         console.log("Valor de productosSeleccionados antes de addProductToCart:", productosSeleccionados);
@@ -310,7 +290,7 @@ const usePedidos = () => {
             console.error("Error al cargar detalles de pedido:", error);
             setProductosSeleccionados([]);
         }
-    };  
+    };
 
     const handleSubmit = async () => {
         const valorNumerico = parseFloat(valor_total);
@@ -342,7 +322,7 @@ const usePedidos = () => {
 
             const data = await res.json();
             if (data.success) {
-                const pedidoPkid = editingPedido ? editingPedido.pkid : data.pedido.pkid; 
+                const pedidoPkid = editingPedido ? editingPedido.pkid : data.pedido.pkid;
 
                 await saveDetalleProductos(pedidoPkid);
 
@@ -371,20 +351,20 @@ const usePedidos = () => {
             } catch (error) {
                 console.error("Error al eliminar detalles de pedido existentes:", error);
                 alert(`No se pudieron eliminar los detalles de productos anteriores. Error: ${error.message}`);
-                return; 
+                return;
             }
         }
 
         if (productosSeleccionados.length === 0) {
-            console.log("No hay productos seleccionados para guardar en el detalle.");            
+            console.log("No hay productos seleccionados para guardar en el detalle.");
             return;
         }
         const detallesToSave = productosSeleccionados.map(prod => ({
             cantidad: prod.cantidad,
-            precio_venta_unitario: prod.precio_unitario, 
-            costo_unitario: prod.costo_unitario, 
-            fkid_tbl_productos: prod.pkid.toString(), 
-            fkid_tbl_pedidos: pedidoPkid.toString(), 
+            precio_venta_unitario: prod.precio_unitario,
+            costo_unitario: prod.costo_unitario,
+            fkid_tbl_productos: prod.pkid.toString(),
+            fkid_tbl_pedidos: pedidoPkid.toString(),
         }));
 
         try {
@@ -517,14 +497,14 @@ const usePedidos = () => {
         municipios,
         selectedMunicipio,
         setSelectedMunicipio,
-        comercioSeleccionado,
+        relacionSeleccionada,
         viewPedido,
         viewCosto,
         formatearNumero,
         handleFileUpload,
         hasFetchedRef,
         useModalCloseEvents,
-        contarDiasDesde,        
+        contarDiasDesde,
     };
 }
 export default usePedidos;

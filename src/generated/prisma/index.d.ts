@@ -74,6 +74,11 @@ export type tbl_roles = $Result.DefaultSelection<Prisma.$tbl_rolesPayload>
  */
 export type tbl_comercios = $Result.DefaultSelection<Prisma.$tbl_comerciosPayload>
 /**
+ * Model tbl_comercios_usuarios
+ * 
+ */
+export type tbl_comercios_usuarios = $Result.DefaultSelection<Prisma.$tbl_comercios_usuariosPayload>
+/**
  * Model tbl_transportadoras
  * 
  */
@@ -328,6 +333,16 @@ export class PrismaClient<
     * ```
     */
   get tbl_comercios(): Prisma.tbl_comerciosDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.tbl_comercios_usuarios`: Exposes CRUD operations for the **tbl_comercios_usuarios** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Tbl_comercios_usuarios
+    * const tbl_comercios_usuarios = await prisma.tbl_comercios_usuarios.findMany()
+    * ```
+    */
+  get tbl_comercios_usuarios(): Prisma.tbl_comercios_usuariosDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.tbl_transportadoras`: Exposes CRUD operations for the **tbl_transportadoras** model.
@@ -800,6 +815,7 @@ export namespace Prisma {
     tbl_empresas: 'tbl_empresas',
     tbl_roles: 'tbl_roles',
     tbl_comercios: 'tbl_comercios',
+    tbl_comercios_usuarios: 'tbl_comercios_usuarios',
     tbl_transportadoras: 'tbl_transportadoras',
     tbl_usuarios: 'tbl_usuarios'
   };
@@ -820,7 +836,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "tbl_campanias" | "tbl_clientes" | "tbl_departamentos" | "tbl_det_productos" | "tbl_estados_usuario" | "tbl_municipios" | "tbl_pedidos" | "tbl_personas" | "tbl_productos" | "tbl_empresas" | "tbl_roles" | "tbl_comercios" | "tbl_transportadoras" | "tbl_usuarios"
+      modelProps: "tbl_campanias" | "tbl_clientes" | "tbl_departamentos" | "tbl_det_productos" | "tbl_estados_usuario" | "tbl_municipios" | "tbl_pedidos" | "tbl_personas" | "tbl_productos" | "tbl_empresas" | "tbl_roles" | "tbl_comercios" | "tbl_comercios_usuarios" | "tbl_transportadoras" | "tbl_usuarios"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1712,6 +1728,80 @@ export namespace Prisma {
           }
         }
       }
+      tbl_comercios_usuarios: {
+        payload: Prisma.$tbl_comercios_usuariosPayload<ExtArgs>
+        fields: Prisma.tbl_comercios_usuariosFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.tbl_comercios_usuariosFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$tbl_comercios_usuariosPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.tbl_comercios_usuariosFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$tbl_comercios_usuariosPayload>
+          }
+          findFirst: {
+            args: Prisma.tbl_comercios_usuariosFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$tbl_comercios_usuariosPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.tbl_comercios_usuariosFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$tbl_comercios_usuariosPayload>
+          }
+          findMany: {
+            args: Prisma.tbl_comercios_usuariosFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$tbl_comercios_usuariosPayload>[]
+          }
+          create: {
+            args: Prisma.tbl_comercios_usuariosCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$tbl_comercios_usuariosPayload>
+          }
+          createMany: {
+            args: Prisma.tbl_comercios_usuariosCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.tbl_comercios_usuariosCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$tbl_comercios_usuariosPayload>[]
+          }
+          delete: {
+            args: Prisma.tbl_comercios_usuariosDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$tbl_comercios_usuariosPayload>
+          }
+          update: {
+            args: Prisma.tbl_comercios_usuariosUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$tbl_comercios_usuariosPayload>
+          }
+          deleteMany: {
+            args: Prisma.tbl_comercios_usuariosDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.tbl_comercios_usuariosUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.tbl_comercios_usuariosUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$tbl_comercios_usuariosPayload>[]
+          }
+          upsert: {
+            args: Prisma.tbl_comercios_usuariosUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$tbl_comercios_usuariosPayload>
+          }
+          aggregate: {
+            args: Prisma.Tbl_comercios_usuariosAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTbl_comercios_usuarios>
+          }
+          groupBy: {
+            args: Prisma.tbl_comercios_usuariosGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Tbl_comercios_usuariosGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.tbl_comercios_usuariosCountArgs<ExtArgs>
+            result: $Utils.Optional<Tbl_comercios_usuariosCountAggregateOutputType> | number
+          }
+        }
+      }
       tbl_transportadoras: {
         payload: Prisma.$tbl_transportadorasPayload<ExtArgs>
         fields: Prisma.tbl_transportadorasFieldRefs
@@ -1956,6 +2046,7 @@ export namespace Prisma {
     tbl_empresas?: tbl_empresasOmit
     tbl_roles?: tbl_rolesOmit
     tbl_comercios?: tbl_comerciosOmit
+    tbl_comercios_usuarios?: tbl_comercios_usuariosOmit
     tbl_transportadoras?: tbl_transportadorasOmit
     tbl_usuarios?: tbl_usuariosOmit
   }
@@ -2115,10 +2206,12 @@ export namespace Prisma {
 
   export type Tbl_estados_usuarioCountOutputType = {
     usuarios: number
+    comercios_usuarios: number
   }
 
   export type Tbl_estados_usuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     usuarios?: boolean | Tbl_estados_usuarioCountOutputTypeCountUsuariosArgs
+    comercios_usuarios?: boolean | Tbl_estados_usuarioCountOutputTypeCountComercios_usuariosArgs
   }
 
   // Custom InputTypes
@@ -2137,6 +2230,13 @@ export namespace Prisma {
    */
   export type Tbl_estados_usuarioCountOutputTypeCountUsuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: tbl_usuariosWhereInput
+  }
+
+  /**
+   * Tbl_estados_usuarioCountOutputType without action
+   */
+  export type Tbl_estados_usuarioCountOutputTypeCountComercios_usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: tbl_comercios_usuariosWhereInput
   }
 
 
@@ -2340,13 +2440,11 @@ export namespace Prisma {
    */
 
   export type Tbl_comerciosCountOutputType = {
-    campanias: number
-    clientes: number
+    comercios_usuarios: number
   }
 
   export type Tbl_comerciosCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campanias?: boolean | Tbl_comerciosCountOutputTypeCountCampaniasArgs
-    clientes?: boolean | Tbl_comerciosCountOutputTypeCountClientesArgs
+    comercios_usuarios?: boolean | Tbl_comerciosCountOutputTypeCountComercios_usuariosArgs
   }
 
   // Custom InputTypes
@@ -2363,14 +2461,47 @@ export namespace Prisma {
   /**
    * Tbl_comerciosCountOutputType without action
    */
-  export type Tbl_comerciosCountOutputTypeCountCampaniasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Tbl_comerciosCountOutputTypeCountComercios_usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: tbl_comercios_usuariosWhereInput
+  }
+
+
+  /**
+   * Count Type Tbl_comercios_usuariosCountOutputType
+   */
+
+  export type Tbl_comercios_usuariosCountOutputType = {
+    campanias: number
+    clientes: number
+  }
+
+  export type Tbl_comercios_usuariosCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campanias?: boolean | Tbl_comercios_usuariosCountOutputTypeCountCampaniasArgs
+    clientes?: boolean | Tbl_comercios_usuariosCountOutputTypeCountClientesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Tbl_comercios_usuariosCountOutputType without action
+   */
+  export type Tbl_comercios_usuariosCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tbl_comercios_usuariosCountOutputType
+     */
+    select?: Tbl_comercios_usuariosCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Tbl_comercios_usuariosCountOutputType without action
+   */
+  export type Tbl_comercios_usuariosCountOutputTypeCountCampaniasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: tbl_campaniasWhereInput
   }
 
   /**
-   * Tbl_comerciosCountOutputType without action
+   * Tbl_comercios_usuariosCountOutputType without action
    */
-  export type Tbl_comerciosCountOutputTypeCountClientesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Tbl_comercios_usuariosCountOutputTypeCountClientesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: tbl_clientesWhereInput
   }
 
@@ -2411,11 +2542,11 @@ export namespace Prisma {
    */
 
   export type Tbl_usuariosCountOutputType = {
-    comercios: number
+    comercios_usuarios: number
   }
 
   export type Tbl_usuariosCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    comercios?: boolean | Tbl_usuariosCountOutputTypeCountComerciosArgs
+    comercios_usuarios?: boolean | Tbl_usuariosCountOutputTypeCountComercios_usuariosArgs
   }
 
   // Custom InputTypes
@@ -2432,8 +2563,8 @@ export namespace Prisma {
   /**
    * Tbl_usuariosCountOutputType without action
    */
-  export type Tbl_usuariosCountOutputTypeCountComerciosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: tbl_comerciosWhereInput
+  export type Tbl_usuariosCountOutputTypeCountComercios_usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: tbl_comercios_usuariosWhereInput
   }
 
 
@@ -2456,13 +2587,13 @@ export namespace Prisma {
   export type Tbl_campaniasAvgAggregateOutputType = {
     pkid: number | null
     presupuesto_gastado: number | null
-    fkid_tbl_comercios: number | null
+    fkid_tbl_comercios_usuarios: number | null
   }
 
   export type Tbl_campaniasSumAggregateOutputType = {
     pkid: bigint | null
     presupuesto_gastado: number | null
-    fkid_tbl_comercios: bigint | null
+    fkid_tbl_comercios_usuarios: bigint | null
   }
 
   export type Tbl_campaniasMinAggregateOutputType = {
@@ -2471,7 +2602,7 @@ export namespace Prisma {
     presupuesto_gastado: number | null
     fecha_inicio: Date | null
     fecha_fin: Date | null
-    fkid_tbl_comercios: bigint | null
+    fkid_tbl_comercios_usuarios: bigint | null
   }
 
   export type Tbl_campaniasMaxAggregateOutputType = {
@@ -2480,7 +2611,7 @@ export namespace Prisma {
     presupuesto_gastado: number | null
     fecha_inicio: Date | null
     fecha_fin: Date | null
-    fkid_tbl_comercios: bigint | null
+    fkid_tbl_comercios_usuarios: bigint | null
   }
 
   export type Tbl_campaniasCountAggregateOutputType = {
@@ -2489,7 +2620,7 @@ export namespace Prisma {
     presupuesto_gastado: number
     fecha_inicio: number
     fecha_fin: number
-    fkid_tbl_comercios: number
+    fkid_tbl_comercios_usuarios: number
     _all: number
   }
 
@@ -2497,13 +2628,13 @@ export namespace Prisma {
   export type Tbl_campaniasAvgAggregateInputType = {
     pkid?: true
     presupuesto_gastado?: true
-    fkid_tbl_comercios?: true
+    fkid_tbl_comercios_usuarios?: true
   }
 
   export type Tbl_campaniasSumAggregateInputType = {
     pkid?: true
     presupuesto_gastado?: true
-    fkid_tbl_comercios?: true
+    fkid_tbl_comercios_usuarios?: true
   }
 
   export type Tbl_campaniasMinAggregateInputType = {
@@ -2512,7 +2643,7 @@ export namespace Prisma {
     presupuesto_gastado?: true
     fecha_inicio?: true
     fecha_fin?: true
-    fkid_tbl_comercios?: true
+    fkid_tbl_comercios_usuarios?: true
   }
 
   export type Tbl_campaniasMaxAggregateInputType = {
@@ -2521,7 +2652,7 @@ export namespace Prisma {
     presupuesto_gastado?: true
     fecha_inicio?: true
     fecha_fin?: true
-    fkid_tbl_comercios?: true
+    fkid_tbl_comercios_usuarios?: true
   }
 
   export type Tbl_campaniasCountAggregateInputType = {
@@ -2530,7 +2661,7 @@ export namespace Prisma {
     presupuesto_gastado?: true
     fecha_inicio?: true
     fecha_fin?: true
-    fkid_tbl_comercios?: true
+    fkid_tbl_comercios_usuarios?: true
     _all?: true
   }
 
@@ -2626,7 +2757,7 @@ export namespace Prisma {
     presupuesto_gastado: number
     fecha_inicio: Date
     fecha_fin: Date
-    fkid_tbl_comercios: bigint | null
+    fkid_tbl_comercios_usuarios: bigint | null
     _count: Tbl_campaniasCountAggregateOutputType | null
     _avg: Tbl_campaniasAvgAggregateOutputType | null
     _sum: Tbl_campaniasSumAggregateOutputType | null
@@ -2654,8 +2785,8 @@ export namespace Prisma {
     presupuesto_gastado?: boolean
     fecha_inicio?: boolean
     fecha_fin?: boolean
-    fkid_tbl_comercios?: boolean
-    comercio?: boolean | tbl_campanias$comercioArgs<ExtArgs>
+    fkid_tbl_comercios_usuarios?: boolean
+    comercios_usuarios?: boolean | tbl_campanias$comercios_usuariosArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_campanias"]>
 
   export type tbl_campaniasSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2664,8 +2795,8 @@ export namespace Prisma {
     presupuesto_gastado?: boolean
     fecha_inicio?: boolean
     fecha_fin?: boolean
-    fkid_tbl_comercios?: boolean
-    comercio?: boolean | tbl_campanias$comercioArgs<ExtArgs>
+    fkid_tbl_comercios_usuarios?: boolean
+    comercios_usuarios?: boolean | tbl_campanias$comercios_usuariosArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_campanias"]>
 
   export type tbl_campaniasSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2674,8 +2805,8 @@ export namespace Prisma {
     presupuesto_gastado?: boolean
     fecha_inicio?: boolean
     fecha_fin?: boolean
-    fkid_tbl_comercios?: boolean
-    comercio?: boolean | tbl_campanias$comercioArgs<ExtArgs>
+    fkid_tbl_comercios_usuarios?: boolean
+    comercios_usuarios?: boolean | tbl_campanias$comercios_usuariosArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_campanias"]>
 
   export type tbl_campaniasSelectScalar = {
@@ -2684,24 +2815,24 @@ export namespace Prisma {
     presupuesto_gastado?: boolean
     fecha_inicio?: boolean
     fecha_fin?: boolean
-    fkid_tbl_comercios?: boolean
+    fkid_tbl_comercios_usuarios?: boolean
   }
 
-  export type tbl_campaniasOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "nombre" | "presupuesto_gastado" | "fecha_inicio" | "fecha_fin" | "fkid_tbl_comercios", ExtArgs["result"]["tbl_campanias"]>
+  export type tbl_campaniasOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "nombre" | "presupuesto_gastado" | "fecha_inicio" | "fecha_fin" | "fkid_tbl_comercios_usuarios", ExtArgs["result"]["tbl_campanias"]>
   export type tbl_campaniasInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    comercio?: boolean | tbl_campanias$comercioArgs<ExtArgs>
+    comercios_usuarios?: boolean | tbl_campanias$comercios_usuariosArgs<ExtArgs>
   }
   export type tbl_campaniasIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    comercio?: boolean | tbl_campanias$comercioArgs<ExtArgs>
+    comercios_usuarios?: boolean | tbl_campanias$comercios_usuariosArgs<ExtArgs>
   }
   export type tbl_campaniasIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    comercio?: boolean | tbl_campanias$comercioArgs<ExtArgs>
+    comercios_usuarios?: boolean | tbl_campanias$comercios_usuariosArgs<ExtArgs>
   }
 
   export type $tbl_campaniasPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "tbl_campanias"
     objects: {
-      comercio: Prisma.$tbl_comerciosPayload<ExtArgs> | null
+      comercios_usuarios: Prisma.$tbl_comercios_usuariosPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       pkid: bigint
@@ -2709,7 +2840,7 @@ export namespace Prisma {
       presupuesto_gastado: number
       fecha_inicio: Date
       fecha_fin: Date
-      fkid_tbl_comercios: bigint | null
+      fkid_tbl_comercios_usuarios: bigint | null
     }, ExtArgs["result"]["tbl_campanias"]>
     composites: {}
   }
@@ -3104,7 +3235,7 @@ export namespace Prisma {
    */
   export interface Prisma__tbl_campaniasClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    comercio<T extends tbl_campanias$comercioArgs<ExtArgs> = {}>(args?: Subset<T, tbl_campanias$comercioArgs<ExtArgs>>): Prisma__tbl_comerciosClient<$Result.GetResult<Prisma.$tbl_comerciosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    comercios_usuarios<T extends tbl_campanias$comercios_usuariosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_campanias$comercios_usuariosArgs<ExtArgs>>): Prisma__tbl_comercios_usuariosClient<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3139,7 +3270,7 @@ export namespace Prisma {
     readonly presupuesto_gastado: FieldRef<"tbl_campanias", 'Float'>
     readonly fecha_inicio: FieldRef<"tbl_campanias", 'DateTime'>
     readonly fecha_fin: FieldRef<"tbl_campanias", 'DateTime'>
-    readonly fkid_tbl_comercios: FieldRef<"tbl_campanias", 'BigInt'>
+    readonly fkid_tbl_comercios_usuarios: FieldRef<"tbl_campanias", 'BigInt'>
   }
     
 
@@ -3536,22 +3667,22 @@ export namespace Prisma {
   }
 
   /**
-   * tbl_campanias.comercio
+   * tbl_campanias.comercios_usuarios
    */
-  export type tbl_campanias$comercioArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type tbl_campanias$comercios_usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the tbl_comercios
+     * Select specific fields to fetch from the tbl_comercios_usuarios
      */
-    select?: tbl_comerciosSelect<ExtArgs> | null
+    select?: tbl_comercios_usuariosSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the tbl_comercios
+     * Omit specific fields from the tbl_comercios_usuarios
      */
-    omit?: tbl_comerciosOmit<ExtArgs> | null
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: tbl_comerciosInclude<ExtArgs> | null
-    where?: tbl_comerciosWhereInput
+    include?: tbl_comercios_usuariosInclude<ExtArgs> | null
+    where?: tbl_comercios_usuariosWhereInput
   }
 
   /**
@@ -3587,13 +3718,13 @@ export namespace Prisma {
 
   export type Tbl_clientesAvgAggregateOutputType = {
     fkid_tbl_municipios: number | null
-    fkid_tbl_comercios: number | null
+    fkid_tbl_comercios_usuarios: number | null
     pkid: number | null
   }
 
   export type Tbl_clientesSumAggregateOutputType = {
     fkid_tbl_municipios: bigint | null
-    fkid_tbl_comercios: bigint | null
+    fkid_tbl_comercios_usuarios: bigint | null
     pkid: bigint | null
   }
 
@@ -3603,7 +3734,7 @@ export namespace Prisma {
     correo: string | null
     direccion: string | null
     fkid_tbl_municipios: bigint | null
-    fkid_tbl_comercios: bigint | null
+    fkid_tbl_comercios_usuarios: bigint | null
     pkid: bigint | null
     telefono: string | null
   }
@@ -3614,7 +3745,7 @@ export namespace Prisma {
     correo: string | null
     direccion: string | null
     fkid_tbl_municipios: bigint | null
-    fkid_tbl_comercios: bigint | null
+    fkid_tbl_comercios_usuarios: bigint | null
     pkid: bigint | null
     telefono: string | null
   }
@@ -3625,7 +3756,7 @@ export namespace Prisma {
     correo: number
     direccion: number
     fkid_tbl_municipios: number
-    fkid_tbl_comercios: number
+    fkid_tbl_comercios_usuarios: number
     pkid: number
     telefono: number
     _all: number
@@ -3634,13 +3765,13 @@ export namespace Prisma {
 
   export type Tbl_clientesAvgAggregateInputType = {
     fkid_tbl_municipios?: true
-    fkid_tbl_comercios?: true
+    fkid_tbl_comercios_usuarios?: true
     pkid?: true
   }
 
   export type Tbl_clientesSumAggregateInputType = {
     fkid_tbl_municipios?: true
-    fkid_tbl_comercios?: true
+    fkid_tbl_comercios_usuarios?: true
     pkid?: true
   }
 
@@ -3650,7 +3781,7 @@ export namespace Prisma {
     correo?: true
     direccion?: true
     fkid_tbl_municipios?: true
-    fkid_tbl_comercios?: true
+    fkid_tbl_comercios_usuarios?: true
     pkid?: true
     telefono?: true
   }
@@ -3661,7 +3792,7 @@ export namespace Prisma {
     correo?: true
     direccion?: true
     fkid_tbl_municipios?: true
-    fkid_tbl_comercios?: true
+    fkid_tbl_comercios_usuarios?: true
     pkid?: true
     telefono?: true
   }
@@ -3672,7 +3803,7 @@ export namespace Prisma {
     correo?: true
     direccion?: true
     fkid_tbl_municipios?: true
-    fkid_tbl_comercios?: true
+    fkid_tbl_comercios_usuarios?: true
     pkid?: true
     telefono?: true
     _all?: true
@@ -3770,7 +3901,7 @@ export namespace Prisma {
     correo: string
     direccion: string
     fkid_tbl_municipios: bigint | null
-    fkid_tbl_comercios: bigint | null
+    fkid_tbl_comercios_usuarios: bigint | null
     pkid: bigint
     telefono: string
     _count: Tbl_clientesCountAggregateOutputType | null
@@ -3800,10 +3931,10 @@ export namespace Prisma {
     correo?: boolean
     direccion?: boolean
     fkid_tbl_municipios?: boolean
-    fkid_tbl_comercios?: boolean
+    fkid_tbl_comercios_usuarios?: boolean
     pkid?: boolean
     telefono?: boolean
-    comercios?: boolean | tbl_clientes$comerciosArgs<ExtArgs>
+    comercios_usuarios?: boolean | tbl_clientes$comercios_usuariosArgs<ExtArgs>
     municipios?: boolean | tbl_clientes$municipiosArgs<ExtArgs>
     pedidos?: boolean | tbl_clientes$pedidosArgs<ExtArgs>
     _count?: boolean | Tbl_clientesCountOutputTypeDefaultArgs<ExtArgs>
@@ -3815,10 +3946,10 @@ export namespace Prisma {
     correo?: boolean
     direccion?: boolean
     fkid_tbl_municipios?: boolean
-    fkid_tbl_comercios?: boolean
+    fkid_tbl_comercios_usuarios?: boolean
     pkid?: boolean
     telefono?: boolean
-    comercios?: boolean | tbl_clientes$comerciosArgs<ExtArgs>
+    comercios_usuarios?: boolean | tbl_clientes$comercios_usuariosArgs<ExtArgs>
     municipios?: boolean | tbl_clientes$municipiosArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_clientes"]>
 
@@ -3828,10 +3959,10 @@ export namespace Prisma {
     correo?: boolean
     direccion?: boolean
     fkid_tbl_municipios?: boolean
-    fkid_tbl_comercios?: boolean
+    fkid_tbl_comercios_usuarios?: boolean
     pkid?: boolean
     telefono?: boolean
-    comercios?: boolean | tbl_clientes$comerciosArgs<ExtArgs>
+    comercios_usuarios?: boolean | tbl_clientes$comercios_usuariosArgs<ExtArgs>
     municipios?: boolean | tbl_clientes$municipiosArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_clientes"]>
 
@@ -3841,31 +3972,31 @@ export namespace Prisma {
     correo?: boolean
     direccion?: boolean
     fkid_tbl_municipios?: boolean
-    fkid_tbl_comercios?: boolean
+    fkid_tbl_comercios_usuarios?: boolean
     pkid?: boolean
     telefono?: boolean
   }
 
-  export type tbl_clientesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"nombres" | "apellidos" | "correo" | "direccion" | "fkid_tbl_municipios" | "fkid_tbl_comercios" | "pkid" | "telefono", ExtArgs["result"]["tbl_clientes"]>
+  export type tbl_clientesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"nombres" | "apellidos" | "correo" | "direccion" | "fkid_tbl_municipios" | "fkid_tbl_comercios_usuarios" | "pkid" | "telefono", ExtArgs["result"]["tbl_clientes"]>
   export type tbl_clientesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    comercios?: boolean | tbl_clientes$comerciosArgs<ExtArgs>
+    comercios_usuarios?: boolean | tbl_clientes$comercios_usuariosArgs<ExtArgs>
     municipios?: boolean | tbl_clientes$municipiosArgs<ExtArgs>
     pedidos?: boolean | tbl_clientes$pedidosArgs<ExtArgs>
     _count?: boolean | Tbl_clientesCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type tbl_clientesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    comercios?: boolean | tbl_clientes$comerciosArgs<ExtArgs>
+    comercios_usuarios?: boolean | tbl_clientes$comercios_usuariosArgs<ExtArgs>
     municipios?: boolean | tbl_clientes$municipiosArgs<ExtArgs>
   }
   export type tbl_clientesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    comercios?: boolean | tbl_clientes$comerciosArgs<ExtArgs>
+    comercios_usuarios?: boolean | tbl_clientes$comercios_usuariosArgs<ExtArgs>
     municipios?: boolean | tbl_clientes$municipiosArgs<ExtArgs>
   }
 
   export type $tbl_clientesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "tbl_clientes"
     objects: {
-      comercios: Prisma.$tbl_comerciosPayload<ExtArgs> | null
+      comercios_usuarios: Prisma.$tbl_comercios_usuariosPayload<ExtArgs> | null
       municipios: Prisma.$tbl_municipiosPayload<ExtArgs> | null
       pedidos: Prisma.$tbl_pedidosPayload<ExtArgs>[]
     }
@@ -3875,7 +4006,7 @@ export namespace Prisma {
       correo: string
       direccion: string
       fkid_tbl_municipios: bigint | null
-      fkid_tbl_comercios: bigint | null
+      fkid_tbl_comercios_usuarios: bigint | null
       pkid: bigint
       telefono: string
     }, ExtArgs["result"]["tbl_clientes"]>
@@ -4272,7 +4403,7 @@ export namespace Prisma {
    */
   export interface Prisma__tbl_clientesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    comercios<T extends tbl_clientes$comerciosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_clientes$comerciosArgs<ExtArgs>>): Prisma__tbl_comerciosClient<$Result.GetResult<Prisma.$tbl_comerciosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    comercios_usuarios<T extends tbl_clientes$comercios_usuariosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_clientes$comercios_usuariosArgs<ExtArgs>>): Prisma__tbl_comercios_usuariosClient<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     municipios<T extends tbl_clientes$municipiosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_clientes$municipiosArgs<ExtArgs>>): Prisma__tbl_municipiosClient<$Result.GetResult<Prisma.$tbl_municipiosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     pedidos<T extends tbl_clientes$pedidosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_clientes$pedidosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_pedidosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -4309,7 +4440,7 @@ export namespace Prisma {
     readonly correo: FieldRef<"tbl_clientes", 'String'>
     readonly direccion: FieldRef<"tbl_clientes", 'String'>
     readonly fkid_tbl_municipios: FieldRef<"tbl_clientes", 'BigInt'>
-    readonly fkid_tbl_comercios: FieldRef<"tbl_clientes", 'BigInt'>
+    readonly fkid_tbl_comercios_usuarios: FieldRef<"tbl_clientes", 'BigInt'>
     readonly pkid: FieldRef<"tbl_clientes", 'BigInt'>
     readonly telefono: FieldRef<"tbl_clientes", 'String'>
   }
@@ -4708,22 +4839,22 @@ export namespace Prisma {
   }
 
   /**
-   * tbl_clientes.comercios
+   * tbl_clientes.comercios_usuarios
    */
-  export type tbl_clientes$comerciosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type tbl_clientes$comercios_usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the tbl_comercios
+     * Select specific fields to fetch from the tbl_comercios_usuarios
      */
-    select?: tbl_comerciosSelect<ExtArgs> | null
+    select?: tbl_comercios_usuariosSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the tbl_comercios
+     * Omit specific fields from the tbl_comercios_usuarios
      */
-    omit?: tbl_comerciosOmit<ExtArgs> | null
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: tbl_comerciosInclude<ExtArgs> | null
-    where?: tbl_comerciosWhereInput
+    include?: tbl_comercios_usuariosInclude<ExtArgs> | null
+    where?: tbl_comercios_usuariosWhereInput
   }
 
   /**
@@ -7182,6 +7313,7 @@ export namespace Prisma {
     nombre?: boolean
     nomenclatura?: boolean
     usuarios?: boolean | tbl_estados_usuario$usuariosArgs<ExtArgs>
+    comercios_usuarios?: boolean | tbl_estados_usuario$comercios_usuariosArgs<ExtArgs>
     _count?: boolean | Tbl_estados_usuarioCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_estados_usuario"]>
 
@@ -7206,6 +7338,7 @@ export namespace Prisma {
   export type tbl_estados_usuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "nombre" | "nomenclatura", ExtArgs["result"]["tbl_estados_usuario"]>
   export type tbl_estados_usuarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     usuarios?: boolean | tbl_estados_usuario$usuariosArgs<ExtArgs>
+    comercios_usuarios?: boolean | tbl_estados_usuario$comercios_usuariosArgs<ExtArgs>
     _count?: boolean | Tbl_estados_usuarioCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type tbl_estados_usuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -7215,6 +7348,7 @@ export namespace Prisma {
     name: "tbl_estados_usuario"
     objects: {
       usuarios: Prisma.$tbl_usuariosPayload<ExtArgs>[]
+      comercios_usuarios: Prisma.$tbl_comercios_usuariosPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       pkid: bigint
@@ -7615,6 +7749,7 @@ export namespace Prisma {
   export interface Prisma__tbl_estados_usuarioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     usuarios<T extends tbl_estados_usuario$usuariosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_estados_usuario$usuariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_usuariosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    comercios_usuarios<T extends tbl_estados_usuario$comercios_usuariosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_estados_usuario$comercios_usuariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8056,6 +8191,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Tbl_usuariosScalarFieldEnum | Tbl_usuariosScalarFieldEnum[]
+  }
+
+  /**
+   * tbl_estados_usuario.comercios_usuarios
+   */
+  export type tbl_estados_usuario$comercios_usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_comercios_usuarios
+     */
+    select?: tbl_comercios_usuariosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_comercios_usuarios
+     */
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_comercios_usuariosInclude<ExtArgs> | null
+    where?: tbl_comercios_usuariosWhereInput
+    orderBy?: tbl_comercios_usuariosOrderByWithRelationInput | tbl_comercios_usuariosOrderByWithRelationInput[]
+    cursor?: tbl_comercios_usuariosWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Tbl_comercios_usuariosScalarFieldEnum | Tbl_comercios_usuariosScalarFieldEnum[]
   }
 
   /**
@@ -14942,7 +15101,6 @@ export namespace Prisma {
     nombre: string | null
     telefono: string | null
     correo: string | null
-    fkusuario_tbl_usuarios: string | null
   }
 
   export type Tbl_comerciosMaxAggregateOutputType = {
@@ -14950,7 +15108,6 @@ export namespace Prisma {
     nombre: string | null
     telefono: string | null
     correo: string | null
-    fkusuario_tbl_usuarios: string | null
   }
 
   export type Tbl_comerciosCountAggregateOutputType = {
@@ -14958,7 +15115,6 @@ export namespace Prisma {
     nombre: number
     telefono: number
     correo: number
-    fkusuario_tbl_usuarios: number
     _all: number
   }
 
@@ -14976,7 +15132,6 @@ export namespace Prisma {
     nombre?: true
     telefono?: true
     correo?: true
-    fkusuario_tbl_usuarios?: true
   }
 
   export type Tbl_comerciosMaxAggregateInputType = {
@@ -14984,7 +15139,6 @@ export namespace Prisma {
     nombre?: true
     telefono?: true
     correo?: true
-    fkusuario_tbl_usuarios?: true
   }
 
   export type Tbl_comerciosCountAggregateInputType = {
@@ -14992,7 +15146,6 @@ export namespace Prisma {
     nombre?: true
     telefono?: true
     correo?: true
-    fkusuario_tbl_usuarios?: true
     _all?: true
   }
 
@@ -15087,7 +15240,6 @@ export namespace Prisma {
     nombre: string
     telefono: string
     correo: string
-    fkusuario_tbl_usuarios: string | null
     _count: Tbl_comerciosCountAggregateOutputType | null
     _avg: Tbl_comerciosAvgAggregateOutputType | null
     _sum: Tbl_comerciosSumAggregateOutputType | null
@@ -15114,10 +15266,7 @@ export namespace Prisma {
     nombre?: boolean
     telefono?: boolean
     correo?: boolean
-    fkusuario_tbl_usuarios?: boolean
-    campanias?: boolean | tbl_comercios$campaniasArgs<ExtArgs>
-    clientes?: boolean | tbl_comercios$clientesArgs<ExtArgs>
-    usuarios?: boolean | tbl_comercios$usuariosArgs<ExtArgs>
+    comercios_usuarios?: boolean | tbl_comercios$comercios_usuariosArgs<ExtArgs>
     _count?: boolean | Tbl_comerciosCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_comercios"]>
 
@@ -15126,8 +15275,6 @@ export namespace Prisma {
     nombre?: boolean
     telefono?: boolean
     correo?: boolean
-    fkusuario_tbl_usuarios?: boolean
-    usuarios?: boolean | tbl_comercios$usuariosArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_comercios"]>
 
   export type tbl_comerciosSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -15135,8 +15282,6 @@ export namespace Prisma {
     nombre?: boolean
     telefono?: boolean
     correo?: boolean
-    fkusuario_tbl_usuarios?: boolean
-    usuarios?: boolean | tbl_comercios$usuariosArgs<ExtArgs>
   }, ExtArgs["result"]["tbl_comercios"]>
 
   export type tbl_comerciosSelectScalar = {
@@ -15144,36 +15289,26 @@ export namespace Prisma {
     nombre?: boolean
     telefono?: boolean
     correo?: boolean
-    fkusuario_tbl_usuarios?: boolean
   }
 
-  export type tbl_comerciosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "nombre" | "telefono" | "correo" | "fkusuario_tbl_usuarios", ExtArgs["result"]["tbl_comercios"]>
+  export type tbl_comerciosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "nombre" | "telefono" | "correo", ExtArgs["result"]["tbl_comercios"]>
   export type tbl_comerciosInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    campanias?: boolean | tbl_comercios$campaniasArgs<ExtArgs>
-    clientes?: boolean | tbl_comercios$clientesArgs<ExtArgs>
-    usuarios?: boolean | tbl_comercios$usuariosArgs<ExtArgs>
+    comercios_usuarios?: boolean | tbl_comercios$comercios_usuariosArgs<ExtArgs>
     _count?: boolean | Tbl_comerciosCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type tbl_comerciosIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuarios?: boolean | tbl_comercios$usuariosArgs<ExtArgs>
-  }
-  export type tbl_comerciosIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuarios?: boolean | tbl_comercios$usuariosArgs<ExtArgs>
-  }
+  export type tbl_comerciosIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type tbl_comerciosIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $tbl_comerciosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "tbl_comercios"
     objects: {
-      campanias: Prisma.$tbl_campaniasPayload<ExtArgs>[]
-      clientes: Prisma.$tbl_clientesPayload<ExtArgs>[]
-      usuarios: Prisma.$tbl_usuariosPayload<ExtArgs> | null
+      comercios_usuarios: Prisma.$tbl_comercios_usuariosPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       pkid: bigint
       nombre: string
       telefono: string
       correo: string
-      fkusuario_tbl_usuarios: string | null
     }, ExtArgs["result"]["tbl_comercios"]>
     composites: {}
   }
@@ -15568,9 +15703,7 @@ export namespace Prisma {
    */
   export interface Prisma__tbl_comerciosClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    campanias<T extends tbl_comercios$campaniasArgs<ExtArgs> = {}>(args?: Subset<T, tbl_comercios$campaniasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_campaniasPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    clientes<T extends tbl_comercios$clientesArgs<ExtArgs> = {}>(args?: Subset<T, tbl_comercios$clientesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_clientesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    usuarios<T extends tbl_comercios$usuariosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_comercios$usuariosArgs<ExtArgs>>): Prisma__tbl_usuariosClient<$Result.GetResult<Prisma.$tbl_usuariosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    comercios_usuarios<T extends tbl_comercios$comercios_usuariosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_comercios$comercios_usuariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15604,7 +15737,6 @@ export namespace Prisma {
     readonly nombre: FieldRef<"tbl_comercios", 'String'>
     readonly telefono: FieldRef<"tbl_comercios", 'String'>
     readonly correo: FieldRef<"tbl_comercios", 'String'>
-    readonly fkusuario_tbl_usuarios: FieldRef<"tbl_comercios", 'String'>
   }
     
 
@@ -15854,10 +15986,6 @@ export namespace Prisma {
      */
     data: tbl_comerciosCreateManyInput | tbl_comerciosCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: tbl_comerciosIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -15928,10 +16056,6 @@ export namespace Prisma {
      * Limit how many tbl_comercios to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: tbl_comerciosIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -16001,9 +16125,1214 @@ export namespace Prisma {
   }
 
   /**
-   * tbl_comercios.campanias
+   * tbl_comercios.comercios_usuarios
    */
-  export type tbl_comercios$campaniasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type tbl_comercios$comercios_usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_comercios_usuarios
+     */
+    select?: tbl_comercios_usuariosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_comercios_usuarios
+     */
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_comercios_usuariosInclude<ExtArgs> | null
+    where?: tbl_comercios_usuariosWhereInput
+    orderBy?: tbl_comercios_usuariosOrderByWithRelationInput | tbl_comercios_usuariosOrderByWithRelationInput[]
+    cursor?: tbl_comercios_usuariosWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Tbl_comercios_usuariosScalarFieldEnum | Tbl_comercios_usuariosScalarFieldEnum[]
+  }
+
+  /**
+   * tbl_comercios without action
+   */
+  export type tbl_comerciosDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_comercios
+     */
+    select?: tbl_comerciosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_comercios
+     */
+    omit?: tbl_comerciosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_comerciosInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model tbl_comercios_usuarios
+   */
+
+  export type AggregateTbl_comercios_usuarios = {
+    _count: Tbl_comercios_usuariosCountAggregateOutputType | null
+    _avg: Tbl_comercios_usuariosAvgAggregateOutputType | null
+    _sum: Tbl_comercios_usuariosSumAggregateOutputType | null
+    _min: Tbl_comercios_usuariosMinAggregateOutputType | null
+    _max: Tbl_comercios_usuariosMaxAggregateOutputType | null
+  }
+
+  export type Tbl_comercios_usuariosAvgAggregateOutputType = {
+    pkid: number | null
+    fkid_tbl_comercios: number | null
+    nivel_acceso: number | null
+    fkid_tbl_estados_usuario: number | null
+  }
+
+  export type Tbl_comercios_usuariosSumAggregateOutputType = {
+    pkid: bigint | null
+    fkid_tbl_comercios: bigint | null
+    nivel_acceso: number | null
+    fkid_tbl_estados_usuario: bigint | null
+  }
+
+  export type Tbl_comercios_usuariosMinAggregateOutputType = {
+    pkid: bigint | null
+    fkusuario_tbl_usuarios: string | null
+    fkid_tbl_comercios: bigint | null
+    nivel_acceso: number | null
+    fkid_tbl_estados_usuario: bigint | null
+    fecha_asignacion: Date | null
+  }
+
+  export type Tbl_comercios_usuariosMaxAggregateOutputType = {
+    pkid: bigint | null
+    fkusuario_tbl_usuarios: string | null
+    fkid_tbl_comercios: bigint | null
+    nivel_acceso: number | null
+    fkid_tbl_estados_usuario: bigint | null
+    fecha_asignacion: Date | null
+  }
+
+  export type Tbl_comercios_usuariosCountAggregateOutputType = {
+    pkid: number
+    fkusuario_tbl_usuarios: number
+    fkid_tbl_comercios: number
+    nivel_acceso: number
+    fkid_tbl_estados_usuario: number
+    fecha_asignacion: number
+    _all: number
+  }
+
+
+  export type Tbl_comercios_usuariosAvgAggregateInputType = {
+    pkid?: true
+    fkid_tbl_comercios?: true
+    nivel_acceso?: true
+    fkid_tbl_estados_usuario?: true
+  }
+
+  export type Tbl_comercios_usuariosSumAggregateInputType = {
+    pkid?: true
+    fkid_tbl_comercios?: true
+    nivel_acceso?: true
+    fkid_tbl_estados_usuario?: true
+  }
+
+  export type Tbl_comercios_usuariosMinAggregateInputType = {
+    pkid?: true
+    fkusuario_tbl_usuarios?: true
+    fkid_tbl_comercios?: true
+    nivel_acceso?: true
+    fkid_tbl_estados_usuario?: true
+    fecha_asignacion?: true
+  }
+
+  export type Tbl_comercios_usuariosMaxAggregateInputType = {
+    pkid?: true
+    fkusuario_tbl_usuarios?: true
+    fkid_tbl_comercios?: true
+    nivel_acceso?: true
+    fkid_tbl_estados_usuario?: true
+    fecha_asignacion?: true
+  }
+
+  export type Tbl_comercios_usuariosCountAggregateInputType = {
+    pkid?: true
+    fkusuario_tbl_usuarios?: true
+    fkid_tbl_comercios?: true
+    nivel_acceso?: true
+    fkid_tbl_estados_usuario?: true
+    fecha_asignacion?: true
+    _all?: true
+  }
+
+  export type Tbl_comercios_usuariosAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which tbl_comercios_usuarios to aggregate.
+     */
+    where?: tbl_comercios_usuariosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of tbl_comercios_usuarios to fetch.
+     */
+    orderBy?: tbl_comercios_usuariosOrderByWithRelationInput | tbl_comercios_usuariosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: tbl_comercios_usuariosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` tbl_comercios_usuarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` tbl_comercios_usuarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned tbl_comercios_usuarios
+    **/
+    _count?: true | Tbl_comercios_usuariosCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Tbl_comercios_usuariosAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Tbl_comercios_usuariosSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Tbl_comercios_usuariosMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Tbl_comercios_usuariosMaxAggregateInputType
+  }
+
+  export type GetTbl_comercios_usuariosAggregateType<T extends Tbl_comercios_usuariosAggregateArgs> = {
+        [P in keyof T & keyof AggregateTbl_comercios_usuarios]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTbl_comercios_usuarios[P]>
+      : GetScalarType<T[P], AggregateTbl_comercios_usuarios[P]>
+  }
+
+
+
+
+  export type tbl_comercios_usuariosGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: tbl_comercios_usuariosWhereInput
+    orderBy?: tbl_comercios_usuariosOrderByWithAggregationInput | tbl_comercios_usuariosOrderByWithAggregationInput[]
+    by: Tbl_comercios_usuariosScalarFieldEnum[] | Tbl_comercios_usuariosScalarFieldEnum
+    having?: tbl_comercios_usuariosScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Tbl_comercios_usuariosCountAggregateInputType | true
+    _avg?: Tbl_comercios_usuariosAvgAggregateInputType
+    _sum?: Tbl_comercios_usuariosSumAggregateInputType
+    _min?: Tbl_comercios_usuariosMinAggregateInputType
+    _max?: Tbl_comercios_usuariosMaxAggregateInputType
+  }
+
+  export type Tbl_comercios_usuariosGroupByOutputType = {
+    pkid: bigint
+    fkusuario_tbl_usuarios: string
+    fkid_tbl_comercios: bigint
+    nivel_acceso: number
+    fkid_tbl_estados_usuario: bigint
+    fecha_asignacion: Date
+    _count: Tbl_comercios_usuariosCountAggregateOutputType | null
+    _avg: Tbl_comercios_usuariosAvgAggregateOutputType | null
+    _sum: Tbl_comercios_usuariosSumAggregateOutputType | null
+    _min: Tbl_comercios_usuariosMinAggregateOutputType | null
+    _max: Tbl_comercios_usuariosMaxAggregateOutputType | null
+  }
+
+  type GetTbl_comercios_usuariosGroupByPayload<T extends tbl_comercios_usuariosGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Tbl_comercios_usuariosGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Tbl_comercios_usuariosGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Tbl_comercios_usuariosGroupByOutputType[P]>
+            : GetScalarType<T[P], Tbl_comercios_usuariosGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type tbl_comercios_usuariosSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    pkid?: boolean
+    fkusuario_tbl_usuarios?: boolean
+    fkid_tbl_comercios?: boolean
+    nivel_acceso?: boolean
+    fkid_tbl_estados_usuario?: boolean
+    fecha_asignacion?: boolean
+    usuarios?: boolean | tbl_comercios_usuarios$usuariosArgs<ExtArgs>
+    comercios?: boolean | tbl_comercios_usuarios$comerciosArgs<ExtArgs>
+    estado?: boolean | tbl_estados_usuarioDefaultArgs<ExtArgs>
+    campanias?: boolean | tbl_comercios_usuarios$campaniasArgs<ExtArgs>
+    clientes?: boolean | tbl_comercios_usuarios$clientesArgs<ExtArgs>
+    _count?: boolean | Tbl_comercios_usuariosCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tbl_comercios_usuarios"]>
+
+  export type tbl_comercios_usuariosSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    pkid?: boolean
+    fkusuario_tbl_usuarios?: boolean
+    fkid_tbl_comercios?: boolean
+    nivel_acceso?: boolean
+    fkid_tbl_estados_usuario?: boolean
+    fecha_asignacion?: boolean
+    usuarios?: boolean | tbl_comercios_usuarios$usuariosArgs<ExtArgs>
+    comercios?: boolean | tbl_comercios_usuarios$comerciosArgs<ExtArgs>
+    estado?: boolean | tbl_estados_usuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tbl_comercios_usuarios"]>
+
+  export type tbl_comercios_usuariosSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    pkid?: boolean
+    fkusuario_tbl_usuarios?: boolean
+    fkid_tbl_comercios?: boolean
+    nivel_acceso?: boolean
+    fkid_tbl_estados_usuario?: boolean
+    fecha_asignacion?: boolean
+    usuarios?: boolean | tbl_comercios_usuarios$usuariosArgs<ExtArgs>
+    comercios?: boolean | tbl_comercios_usuarios$comerciosArgs<ExtArgs>
+    estado?: boolean | tbl_estados_usuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tbl_comercios_usuarios"]>
+
+  export type tbl_comercios_usuariosSelectScalar = {
+    pkid?: boolean
+    fkusuario_tbl_usuarios?: boolean
+    fkid_tbl_comercios?: boolean
+    nivel_acceso?: boolean
+    fkid_tbl_estados_usuario?: boolean
+    fecha_asignacion?: boolean
+  }
+
+  export type tbl_comercios_usuariosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkid" | "fkusuario_tbl_usuarios" | "fkid_tbl_comercios" | "nivel_acceso" | "fkid_tbl_estados_usuario" | "fecha_asignacion", ExtArgs["result"]["tbl_comercios_usuarios"]>
+  export type tbl_comercios_usuariosInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuarios?: boolean | tbl_comercios_usuarios$usuariosArgs<ExtArgs>
+    comercios?: boolean | tbl_comercios_usuarios$comerciosArgs<ExtArgs>
+    estado?: boolean | tbl_estados_usuarioDefaultArgs<ExtArgs>
+    campanias?: boolean | tbl_comercios_usuarios$campaniasArgs<ExtArgs>
+    clientes?: boolean | tbl_comercios_usuarios$clientesArgs<ExtArgs>
+    _count?: boolean | Tbl_comercios_usuariosCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type tbl_comercios_usuariosIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuarios?: boolean | tbl_comercios_usuarios$usuariosArgs<ExtArgs>
+    comercios?: boolean | tbl_comercios_usuarios$comerciosArgs<ExtArgs>
+    estado?: boolean | tbl_estados_usuarioDefaultArgs<ExtArgs>
+  }
+  export type tbl_comercios_usuariosIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuarios?: boolean | tbl_comercios_usuarios$usuariosArgs<ExtArgs>
+    comercios?: boolean | tbl_comercios_usuarios$comerciosArgs<ExtArgs>
+    estado?: boolean | tbl_estados_usuarioDefaultArgs<ExtArgs>
+  }
+
+  export type $tbl_comercios_usuariosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "tbl_comercios_usuarios"
+    objects: {
+      usuarios: Prisma.$tbl_usuariosPayload<ExtArgs> | null
+      comercios: Prisma.$tbl_comerciosPayload<ExtArgs> | null
+      estado: Prisma.$tbl_estados_usuarioPayload<ExtArgs>
+      campanias: Prisma.$tbl_campaniasPayload<ExtArgs>[]
+      clientes: Prisma.$tbl_clientesPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      pkid: bigint
+      fkusuario_tbl_usuarios: string
+      fkid_tbl_comercios: bigint
+      nivel_acceso: number
+      fkid_tbl_estados_usuario: bigint
+      fecha_asignacion: Date
+    }, ExtArgs["result"]["tbl_comercios_usuarios"]>
+    composites: {}
+  }
+
+  type tbl_comercios_usuariosGetPayload<S extends boolean | null | undefined | tbl_comercios_usuariosDefaultArgs> = $Result.GetResult<Prisma.$tbl_comercios_usuariosPayload, S>
+
+  type tbl_comercios_usuariosCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<tbl_comercios_usuariosFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Tbl_comercios_usuariosCountAggregateInputType | true
+    }
+
+  export interface tbl_comercios_usuariosDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['tbl_comercios_usuarios'], meta: { name: 'tbl_comercios_usuarios' } }
+    /**
+     * Find zero or one Tbl_comercios_usuarios that matches the filter.
+     * @param {tbl_comercios_usuariosFindUniqueArgs} args - Arguments to find a Tbl_comercios_usuarios
+     * @example
+     * // Get one Tbl_comercios_usuarios
+     * const tbl_comercios_usuarios = await prisma.tbl_comercios_usuarios.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends tbl_comercios_usuariosFindUniqueArgs>(args: SelectSubset<T, tbl_comercios_usuariosFindUniqueArgs<ExtArgs>>): Prisma__tbl_comercios_usuariosClient<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Tbl_comercios_usuarios that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {tbl_comercios_usuariosFindUniqueOrThrowArgs} args - Arguments to find a Tbl_comercios_usuarios
+     * @example
+     * // Get one Tbl_comercios_usuarios
+     * const tbl_comercios_usuarios = await prisma.tbl_comercios_usuarios.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends tbl_comercios_usuariosFindUniqueOrThrowArgs>(args: SelectSubset<T, tbl_comercios_usuariosFindUniqueOrThrowArgs<ExtArgs>>): Prisma__tbl_comercios_usuariosClient<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Tbl_comercios_usuarios that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {tbl_comercios_usuariosFindFirstArgs} args - Arguments to find a Tbl_comercios_usuarios
+     * @example
+     * // Get one Tbl_comercios_usuarios
+     * const tbl_comercios_usuarios = await prisma.tbl_comercios_usuarios.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends tbl_comercios_usuariosFindFirstArgs>(args?: SelectSubset<T, tbl_comercios_usuariosFindFirstArgs<ExtArgs>>): Prisma__tbl_comercios_usuariosClient<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Tbl_comercios_usuarios that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {tbl_comercios_usuariosFindFirstOrThrowArgs} args - Arguments to find a Tbl_comercios_usuarios
+     * @example
+     * // Get one Tbl_comercios_usuarios
+     * const tbl_comercios_usuarios = await prisma.tbl_comercios_usuarios.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends tbl_comercios_usuariosFindFirstOrThrowArgs>(args?: SelectSubset<T, tbl_comercios_usuariosFindFirstOrThrowArgs<ExtArgs>>): Prisma__tbl_comercios_usuariosClient<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Tbl_comercios_usuarios that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {tbl_comercios_usuariosFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Tbl_comercios_usuarios
+     * const tbl_comercios_usuarios = await prisma.tbl_comercios_usuarios.findMany()
+     * 
+     * // Get first 10 Tbl_comercios_usuarios
+     * const tbl_comercios_usuarios = await prisma.tbl_comercios_usuarios.findMany({ take: 10 })
+     * 
+     * // Only select the `pkid`
+     * const tbl_comercios_usuariosWithPkidOnly = await prisma.tbl_comercios_usuarios.findMany({ select: { pkid: true } })
+     * 
+     */
+    findMany<T extends tbl_comercios_usuariosFindManyArgs>(args?: SelectSubset<T, tbl_comercios_usuariosFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Tbl_comercios_usuarios.
+     * @param {tbl_comercios_usuariosCreateArgs} args - Arguments to create a Tbl_comercios_usuarios.
+     * @example
+     * // Create one Tbl_comercios_usuarios
+     * const Tbl_comercios_usuarios = await prisma.tbl_comercios_usuarios.create({
+     *   data: {
+     *     // ... data to create a Tbl_comercios_usuarios
+     *   }
+     * })
+     * 
+     */
+    create<T extends tbl_comercios_usuariosCreateArgs>(args: SelectSubset<T, tbl_comercios_usuariosCreateArgs<ExtArgs>>): Prisma__tbl_comercios_usuariosClient<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Tbl_comercios_usuarios.
+     * @param {tbl_comercios_usuariosCreateManyArgs} args - Arguments to create many Tbl_comercios_usuarios.
+     * @example
+     * // Create many Tbl_comercios_usuarios
+     * const tbl_comercios_usuarios = await prisma.tbl_comercios_usuarios.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends tbl_comercios_usuariosCreateManyArgs>(args?: SelectSubset<T, tbl_comercios_usuariosCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Tbl_comercios_usuarios and returns the data saved in the database.
+     * @param {tbl_comercios_usuariosCreateManyAndReturnArgs} args - Arguments to create many Tbl_comercios_usuarios.
+     * @example
+     * // Create many Tbl_comercios_usuarios
+     * const tbl_comercios_usuarios = await prisma.tbl_comercios_usuarios.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Tbl_comercios_usuarios and only return the `pkid`
+     * const tbl_comercios_usuariosWithPkidOnly = await prisma.tbl_comercios_usuarios.createManyAndReturn({
+     *   select: { pkid: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends tbl_comercios_usuariosCreateManyAndReturnArgs>(args?: SelectSubset<T, tbl_comercios_usuariosCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Tbl_comercios_usuarios.
+     * @param {tbl_comercios_usuariosDeleteArgs} args - Arguments to delete one Tbl_comercios_usuarios.
+     * @example
+     * // Delete one Tbl_comercios_usuarios
+     * const Tbl_comercios_usuarios = await prisma.tbl_comercios_usuarios.delete({
+     *   where: {
+     *     // ... filter to delete one Tbl_comercios_usuarios
+     *   }
+     * })
+     * 
+     */
+    delete<T extends tbl_comercios_usuariosDeleteArgs>(args: SelectSubset<T, tbl_comercios_usuariosDeleteArgs<ExtArgs>>): Prisma__tbl_comercios_usuariosClient<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Tbl_comercios_usuarios.
+     * @param {tbl_comercios_usuariosUpdateArgs} args - Arguments to update one Tbl_comercios_usuarios.
+     * @example
+     * // Update one Tbl_comercios_usuarios
+     * const tbl_comercios_usuarios = await prisma.tbl_comercios_usuarios.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends tbl_comercios_usuariosUpdateArgs>(args: SelectSubset<T, tbl_comercios_usuariosUpdateArgs<ExtArgs>>): Prisma__tbl_comercios_usuariosClient<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Tbl_comercios_usuarios.
+     * @param {tbl_comercios_usuariosDeleteManyArgs} args - Arguments to filter Tbl_comercios_usuarios to delete.
+     * @example
+     * // Delete a few Tbl_comercios_usuarios
+     * const { count } = await prisma.tbl_comercios_usuarios.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends tbl_comercios_usuariosDeleteManyArgs>(args?: SelectSubset<T, tbl_comercios_usuariosDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tbl_comercios_usuarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {tbl_comercios_usuariosUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Tbl_comercios_usuarios
+     * const tbl_comercios_usuarios = await prisma.tbl_comercios_usuarios.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends tbl_comercios_usuariosUpdateManyArgs>(args: SelectSubset<T, tbl_comercios_usuariosUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tbl_comercios_usuarios and returns the data updated in the database.
+     * @param {tbl_comercios_usuariosUpdateManyAndReturnArgs} args - Arguments to update many Tbl_comercios_usuarios.
+     * @example
+     * // Update many Tbl_comercios_usuarios
+     * const tbl_comercios_usuarios = await prisma.tbl_comercios_usuarios.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Tbl_comercios_usuarios and only return the `pkid`
+     * const tbl_comercios_usuariosWithPkidOnly = await prisma.tbl_comercios_usuarios.updateManyAndReturn({
+     *   select: { pkid: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends tbl_comercios_usuariosUpdateManyAndReturnArgs>(args: SelectSubset<T, tbl_comercios_usuariosUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Tbl_comercios_usuarios.
+     * @param {tbl_comercios_usuariosUpsertArgs} args - Arguments to update or create a Tbl_comercios_usuarios.
+     * @example
+     * // Update or create a Tbl_comercios_usuarios
+     * const tbl_comercios_usuarios = await prisma.tbl_comercios_usuarios.upsert({
+     *   create: {
+     *     // ... data to create a Tbl_comercios_usuarios
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Tbl_comercios_usuarios we want to update
+     *   }
+     * })
+     */
+    upsert<T extends tbl_comercios_usuariosUpsertArgs>(args: SelectSubset<T, tbl_comercios_usuariosUpsertArgs<ExtArgs>>): Prisma__tbl_comercios_usuariosClient<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Tbl_comercios_usuarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {tbl_comercios_usuariosCountArgs} args - Arguments to filter Tbl_comercios_usuarios to count.
+     * @example
+     * // Count the number of Tbl_comercios_usuarios
+     * const count = await prisma.tbl_comercios_usuarios.count({
+     *   where: {
+     *     // ... the filter for the Tbl_comercios_usuarios we want to count
+     *   }
+     * })
+    **/
+    count<T extends tbl_comercios_usuariosCountArgs>(
+      args?: Subset<T, tbl_comercios_usuariosCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Tbl_comercios_usuariosCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Tbl_comercios_usuarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Tbl_comercios_usuariosAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Tbl_comercios_usuariosAggregateArgs>(args: Subset<T, Tbl_comercios_usuariosAggregateArgs>): Prisma.PrismaPromise<GetTbl_comercios_usuariosAggregateType<T>>
+
+    /**
+     * Group by Tbl_comercios_usuarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {tbl_comercios_usuariosGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends tbl_comercios_usuariosGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: tbl_comercios_usuariosGroupByArgs['orderBy'] }
+        : { orderBy?: tbl_comercios_usuariosGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, tbl_comercios_usuariosGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTbl_comercios_usuariosGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the tbl_comercios_usuarios model
+   */
+  readonly fields: tbl_comercios_usuariosFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for tbl_comercios_usuarios.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__tbl_comercios_usuariosClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    usuarios<T extends tbl_comercios_usuarios$usuariosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_comercios_usuarios$usuariosArgs<ExtArgs>>): Prisma__tbl_usuariosClient<$Result.GetResult<Prisma.$tbl_usuariosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    comercios<T extends tbl_comercios_usuarios$comerciosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_comercios_usuarios$comerciosArgs<ExtArgs>>): Prisma__tbl_comerciosClient<$Result.GetResult<Prisma.$tbl_comerciosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    estado<T extends tbl_estados_usuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, tbl_estados_usuarioDefaultArgs<ExtArgs>>): Prisma__tbl_estados_usuarioClient<$Result.GetResult<Prisma.$tbl_estados_usuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    campanias<T extends tbl_comercios_usuarios$campaniasArgs<ExtArgs> = {}>(args?: Subset<T, tbl_comercios_usuarios$campaniasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_campaniasPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    clientes<T extends tbl_comercios_usuarios$clientesArgs<ExtArgs> = {}>(args?: Subset<T, tbl_comercios_usuarios$clientesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_clientesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the tbl_comercios_usuarios model
+   */
+  interface tbl_comercios_usuariosFieldRefs {
+    readonly pkid: FieldRef<"tbl_comercios_usuarios", 'BigInt'>
+    readonly fkusuario_tbl_usuarios: FieldRef<"tbl_comercios_usuarios", 'String'>
+    readonly fkid_tbl_comercios: FieldRef<"tbl_comercios_usuarios", 'BigInt'>
+    readonly nivel_acceso: FieldRef<"tbl_comercios_usuarios", 'Int'>
+    readonly fkid_tbl_estados_usuario: FieldRef<"tbl_comercios_usuarios", 'BigInt'>
+    readonly fecha_asignacion: FieldRef<"tbl_comercios_usuarios", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * tbl_comercios_usuarios findUnique
+   */
+  export type tbl_comercios_usuariosFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_comercios_usuarios
+     */
+    select?: tbl_comercios_usuariosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_comercios_usuarios
+     */
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_comercios_usuariosInclude<ExtArgs> | null
+    /**
+     * Filter, which tbl_comercios_usuarios to fetch.
+     */
+    where: tbl_comercios_usuariosWhereUniqueInput
+  }
+
+  /**
+   * tbl_comercios_usuarios findUniqueOrThrow
+   */
+  export type tbl_comercios_usuariosFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_comercios_usuarios
+     */
+    select?: tbl_comercios_usuariosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_comercios_usuarios
+     */
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_comercios_usuariosInclude<ExtArgs> | null
+    /**
+     * Filter, which tbl_comercios_usuarios to fetch.
+     */
+    where: tbl_comercios_usuariosWhereUniqueInput
+  }
+
+  /**
+   * tbl_comercios_usuarios findFirst
+   */
+  export type tbl_comercios_usuariosFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_comercios_usuarios
+     */
+    select?: tbl_comercios_usuariosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_comercios_usuarios
+     */
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_comercios_usuariosInclude<ExtArgs> | null
+    /**
+     * Filter, which tbl_comercios_usuarios to fetch.
+     */
+    where?: tbl_comercios_usuariosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of tbl_comercios_usuarios to fetch.
+     */
+    orderBy?: tbl_comercios_usuariosOrderByWithRelationInput | tbl_comercios_usuariosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for tbl_comercios_usuarios.
+     */
+    cursor?: tbl_comercios_usuariosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` tbl_comercios_usuarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` tbl_comercios_usuarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of tbl_comercios_usuarios.
+     */
+    distinct?: Tbl_comercios_usuariosScalarFieldEnum | Tbl_comercios_usuariosScalarFieldEnum[]
+  }
+
+  /**
+   * tbl_comercios_usuarios findFirstOrThrow
+   */
+  export type tbl_comercios_usuariosFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_comercios_usuarios
+     */
+    select?: tbl_comercios_usuariosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_comercios_usuarios
+     */
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_comercios_usuariosInclude<ExtArgs> | null
+    /**
+     * Filter, which tbl_comercios_usuarios to fetch.
+     */
+    where?: tbl_comercios_usuariosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of tbl_comercios_usuarios to fetch.
+     */
+    orderBy?: tbl_comercios_usuariosOrderByWithRelationInput | tbl_comercios_usuariosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for tbl_comercios_usuarios.
+     */
+    cursor?: tbl_comercios_usuariosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` tbl_comercios_usuarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` tbl_comercios_usuarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of tbl_comercios_usuarios.
+     */
+    distinct?: Tbl_comercios_usuariosScalarFieldEnum | Tbl_comercios_usuariosScalarFieldEnum[]
+  }
+
+  /**
+   * tbl_comercios_usuarios findMany
+   */
+  export type tbl_comercios_usuariosFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_comercios_usuarios
+     */
+    select?: tbl_comercios_usuariosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_comercios_usuarios
+     */
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_comercios_usuariosInclude<ExtArgs> | null
+    /**
+     * Filter, which tbl_comercios_usuarios to fetch.
+     */
+    where?: tbl_comercios_usuariosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of tbl_comercios_usuarios to fetch.
+     */
+    orderBy?: tbl_comercios_usuariosOrderByWithRelationInput | tbl_comercios_usuariosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing tbl_comercios_usuarios.
+     */
+    cursor?: tbl_comercios_usuariosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` tbl_comercios_usuarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` tbl_comercios_usuarios.
+     */
+    skip?: number
+    distinct?: Tbl_comercios_usuariosScalarFieldEnum | Tbl_comercios_usuariosScalarFieldEnum[]
+  }
+
+  /**
+   * tbl_comercios_usuarios create
+   */
+  export type tbl_comercios_usuariosCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_comercios_usuarios
+     */
+    select?: tbl_comercios_usuariosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_comercios_usuarios
+     */
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_comercios_usuariosInclude<ExtArgs> | null
+    /**
+     * The data needed to create a tbl_comercios_usuarios.
+     */
+    data: XOR<tbl_comercios_usuariosCreateInput, tbl_comercios_usuariosUncheckedCreateInput>
+  }
+
+  /**
+   * tbl_comercios_usuarios createMany
+   */
+  export type tbl_comercios_usuariosCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many tbl_comercios_usuarios.
+     */
+    data: tbl_comercios_usuariosCreateManyInput | tbl_comercios_usuariosCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * tbl_comercios_usuarios createManyAndReturn
+   */
+  export type tbl_comercios_usuariosCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_comercios_usuarios
+     */
+    select?: tbl_comercios_usuariosSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_comercios_usuarios
+     */
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
+    /**
+     * The data used to create many tbl_comercios_usuarios.
+     */
+    data: tbl_comercios_usuariosCreateManyInput | tbl_comercios_usuariosCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_comercios_usuariosIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * tbl_comercios_usuarios update
+   */
+  export type tbl_comercios_usuariosUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_comercios_usuarios
+     */
+    select?: tbl_comercios_usuariosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_comercios_usuarios
+     */
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_comercios_usuariosInclude<ExtArgs> | null
+    /**
+     * The data needed to update a tbl_comercios_usuarios.
+     */
+    data: XOR<tbl_comercios_usuariosUpdateInput, tbl_comercios_usuariosUncheckedUpdateInput>
+    /**
+     * Choose, which tbl_comercios_usuarios to update.
+     */
+    where: tbl_comercios_usuariosWhereUniqueInput
+  }
+
+  /**
+   * tbl_comercios_usuarios updateMany
+   */
+  export type tbl_comercios_usuariosUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update tbl_comercios_usuarios.
+     */
+    data: XOR<tbl_comercios_usuariosUpdateManyMutationInput, tbl_comercios_usuariosUncheckedUpdateManyInput>
+    /**
+     * Filter which tbl_comercios_usuarios to update
+     */
+    where?: tbl_comercios_usuariosWhereInput
+    /**
+     * Limit how many tbl_comercios_usuarios to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * tbl_comercios_usuarios updateManyAndReturn
+   */
+  export type tbl_comercios_usuariosUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_comercios_usuarios
+     */
+    select?: tbl_comercios_usuariosSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_comercios_usuarios
+     */
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
+    /**
+     * The data used to update tbl_comercios_usuarios.
+     */
+    data: XOR<tbl_comercios_usuariosUpdateManyMutationInput, tbl_comercios_usuariosUncheckedUpdateManyInput>
+    /**
+     * Filter which tbl_comercios_usuarios to update
+     */
+    where?: tbl_comercios_usuariosWhereInput
+    /**
+     * Limit how many tbl_comercios_usuarios to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_comercios_usuariosIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * tbl_comercios_usuarios upsert
+   */
+  export type tbl_comercios_usuariosUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_comercios_usuarios
+     */
+    select?: tbl_comercios_usuariosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_comercios_usuarios
+     */
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_comercios_usuariosInclude<ExtArgs> | null
+    /**
+     * The filter to search for the tbl_comercios_usuarios to update in case it exists.
+     */
+    where: tbl_comercios_usuariosWhereUniqueInput
+    /**
+     * In case the tbl_comercios_usuarios found by the `where` argument doesn't exist, create a new tbl_comercios_usuarios with this data.
+     */
+    create: XOR<tbl_comercios_usuariosCreateInput, tbl_comercios_usuariosUncheckedCreateInput>
+    /**
+     * In case the tbl_comercios_usuarios was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<tbl_comercios_usuariosUpdateInput, tbl_comercios_usuariosUncheckedUpdateInput>
+  }
+
+  /**
+   * tbl_comercios_usuarios delete
+   */
+  export type tbl_comercios_usuariosDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_comercios_usuarios
+     */
+    select?: tbl_comercios_usuariosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_comercios_usuarios
+     */
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_comercios_usuariosInclude<ExtArgs> | null
+    /**
+     * Filter which tbl_comercios_usuarios to delete.
+     */
+    where: tbl_comercios_usuariosWhereUniqueInput
+  }
+
+  /**
+   * tbl_comercios_usuarios deleteMany
+   */
+  export type tbl_comercios_usuariosDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which tbl_comercios_usuarios to delete
+     */
+    where?: tbl_comercios_usuariosWhereInput
+    /**
+     * Limit how many tbl_comercios_usuarios to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * tbl_comercios_usuarios.usuarios
+   */
+  export type tbl_comercios_usuarios$usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_usuarios
+     */
+    select?: tbl_usuariosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_usuarios
+     */
+    omit?: tbl_usuariosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_usuariosInclude<ExtArgs> | null
+    where?: tbl_usuariosWhereInput
+  }
+
+  /**
+   * tbl_comercios_usuarios.comercios
+   */
+  export type tbl_comercios_usuarios$comerciosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the tbl_comercios
+     */
+    select?: tbl_comerciosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the tbl_comercios
+     */
+    omit?: tbl_comerciosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: tbl_comerciosInclude<ExtArgs> | null
+    where?: tbl_comerciosWhereInput
+  }
+
+  /**
+   * tbl_comercios_usuarios.campanias
+   */
+  export type tbl_comercios_usuarios$campaniasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the tbl_campanias
      */
@@ -16025,9 +17354,9 @@ export namespace Prisma {
   }
 
   /**
-   * tbl_comercios.clientes
+   * tbl_comercios_usuarios.clientes
    */
-  export type tbl_comercios$clientesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type tbl_comercios_usuarios$clientesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the tbl_clientes
      */
@@ -16049,40 +17378,21 @@ export namespace Prisma {
   }
 
   /**
-   * tbl_comercios.usuarios
+   * tbl_comercios_usuarios without action
    */
-  export type tbl_comercios$usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type tbl_comercios_usuariosDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the tbl_usuarios
+     * Select specific fields to fetch from the tbl_comercios_usuarios
      */
-    select?: tbl_usuariosSelect<ExtArgs> | null
+    select?: tbl_comercios_usuariosSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the tbl_usuarios
+     * Omit specific fields from the tbl_comercios_usuarios
      */
-    omit?: tbl_usuariosOmit<ExtArgs> | null
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: tbl_usuariosInclude<ExtArgs> | null
-    where?: tbl_usuariosWhereInput
-  }
-
-  /**
-   * tbl_comercios without action
-   */
-  export type tbl_comerciosDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the tbl_comercios
-     */
-    select?: tbl_comerciosSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the tbl_comercios
-     */
-    omit?: tbl_comerciosOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: tbl_comerciosInclude<ExtArgs> | null
+    include?: tbl_comercios_usuariosInclude<ExtArgs> | null
   }
 
 
@@ -17370,7 +18680,7 @@ export namespace Prisma {
     fkid_tbl_roles?: boolean
     fkid_tbl_estados_usuario?: boolean
     fkid_tbl_personas?: boolean
-    comercios?: boolean | tbl_usuarios$comerciosArgs<ExtArgs>
+    comercios_usuarios?: boolean | tbl_usuarios$comercios_usuariosArgs<ExtArgs>
     estado?: boolean | tbl_estados_usuarioDefaultArgs<ExtArgs>
     persona?: boolean | tbl_personasDefaultArgs<ExtArgs>
     rol?: boolean | tbl_rolesDefaultArgs<ExtArgs>
@@ -17409,7 +18719,7 @@ export namespace Prisma {
 
   export type tbl_usuariosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"pkusuario" | "contrasena" | "fkid_tbl_roles" | "fkid_tbl_estados_usuario" | "fkid_tbl_personas", ExtArgs["result"]["tbl_usuarios"]>
   export type tbl_usuariosInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    comercios?: boolean | tbl_usuarios$comerciosArgs<ExtArgs>
+    comercios_usuarios?: boolean | tbl_usuarios$comercios_usuariosArgs<ExtArgs>
     estado?: boolean | tbl_estados_usuarioDefaultArgs<ExtArgs>
     persona?: boolean | tbl_personasDefaultArgs<ExtArgs>
     rol?: boolean | tbl_rolesDefaultArgs<ExtArgs>
@@ -17429,7 +18739,7 @@ export namespace Prisma {
   export type $tbl_usuariosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "tbl_usuarios"
     objects: {
-      comercios: Prisma.$tbl_comerciosPayload<ExtArgs>[]
+      comercios_usuarios: Prisma.$tbl_comercios_usuariosPayload<ExtArgs>[]
       estado: Prisma.$tbl_estados_usuarioPayload<ExtArgs>
       persona: Prisma.$tbl_personasPayload<ExtArgs>
       rol: Prisma.$tbl_rolesPayload<ExtArgs>
@@ -17834,7 +19144,7 @@ export namespace Prisma {
    */
   export interface Prisma__tbl_usuariosClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    comercios<T extends tbl_usuarios$comerciosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_usuarios$comerciosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_comerciosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    comercios_usuarios<T extends tbl_usuarios$comercios_usuariosArgs<ExtArgs> = {}>(args?: Subset<T, tbl_usuarios$comercios_usuariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tbl_comercios_usuariosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     estado<T extends tbl_estados_usuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, tbl_estados_usuarioDefaultArgs<ExtArgs>>): Prisma__tbl_estados_usuarioClient<$Result.GetResult<Prisma.$tbl_estados_usuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     persona<T extends tbl_personasDefaultArgs<ExtArgs> = {}>(args?: Subset<T, tbl_personasDefaultArgs<ExtArgs>>): Prisma__tbl_personasClient<$Result.GetResult<Prisma.$tbl_personasPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     rol<T extends tbl_rolesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, tbl_rolesDefaultArgs<ExtArgs>>): Prisma__tbl_rolesClient<$Result.GetResult<Prisma.$tbl_rolesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -18268,27 +19578,27 @@ export namespace Prisma {
   }
 
   /**
-   * tbl_usuarios.comercios
+   * tbl_usuarios.comercios_usuarios
    */
-  export type tbl_usuarios$comerciosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type tbl_usuarios$comercios_usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the tbl_comercios
+     * Select specific fields to fetch from the tbl_comercios_usuarios
      */
-    select?: tbl_comerciosSelect<ExtArgs> | null
+    select?: tbl_comercios_usuariosSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the tbl_comercios
+     * Omit specific fields from the tbl_comercios_usuarios
      */
-    omit?: tbl_comerciosOmit<ExtArgs> | null
+    omit?: tbl_comercios_usuariosOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: tbl_comerciosInclude<ExtArgs> | null
-    where?: tbl_comerciosWhereInput
-    orderBy?: tbl_comerciosOrderByWithRelationInput | tbl_comerciosOrderByWithRelationInput[]
-    cursor?: tbl_comerciosWhereUniqueInput
+    include?: tbl_comercios_usuariosInclude<ExtArgs> | null
+    where?: tbl_comercios_usuariosWhereInput
+    orderBy?: tbl_comercios_usuariosOrderByWithRelationInput | tbl_comercios_usuariosOrderByWithRelationInput[]
+    cursor?: tbl_comercios_usuariosWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Tbl_comerciosScalarFieldEnum | Tbl_comerciosScalarFieldEnum[]
+    distinct?: Tbl_comercios_usuariosScalarFieldEnum | Tbl_comercios_usuariosScalarFieldEnum[]
   }
 
   /**
@@ -18330,7 +19640,7 @@ export namespace Prisma {
     presupuesto_gastado: 'presupuesto_gastado',
     fecha_inicio: 'fecha_inicio',
     fecha_fin: 'fecha_fin',
-    fkid_tbl_comercios: 'fkid_tbl_comercios'
+    fkid_tbl_comercios_usuarios: 'fkid_tbl_comercios_usuarios'
   };
 
   export type Tbl_campaniasScalarFieldEnum = (typeof Tbl_campaniasScalarFieldEnum)[keyof typeof Tbl_campaniasScalarFieldEnum]
@@ -18342,7 +19652,7 @@ export namespace Prisma {
     correo: 'correo',
     direccion: 'direccion',
     fkid_tbl_municipios: 'fkid_tbl_municipios',
-    fkid_tbl_comercios: 'fkid_tbl_comercios',
+    fkid_tbl_comercios_usuarios: 'fkid_tbl_comercios_usuarios',
     pkid: 'pkid',
     telefono: 'telefono'
   };
@@ -18449,11 +19759,22 @@ export namespace Prisma {
     pkid: 'pkid',
     nombre: 'nombre',
     telefono: 'telefono',
-    correo: 'correo',
-    fkusuario_tbl_usuarios: 'fkusuario_tbl_usuarios'
+    correo: 'correo'
   };
 
   export type Tbl_comerciosScalarFieldEnum = (typeof Tbl_comerciosScalarFieldEnum)[keyof typeof Tbl_comerciosScalarFieldEnum]
+
+
+  export const Tbl_comercios_usuariosScalarFieldEnum: {
+    pkid: 'pkid',
+    fkusuario_tbl_usuarios: 'fkusuario_tbl_usuarios',
+    fkid_tbl_comercios: 'fkid_tbl_comercios',
+    nivel_acceso: 'nivel_acceso',
+    fkid_tbl_estados_usuario: 'fkid_tbl_estados_usuario',
+    fecha_asignacion: 'fecha_asignacion'
+  };
+
+  export type Tbl_comercios_usuariosScalarFieldEnum = (typeof Tbl_comercios_usuariosScalarFieldEnum)[keyof typeof Tbl_comercios_usuariosScalarFieldEnum]
 
 
   export const Tbl_transportadorasScalarFieldEnum: {
@@ -18587,8 +19908,8 @@ export namespace Prisma {
     presupuesto_gastado?: FloatFilter<"tbl_campanias"> | number
     fecha_inicio?: DateTimeFilter<"tbl_campanias"> | Date | string
     fecha_fin?: DateTimeFilter<"tbl_campanias"> | Date | string
-    fkid_tbl_comercios?: BigIntNullableFilter<"tbl_campanias"> | bigint | number | null
-    comercio?: XOR<Tbl_comerciosNullableScalarRelationFilter, tbl_comerciosWhereInput> | null
+    fkid_tbl_comercios_usuarios?: BigIntNullableFilter<"tbl_campanias"> | bigint | number | null
+    comercios_usuarios?: XOR<Tbl_comercios_usuariosNullableScalarRelationFilter, tbl_comercios_usuariosWhereInput> | null
   }
 
   export type tbl_campaniasOrderByWithRelationInput = {
@@ -18597,8 +19918,8 @@ export namespace Prisma {
     presupuesto_gastado?: SortOrder
     fecha_inicio?: SortOrder
     fecha_fin?: SortOrder
-    fkid_tbl_comercios?: SortOrderInput | SortOrder
-    comercio?: tbl_comerciosOrderByWithRelationInput
+    fkid_tbl_comercios_usuarios?: SortOrderInput | SortOrder
+    comercios_usuarios?: tbl_comercios_usuariosOrderByWithRelationInput
   }
 
   export type tbl_campaniasWhereUniqueInput = Prisma.AtLeast<{
@@ -18610,8 +19931,8 @@ export namespace Prisma {
     presupuesto_gastado?: FloatFilter<"tbl_campanias"> | number
     fecha_inicio?: DateTimeFilter<"tbl_campanias"> | Date | string
     fecha_fin?: DateTimeFilter<"tbl_campanias"> | Date | string
-    fkid_tbl_comercios?: BigIntNullableFilter<"tbl_campanias"> | bigint | number | null
-    comercio?: XOR<Tbl_comerciosNullableScalarRelationFilter, tbl_comerciosWhereInput> | null
+    fkid_tbl_comercios_usuarios?: BigIntNullableFilter<"tbl_campanias"> | bigint | number | null
+    comercios_usuarios?: XOR<Tbl_comercios_usuariosNullableScalarRelationFilter, tbl_comercios_usuariosWhereInput> | null
   }, "pkid">
 
   export type tbl_campaniasOrderByWithAggregationInput = {
@@ -18620,7 +19941,7 @@ export namespace Prisma {
     presupuesto_gastado?: SortOrder
     fecha_inicio?: SortOrder
     fecha_fin?: SortOrder
-    fkid_tbl_comercios?: SortOrderInput | SortOrder
+    fkid_tbl_comercios_usuarios?: SortOrderInput | SortOrder
     _count?: tbl_campaniasCountOrderByAggregateInput
     _avg?: tbl_campaniasAvgOrderByAggregateInput
     _max?: tbl_campaniasMaxOrderByAggregateInput
@@ -18637,7 +19958,7 @@ export namespace Prisma {
     presupuesto_gastado?: FloatWithAggregatesFilter<"tbl_campanias"> | number
     fecha_inicio?: DateTimeWithAggregatesFilter<"tbl_campanias"> | Date | string
     fecha_fin?: DateTimeWithAggregatesFilter<"tbl_campanias"> | Date | string
-    fkid_tbl_comercios?: BigIntNullableWithAggregatesFilter<"tbl_campanias"> | bigint | number | null
+    fkid_tbl_comercios_usuarios?: BigIntNullableWithAggregatesFilter<"tbl_campanias"> | bigint | number | null
   }
 
   export type tbl_clientesWhereInput = {
@@ -18649,10 +19970,10 @@ export namespace Prisma {
     correo?: StringFilter<"tbl_clientes"> | string
     direccion?: StringFilter<"tbl_clientes"> | string
     fkid_tbl_municipios?: BigIntNullableFilter<"tbl_clientes"> | bigint | number | null
-    fkid_tbl_comercios?: BigIntNullableFilter<"tbl_clientes"> | bigint | number | null
+    fkid_tbl_comercios_usuarios?: BigIntNullableFilter<"tbl_clientes"> | bigint | number | null
     pkid?: BigIntFilter<"tbl_clientes"> | bigint | number
     telefono?: StringFilter<"tbl_clientes"> | string
-    comercios?: XOR<Tbl_comerciosNullableScalarRelationFilter, tbl_comerciosWhereInput> | null
+    comercios_usuarios?: XOR<Tbl_comercios_usuariosNullableScalarRelationFilter, tbl_comercios_usuariosWhereInput> | null
     municipios?: XOR<Tbl_municipiosNullableScalarRelationFilter, tbl_municipiosWhereInput> | null
     pedidos?: Tbl_pedidosListRelationFilter
   }
@@ -18663,10 +19984,10 @@ export namespace Prisma {
     correo?: SortOrder
     direccion?: SortOrder
     fkid_tbl_municipios?: SortOrderInput | SortOrder
-    fkid_tbl_comercios?: SortOrderInput | SortOrder
+    fkid_tbl_comercios_usuarios?: SortOrderInput | SortOrder
     pkid?: SortOrder
     telefono?: SortOrder
-    comercios?: tbl_comerciosOrderByWithRelationInput
+    comercios_usuarios?: tbl_comercios_usuariosOrderByWithRelationInput
     municipios?: tbl_municipiosOrderByWithRelationInput
     pedidos?: tbl_pedidosOrderByRelationAggregateInput
   }
@@ -18681,9 +20002,9 @@ export namespace Prisma {
     correo?: StringFilter<"tbl_clientes"> | string
     direccion?: StringFilter<"tbl_clientes"> | string
     fkid_tbl_municipios?: BigIntNullableFilter<"tbl_clientes"> | bigint | number | null
-    fkid_tbl_comercios?: BigIntNullableFilter<"tbl_clientes"> | bigint | number | null
+    fkid_tbl_comercios_usuarios?: BigIntNullableFilter<"tbl_clientes"> | bigint | number | null
     telefono?: StringFilter<"tbl_clientes"> | string
-    comercios?: XOR<Tbl_comerciosNullableScalarRelationFilter, tbl_comerciosWhereInput> | null
+    comercios_usuarios?: XOR<Tbl_comercios_usuariosNullableScalarRelationFilter, tbl_comercios_usuariosWhereInput> | null
     municipios?: XOR<Tbl_municipiosNullableScalarRelationFilter, tbl_municipiosWhereInput> | null
     pedidos?: Tbl_pedidosListRelationFilter
   }, "pkid">
@@ -18694,7 +20015,7 @@ export namespace Prisma {
     correo?: SortOrder
     direccion?: SortOrder
     fkid_tbl_municipios?: SortOrderInput | SortOrder
-    fkid_tbl_comercios?: SortOrderInput | SortOrder
+    fkid_tbl_comercios_usuarios?: SortOrderInput | SortOrder
     pkid?: SortOrder
     telefono?: SortOrder
     _count?: tbl_clientesCountOrderByAggregateInput
@@ -18713,7 +20034,7 @@ export namespace Prisma {
     correo?: StringWithAggregatesFilter<"tbl_clientes"> | string
     direccion?: StringWithAggregatesFilter<"tbl_clientes"> | string
     fkid_tbl_municipios?: BigIntNullableWithAggregatesFilter<"tbl_clientes"> | bigint | number | null
-    fkid_tbl_comercios?: BigIntNullableWithAggregatesFilter<"tbl_clientes"> | bigint | number | null
+    fkid_tbl_comercios_usuarios?: BigIntNullableWithAggregatesFilter<"tbl_clientes"> | bigint | number | null
     pkid?: BigIntWithAggregatesFilter<"tbl_clientes"> | bigint | number
     telefono?: StringWithAggregatesFilter<"tbl_clientes"> | string
   }
@@ -18838,6 +20159,7 @@ export namespace Prisma {
     nombre?: StringFilter<"tbl_estados_usuario"> | string
     nomenclatura?: StringFilter<"tbl_estados_usuario"> | string
     usuarios?: Tbl_usuariosListRelationFilter
+    comercios_usuarios?: Tbl_comercios_usuariosListRelationFilter
   }
 
   export type tbl_estados_usuarioOrderByWithRelationInput = {
@@ -18845,6 +20167,7 @@ export namespace Prisma {
     nombre?: SortOrder
     nomenclatura?: SortOrder
     usuarios?: tbl_usuariosOrderByRelationAggregateInput
+    comercios_usuarios?: tbl_comercios_usuariosOrderByRelationAggregateInput
   }
 
   export type tbl_estados_usuarioWhereUniqueInput = Prisma.AtLeast<{
@@ -18855,6 +20178,7 @@ export namespace Prisma {
     nombre?: StringFilter<"tbl_estados_usuario"> | string
     nomenclatura?: StringFilter<"tbl_estados_usuario"> | string
     usuarios?: Tbl_usuariosListRelationFilter
+    comercios_usuarios?: Tbl_comercios_usuariosListRelationFilter
   }, "pkid">
 
   export type tbl_estados_usuarioOrderByWithAggregationInput = {
@@ -19240,10 +20564,7 @@ export namespace Prisma {
     nombre?: StringFilter<"tbl_comercios"> | string
     telefono?: StringFilter<"tbl_comercios"> | string
     correo?: StringFilter<"tbl_comercios"> | string
-    fkusuario_tbl_usuarios?: StringNullableFilter<"tbl_comercios"> | string | null
-    campanias?: Tbl_campaniasListRelationFilter
-    clientes?: Tbl_clientesListRelationFilter
-    usuarios?: XOR<Tbl_usuariosNullableScalarRelationFilter, tbl_usuariosWhereInput> | null
+    comercios_usuarios?: Tbl_comercios_usuariosListRelationFilter
   }
 
   export type tbl_comerciosOrderByWithRelationInput = {
@@ -19251,10 +20572,7 @@ export namespace Prisma {
     nombre?: SortOrder
     telefono?: SortOrder
     correo?: SortOrder
-    fkusuario_tbl_usuarios?: SortOrderInput | SortOrder
-    campanias?: tbl_campaniasOrderByRelationAggregateInput
-    clientes?: tbl_clientesOrderByRelationAggregateInput
-    usuarios?: tbl_usuariosOrderByWithRelationInput
+    comercios_usuarios?: tbl_comercios_usuariosOrderByRelationAggregateInput
   }
 
   export type tbl_comerciosWhereUniqueInput = Prisma.AtLeast<{
@@ -19265,10 +20583,7 @@ export namespace Prisma {
     NOT?: tbl_comerciosWhereInput | tbl_comerciosWhereInput[]
     telefono?: StringFilter<"tbl_comercios"> | string
     correo?: StringFilter<"tbl_comercios"> | string
-    fkusuario_tbl_usuarios?: StringNullableFilter<"tbl_comercios"> | string | null
-    campanias?: Tbl_campaniasListRelationFilter
-    clientes?: Tbl_clientesListRelationFilter
-    usuarios?: XOR<Tbl_usuariosNullableScalarRelationFilter, tbl_usuariosWhereInput> | null
+    comercios_usuarios?: Tbl_comercios_usuariosListRelationFilter
   }, "pkid" | "nombre">
 
   export type tbl_comerciosOrderByWithAggregationInput = {
@@ -19276,7 +20591,6 @@ export namespace Prisma {
     nombre?: SortOrder
     telefono?: SortOrder
     correo?: SortOrder
-    fkusuario_tbl_usuarios?: SortOrderInput | SortOrder
     _count?: tbl_comerciosCountOrderByAggregateInput
     _avg?: tbl_comerciosAvgOrderByAggregateInput
     _max?: tbl_comerciosMaxOrderByAggregateInput
@@ -19292,7 +20606,80 @@ export namespace Prisma {
     nombre?: StringWithAggregatesFilter<"tbl_comercios"> | string
     telefono?: StringWithAggregatesFilter<"tbl_comercios"> | string
     correo?: StringWithAggregatesFilter<"tbl_comercios"> | string
-    fkusuario_tbl_usuarios?: StringNullableWithAggregatesFilter<"tbl_comercios"> | string | null
+  }
+
+  export type tbl_comercios_usuariosWhereInput = {
+    AND?: tbl_comercios_usuariosWhereInput | tbl_comercios_usuariosWhereInput[]
+    OR?: tbl_comercios_usuariosWhereInput[]
+    NOT?: tbl_comercios_usuariosWhereInput | tbl_comercios_usuariosWhereInput[]
+    pkid?: BigIntFilter<"tbl_comercios_usuarios"> | bigint | number
+    fkusuario_tbl_usuarios?: StringFilter<"tbl_comercios_usuarios"> | string
+    fkid_tbl_comercios?: BigIntFilter<"tbl_comercios_usuarios"> | bigint | number
+    nivel_acceso?: IntFilter<"tbl_comercios_usuarios"> | number
+    fkid_tbl_estados_usuario?: BigIntFilter<"tbl_comercios_usuarios"> | bigint | number
+    fecha_asignacion?: DateTimeFilter<"tbl_comercios_usuarios"> | Date | string
+    usuarios?: XOR<Tbl_usuariosNullableScalarRelationFilter, tbl_usuariosWhereInput> | null
+    comercios?: XOR<Tbl_comerciosNullableScalarRelationFilter, tbl_comerciosWhereInput> | null
+    estado?: XOR<Tbl_estados_usuarioScalarRelationFilter, tbl_estados_usuarioWhereInput>
+    campanias?: Tbl_campaniasListRelationFilter
+    clientes?: Tbl_clientesListRelationFilter
+  }
+
+  export type tbl_comercios_usuariosOrderByWithRelationInput = {
+    pkid?: SortOrder
+    fkusuario_tbl_usuarios?: SortOrder
+    fkid_tbl_comercios?: SortOrder
+    nivel_acceso?: SortOrder
+    fkid_tbl_estados_usuario?: SortOrder
+    fecha_asignacion?: SortOrder
+    usuarios?: tbl_usuariosOrderByWithRelationInput
+    comercios?: tbl_comerciosOrderByWithRelationInput
+    estado?: tbl_estados_usuarioOrderByWithRelationInput
+    campanias?: tbl_campaniasOrderByRelationAggregateInput
+    clientes?: tbl_clientesOrderByRelationAggregateInput
+  }
+
+  export type tbl_comercios_usuariosWhereUniqueInput = Prisma.AtLeast<{
+    pkid?: bigint | number
+    AND?: tbl_comercios_usuariosWhereInput | tbl_comercios_usuariosWhereInput[]
+    OR?: tbl_comercios_usuariosWhereInput[]
+    NOT?: tbl_comercios_usuariosWhereInput | tbl_comercios_usuariosWhereInput[]
+    fkusuario_tbl_usuarios?: StringFilter<"tbl_comercios_usuarios"> | string
+    fkid_tbl_comercios?: BigIntFilter<"tbl_comercios_usuarios"> | bigint | number
+    nivel_acceso?: IntFilter<"tbl_comercios_usuarios"> | number
+    fkid_tbl_estados_usuario?: BigIntFilter<"tbl_comercios_usuarios"> | bigint | number
+    fecha_asignacion?: DateTimeFilter<"tbl_comercios_usuarios"> | Date | string
+    usuarios?: XOR<Tbl_usuariosNullableScalarRelationFilter, tbl_usuariosWhereInput> | null
+    comercios?: XOR<Tbl_comerciosNullableScalarRelationFilter, tbl_comerciosWhereInput> | null
+    estado?: XOR<Tbl_estados_usuarioScalarRelationFilter, tbl_estados_usuarioWhereInput>
+    campanias?: Tbl_campaniasListRelationFilter
+    clientes?: Tbl_clientesListRelationFilter
+  }, "pkid">
+
+  export type tbl_comercios_usuariosOrderByWithAggregationInput = {
+    pkid?: SortOrder
+    fkusuario_tbl_usuarios?: SortOrder
+    fkid_tbl_comercios?: SortOrder
+    nivel_acceso?: SortOrder
+    fkid_tbl_estados_usuario?: SortOrder
+    fecha_asignacion?: SortOrder
+    _count?: tbl_comercios_usuariosCountOrderByAggregateInput
+    _avg?: tbl_comercios_usuariosAvgOrderByAggregateInput
+    _max?: tbl_comercios_usuariosMaxOrderByAggregateInput
+    _min?: tbl_comercios_usuariosMinOrderByAggregateInput
+    _sum?: tbl_comercios_usuariosSumOrderByAggregateInput
+  }
+
+  export type tbl_comercios_usuariosScalarWhereWithAggregatesInput = {
+    AND?: tbl_comercios_usuariosScalarWhereWithAggregatesInput | tbl_comercios_usuariosScalarWhereWithAggregatesInput[]
+    OR?: tbl_comercios_usuariosScalarWhereWithAggregatesInput[]
+    NOT?: tbl_comercios_usuariosScalarWhereWithAggregatesInput | tbl_comercios_usuariosScalarWhereWithAggregatesInput[]
+    pkid?: BigIntWithAggregatesFilter<"tbl_comercios_usuarios"> | bigint | number
+    fkusuario_tbl_usuarios?: StringWithAggregatesFilter<"tbl_comercios_usuarios"> | string
+    fkid_tbl_comercios?: BigIntWithAggregatesFilter<"tbl_comercios_usuarios"> | bigint | number
+    nivel_acceso?: IntWithAggregatesFilter<"tbl_comercios_usuarios"> | number
+    fkid_tbl_estados_usuario?: BigIntWithAggregatesFilter<"tbl_comercios_usuarios"> | bigint | number
+    fecha_asignacion?: DateTimeWithAggregatesFilter<"tbl_comercios_usuarios"> | Date | string
   }
 
   export type tbl_transportadorasWhereInput = {
@@ -19351,7 +20738,7 @@ export namespace Prisma {
     fkid_tbl_roles?: BigIntFilter<"tbl_usuarios"> | bigint | number
     fkid_tbl_estados_usuario?: BigIntFilter<"tbl_usuarios"> | bigint | number
     fkid_tbl_personas?: BigIntFilter<"tbl_usuarios"> | bigint | number
-    comercios?: Tbl_comerciosListRelationFilter
+    comercios_usuarios?: Tbl_comercios_usuariosListRelationFilter
     estado?: XOR<Tbl_estados_usuarioScalarRelationFilter, tbl_estados_usuarioWhereInput>
     persona?: XOR<Tbl_personasScalarRelationFilter, tbl_personasWhereInput>
     rol?: XOR<Tbl_rolesScalarRelationFilter, tbl_rolesWhereInput>
@@ -19363,7 +20750,7 @@ export namespace Prisma {
     fkid_tbl_roles?: SortOrder
     fkid_tbl_estados_usuario?: SortOrder
     fkid_tbl_personas?: SortOrder
-    comercios?: tbl_comerciosOrderByRelationAggregateInput
+    comercios_usuarios?: tbl_comercios_usuariosOrderByRelationAggregateInput
     estado?: tbl_estados_usuarioOrderByWithRelationInput
     persona?: tbl_personasOrderByWithRelationInput
     rol?: tbl_rolesOrderByWithRelationInput
@@ -19378,7 +20765,7 @@ export namespace Prisma {
     fkid_tbl_roles?: BigIntFilter<"tbl_usuarios"> | bigint | number
     fkid_tbl_estados_usuario?: BigIntFilter<"tbl_usuarios"> | bigint | number
     fkid_tbl_personas?: BigIntFilter<"tbl_usuarios"> | bigint | number
-    comercios?: Tbl_comerciosListRelationFilter
+    comercios_usuarios?: Tbl_comercios_usuariosListRelationFilter
     estado?: XOR<Tbl_estados_usuarioScalarRelationFilter, tbl_estados_usuarioWhereInput>
     persona?: XOR<Tbl_personasScalarRelationFilter, tbl_personasWhereInput>
     rol?: XOR<Tbl_rolesScalarRelationFilter, tbl_rolesWhereInput>
@@ -19414,7 +20801,7 @@ export namespace Prisma {
     presupuesto_gastado: number
     fecha_inicio: Date | string
     fecha_fin: Date | string
-    comercio?: tbl_comerciosCreateNestedOneWithoutCampaniasInput
+    comercios_usuarios?: tbl_comercios_usuariosCreateNestedOneWithoutCampaniasInput
   }
 
   export type tbl_campaniasUncheckedCreateInput = {
@@ -19423,7 +20810,7 @@ export namespace Prisma {
     presupuesto_gastado: number
     fecha_inicio: Date | string
     fecha_fin: Date | string
-    fkid_tbl_comercios?: bigint | number | null
+    fkid_tbl_comercios_usuarios?: bigint | number | null
   }
 
   export type tbl_campaniasUpdateInput = {
@@ -19432,7 +20819,7 @@ export namespace Prisma {
     presupuesto_gastado?: FloatFieldUpdateOperationsInput | number
     fecha_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
     fecha_fin?: DateTimeFieldUpdateOperationsInput | Date | string
-    comercio?: tbl_comerciosUpdateOneWithoutCampaniasNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUpdateOneWithoutCampaniasNestedInput
   }
 
   export type tbl_campaniasUncheckedUpdateInput = {
@@ -19441,7 +20828,7 @@ export namespace Prisma {
     presupuesto_gastado?: FloatFieldUpdateOperationsInput | number
     fecha_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
     fecha_fin?: DateTimeFieldUpdateOperationsInput | Date | string
-    fkid_tbl_comercios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_comercios_usuarios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type tbl_campaniasCreateManyInput = {
@@ -19450,7 +20837,7 @@ export namespace Prisma {
     presupuesto_gastado: number
     fecha_inicio: Date | string
     fecha_fin: Date | string
-    fkid_tbl_comercios?: bigint | number | null
+    fkid_tbl_comercios_usuarios?: bigint | number | null
   }
 
   export type tbl_campaniasUpdateManyMutationInput = {
@@ -19467,7 +20854,7 @@ export namespace Prisma {
     presupuesto_gastado?: FloatFieldUpdateOperationsInput | number
     fecha_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
     fecha_fin?: DateTimeFieldUpdateOperationsInput | Date | string
-    fkid_tbl_comercios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_comercios_usuarios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type tbl_clientesCreateInput = {
@@ -19477,7 +20864,7 @@ export namespace Prisma {
     direccion: string
     pkid?: bigint | number
     telefono: string
-    comercios?: tbl_comerciosCreateNestedOneWithoutClientesInput
+    comercios_usuarios?: tbl_comercios_usuariosCreateNestedOneWithoutClientesInput
     municipios?: tbl_municipiosCreateNestedOneWithoutClientesInput
     pedidos?: tbl_pedidosCreateNestedManyWithoutClientesInput
   }
@@ -19488,7 +20875,7 @@ export namespace Prisma {
     correo: string
     direccion: string
     fkid_tbl_municipios?: bigint | number | null
-    fkid_tbl_comercios?: bigint | number | null
+    fkid_tbl_comercios_usuarios?: bigint | number | null
     pkid?: bigint | number
     telefono: string
     pedidos?: tbl_pedidosUncheckedCreateNestedManyWithoutClientesInput
@@ -19501,7 +20888,7 @@ export namespace Prisma {
     direccion?: StringFieldUpdateOperationsInput | string
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     telefono?: StringFieldUpdateOperationsInput | string
-    comercios?: tbl_comerciosUpdateOneWithoutClientesNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUpdateOneWithoutClientesNestedInput
     municipios?: tbl_municipiosUpdateOneWithoutClientesNestedInput
     pedidos?: tbl_pedidosUpdateManyWithoutClientesNestedInput
   }
@@ -19512,7 +20899,7 @@ export namespace Prisma {
     correo?: StringFieldUpdateOperationsInput | string
     direccion?: StringFieldUpdateOperationsInput | string
     fkid_tbl_municipios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    fkid_tbl_comercios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_comercios_usuarios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     telefono?: StringFieldUpdateOperationsInput | string
     pedidos?: tbl_pedidosUncheckedUpdateManyWithoutClientesNestedInput
@@ -19524,7 +20911,7 @@ export namespace Prisma {
     correo: string
     direccion: string
     fkid_tbl_municipios?: bigint | number | null
-    fkid_tbl_comercios?: bigint | number | null
+    fkid_tbl_comercios_usuarios?: bigint | number | null
     pkid?: bigint | number
     telefono: string
   }
@@ -19544,7 +20931,7 @@ export namespace Prisma {
     correo?: StringFieldUpdateOperationsInput | string
     direccion?: StringFieldUpdateOperationsInput | string
     fkid_tbl_municipios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    fkid_tbl_comercios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_comercios_usuarios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     telefono?: StringFieldUpdateOperationsInput | string
   }
@@ -19661,6 +21048,7 @@ export namespace Prisma {
     nombre: string
     nomenclatura: string
     usuarios?: tbl_usuariosCreateNestedManyWithoutEstadoInput
+    comercios_usuarios?: tbl_comercios_usuariosCreateNestedManyWithoutEstadoInput
   }
 
   export type tbl_estados_usuarioUncheckedCreateInput = {
@@ -19668,6 +21056,7 @@ export namespace Prisma {
     nombre: string
     nomenclatura: string
     usuarios?: tbl_usuariosUncheckedCreateNestedManyWithoutEstadoInput
+    comercios_usuarios?: tbl_comercios_usuariosUncheckedCreateNestedManyWithoutEstadoInput
   }
 
   export type tbl_estados_usuarioUpdateInput = {
@@ -19675,6 +21064,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
     usuarios?: tbl_usuariosUpdateManyWithoutEstadoNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUpdateManyWithoutEstadoNestedInput
   }
 
   export type tbl_estados_usuarioUncheckedUpdateInput = {
@@ -19682,6 +21072,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
     usuarios?: tbl_usuariosUncheckedUpdateManyWithoutEstadoNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUncheckedUpdateManyWithoutEstadoNestedInput
   }
 
   export type tbl_estados_usuarioCreateManyInput = {
@@ -20059,9 +21450,7 @@ export namespace Prisma {
     nombre: string
     telefono: string
     correo: string
-    campanias?: tbl_campaniasCreateNestedManyWithoutComercioInput
-    clientes?: tbl_clientesCreateNestedManyWithoutComerciosInput
-    usuarios?: tbl_usuariosCreateNestedOneWithoutComerciosInput
+    comercios_usuarios?: tbl_comercios_usuariosCreateNestedManyWithoutComerciosInput
   }
 
   export type tbl_comerciosUncheckedCreateInput = {
@@ -20069,9 +21458,7 @@ export namespace Prisma {
     nombre: string
     telefono: string
     correo: string
-    fkusuario_tbl_usuarios?: string | null
-    campanias?: tbl_campaniasUncheckedCreateNestedManyWithoutComercioInput
-    clientes?: tbl_clientesUncheckedCreateNestedManyWithoutComerciosInput
+    comercios_usuarios?: tbl_comercios_usuariosUncheckedCreateNestedManyWithoutComerciosInput
   }
 
   export type tbl_comerciosUpdateInput = {
@@ -20079,9 +21466,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     telefono?: StringFieldUpdateOperationsInput | string
     correo?: StringFieldUpdateOperationsInput | string
-    campanias?: tbl_campaniasUpdateManyWithoutComercioNestedInput
-    clientes?: tbl_clientesUpdateManyWithoutComerciosNestedInput
-    usuarios?: tbl_usuariosUpdateOneWithoutComerciosNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUpdateManyWithoutComerciosNestedInput
   }
 
   export type tbl_comerciosUncheckedUpdateInput = {
@@ -20089,9 +21474,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     telefono?: StringFieldUpdateOperationsInput | string
     correo?: StringFieldUpdateOperationsInput | string
-    fkusuario_tbl_usuarios?: NullableStringFieldUpdateOperationsInput | string | null
-    campanias?: tbl_campaniasUncheckedUpdateManyWithoutComercioNestedInput
-    clientes?: tbl_clientesUncheckedUpdateManyWithoutComerciosNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUncheckedUpdateManyWithoutComerciosNestedInput
   }
 
   export type tbl_comerciosCreateManyInput = {
@@ -20099,7 +21482,6 @@ export namespace Prisma {
     nombre: string
     telefono: string
     correo: string
-    fkusuario_tbl_usuarios?: string | null
   }
 
   export type tbl_comerciosUpdateManyMutationInput = {
@@ -20114,7 +21496,74 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     telefono?: StringFieldUpdateOperationsInput | string
     correo?: StringFieldUpdateOperationsInput | string
-    fkusuario_tbl_usuarios?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type tbl_comercios_usuariosCreateInput = {
+    pkid?: bigint | number
+    nivel_acceso: number
+    fecha_asignacion: Date | string
+    usuarios?: tbl_usuariosCreateNestedOneWithoutComercios_usuariosInput
+    comercios?: tbl_comerciosCreateNestedOneWithoutComercios_usuariosInput
+    estado: tbl_estados_usuarioCreateNestedOneWithoutComercios_usuariosInput
+    campanias?: tbl_campaniasCreateNestedManyWithoutComercios_usuariosInput
+    clientes?: tbl_clientesCreateNestedManyWithoutComercios_usuariosInput
+  }
+
+  export type tbl_comercios_usuariosUncheckedCreateInput = {
+    pkid?: bigint | number
+    fkusuario_tbl_usuarios: string
+    fkid_tbl_comercios: bigint | number
+    nivel_acceso: number
+    fkid_tbl_estados_usuario: bigint | number
+    fecha_asignacion: Date | string
+    campanias?: tbl_campaniasUncheckedCreateNestedManyWithoutComercios_usuariosInput
+    clientes?: tbl_clientesUncheckedCreateNestedManyWithoutComercios_usuariosInput
+  }
+
+  export type tbl_comercios_usuariosUpdateInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarios?: tbl_usuariosUpdateOneWithoutComercios_usuariosNestedInput
+    comercios?: tbl_comerciosUpdateOneWithoutComercios_usuariosNestedInput
+    estado?: tbl_estados_usuarioUpdateOneRequiredWithoutComercios_usuariosNestedInput
+    campanias?: tbl_campaniasUpdateManyWithoutComercios_usuariosNestedInput
+    clientes?: tbl_clientesUpdateManyWithoutComercios_usuariosNestedInput
+  }
+
+  export type tbl_comercios_usuariosUncheckedUpdateInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    fkusuario_tbl_usuarios?: StringFieldUpdateOperationsInput | string
+    fkid_tbl_comercios?: BigIntFieldUpdateOperationsInput | bigint | number
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    campanias?: tbl_campaniasUncheckedUpdateManyWithoutComercios_usuariosNestedInput
+    clientes?: tbl_clientesUncheckedUpdateManyWithoutComercios_usuariosNestedInput
+  }
+
+  export type tbl_comercios_usuariosCreateManyInput = {
+    pkid?: bigint | number
+    fkusuario_tbl_usuarios: string
+    fkid_tbl_comercios: bigint | number
+    nivel_acceso: number
+    fkid_tbl_estados_usuario: bigint | number
+    fecha_asignacion: Date | string
+  }
+
+  export type tbl_comercios_usuariosUpdateManyMutationInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type tbl_comercios_usuariosUncheckedUpdateManyInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    fkusuario_tbl_usuarios?: StringFieldUpdateOperationsInput | string
+    fkid_tbl_comercios?: BigIntFieldUpdateOperationsInput | bigint | number
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type tbl_transportadorasCreateInput = {
@@ -20166,7 +21615,7 @@ export namespace Prisma {
   export type tbl_usuariosCreateInput = {
     pkusuario: string
     contrasena: string
-    comercios?: tbl_comerciosCreateNestedManyWithoutUsuariosInput
+    comercios_usuarios?: tbl_comercios_usuariosCreateNestedManyWithoutUsuariosInput
     estado: tbl_estados_usuarioCreateNestedOneWithoutUsuariosInput
     persona: tbl_personasCreateNestedOneWithoutUsuariosInput
     rol: tbl_rolesCreateNestedOneWithoutUsuariosInput
@@ -20178,13 +21627,13 @@ export namespace Prisma {
     fkid_tbl_roles: bigint | number
     fkid_tbl_estados_usuario: bigint | number
     fkid_tbl_personas: bigint | number
-    comercios?: tbl_comerciosUncheckedCreateNestedManyWithoutUsuariosInput
+    comercios_usuarios?: tbl_comercios_usuariosUncheckedCreateNestedManyWithoutUsuariosInput
   }
 
   export type tbl_usuariosUpdateInput = {
     pkusuario?: StringFieldUpdateOperationsInput | string
     contrasena?: StringFieldUpdateOperationsInput | string
-    comercios?: tbl_comerciosUpdateManyWithoutUsuariosNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUpdateManyWithoutUsuariosNestedInput
     estado?: tbl_estados_usuarioUpdateOneRequiredWithoutUsuariosNestedInput
     persona?: tbl_personasUpdateOneRequiredWithoutUsuariosNestedInput
     rol?: tbl_rolesUpdateOneRequiredWithoutUsuariosNestedInput
@@ -20196,7 +21645,7 @@ export namespace Prisma {
     fkid_tbl_roles?: BigIntFieldUpdateOperationsInput | bigint | number
     fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
     fkid_tbl_personas?: BigIntFieldUpdateOperationsInput | bigint | number
-    comercios?: tbl_comerciosUncheckedUpdateManyWithoutUsuariosNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUncheckedUpdateManyWithoutUsuariosNestedInput
   }
 
   export type tbl_usuariosCreateManyInput = {
@@ -20279,9 +21728,9 @@ export namespace Prisma {
     not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
   }
 
-  export type Tbl_comerciosNullableScalarRelationFilter = {
-    is?: tbl_comerciosWhereInput | null
-    isNot?: tbl_comerciosWhereInput | null
+  export type Tbl_comercios_usuariosNullableScalarRelationFilter = {
+    is?: tbl_comercios_usuariosWhereInput | null
+    isNot?: tbl_comercios_usuariosWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -20295,13 +21744,13 @@ export namespace Prisma {
     presupuesto_gastado?: SortOrder
     fecha_inicio?: SortOrder
     fecha_fin?: SortOrder
-    fkid_tbl_comercios?: SortOrder
+    fkid_tbl_comercios_usuarios?: SortOrder
   }
 
   export type tbl_campaniasAvgOrderByAggregateInput = {
     pkid?: SortOrder
     presupuesto_gastado?: SortOrder
-    fkid_tbl_comercios?: SortOrder
+    fkid_tbl_comercios_usuarios?: SortOrder
   }
 
   export type tbl_campaniasMaxOrderByAggregateInput = {
@@ -20310,7 +21759,7 @@ export namespace Prisma {
     presupuesto_gastado?: SortOrder
     fecha_inicio?: SortOrder
     fecha_fin?: SortOrder
-    fkid_tbl_comercios?: SortOrder
+    fkid_tbl_comercios_usuarios?: SortOrder
   }
 
   export type tbl_campaniasMinOrderByAggregateInput = {
@@ -20319,13 +21768,13 @@ export namespace Prisma {
     presupuesto_gastado?: SortOrder
     fecha_inicio?: SortOrder
     fecha_fin?: SortOrder
-    fkid_tbl_comercios?: SortOrder
+    fkid_tbl_comercios_usuarios?: SortOrder
   }
 
   export type tbl_campaniasSumOrderByAggregateInput = {
     pkid?: SortOrder
     presupuesto_gastado?: SortOrder
-    fkid_tbl_comercios?: SortOrder
+    fkid_tbl_comercios_usuarios?: SortOrder
   }
 
   export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -20429,14 +21878,14 @@ export namespace Prisma {
     correo?: SortOrder
     direccion?: SortOrder
     fkid_tbl_municipios?: SortOrder
-    fkid_tbl_comercios?: SortOrder
+    fkid_tbl_comercios_usuarios?: SortOrder
     pkid?: SortOrder
     telefono?: SortOrder
   }
 
   export type tbl_clientesAvgOrderByAggregateInput = {
     fkid_tbl_municipios?: SortOrder
-    fkid_tbl_comercios?: SortOrder
+    fkid_tbl_comercios_usuarios?: SortOrder
     pkid?: SortOrder
   }
 
@@ -20446,7 +21895,7 @@ export namespace Prisma {
     correo?: SortOrder
     direccion?: SortOrder
     fkid_tbl_municipios?: SortOrder
-    fkid_tbl_comercios?: SortOrder
+    fkid_tbl_comercios_usuarios?: SortOrder
     pkid?: SortOrder
     telefono?: SortOrder
   }
@@ -20457,14 +21906,14 @@ export namespace Prisma {
     correo?: SortOrder
     direccion?: SortOrder
     fkid_tbl_municipios?: SortOrder
-    fkid_tbl_comercios?: SortOrder
+    fkid_tbl_comercios_usuarios?: SortOrder
     pkid?: SortOrder
     telefono?: SortOrder
   }
 
   export type tbl_clientesSumOrderByAggregateInput = {
     fkid_tbl_municipios?: SortOrder
-    fkid_tbl_comercios?: SortOrder
+    fkid_tbl_comercios_usuarios?: SortOrder
     pkid?: SortOrder
   }
 
@@ -20592,7 +22041,17 @@ export namespace Prisma {
     none?: tbl_usuariosWhereInput
   }
 
+  export type Tbl_comercios_usuariosListRelationFilter = {
+    every?: tbl_comercios_usuariosWhereInput
+    some?: tbl_comercios_usuariosWhereInput
+    none?: tbl_comercios_usuariosWhereInput
+  }
+
   export type tbl_usuariosOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type tbl_comercios_usuariosOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -20912,27 +22371,11 @@ export namespace Prisma {
     pkid?: SortOrder
   }
 
-  export type Tbl_campaniasListRelationFilter = {
-    every?: tbl_campaniasWhereInput
-    some?: tbl_campaniasWhereInput
-    none?: tbl_campaniasWhereInput
-  }
-
-  export type Tbl_usuariosNullableScalarRelationFilter = {
-    is?: tbl_usuariosWhereInput | null
-    isNot?: tbl_usuariosWhereInput | null
-  }
-
-  export type tbl_campaniasOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type tbl_comerciosCountOrderByAggregateInput = {
     pkid?: SortOrder
     nombre?: SortOrder
     telefono?: SortOrder
     correo?: SortOrder
-    fkusuario_tbl_usuarios?: SortOrder
   }
 
   export type tbl_comerciosAvgOrderByAggregateInput = {
@@ -20944,7 +22387,6 @@ export namespace Prisma {
     nombre?: SortOrder
     telefono?: SortOrder
     correo?: SortOrder
-    fkusuario_tbl_usuarios?: SortOrder
   }
 
   export type tbl_comerciosMinOrderByAggregateInput = {
@@ -20952,11 +22394,76 @@ export namespace Prisma {
     nombre?: SortOrder
     telefono?: SortOrder
     correo?: SortOrder
-    fkusuario_tbl_usuarios?: SortOrder
   }
 
   export type tbl_comerciosSumOrderByAggregateInput = {
     pkid?: SortOrder
+  }
+
+  export type Tbl_usuariosNullableScalarRelationFilter = {
+    is?: tbl_usuariosWhereInput | null
+    isNot?: tbl_usuariosWhereInput | null
+  }
+
+  export type Tbl_comerciosNullableScalarRelationFilter = {
+    is?: tbl_comerciosWhereInput | null
+    isNot?: tbl_comerciosWhereInput | null
+  }
+
+  export type Tbl_estados_usuarioScalarRelationFilter = {
+    is?: tbl_estados_usuarioWhereInput
+    isNot?: tbl_estados_usuarioWhereInput
+  }
+
+  export type Tbl_campaniasListRelationFilter = {
+    every?: tbl_campaniasWhereInput
+    some?: tbl_campaniasWhereInput
+    none?: tbl_campaniasWhereInput
+  }
+
+  export type tbl_campaniasOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type tbl_comercios_usuariosCountOrderByAggregateInput = {
+    pkid?: SortOrder
+    fkusuario_tbl_usuarios?: SortOrder
+    fkid_tbl_comercios?: SortOrder
+    nivel_acceso?: SortOrder
+    fkid_tbl_estados_usuario?: SortOrder
+    fecha_asignacion?: SortOrder
+  }
+
+  export type tbl_comercios_usuariosAvgOrderByAggregateInput = {
+    pkid?: SortOrder
+    fkid_tbl_comercios?: SortOrder
+    nivel_acceso?: SortOrder
+    fkid_tbl_estados_usuario?: SortOrder
+  }
+
+  export type tbl_comercios_usuariosMaxOrderByAggregateInput = {
+    pkid?: SortOrder
+    fkusuario_tbl_usuarios?: SortOrder
+    fkid_tbl_comercios?: SortOrder
+    nivel_acceso?: SortOrder
+    fkid_tbl_estados_usuario?: SortOrder
+    fecha_asignacion?: SortOrder
+  }
+
+  export type tbl_comercios_usuariosMinOrderByAggregateInput = {
+    pkid?: SortOrder
+    fkusuario_tbl_usuarios?: SortOrder
+    fkid_tbl_comercios?: SortOrder
+    nivel_acceso?: SortOrder
+    fkid_tbl_estados_usuario?: SortOrder
+    fecha_asignacion?: SortOrder
+  }
+
+  export type tbl_comercios_usuariosSumOrderByAggregateInput = {
+    pkid?: SortOrder
+    fkid_tbl_comercios?: SortOrder
+    nivel_acceso?: SortOrder
+    fkid_tbl_estados_usuario?: SortOrder
   }
 
   export type tbl_transportadorasCountOrderByAggregateInput = {
@@ -20985,17 +22492,6 @@ export namespace Prisma {
     pkid?: SortOrder
   }
 
-  export type Tbl_comerciosListRelationFilter = {
-    every?: tbl_comerciosWhereInput
-    some?: tbl_comerciosWhereInput
-    none?: tbl_comerciosWhereInput
-  }
-
-  export type Tbl_estados_usuarioScalarRelationFilter = {
-    is?: tbl_estados_usuarioWhereInput
-    isNot?: tbl_estados_usuarioWhereInput
-  }
-
   export type Tbl_personasScalarRelationFilter = {
     is?: tbl_personasWhereInput
     isNot?: tbl_personasWhereInput
@@ -21004,10 +22500,6 @@ export namespace Prisma {
   export type Tbl_rolesScalarRelationFilter = {
     is?: tbl_rolesWhereInput
     isNot?: tbl_rolesWhereInput
-  }
-
-  export type tbl_comerciosOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type tbl_usuariosCountOrderByAggregateInput = {
@@ -21046,10 +22538,10 @@ export namespace Prisma {
     fkid_tbl_personas?: SortOrder
   }
 
-  export type tbl_comerciosCreateNestedOneWithoutCampaniasInput = {
-    create?: XOR<tbl_comerciosCreateWithoutCampaniasInput, tbl_comerciosUncheckedCreateWithoutCampaniasInput>
-    connectOrCreate?: tbl_comerciosCreateOrConnectWithoutCampaniasInput
-    connect?: tbl_comerciosWhereUniqueInput
+  export type tbl_comercios_usuariosCreateNestedOneWithoutCampaniasInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutCampaniasInput, tbl_comercios_usuariosUncheckedCreateWithoutCampaniasInput>
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutCampaniasInput
+    connect?: tbl_comercios_usuariosWhereUniqueInput
   }
 
   export type BigIntFieldUpdateOperationsInput = {
@@ -21076,14 +22568,14 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type tbl_comerciosUpdateOneWithoutCampaniasNestedInput = {
-    create?: XOR<tbl_comerciosCreateWithoutCampaniasInput, tbl_comerciosUncheckedCreateWithoutCampaniasInput>
-    connectOrCreate?: tbl_comerciosCreateOrConnectWithoutCampaniasInput
-    upsert?: tbl_comerciosUpsertWithoutCampaniasInput
-    disconnect?: tbl_comerciosWhereInput | boolean
-    delete?: tbl_comerciosWhereInput | boolean
-    connect?: tbl_comerciosWhereUniqueInput
-    update?: XOR<XOR<tbl_comerciosUpdateToOneWithWhereWithoutCampaniasInput, tbl_comerciosUpdateWithoutCampaniasInput>, tbl_comerciosUncheckedUpdateWithoutCampaniasInput>
+  export type tbl_comercios_usuariosUpdateOneWithoutCampaniasNestedInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutCampaniasInput, tbl_comercios_usuariosUncheckedCreateWithoutCampaniasInput>
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutCampaniasInput
+    upsert?: tbl_comercios_usuariosUpsertWithoutCampaniasInput
+    disconnect?: tbl_comercios_usuariosWhereInput | boolean
+    delete?: tbl_comercios_usuariosWhereInput | boolean
+    connect?: tbl_comercios_usuariosWhereUniqueInput
+    update?: XOR<XOR<tbl_comercios_usuariosUpdateToOneWithWhereWithoutCampaniasInput, tbl_comercios_usuariosUpdateWithoutCampaniasInput>, tbl_comercios_usuariosUncheckedUpdateWithoutCampaniasInput>
   }
 
   export type NullableBigIntFieldUpdateOperationsInput = {
@@ -21094,10 +22586,10 @@ export namespace Prisma {
     divide?: bigint | number
   }
 
-  export type tbl_comerciosCreateNestedOneWithoutClientesInput = {
-    create?: XOR<tbl_comerciosCreateWithoutClientesInput, tbl_comerciosUncheckedCreateWithoutClientesInput>
-    connectOrCreate?: tbl_comerciosCreateOrConnectWithoutClientesInput
-    connect?: tbl_comerciosWhereUniqueInput
+  export type tbl_comercios_usuariosCreateNestedOneWithoutClientesInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutClientesInput, tbl_comercios_usuariosUncheckedCreateWithoutClientesInput>
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutClientesInput
+    connect?: tbl_comercios_usuariosWhereUniqueInput
   }
 
   export type tbl_municipiosCreateNestedOneWithoutClientesInput = {
@@ -21120,14 +22612,14 @@ export namespace Prisma {
     connect?: tbl_pedidosWhereUniqueInput | tbl_pedidosWhereUniqueInput[]
   }
 
-  export type tbl_comerciosUpdateOneWithoutClientesNestedInput = {
-    create?: XOR<tbl_comerciosCreateWithoutClientesInput, tbl_comerciosUncheckedCreateWithoutClientesInput>
-    connectOrCreate?: tbl_comerciosCreateOrConnectWithoutClientesInput
-    upsert?: tbl_comerciosUpsertWithoutClientesInput
-    disconnect?: tbl_comerciosWhereInput | boolean
-    delete?: tbl_comerciosWhereInput | boolean
-    connect?: tbl_comerciosWhereUniqueInput
-    update?: XOR<XOR<tbl_comerciosUpdateToOneWithWhereWithoutClientesInput, tbl_comerciosUpdateWithoutClientesInput>, tbl_comerciosUncheckedUpdateWithoutClientesInput>
+  export type tbl_comercios_usuariosUpdateOneWithoutClientesNestedInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutClientesInput, tbl_comercios_usuariosUncheckedCreateWithoutClientesInput>
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutClientesInput
+    upsert?: tbl_comercios_usuariosUpsertWithoutClientesInput
+    disconnect?: tbl_comercios_usuariosWhereInput | boolean
+    delete?: tbl_comercios_usuariosWhereInput | boolean
+    connect?: tbl_comercios_usuariosWhereUniqueInput
+    update?: XOR<XOR<tbl_comercios_usuariosUpdateToOneWithWhereWithoutClientesInput, tbl_comercios_usuariosUpdateWithoutClientesInput>, tbl_comercios_usuariosUncheckedUpdateWithoutClientesInput>
   }
 
   export type tbl_municipiosUpdateOneWithoutClientesNestedInput = {
@@ -21253,11 +22745,25 @@ export namespace Prisma {
     connect?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
   }
 
+  export type tbl_comercios_usuariosCreateNestedManyWithoutEstadoInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutEstadoInput, tbl_comercios_usuariosUncheckedCreateWithoutEstadoInput> | tbl_comercios_usuariosCreateWithoutEstadoInput[] | tbl_comercios_usuariosUncheckedCreateWithoutEstadoInput[]
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutEstadoInput | tbl_comercios_usuariosCreateOrConnectWithoutEstadoInput[]
+    createMany?: tbl_comercios_usuariosCreateManyEstadoInputEnvelope
+    connect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+  }
+
   export type tbl_usuariosUncheckedCreateNestedManyWithoutEstadoInput = {
     create?: XOR<tbl_usuariosCreateWithoutEstadoInput, tbl_usuariosUncheckedCreateWithoutEstadoInput> | tbl_usuariosCreateWithoutEstadoInput[] | tbl_usuariosUncheckedCreateWithoutEstadoInput[]
     connectOrCreate?: tbl_usuariosCreateOrConnectWithoutEstadoInput | tbl_usuariosCreateOrConnectWithoutEstadoInput[]
     createMany?: tbl_usuariosCreateManyEstadoInputEnvelope
     connect?: tbl_usuariosWhereUniqueInput | tbl_usuariosWhereUniqueInput[]
+  }
+
+  export type tbl_comercios_usuariosUncheckedCreateNestedManyWithoutEstadoInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutEstadoInput, tbl_comercios_usuariosUncheckedCreateWithoutEstadoInput> | tbl_comercios_usuariosCreateWithoutEstadoInput[] | tbl_comercios_usuariosUncheckedCreateWithoutEstadoInput[]
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutEstadoInput | tbl_comercios_usuariosCreateOrConnectWithoutEstadoInput[]
+    createMany?: tbl_comercios_usuariosCreateManyEstadoInputEnvelope
+    connect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
   }
 
   export type tbl_usuariosUpdateManyWithoutEstadoNestedInput = {
@@ -21274,6 +22780,20 @@ export namespace Prisma {
     deleteMany?: tbl_usuariosScalarWhereInput | tbl_usuariosScalarWhereInput[]
   }
 
+  export type tbl_comercios_usuariosUpdateManyWithoutEstadoNestedInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutEstadoInput, tbl_comercios_usuariosUncheckedCreateWithoutEstadoInput> | tbl_comercios_usuariosCreateWithoutEstadoInput[] | tbl_comercios_usuariosUncheckedCreateWithoutEstadoInput[]
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutEstadoInput | tbl_comercios_usuariosCreateOrConnectWithoutEstadoInput[]
+    upsert?: tbl_comercios_usuariosUpsertWithWhereUniqueWithoutEstadoInput | tbl_comercios_usuariosUpsertWithWhereUniqueWithoutEstadoInput[]
+    createMany?: tbl_comercios_usuariosCreateManyEstadoInputEnvelope
+    set?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    disconnect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    delete?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    connect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    update?: tbl_comercios_usuariosUpdateWithWhereUniqueWithoutEstadoInput | tbl_comercios_usuariosUpdateWithWhereUniqueWithoutEstadoInput[]
+    updateMany?: tbl_comercios_usuariosUpdateManyWithWhereWithoutEstadoInput | tbl_comercios_usuariosUpdateManyWithWhereWithoutEstadoInput[]
+    deleteMany?: tbl_comercios_usuariosScalarWhereInput | tbl_comercios_usuariosScalarWhereInput[]
+  }
+
   export type tbl_usuariosUncheckedUpdateManyWithoutEstadoNestedInput = {
     create?: XOR<tbl_usuariosCreateWithoutEstadoInput, tbl_usuariosUncheckedCreateWithoutEstadoInput> | tbl_usuariosCreateWithoutEstadoInput[] | tbl_usuariosUncheckedCreateWithoutEstadoInput[]
     connectOrCreate?: tbl_usuariosCreateOrConnectWithoutEstadoInput | tbl_usuariosCreateOrConnectWithoutEstadoInput[]
@@ -21286,6 +22806,20 @@ export namespace Prisma {
     update?: tbl_usuariosUpdateWithWhereUniqueWithoutEstadoInput | tbl_usuariosUpdateWithWhereUniqueWithoutEstadoInput[]
     updateMany?: tbl_usuariosUpdateManyWithWhereWithoutEstadoInput | tbl_usuariosUpdateManyWithWhereWithoutEstadoInput[]
     deleteMany?: tbl_usuariosScalarWhereInput | tbl_usuariosScalarWhereInput[]
+  }
+
+  export type tbl_comercios_usuariosUncheckedUpdateManyWithoutEstadoNestedInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutEstadoInput, tbl_comercios_usuariosUncheckedCreateWithoutEstadoInput> | tbl_comercios_usuariosCreateWithoutEstadoInput[] | tbl_comercios_usuariosUncheckedCreateWithoutEstadoInput[]
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutEstadoInput | tbl_comercios_usuariosCreateOrConnectWithoutEstadoInput[]
+    upsert?: tbl_comercios_usuariosUpsertWithWhereUniqueWithoutEstadoInput | tbl_comercios_usuariosUpsertWithWhereUniqueWithoutEstadoInput[]
+    createMany?: tbl_comercios_usuariosCreateManyEstadoInputEnvelope
+    set?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    disconnect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    delete?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    connect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    update?: tbl_comercios_usuariosUpdateWithWhereUniqueWithoutEstadoInput | tbl_comercios_usuariosUpdateWithWhereUniqueWithoutEstadoInput[]
+    updateMany?: tbl_comercios_usuariosUpdateManyWithWhereWithoutEstadoInput | tbl_comercios_usuariosUpdateManyWithWhereWithoutEstadoInput[]
+    deleteMany?: tbl_comercios_usuariosScalarWhereInput | tbl_comercios_usuariosScalarWhereInput[]
   }
 
   export type tbl_clientesCreateNestedManyWithoutMunicipiosInput = {
@@ -21666,103 +23200,175 @@ export namespace Prisma {
     deleteMany?: tbl_usuariosScalarWhereInput | tbl_usuariosScalarWhereInput[]
   }
 
-  export type tbl_campaniasCreateNestedManyWithoutComercioInput = {
-    create?: XOR<tbl_campaniasCreateWithoutComercioInput, tbl_campaniasUncheckedCreateWithoutComercioInput> | tbl_campaniasCreateWithoutComercioInput[] | tbl_campaniasUncheckedCreateWithoutComercioInput[]
-    connectOrCreate?: tbl_campaniasCreateOrConnectWithoutComercioInput | tbl_campaniasCreateOrConnectWithoutComercioInput[]
-    createMany?: tbl_campaniasCreateManyComercioInputEnvelope
-    connect?: tbl_campaniasWhereUniqueInput | tbl_campaniasWhereUniqueInput[]
+  export type tbl_comercios_usuariosCreateNestedManyWithoutComerciosInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutComerciosInput, tbl_comercios_usuariosUncheckedCreateWithoutComerciosInput> | tbl_comercios_usuariosCreateWithoutComerciosInput[] | tbl_comercios_usuariosUncheckedCreateWithoutComerciosInput[]
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutComerciosInput | tbl_comercios_usuariosCreateOrConnectWithoutComerciosInput[]
+    createMany?: tbl_comercios_usuariosCreateManyComerciosInputEnvelope
+    connect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
   }
 
-  export type tbl_clientesCreateNestedManyWithoutComerciosInput = {
-    create?: XOR<tbl_clientesCreateWithoutComerciosInput, tbl_clientesUncheckedCreateWithoutComerciosInput> | tbl_clientesCreateWithoutComerciosInput[] | tbl_clientesUncheckedCreateWithoutComerciosInput[]
-    connectOrCreate?: tbl_clientesCreateOrConnectWithoutComerciosInput | tbl_clientesCreateOrConnectWithoutComerciosInput[]
-    createMany?: tbl_clientesCreateManyComerciosInputEnvelope
-    connect?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
+  export type tbl_comercios_usuariosUncheckedCreateNestedManyWithoutComerciosInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutComerciosInput, tbl_comercios_usuariosUncheckedCreateWithoutComerciosInput> | tbl_comercios_usuariosCreateWithoutComerciosInput[] | tbl_comercios_usuariosUncheckedCreateWithoutComerciosInput[]
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutComerciosInput | tbl_comercios_usuariosCreateOrConnectWithoutComerciosInput[]
+    createMany?: tbl_comercios_usuariosCreateManyComerciosInputEnvelope
+    connect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
   }
 
-  export type tbl_usuariosCreateNestedOneWithoutComerciosInput = {
-    create?: XOR<tbl_usuariosCreateWithoutComerciosInput, tbl_usuariosUncheckedCreateWithoutComerciosInput>
-    connectOrCreate?: tbl_usuariosCreateOrConnectWithoutComerciosInput
+  export type tbl_comercios_usuariosUpdateManyWithoutComerciosNestedInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutComerciosInput, tbl_comercios_usuariosUncheckedCreateWithoutComerciosInput> | tbl_comercios_usuariosCreateWithoutComerciosInput[] | tbl_comercios_usuariosUncheckedCreateWithoutComerciosInput[]
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutComerciosInput | tbl_comercios_usuariosCreateOrConnectWithoutComerciosInput[]
+    upsert?: tbl_comercios_usuariosUpsertWithWhereUniqueWithoutComerciosInput | tbl_comercios_usuariosUpsertWithWhereUniqueWithoutComerciosInput[]
+    createMany?: tbl_comercios_usuariosCreateManyComerciosInputEnvelope
+    set?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    disconnect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    delete?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    connect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    update?: tbl_comercios_usuariosUpdateWithWhereUniqueWithoutComerciosInput | tbl_comercios_usuariosUpdateWithWhereUniqueWithoutComerciosInput[]
+    updateMany?: tbl_comercios_usuariosUpdateManyWithWhereWithoutComerciosInput | tbl_comercios_usuariosUpdateManyWithWhereWithoutComerciosInput[]
+    deleteMany?: tbl_comercios_usuariosScalarWhereInput | tbl_comercios_usuariosScalarWhereInput[]
+  }
+
+  export type tbl_comercios_usuariosUncheckedUpdateManyWithoutComerciosNestedInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutComerciosInput, tbl_comercios_usuariosUncheckedCreateWithoutComerciosInput> | tbl_comercios_usuariosCreateWithoutComerciosInput[] | tbl_comercios_usuariosUncheckedCreateWithoutComerciosInput[]
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutComerciosInput | tbl_comercios_usuariosCreateOrConnectWithoutComerciosInput[]
+    upsert?: tbl_comercios_usuariosUpsertWithWhereUniqueWithoutComerciosInput | tbl_comercios_usuariosUpsertWithWhereUniqueWithoutComerciosInput[]
+    createMany?: tbl_comercios_usuariosCreateManyComerciosInputEnvelope
+    set?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    disconnect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    delete?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    connect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    update?: tbl_comercios_usuariosUpdateWithWhereUniqueWithoutComerciosInput | tbl_comercios_usuariosUpdateWithWhereUniqueWithoutComerciosInput[]
+    updateMany?: tbl_comercios_usuariosUpdateManyWithWhereWithoutComerciosInput | tbl_comercios_usuariosUpdateManyWithWhereWithoutComerciosInput[]
+    deleteMany?: tbl_comercios_usuariosScalarWhereInput | tbl_comercios_usuariosScalarWhereInput[]
+  }
+
+  export type tbl_usuariosCreateNestedOneWithoutComercios_usuariosInput = {
+    create?: XOR<tbl_usuariosCreateWithoutComercios_usuariosInput, tbl_usuariosUncheckedCreateWithoutComercios_usuariosInput>
+    connectOrCreate?: tbl_usuariosCreateOrConnectWithoutComercios_usuariosInput
     connect?: tbl_usuariosWhereUniqueInput
   }
 
-  export type tbl_campaniasUncheckedCreateNestedManyWithoutComercioInput = {
-    create?: XOR<tbl_campaniasCreateWithoutComercioInput, tbl_campaniasUncheckedCreateWithoutComercioInput> | tbl_campaniasCreateWithoutComercioInput[] | tbl_campaniasUncheckedCreateWithoutComercioInput[]
-    connectOrCreate?: tbl_campaniasCreateOrConnectWithoutComercioInput | tbl_campaniasCreateOrConnectWithoutComercioInput[]
-    createMany?: tbl_campaniasCreateManyComercioInputEnvelope
+  export type tbl_comerciosCreateNestedOneWithoutComercios_usuariosInput = {
+    create?: XOR<tbl_comerciosCreateWithoutComercios_usuariosInput, tbl_comerciosUncheckedCreateWithoutComercios_usuariosInput>
+    connectOrCreate?: tbl_comerciosCreateOrConnectWithoutComercios_usuariosInput
+    connect?: tbl_comerciosWhereUniqueInput
+  }
+
+  export type tbl_estados_usuarioCreateNestedOneWithoutComercios_usuariosInput = {
+    create?: XOR<tbl_estados_usuarioCreateWithoutComercios_usuariosInput, tbl_estados_usuarioUncheckedCreateWithoutComercios_usuariosInput>
+    connectOrCreate?: tbl_estados_usuarioCreateOrConnectWithoutComercios_usuariosInput
+    connect?: tbl_estados_usuarioWhereUniqueInput
+  }
+
+  export type tbl_campaniasCreateNestedManyWithoutComercios_usuariosInput = {
+    create?: XOR<tbl_campaniasCreateWithoutComercios_usuariosInput, tbl_campaniasUncheckedCreateWithoutComercios_usuariosInput> | tbl_campaniasCreateWithoutComercios_usuariosInput[] | tbl_campaniasUncheckedCreateWithoutComercios_usuariosInput[]
+    connectOrCreate?: tbl_campaniasCreateOrConnectWithoutComercios_usuariosInput | tbl_campaniasCreateOrConnectWithoutComercios_usuariosInput[]
+    createMany?: tbl_campaniasCreateManyComercios_usuariosInputEnvelope
     connect?: tbl_campaniasWhereUniqueInput | tbl_campaniasWhereUniqueInput[]
   }
 
-  export type tbl_clientesUncheckedCreateNestedManyWithoutComerciosInput = {
-    create?: XOR<tbl_clientesCreateWithoutComerciosInput, tbl_clientesUncheckedCreateWithoutComerciosInput> | tbl_clientesCreateWithoutComerciosInput[] | tbl_clientesUncheckedCreateWithoutComerciosInput[]
-    connectOrCreate?: tbl_clientesCreateOrConnectWithoutComerciosInput | tbl_clientesCreateOrConnectWithoutComerciosInput[]
-    createMany?: tbl_clientesCreateManyComerciosInputEnvelope
+  export type tbl_clientesCreateNestedManyWithoutComercios_usuariosInput = {
+    create?: XOR<tbl_clientesCreateWithoutComercios_usuariosInput, tbl_clientesUncheckedCreateWithoutComercios_usuariosInput> | tbl_clientesCreateWithoutComercios_usuariosInput[] | tbl_clientesUncheckedCreateWithoutComercios_usuariosInput[]
+    connectOrCreate?: tbl_clientesCreateOrConnectWithoutComercios_usuariosInput | tbl_clientesCreateOrConnectWithoutComercios_usuariosInput[]
+    createMany?: tbl_clientesCreateManyComercios_usuariosInputEnvelope
     connect?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
   }
 
-  export type tbl_campaniasUpdateManyWithoutComercioNestedInput = {
-    create?: XOR<tbl_campaniasCreateWithoutComercioInput, tbl_campaniasUncheckedCreateWithoutComercioInput> | tbl_campaniasCreateWithoutComercioInput[] | tbl_campaniasUncheckedCreateWithoutComercioInput[]
-    connectOrCreate?: tbl_campaniasCreateOrConnectWithoutComercioInput | tbl_campaniasCreateOrConnectWithoutComercioInput[]
-    upsert?: tbl_campaniasUpsertWithWhereUniqueWithoutComercioInput | tbl_campaniasUpsertWithWhereUniqueWithoutComercioInput[]
-    createMany?: tbl_campaniasCreateManyComercioInputEnvelope
-    set?: tbl_campaniasWhereUniqueInput | tbl_campaniasWhereUniqueInput[]
-    disconnect?: tbl_campaniasWhereUniqueInput | tbl_campaniasWhereUniqueInput[]
-    delete?: tbl_campaniasWhereUniqueInput | tbl_campaniasWhereUniqueInput[]
+  export type tbl_campaniasUncheckedCreateNestedManyWithoutComercios_usuariosInput = {
+    create?: XOR<tbl_campaniasCreateWithoutComercios_usuariosInput, tbl_campaniasUncheckedCreateWithoutComercios_usuariosInput> | tbl_campaniasCreateWithoutComercios_usuariosInput[] | tbl_campaniasUncheckedCreateWithoutComercios_usuariosInput[]
+    connectOrCreate?: tbl_campaniasCreateOrConnectWithoutComercios_usuariosInput | tbl_campaniasCreateOrConnectWithoutComercios_usuariosInput[]
+    createMany?: tbl_campaniasCreateManyComercios_usuariosInputEnvelope
     connect?: tbl_campaniasWhereUniqueInput | tbl_campaniasWhereUniqueInput[]
-    update?: tbl_campaniasUpdateWithWhereUniqueWithoutComercioInput | tbl_campaniasUpdateWithWhereUniqueWithoutComercioInput[]
-    updateMany?: tbl_campaniasUpdateManyWithWhereWithoutComercioInput | tbl_campaniasUpdateManyWithWhereWithoutComercioInput[]
-    deleteMany?: tbl_campaniasScalarWhereInput | tbl_campaniasScalarWhereInput[]
   }
 
-  export type tbl_clientesUpdateManyWithoutComerciosNestedInput = {
-    create?: XOR<tbl_clientesCreateWithoutComerciosInput, tbl_clientesUncheckedCreateWithoutComerciosInput> | tbl_clientesCreateWithoutComerciosInput[] | tbl_clientesUncheckedCreateWithoutComerciosInput[]
-    connectOrCreate?: tbl_clientesCreateOrConnectWithoutComerciosInput | tbl_clientesCreateOrConnectWithoutComerciosInput[]
-    upsert?: tbl_clientesUpsertWithWhereUniqueWithoutComerciosInput | tbl_clientesUpsertWithWhereUniqueWithoutComerciosInput[]
-    createMany?: tbl_clientesCreateManyComerciosInputEnvelope
-    set?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
-    disconnect?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
-    delete?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
+  export type tbl_clientesUncheckedCreateNestedManyWithoutComercios_usuariosInput = {
+    create?: XOR<tbl_clientesCreateWithoutComercios_usuariosInput, tbl_clientesUncheckedCreateWithoutComercios_usuariosInput> | tbl_clientesCreateWithoutComercios_usuariosInput[] | tbl_clientesUncheckedCreateWithoutComercios_usuariosInput[]
+    connectOrCreate?: tbl_clientesCreateOrConnectWithoutComercios_usuariosInput | tbl_clientesCreateOrConnectWithoutComercios_usuariosInput[]
+    createMany?: tbl_clientesCreateManyComercios_usuariosInputEnvelope
     connect?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
-    update?: tbl_clientesUpdateWithWhereUniqueWithoutComerciosInput | tbl_clientesUpdateWithWhereUniqueWithoutComerciosInput[]
-    updateMany?: tbl_clientesUpdateManyWithWhereWithoutComerciosInput | tbl_clientesUpdateManyWithWhereWithoutComerciosInput[]
-    deleteMany?: tbl_clientesScalarWhereInput | tbl_clientesScalarWhereInput[]
   }
 
-  export type tbl_usuariosUpdateOneWithoutComerciosNestedInput = {
-    create?: XOR<tbl_usuariosCreateWithoutComerciosInput, tbl_usuariosUncheckedCreateWithoutComerciosInput>
-    connectOrCreate?: tbl_usuariosCreateOrConnectWithoutComerciosInput
-    upsert?: tbl_usuariosUpsertWithoutComerciosInput
+  export type tbl_usuariosUpdateOneWithoutComercios_usuariosNestedInput = {
+    create?: XOR<tbl_usuariosCreateWithoutComercios_usuariosInput, tbl_usuariosUncheckedCreateWithoutComercios_usuariosInput>
+    connectOrCreate?: tbl_usuariosCreateOrConnectWithoutComercios_usuariosInput
+    upsert?: tbl_usuariosUpsertWithoutComercios_usuariosInput
     disconnect?: tbl_usuariosWhereInput | boolean
     delete?: tbl_usuariosWhereInput | boolean
     connect?: tbl_usuariosWhereUniqueInput
-    update?: XOR<XOR<tbl_usuariosUpdateToOneWithWhereWithoutComerciosInput, tbl_usuariosUpdateWithoutComerciosInput>, tbl_usuariosUncheckedUpdateWithoutComerciosInput>
+    update?: XOR<XOR<tbl_usuariosUpdateToOneWithWhereWithoutComercios_usuariosInput, tbl_usuariosUpdateWithoutComercios_usuariosInput>, tbl_usuariosUncheckedUpdateWithoutComercios_usuariosInput>
   }
 
-  export type tbl_campaniasUncheckedUpdateManyWithoutComercioNestedInput = {
-    create?: XOR<tbl_campaniasCreateWithoutComercioInput, tbl_campaniasUncheckedCreateWithoutComercioInput> | tbl_campaniasCreateWithoutComercioInput[] | tbl_campaniasUncheckedCreateWithoutComercioInput[]
-    connectOrCreate?: tbl_campaniasCreateOrConnectWithoutComercioInput | tbl_campaniasCreateOrConnectWithoutComercioInput[]
-    upsert?: tbl_campaniasUpsertWithWhereUniqueWithoutComercioInput | tbl_campaniasUpsertWithWhereUniqueWithoutComercioInput[]
-    createMany?: tbl_campaniasCreateManyComercioInputEnvelope
+  export type tbl_comerciosUpdateOneWithoutComercios_usuariosNestedInput = {
+    create?: XOR<tbl_comerciosCreateWithoutComercios_usuariosInput, tbl_comerciosUncheckedCreateWithoutComercios_usuariosInput>
+    connectOrCreate?: tbl_comerciosCreateOrConnectWithoutComercios_usuariosInput
+    upsert?: tbl_comerciosUpsertWithoutComercios_usuariosInput
+    disconnect?: tbl_comerciosWhereInput | boolean
+    delete?: tbl_comerciosWhereInput | boolean
+    connect?: tbl_comerciosWhereUniqueInput
+    update?: XOR<XOR<tbl_comerciosUpdateToOneWithWhereWithoutComercios_usuariosInput, tbl_comerciosUpdateWithoutComercios_usuariosInput>, tbl_comerciosUncheckedUpdateWithoutComercios_usuariosInput>
+  }
+
+  export type tbl_estados_usuarioUpdateOneRequiredWithoutComercios_usuariosNestedInput = {
+    create?: XOR<tbl_estados_usuarioCreateWithoutComercios_usuariosInput, tbl_estados_usuarioUncheckedCreateWithoutComercios_usuariosInput>
+    connectOrCreate?: tbl_estados_usuarioCreateOrConnectWithoutComercios_usuariosInput
+    upsert?: tbl_estados_usuarioUpsertWithoutComercios_usuariosInput
+    connect?: tbl_estados_usuarioWhereUniqueInput
+    update?: XOR<XOR<tbl_estados_usuarioUpdateToOneWithWhereWithoutComercios_usuariosInput, tbl_estados_usuarioUpdateWithoutComercios_usuariosInput>, tbl_estados_usuarioUncheckedUpdateWithoutComercios_usuariosInput>
+  }
+
+  export type tbl_campaniasUpdateManyWithoutComercios_usuariosNestedInput = {
+    create?: XOR<tbl_campaniasCreateWithoutComercios_usuariosInput, tbl_campaniasUncheckedCreateWithoutComercios_usuariosInput> | tbl_campaniasCreateWithoutComercios_usuariosInput[] | tbl_campaniasUncheckedCreateWithoutComercios_usuariosInput[]
+    connectOrCreate?: tbl_campaniasCreateOrConnectWithoutComercios_usuariosInput | tbl_campaniasCreateOrConnectWithoutComercios_usuariosInput[]
+    upsert?: tbl_campaniasUpsertWithWhereUniqueWithoutComercios_usuariosInput | tbl_campaniasUpsertWithWhereUniqueWithoutComercios_usuariosInput[]
+    createMany?: tbl_campaniasCreateManyComercios_usuariosInputEnvelope
     set?: tbl_campaniasWhereUniqueInput | tbl_campaniasWhereUniqueInput[]
     disconnect?: tbl_campaniasWhereUniqueInput | tbl_campaniasWhereUniqueInput[]
     delete?: tbl_campaniasWhereUniqueInput | tbl_campaniasWhereUniqueInput[]
     connect?: tbl_campaniasWhereUniqueInput | tbl_campaniasWhereUniqueInput[]
-    update?: tbl_campaniasUpdateWithWhereUniqueWithoutComercioInput | tbl_campaniasUpdateWithWhereUniqueWithoutComercioInput[]
-    updateMany?: tbl_campaniasUpdateManyWithWhereWithoutComercioInput | tbl_campaniasUpdateManyWithWhereWithoutComercioInput[]
+    update?: tbl_campaniasUpdateWithWhereUniqueWithoutComercios_usuariosInput | tbl_campaniasUpdateWithWhereUniqueWithoutComercios_usuariosInput[]
+    updateMany?: tbl_campaniasUpdateManyWithWhereWithoutComercios_usuariosInput | tbl_campaniasUpdateManyWithWhereWithoutComercios_usuariosInput[]
     deleteMany?: tbl_campaniasScalarWhereInput | tbl_campaniasScalarWhereInput[]
   }
 
-  export type tbl_clientesUncheckedUpdateManyWithoutComerciosNestedInput = {
-    create?: XOR<tbl_clientesCreateWithoutComerciosInput, tbl_clientesUncheckedCreateWithoutComerciosInput> | tbl_clientesCreateWithoutComerciosInput[] | tbl_clientesUncheckedCreateWithoutComerciosInput[]
-    connectOrCreate?: tbl_clientesCreateOrConnectWithoutComerciosInput | tbl_clientesCreateOrConnectWithoutComerciosInput[]
-    upsert?: tbl_clientesUpsertWithWhereUniqueWithoutComerciosInput | tbl_clientesUpsertWithWhereUniqueWithoutComerciosInput[]
-    createMany?: tbl_clientesCreateManyComerciosInputEnvelope
+  export type tbl_clientesUpdateManyWithoutComercios_usuariosNestedInput = {
+    create?: XOR<tbl_clientesCreateWithoutComercios_usuariosInput, tbl_clientesUncheckedCreateWithoutComercios_usuariosInput> | tbl_clientesCreateWithoutComercios_usuariosInput[] | tbl_clientesUncheckedCreateWithoutComercios_usuariosInput[]
+    connectOrCreate?: tbl_clientesCreateOrConnectWithoutComercios_usuariosInput | tbl_clientesCreateOrConnectWithoutComercios_usuariosInput[]
+    upsert?: tbl_clientesUpsertWithWhereUniqueWithoutComercios_usuariosInput | tbl_clientesUpsertWithWhereUniqueWithoutComercios_usuariosInput[]
+    createMany?: tbl_clientesCreateManyComercios_usuariosInputEnvelope
     set?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
     disconnect?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
     delete?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
     connect?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
-    update?: tbl_clientesUpdateWithWhereUniqueWithoutComerciosInput | tbl_clientesUpdateWithWhereUniqueWithoutComerciosInput[]
-    updateMany?: tbl_clientesUpdateManyWithWhereWithoutComerciosInput | tbl_clientesUpdateManyWithWhereWithoutComerciosInput[]
+    update?: tbl_clientesUpdateWithWhereUniqueWithoutComercios_usuariosInput | tbl_clientesUpdateWithWhereUniqueWithoutComercios_usuariosInput[]
+    updateMany?: tbl_clientesUpdateManyWithWhereWithoutComercios_usuariosInput | tbl_clientesUpdateManyWithWhereWithoutComercios_usuariosInput[]
+    deleteMany?: tbl_clientesScalarWhereInput | tbl_clientesScalarWhereInput[]
+  }
+
+  export type tbl_campaniasUncheckedUpdateManyWithoutComercios_usuariosNestedInput = {
+    create?: XOR<tbl_campaniasCreateWithoutComercios_usuariosInput, tbl_campaniasUncheckedCreateWithoutComercios_usuariosInput> | tbl_campaniasCreateWithoutComercios_usuariosInput[] | tbl_campaniasUncheckedCreateWithoutComercios_usuariosInput[]
+    connectOrCreate?: tbl_campaniasCreateOrConnectWithoutComercios_usuariosInput | tbl_campaniasCreateOrConnectWithoutComercios_usuariosInput[]
+    upsert?: tbl_campaniasUpsertWithWhereUniqueWithoutComercios_usuariosInput | tbl_campaniasUpsertWithWhereUniqueWithoutComercios_usuariosInput[]
+    createMany?: tbl_campaniasCreateManyComercios_usuariosInputEnvelope
+    set?: tbl_campaniasWhereUniqueInput | tbl_campaniasWhereUniqueInput[]
+    disconnect?: tbl_campaniasWhereUniqueInput | tbl_campaniasWhereUniqueInput[]
+    delete?: tbl_campaniasWhereUniqueInput | tbl_campaniasWhereUniqueInput[]
+    connect?: tbl_campaniasWhereUniqueInput | tbl_campaniasWhereUniqueInput[]
+    update?: tbl_campaniasUpdateWithWhereUniqueWithoutComercios_usuariosInput | tbl_campaniasUpdateWithWhereUniqueWithoutComercios_usuariosInput[]
+    updateMany?: tbl_campaniasUpdateManyWithWhereWithoutComercios_usuariosInput | tbl_campaniasUpdateManyWithWhereWithoutComercios_usuariosInput[]
+    deleteMany?: tbl_campaniasScalarWhereInput | tbl_campaniasScalarWhereInput[]
+  }
+
+  export type tbl_clientesUncheckedUpdateManyWithoutComercios_usuariosNestedInput = {
+    create?: XOR<tbl_clientesCreateWithoutComercios_usuariosInput, tbl_clientesUncheckedCreateWithoutComercios_usuariosInput> | tbl_clientesCreateWithoutComercios_usuariosInput[] | tbl_clientesUncheckedCreateWithoutComercios_usuariosInput[]
+    connectOrCreate?: tbl_clientesCreateOrConnectWithoutComercios_usuariosInput | tbl_clientesCreateOrConnectWithoutComercios_usuariosInput[]
+    upsert?: tbl_clientesUpsertWithWhereUniqueWithoutComercios_usuariosInput | tbl_clientesUpsertWithWhereUniqueWithoutComercios_usuariosInput[]
+    createMany?: tbl_clientesCreateManyComercios_usuariosInputEnvelope
+    set?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
+    disconnect?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
+    delete?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
+    connect?: tbl_clientesWhereUniqueInput | tbl_clientesWhereUniqueInput[]
+    update?: tbl_clientesUpdateWithWhereUniqueWithoutComercios_usuariosInput | tbl_clientesUpdateWithWhereUniqueWithoutComercios_usuariosInput[]
+    updateMany?: tbl_clientesUpdateManyWithWhereWithoutComercios_usuariosInput | tbl_clientesUpdateManyWithWhereWithoutComercios_usuariosInput[]
     deleteMany?: tbl_clientesScalarWhereInput | tbl_clientesScalarWhereInput[]
   }
 
@@ -21808,11 +23414,11 @@ export namespace Prisma {
     deleteMany?: tbl_pedidosScalarWhereInput | tbl_pedidosScalarWhereInput[]
   }
 
-  export type tbl_comerciosCreateNestedManyWithoutUsuariosInput = {
-    create?: XOR<tbl_comerciosCreateWithoutUsuariosInput, tbl_comerciosUncheckedCreateWithoutUsuariosInput> | tbl_comerciosCreateWithoutUsuariosInput[] | tbl_comerciosUncheckedCreateWithoutUsuariosInput[]
-    connectOrCreate?: tbl_comerciosCreateOrConnectWithoutUsuariosInput | tbl_comerciosCreateOrConnectWithoutUsuariosInput[]
-    createMany?: tbl_comerciosCreateManyUsuariosInputEnvelope
-    connect?: tbl_comerciosWhereUniqueInput | tbl_comerciosWhereUniqueInput[]
+  export type tbl_comercios_usuariosCreateNestedManyWithoutUsuariosInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutUsuariosInput, tbl_comercios_usuariosUncheckedCreateWithoutUsuariosInput> | tbl_comercios_usuariosCreateWithoutUsuariosInput[] | tbl_comercios_usuariosUncheckedCreateWithoutUsuariosInput[]
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutUsuariosInput | tbl_comercios_usuariosCreateOrConnectWithoutUsuariosInput[]
+    createMany?: tbl_comercios_usuariosCreateManyUsuariosInputEnvelope
+    connect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
   }
 
   export type tbl_estados_usuarioCreateNestedOneWithoutUsuariosInput = {
@@ -21833,25 +23439,25 @@ export namespace Prisma {
     connect?: tbl_rolesWhereUniqueInput
   }
 
-  export type tbl_comerciosUncheckedCreateNestedManyWithoutUsuariosInput = {
-    create?: XOR<tbl_comerciosCreateWithoutUsuariosInput, tbl_comerciosUncheckedCreateWithoutUsuariosInput> | tbl_comerciosCreateWithoutUsuariosInput[] | tbl_comerciosUncheckedCreateWithoutUsuariosInput[]
-    connectOrCreate?: tbl_comerciosCreateOrConnectWithoutUsuariosInput | tbl_comerciosCreateOrConnectWithoutUsuariosInput[]
-    createMany?: tbl_comerciosCreateManyUsuariosInputEnvelope
-    connect?: tbl_comerciosWhereUniqueInput | tbl_comerciosWhereUniqueInput[]
+  export type tbl_comercios_usuariosUncheckedCreateNestedManyWithoutUsuariosInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutUsuariosInput, tbl_comercios_usuariosUncheckedCreateWithoutUsuariosInput> | tbl_comercios_usuariosCreateWithoutUsuariosInput[] | tbl_comercios_usuariosUncheckedCreateWithoutUsuariosInput[]
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutUsuariosInput | tbl_comercios_usuariosCreateOrConnectWithoutUsuariosInput[]
+    createMany?: tbl_comercios_usuariosCreateManyUsuariosInputEnvelope
+    connect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
   }
 
-  export type tbl_comerciosUpdateManyWithoutUsuariosNestedInput = {
-    create?: XOR<tbl_comerciosCreateWithoutUsuariosInput, tbl_comerciosUncheckedCreateWithoutUsuariosInput> | tbl_comerciosCreateWithoutUsuariosInput[] | tbl_comerciosUncheckedCreateWithoutUsuariosInput[]
-    connectOrCreate?: tbl_comerciosCreateOrConnectWithoutUsuariosInput | tbl_comerciosCreateOrConnectWithoutUsuariosInput[]
-    upsert?: tbl_comerciosUpsertWithWhereUniqueWithoutUsuariosInput | tbl_comerciosUpsertWithWhereUniqueWithoutUsuariosInput[]
-    createMany?: tbl_comerciosCreateManyUsuariosInputEnvelope
-    set?: tbl_comerciosWhereUniqueInput | tbl_comerciosWhereUniqueInput[]
-    disconnect?: tbl_comerciosWhereUniqueInput | tbl_comerciosWhereUniqueInput[]
-    delete?: tbl_comerciosWhereUniqueInput | tbl_comerciosWhereUniqueInput[]
-    connect?: tbl_comerciosWhereUniqueInput | tbl_comerciosWhereUniqueInput[]
-    update?: tbl_comerciosUpdateWithWhereUniqueWithoutUsuariosInput | tbl_comerciosUpdateWithWhereUniqueWithoutUsuariosInput[]
-    updateMany?: tbl_comerciosUpdateManyWithWhereWithoutUsuariosInput | tbl_comerciosUpdateManyWithWhereWithoutUsuariosInput[]
-    deleteMany?: tbl_comerciosScalarWhereInput | tbl_comerciosScalarWhereInput[]
+  export type tbl_comercios_usuariosUpdateManyWithoutUsuariosNestedInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutUsuariosInput, tbl_comercios_usuariosUncheckedCreateWithoutUsuariosInput> | tbl_comercios_usuariosCreateWithoutUsuariosInput[] | tbl_comercios_usuariosUncheckedCreateWithoutUsuariosInput[]
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutUsuariosInput | tbl_comercios_usuariosCreateOrConnectWithoutUsuariosInput[]
+    upsert?: tbl_comercios_usuariosUpsertWithWhereUniqueWithoutUsuariosInput | tbl_comercios_usuariosUpsertWithWhereUniqueWithoutUsuariosInput[]
+    createMany?: tbl_comercios_usuariosCreateManyUsuariosInputEnvelope
+    set?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    disconnect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    delete?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    connect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    update?: tbl_comercios_usuariosUpdateWithWhereUniqueWithoutUsuariosInput | tbl_comercios_usuariosUpdateWithWhereUniqueWithoutUsuariosInput[]
+    updateMany?: tbl_comercios_usuariosUpdateManyWithWhereWithoutUsuariosInput | tbl_comercios_usuariosUpdateManyWithWhereWithoutUsuariosInput[]
+    deleteMany?: tbl_comercios_usuariosScalarWhereInput | tbl_comercios_usuariosScalarWhereInput[]
   }
 
   export type tbl_estados_usuarioUpdateOneRequiredWithoutUsuariosNestedInput = {
@@ -21878,18 +23484,18 @@ export namespace Prisma {
     update?: XOR<XOR<tbl_rolesUpdateToOneWithWhereWithoutUsuariosInput, tbl_rolesUpdateWithoutUsuariosInput>, tbl_rolesUncheckedUpdateWithoutUsuariosInput>
   }
 
-  export type tbl_comerciosUncheckedUpdateManyWithoutUsuariosNestedInput = {
-    create?: XOR<tbl_comerciosCreateWithoutUsuariosInput, tbl_comerciosUncheckedCreateWithoutUsuariosInput> | tbl_comerciosCreateWithoutUsuariosInput[] | tbl_comerciosUncheckedCreateWithoutUsuariosInput[]
-    connectOrCreate?: tbl_comerciosCreateOrConnectWithoutUsuariosInput | tbl_comerciosCreateOrConnectWithoutUsuariosInput[]
-    upsert?: tbl_comerciosUpsertWithWhereUniqueWithoutUsuariosInput | tbl_comerciosUpsertWithWhereUniqueWithoutUsuariosInput[]
-    createMany?: tbl_comerciosCreateManyUsuariosInputEnvelope
-    set?: tbl_comerciosWhereUniqueInput | tbl_comerciosWhereUniqueInput[]
-    disconnect?: tbl_comerciosWhereUniqueInput | tbl_comerciosWhereUniqueInput[]
-    delete?: tbl_comerciosWhereUniqueInput | tbl_comerciosWhereUniqueInput[]
-    connect?: tbl_comerciosWhereUniqueInput | tbl_comerciosWhereUniqueInput[]
-    update?: tbl_comerciosUpdateWithWhereUniqueWithoutUsuariosInput | tbl_comerciosUpdateWithWhereUniqueWithoutUsuariosInput[]
-    updateMany?: tbl_comerciosUpdateManyWithWhereWithoutUsuariosInput | tbl_comerciosUpdateManyWithWhereWithoutUsuariosInput[]
-    deleteMany?: tbl_comerciosScalarWhereInput | tbl_comerciosScalarWhereInput[]
+  export type tbl_comercios_usuariosUncheckedUpdateManyWithoutUsuariosNestedInput = {
+    create?: XOR<tbl_comercios_usuariosCreateWithoutUsuariosInput, tbl_comercios_usuariosUncheckedCreateWithoutUsuariosInput> | tbl_comercios_usuariosCreateWithoutUsuariosInput[] | tbl_comercios_usuariosUncheckedCreateWithoutUsuariosInput[]
+    connectOrCreate?: tbl_comercios_usuariosCreateOrConnectWithoutUsuariosInput | tbl_comercios_usuariosCreateOrConnectWithoutUsuariosInput[]
+    upsert?: tbl_comercios_usuariosUpsertWithWhereUniqueWithoutUsuariosInput | tbl_comercios_usuariosUpsertWithWhereUniqueWithoutUsuariosInput[]
+    createMany?: tbl_comercios_usuariosCreateManyUsuariosInputEnvelope
+    set?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    disconnect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    delete?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    connect?: tbl_comercios_usuariosWhereUniqueInput | tbl_comercios_usuariosWhereUniqueInput[]
+    update?: tbl_comercios_usuariosUpdateWithWhereUniqueWithoutUsuariosInput | tbl_comercios_usuariosUpdateWithWhereUniqueWithoutUsuariosInput[]
+    updateMany?: tbl_comercios_usuariosUpdateManyWithWhereWithoutUsuariosInput | tbl_comercios_usuariosUpdateManyWithWhereWithoutUsuariosInput[]
+    deleteMany?: tbl_comercios_usuariosScalarWhereInput | tbl_comercios_usuariosScalarWhereInput[]
   }
 
   export type NestedBigIntFilter<$PrismaModel = never> = {
@@ -22109,79 +23715,85 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type tbl_comerciosCreateWithoutCampaniasInput = {
+  export type tbl_comercios_usuariosCreateWithoutCampaniasInput = {
     pkid?: bigint | number
-    nombre: string
-    telefono: string
-    correo: string
-    clientes?: tbl_clientesCreateNestedManyWithoutComerciosInput
-    usuarios?: tbl_usuariosCreateNestedOneWithoutComerciosInput
+    nivel_acceso: number
+    fecha_asignacion: Date | string
+    usuarios?: tbl_usuariosCreateNestedOneWithoutComercios_usuariosInput
+    comercios?: tbl_comerciosCreateNestedOneWithoutComercios_usuariosInput
+    estado: tbl_estados_usuarioCreateNestedOneWithoutComercios_usuariosInput
+    clientes?: tbl_clientesCreateNestedManyWithoutComercios_usuariosInput
   }
 
-  export type tbl_comerciosUncheckedCreateWithoutCampaniasInput = {
+  export type tbl_comercios_usuariosUncheckedCreateWithoutCampaniasInput = {
     pkid?: bigint | number
-    nombre: string
-    telefono: string
-    correo: string
-    fkusuario_tbl_usuarios?: string | null
-    clientes?: tbl_clientesUncheckedCreateNestedManyWithoutComerciosInput
+    fkusuario_tbl_usuarios: string
+    fkid_tbl_comercios: bigint | number
+    nivel_acceso: number
+    fkid_tbl_estados_usuario: bigint | number
+    fecha_asignacion: Date | string
+    clientes?: tbl_clientesUncheckedCreateNestedManyWithoutComercios_usuariosInput
   }
 
-  export type tbl_comerciosCreateOrConnectWithoutCampaniasInput = {
-    where: tbl_comerciosWhereUniqueInput
-    create: XOR<tbl_comerciosCreateWithoutCampaniasInput, tbl_comerciosUncheckedCreateWithoutCampaniasInput>
+  export type tbl_comercios_usuariosCreateOrConnectWithoutCampaniasInput = {
+    where: tbl_comercios_usuariosWhereUniqueInput
+    create: XOR<tbl_comercios_usuariosCreateWithoutCampaniasInput, tbl_comercios_usuariosUncheckedCreateWithoutCampaniasInput>
   }
 
-  export type tbl_comerciosUpsertWithoutCampaniasInput = {
-    update: XOR<tbl_comerciosUpdateWithoutCampaniasInput, tbl_comerciosUncheckedUpdateWithoutCampaniasInput>
-    create: XOR<tbl_comerciosCreateWithoutCampaniasInput, tbl_comerciosUncheckedCreateWithoutCampaniasInput>
-    where?: tbl_comerciosWhereInput
+  export type tbl_comercios_usuariosUpsertWithoutCampaniasInput = {
+    update: XOR<tbl_comercios_usuariosUpdateWithoutCampaniasInput, tbl_comercios_usuariosUncheckedUpdateWithoutCampaniasInput>
+    create: XOR<tbl_comercios_usuariosCreateWithoutCampaniasInput, tbl_comercios_usuariosUncheckedCreateWithoutCampaniasInput>
+    where?: tbl_comercios_usuariosWhereInput
   }
 
-  export type tbl_comerciosUpdateToOneWithWhereWithoutCampaniasInput = {
-    where?: tbl_comerciosWhereInput
-    data: XOR<tbl_comerciosUpdateWithoutCampaniasInput, tbl_comerciosUncheckedUpdateWithoutCampaniasInput>
+  export type tbl_comercios_usuariosUpdateToOneWithWhereWithoutCampaniasInput = {
+    where?: tbl_comercios_usuariosWhereInput
+    data: XOR<tbl_comercios_usuariosUpdateWithoutCampaniasInput, tbl_comercios_usuariosUncheckedUpdateWithoutCampaniasInput>
   }
 
-  export type tbl_comerciosUpdateWithoutCampaniasInput = {
+  export type tbl_comercios_usuariosUpdateWithoutCampaniasInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
-    nombre?: StringFieldUpdateOperationsInput | string
-    telefono?: StringFieldUpdateOperationsInput | string
-    correo?: StringFieldUpdateOperationsInput | string
-    clientes?: tbl_clientesUpdateManyWithoutComerciosNestedInput
-    usuarios?: tbl_usuariosUpdateOneWithoutComerciosNestedInput
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarios?: tbl_usuariosUpdateOneWithoutComercios_usuariosNestedInput
+    comercios?: tbl_comerciosUpdateOneWithoutComercios_usuariosNestedInput
+    estado?: tbl_estados_usuarioUpdateOneRequiredWithoutComercios_usuariosNestedInput
+    clientes?: tbl_clientesUpdateManyWithoutComercios_usuariosNestedInput
   }
 
-  export type tbl_comerciosUncheckedUpdateWithoutCampaniasInput = {
+  export type tbl_comercios_usuariosUncheckedUpdateWithoutCampaniasInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
-    nombre?: StringFieldUpdateOperationsInput | string
-    telefono?: StringFieldUpdateOperationsInput | string
-    correo?: StringFieldUpdateOperationsInput | string
-    fkusuario_tbl_usuarios?: NullableStringFieldUpdateOperationsInput | string | null
-    clientes?: tbl_clientesUncheckedUpdateManyWithoutComerciosNestedInput
+    fkusuario_tbl_usuarios?: StringFieldUpdateOperationsInput | string
+    fkid_tbl_comercios?: BigIntFieldUpdateOperationsInput | bigint | number
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    clientes?: tbl_clientesUncheckedUpdateManyWithoutComercios_usuariosNestedInput
   }
 
-  export type tbl_comerciosCreateWithoutClientesInput = {
+  export type tbl_comercios_usuariosCreateWithoutClientesInput = {
     pkid?: bigint | number
-    nombre: string
-    telefono: string
-    correo: string
-    campanias?: tbl_campaniasCreateNestedManyWithoutComercioInput
-    usuarios?: tbl_usuariosCreateNestedOneWithoutComerciosInput
+    nivel_acceso: number
+    fecha_asignacion: Date | string
+    usuarios?: tbl_usuariosCreateNestedOneWithoutComercios_usuariosInput
+    comercios?: tbl_comerciosCreateNestedOneWithoutComercios_usuariosInput
+    estado: tbl_estados_usuarioCreateNestedOneWithoutComercios_usuariosInput
+    campanias?: tbl_campaniasCreateNestedManyWithoutComercios_usuariosInput
   }
 
-  export type tbl_comerciosUncheckedCreateWithoutClientesInput = {
+  export type tbl_comercios_usuariosUncheckedCreateWithoutClientesInput = {
     pkid?: bigint | number
-    nombre: string
-    telefono: string
-    correo: string
-    fkusuario_tbl_usuarios?: string | null
-    campanias?: tbl_campaniasUncheckedCreateNestedManyWithoutComercioInput
+    fkusuario_tbl_usuarios: string
+    fkid_tbl_comercios: bigint | number
+    nivel_acceso: number
+    fkid_tbl_estados_usuario: bigint | number
+    fecha_asignacion: Date | string
+    campanias?: tbl_campaniasUncheckedCreateNestedManyWithoutComercios_usuariosInput
   }
 
-  export type tbl_comerciosCreateOrConnectWithoutClientesInput = {
-    where: tbl_comerciosWhereUniqueInput
-    create: XOR<tbl_comerciosCreateWithoutClientesInput, tbl_comerciosUncheckedCreateWithoutClientesInput>
+  export type tbl_comercios_usuariosCreateOrConnectWithoutClientesInput = {
+    where: tbl_comercios_usuariosWhereUniqueInput
+    create: XOR<tbl_comercios_usuariosCreateWithoutClientesInput, tbl_comercios_usuariosUncheckedCreateWithoutClientesInput>
   }
 
   export type tbl_municipiosCreateWithoutClientesInput = {
@@ -22237,33 +23849,35 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type tbl_comerciosUpsertWithoutClientesInput = {
-    update: XOR<tbl_comerciosUpdateWithoutClientesInput, tbl_comerciosUncheckedUpdateWithoutClientesInput>
-    create: XOR<tbl_comerciosCreateWithoutClientesInput, tbl_comerciosUncheckedCreateWithoutClientesInput>
-    where?: tbl_comerciosWhereInput
+  export type tbl_comercios_usuariosUpsertWithoutClientesInput = {
+    update: XOR<tbl_comercios_usuariosUpdateWithoutClientesInput, tbl_comercios_usuariosUncheckedUpdateWithoutClientesInput>
+    create: XOR<tbl_comercios_usuariosCreateWithoutClientesInput, tbl_comercios_usuariosUncheckedCreateWithoutClientesInput>
+    where?: tbl_comercios_usuariosWhereInput
   }
 
-  export type tbl_comerciosUpdateToOneWithWhereWithoutClientesInput = {
-    where?: tbl_comerciosWhereInput
-    data: XOR<tbl_comerciosUpdateWithoutClientesInput, tbl_comerciosUncheckedUpdateWithoutClientesInput>
+  export type tbl_comercios_usuariosUpdateToOneWithWhereWithoutClientesInput = {
+    where?: tbl_comercios_usuariosWhereInput
+    data: XOR<tbl_comercios_usuariosUpdateWithoutClientesInput, tbl_comercios_usuariosUncheckedUpdateWithoutClientesInput>
   }
 
-  export type tbl_comerciosUpdateWithoutClientesInput = {
+  export type tbl_comercios_usuariosUpdateWithoutClientesInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
-    nombre?: StringFieldUpdateOperationsInput | string
-    telefono?: StringFieldUpdateOperationsInput | string
-    correo?: StringFieldUpdateOperationsInput | string
-    campanias?: tbl_campaniasUpdateManyWithoutComercioNestedInput
-    usuarios?: tbl_usuariosUpdateOneWithoutComerciosNestedInput
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarios?: tbl_usuariosUpdateOneWithoutComercios_usuariosNestedInput
+    comercios?: tbl_comerciosUpdateOneWithoutComercios_usuariosNestedInput
+    estado?: tbl_estados_usuarioUpdateOneRequiredWithoutComercios_usuariosNestedInput
+    campanias?: tbl_campaniasUpdateManyWithoutComercios_usuariosNestedInput
   }
 
-  export type tbl_comerciosUncheckedUpdateWithoutClientesInput = {
+  export type tbl_comercios_usuariosUncheckedUpdateWithoutClientesInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
-    nombre?: StringFieldUpdateOperationsInput | string
-    telefono?: StringFieldUpdateOperationsInput | string
-    correo?: StringFieldUpdateOperationsInput | string
-    fkusuario_tbl_usuarios?: NullableStringFieldUpdateOperationsInput | string | null
-    campanias?: tbl_campaniasUncheckedUpdateManyWithoutComercioNestedInput
+    fkusuario_tbl_usuarios?: StringFieldUpdateOperationsInput | string
+    fkid_tbl_comercios?: BigIntFieldUpdateOperationsInput | bigint | number
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    campanias?: tbl_campaniasUncheckedUpdateManyWithoutComercios_usuariosNestedInput
   }
 
   export type tbl_municipiosUpsertWithoutClientesInput = {
@@ -22486,7 +24100,7 @@ export namespace Prisma {
   export type tbl_usuariosCreateWithoutEstadoInput = {
     pkusuario: string
     contrasena: string
-    comercios?: tbl_comerciosCreateNestedManyWithoutUsuariosInput
+    comercios_usuarios?: tbl_comercios_usuariosCreateNestedManyWithoutUsuariosInput
     persona: tbl_personasCreateNestedOneWithoutUsuariosInput
     rol: tbl_rolesCreateNestedOneWithoutUsuariosInput
   }
@@ -22496,7 +24110,7 @@ export namespace Prisma {
     contrasena: string
     fkid_tbl_roles: bigint | number
     fkid_tbl_personas: bigint | number
-    comercios?: tbl_comerciosUncheckedCreateNestedManyWithoutUsuariosInput
+    comercios_usuarios?: tbl_comercios_usuariosUncheckedCreateNestedManyWithoutUsuariosInput
   }
 
   export type tbl_usuariosCreateOrConnectWithoutEstadoInput = {
@@ -22506,6 +24120,36 @@ export namespace Prisma {
 
   export type tbl_usuariosCreateManyEstadoInputEnvelope = {
     data: tbl_usuariosCreateManyEstadoInput | tbl_usuariosCreateManyEstadoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type tbl_comercios_usuariosCreateWithoutEstadoInput = {
+    pkid?: bigint | number
+    nivel_acceso: number
+    fecha_asignacion: Date | string
+    usuarios?: tbl_usuariosCreateNestedOneWithoutComercios_usuariosInput
+    comercios?: tbl_comerciosCreateNestedOneWithoutComercios_usuariosInput
+    campanias?: tbl_campaniasCreateNestedManyWithoutComercios_usuariosInput
+    clientes?: tbl_clientesCreateNestedManyWithoutComercios_usuariosInput
+  }
+
+  export type tbl_comercios_usuariosUncheckedCreateWithoutEstadoInput = {
+    pkid?: bigint | number
+    fkusuario_tbl_usuarios: string
+    fkid_tbl_comercios: bigint | number
+    nivel_acceso: number
+    fecha_asignacion: Date | string
+    campanias?: tbl_campaniasUncheckedCreateNestedManyWithoutComercios_usuariosInput
+    clientes?: tbl_clientesUncheckedCreateNestedManyWithoutComercios_usuariosInput
+  }
+
+  export type tbl_comercios_usuariosCreateOrConnectWithoutEstadoInput = {
+    where: tbl_comercios_usuariosWhereUniqueInput
+    create: XOR<tbl_comercios_usuariosCreateWithoutEstadoInput, tbl_comercios_usuariosUncheckedCreateWithoutEstadoInput>
+  }
+
+  export type tbl_comercios_usuariosCreateManyEstadoInputEnvelope = {
+    data: tbl_comercios_usuariosCreateManyEstadoInput | tbl_comercios_usuariosCreateManyEstadoInput[]
     skipDuplicates?: boolean
   }
 
@@ -22536,6 +24180,34 @@ export namespace Prisma {
     fkid_tbl_personas?: BigIntFilter<"tbl_usuarios"> | bigint | number
   }
 
+  export type tbl_comercios_usuariosUpsertWithWhereUniqueWithoutEstadoInput = {
+    where: tbl_comercios_usuariosWhereUniqueInput
+    update: XOR<tbl_comercios_usuariosUpdateWithoutEstadoInput, tbl_comercios_usuariosUncheckedUpdateWithoutEstadoInput>
+    create: XOR<tbl_comercios_usuariosCreateWithoutEstadoInput, tbl_comercios_usuariosUncheckedCreateWithoutEstadoInput>
+  }
+
+  export type tbl_comercios_usuariosUpdateWithWhereUniqueWithoutEstadoInput = {
+    where: tbl_comercios_usuariosWhereUniqueInput
+    data: XOR<tbl_comercios_usuariosUpdateWithoutEstadoInput, tbl_comercios_usuariosUncheckedUpdateWithoutEstadoInput>
+  }
+
+  export type tbl_comercios_usuariosUpdateManyWithWhereWithoutEstadoInput = {
+    where: tbl_comercios_usuariosScalarWhereInput
+    data: XOR<tbl_comercios_usuariosUpdateManyMutationInput, tbl_comercios_usuariosUncheckedUpdateManyWithoutEstadoInput>
+  }
+
+  export type tbl_comercios_usuariosScalarWhereInput = {
+    AND?: tbl_comercios_usuariosScalarWhereInput | tbl_comercios_usuariosScalarWhereInput[]
+    OR?: tbl_comercios_usuariosScalarWhereInput[]
+    NOT?: tbl_comercios_usuariosScalarWhereInput | tbl_comercios_usuariosScalarWhereInput[]
+    pkid?: BigIntFilter<"tbl_comercios_usuarios"> | bigint | number
+    fkusuario_tbl_usuarios?: StringFilter<"tbl_comercios_usuarios"> | string
+    fkid_tbl_comercios?: BigIntFilter<"tbl_comercios_usuarios"> | bigint | number
+    nivel_acceso?: IntFilter<"tbl_comercios_usuarios"> | number
+    fkid_tbl_estados_usuario?: BigIntFilter<"tbl_comercios_usuarios"> | bigint | number
+    fecha_asignacion?: DateTimeFilter<"tbl_comercios_usuarios"> | Date | string
+  }
+
   export type tbl_clientesCreateWithoutMunicipiosInput = {
     nombres: string
     apellidos: string
@@ -22543,7 +24215,7 @@ export namespace Prisma {
     direccion: string
     pkid?: bigint | number
     telefono: string
-    comercios?: tbl_comerciosCreateNestedOneWithoutClientesInput
+    comercios_usuarios?: tbl_comercios_usuariosCreateNestedOneWithoutClientesInput
     pedidos?: tbl_pedidosCreateNestedManyWithoutClientesInput
   }
 
@@ -22552,7 +24224,7 @@ export namespace Prisma {
     apellidos: string
     correo: string
     direccion: string
-    fkid_tbl_comercios?: bigint | number | null
+    fkid_tbl_comercios_usuarios?: bigint | number | null
     pkid?: bigint | number
     telefono: string
     pedidos?: tbl_pedidosUncheckedCreateNestedManyWithoutClientesInput
@@ -22642,7 +24314,7 @@ export namespace Prisma {
     correo?: StringFilter<"tbl_clientes"> | string
     direccion?: StringFilter<"tbl_clientes"> | string
     fkid_tbl_municipios?: BigIntNullableFilter<"tbl_clientes"> | bigint | number | null
-    fkid_tbl_comercios?: BigIntNullableFilter<"tbl_clientes"> | bigint | number | null
+    fkid_tbl_comercios_usuarios?: BigIntNullableFilter<"tbl_clientes"> | bigint | number | null
     pkid?: BigIntFilter<"tbl_clientes"> | bigint | number
     telefono?: StringFilter<"tbl_clientes"> | string
   }
@@ -22719,7 +24391,7 @@ export namespace Prisma {
     direccion: string
     pkid?: bigint | number
     telefono: string
-    comercios?: tbl_comerciosCreateNestedOneWithoutClientesInput
+    comercios_usuarios?: tbl_comercios_usuariosCreateNestedOneWithoutClientesInput
     municipios?: tbl_municipiosCreateNestedOneWithoutClientesInput
   }
 
@@ -22729,7 +24401,7 @@ export namespace Prisma {
     correo: string
     direccion: string
     fkid_tbl_municipios?: bigint | number | null
-    fkid_tbl_comercios?: bigint | number | null
+    fkid_tbl_comercios_usuarios?: bigint | number | null
     pkid?: bigint | number
     telefono: string
   }
@@ -22823,7 +24495,7 @@ export namespace Prisma {
     direccion?: StringFieldUpdateOperationsInput | string
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     telefono?: StringFieldUpdateOperationsInput | string
-    comercios?: tbl_comerciosUpdateOneWithoutClientesNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUpdateOneWithoutClientesNestedInput
     municipios?: tbl_municipiosUpdateOneWithoutClientesNestedInput
   }
 
@@ -22833,7 +24505,7 @@ export namespace Prisma {
     correo?: StringFieldUpdateOperationsInput | string
     direccion?: StringFieldUpdateOperationsInput | string
     fkid_tbl_municipios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    fkid_tbl_comercios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_comercios_usuarios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     telefono?: StringFieldUpdateOperationsInput | string
   }
@@ -22891,7 +24563,7 @@ export namespace Prisma {
   export type tbl_usuariosCreateWithoutPersonaInput = {
     pkusuario: string
     contrasena: string
-    comercios?: tbl_comerciosCreateNestedManyWithoutUsuariosInput
+    comercios_usuarios?: tbl_comercios_usuariosCreateNestedManyWithoutUsuariosInput
     estado: tbl_estados_usuarioCreateNestedOneWithoutUsuariosInput
     rol: tbl_rolesCreateNestedOneWithoutUsuariosInput
   }
@@ -22901,7 +24573,7 @@ export namespace Prisma {
     contrasena: string
     fkid_tbl_roles: bigint | number
     fkid_tbl_estados_usuario: bigint | number
-    comercios?: tbl_comerciosUncheckedCreateNestedManyWithoutUsuariosInput
+    comercios_usuarios?: tbl_comercios_usuariosUncheckedCreateNestedManyWithoutUsuariosInput
   }
 
   export type tbl_usuariosCreateOrConnectWithoutPersonaInput = {
@@ -23076,7 +24748,7 @@ export namespace Prisma {
   export type tbl_usuariosCreateWithoutRolInput = {
     pkusuario: string
     contrasena: string
-    comercios?: tbl_comerciosCreateNestedManyWithoutUsuariosInput
+    comercios_usuarios?: tbl_comercios_usuariosCreateNestedManyWithoutUsuariosInput
     estado: tbl_estados_usuarioCreateNestedOneWithoutUsuariosInput
     persona: tbl_personasCreateNestedOneWithoutUsuariosInput
   }
@@ -23086,7 +24758,7 @@ export namespace Prisma {
     contrasena: string
     fkid_tbl_estados_usuario: bigint | number
     fkid_tbl_personas: bigint | number
-    comercios?: tbl_comerciosUncheckedCreateNestedManyWithoutUsuariosInput
+    comercios_usuarios?: tbl_comercios_usuariosUncheckedCreateNestedManyWithoutUsuariosInput
   }
 
   export type tbl_usuariosCreateOrConnectWithoutRolInput = {
@@ -23115,33 +24787,138 @@ export namespace Prisma {
     data: XOR<tbl_usuariosUpdateManyMutationInput, tbl_usuariosUncheckedUpdateManyWithoutRolInput>
   }
 
-  export type tbl_campaniasCreateWithoutComercioInput = {
+  export type tbl_comercios_usuariosCreateWithoutComerciosInput = {
     pkid?: bigint | number
-    nombre: string
-    presupuesto_gastado: number
-    fecha_inicio: Date | string
-    fecha_fin: Date | string
+    nivel_acceso: number
+    fecha_asignacion: Date | string
+    usuarios?: tbl_usuariosCreateNestedOneWithoutComercios_usuariosInput
+    estado: tbl_estados_usuarioCreateNestedOneWithoutComercios_usuariosInput
+    campanias?: tbl_campaniasCreateNestedManyWithoutComercios_usuariosInput
+    clientes?: tbl_clientesCreateNestedManyWithoutComercios_usuariosInput
   }
 
-  export type tbl_campaniasUncheckedCreateWithoutComercioInput = {
+  export type tbl_comercios_usuariosUncheckedCreateWithoutComerciosInput = {
     pkid?: bigint | number
-    nombre: string
-    presupuesto_gastado: number
-    fecha_inicio: Date | string
-    fecha_fin: Date | string
+    fkusuario_tbl_usuarios: string
+    nivel_acceso: number
+    fkid_tbl_estados_usuario: bigint | number
+    fecha_asignacion: Date | string
+    campanias?: tbl_campaniasUncheckedCreateNestedManyWithoutComercios_usuariosInput
+    clientes?: tbl_clientesUncheckedCreateNestedManyWithoutComercios_usuariosInput
   }
 
-  export type tbl_campaniasCreateOrConnectWithoutComercioInput = {
-    where: tbl_campaniasWhereUniqueInput
-    create: XOR<tbl_campaniasCreateWithoutComercioInput, tbl_campaniasUncheckedCreateWithoutComercioInput>
+  export type tbl_comercios_usuariosCreateOrConnectWithoutComerciosInput = {
+    where: tbl_comercios_usuariosWhereUniqueInput
+    create: XOR<tbl_comercios_usuariosCreateWithoutComerciosInput, tbl_comercios_usuariosUncheckedCreateWithoutComerciosInput>
   }
 
-  export type tbl_campaniasCreateManyComercioInputEnvelope = {
-    data: tbl_campaniasCreateManyComercioInput | tbl_campaniasCreateManyComercioInput[]
+  export type tbl_comercios_usuariosCreateManyComerciosInputEnvelope = {
+    data: tbl_comercios_usuariosCreateManyComerciosInput | tbl_comercios_usuariosCreateManyComerciosInput[]
     skipDuplicates?: boolean
   }
 
-  export type tbl_clientesCreateWithoutComerciosInput = {
+  export type tbl_comercios_usuariosUpsertWithWhereUniqueWithoutComerciosInput = {
+    where: tbl_comercios_usuariosWhereUniqueInput
+    update: XOR<tbl_comercios_usuariosUpdateWithoutComerciosInput, tbl_comercios_usuariosUncheckedUpdateWithoutComerciosInput>
+    create: XOR<tbl_comercios_usuariosCreateWithoutComerciosInput, tbl_comercios_usuariosUncheckedCreateWithoutComerciosInput>
+  }
+
+  export type tbl_comercios_usuariosUpdateWithWhereUniqueWithoutComerciosInput = {
+    where: tbl_comercios_usuariosWhereUniqueInput
+    data: XOR<tbl_comercios_usuariosUpdateWithoutComerciosInput, tbl_comercios_usuariosUncheckedUpdateWithoutComerciosInput>
+  }
+
+  export type tbl_comercios_usuariosUpdateManyWithWhereWithoutComerciosInput = {
+    where: tbl_comercios_usuariosScalarWhereInput
+    data: XOR<tbl_comercios_usuariosUpdateManyMutationInput, tbl_comercios_usuariosUncheckedUpdateManyWithoutComerciosInput>
+  }
+
+  export type tbl_usuariosCreateWithoutComercios_usuariosInput = {
+    pkusuario: string
+    contrasena: string
+    estado: tbl_estados_usuarioCreateNestedOneWithoutUsuariosInput
+    persona: tbl_personasCreateNestedOneWithoutUsuariosInput
+    rol: tbl_rolesCreateNestedOneWithoutUsuariosInput
+  }
+
+  export type tbl_usuariosUncheckedCreateWithoutComercios_usuariosInput = {
+    pkusuario: string
+    contrasena: string
+    fkid_tbl_roles: bigint | number
+    fkid_tbl_estados_usuario: bigint | number
+    fkid_tbl_personas: bigint | number
+  }
+
+  export type tbl_usuariosCreateOrConnectWithoutComercios_usuariosInput = {
+    where: tbl_usuariosWhereUniqueInput
+    create: XOR<tbl_usuariosCreateWithoutComercios_usuariosInput, tbl_usuariosUncheckedCreateWithoutComercios_usuariosInput>
+  }
+
+  export type tbl_comerciosCreateWithoutComercios_usuariosInput = {
+    pkid?: bigint | number
+    nombre: string
+    telefono: string
+    correo: string
+  }
+
+  export type tbl_comerciosUncheckedCreateWithoutComercios_usuariosInput = {
+    pkid?: bigint | number
+    nombre: string
+    telefono: string
+    correo: string
+  }
+
+  export type tbl_comerciosCreateOrConnectWithoutComercios_usuariosInput = {
+    where: tbl_comerciosWhereUniqueInput
+    create: XOR<tbl_comerciosCreateWithoutComercios_usuariosInput, tbl_comerciosUncheckedCreateWithoutComercios_usuariosInput>
+  }
+
+  export type tbl_estados_usuarioCreateWithoutComercios_usuariosInput = {
+    pkid?: bigint | number
+    nombre: string
+    nomenclatura: string
+    usuarios?: tbl_usuariosCreateNestedManyWithoutEstadoInput
+  }
+
+  export type tbl_estados_usuarioUncheckedCreateWithoutComercios_usuariosInput = {
+    pkid?: bigint | number
+    nombre: string
+    nomenclatura: string
+    usuarios?: tbl_usuariosUncheckedCreateNestedManyWithoutEstadoInput
+  }
+
+  export type tbl_estados_usuarioCreateOrConnectWithoutComercios_usuariosInput = {
+    where: tbl_estados_usuarioWhereUniqueInput
+    create: XOR<tbl_estados_usuarioCreateWithoutComercios_usuariosInput, tbl_estados_usuarioUncheckedCreateWithoutComercios_usuariosInput>
+  }
+
+  export type tbl_campaniasCreateWithoutComercios_usuariosInput = {
+    pkid?: bigint | number
+    nombre: string
+    presupuesto_gastado: number
+    fecha_inicio: Date | string
+    fecha_fin: Date | string
+  }
+
+  export type tbl_campaniasUncheckedCreateWithoutComercios_usuariosInput = {
+    pkid?: bigint | number
+    nombre: string
+    presupuesto_gastado: number
+    fecha_inicio: Date | string
+    fecha_fin: Date | string
+  }
+
+  export type tbl_campaniasCreateOrConnectWithoutComercios_usuariosInput = {
+    where: tbl_campaniasWhereUniqueInput
+    create: XOR<tbl_campaniasCreateWithoutComercios_usuariosInput, tbl_campaniasUncheckedCreateWithoutComercios_usuariosInput>
+  }
+
+  export type tbl_campaniasCreateManyComercios_usuariosInputEnvelope = {
+    data: tbl_campaniasCreateManyComercios_usuariosInput | tbl_campaniasCreateManyComercios_usuariosInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type tbl_clientesCreateWithoutComercios_usuariosInput = {
     nombres: string
     apellidos: string
     correo: string
@@ -23152,7 +24929,7 @@ export namespace Prisma {
     pedidos?: tbl_pedidosCreateNestedManyWithoutClientesInput
   }
 
-  export type tbl_clientesUncheckedCreateWithoutComerciosInput = {
+  export type tbl_clientesUncheckedCreateWithoutComercios_usuariosInput = {
     nombres: string
     apellidos: string
     correo: string
@@ -23163,51 +24940,107 @@ export namespace Prisma {
     pedidos?: tbl_pedidosUncheckedCreateNestedManyWithoutClientesInput
   }
 
-  export type tbl_clientesCreateOrConnectWithoutComerciosInput = {
+  export type tbl_clientesCreateOrConnectWithoutComercios_usuariosInput = {
     where: tbl_clientesWhereUniqueInput
-    create: XOR<tbl_clientesCreateWithoutComerciosInput, tbl_clientesUncheckedCreateWithoutComerciosInput>
+    create: XOR<tbl_clientesCreateWithoutComercios_usuariosInput, tbl_clientesUncheckedCreateWithoutComercios_usuariosInput>
   }
 
-  export type tbl_clientesCreateManyComerciosInputEnvelope = {
-    data: tbl_clientesCreateManyComerciosInput | tbl_clientesCreateManyComerciosInput[]
+  export type tbl_clientesCreateManyComercios_usuariosInputEnvelope = {
+    data: tbl_clientesCreateManyComercios_usuariosInput | tbl_clientesCreateManyComercios_usuariosInput[]
     skipDuplicates?: boolean
   }
 
-  export type tbl_usuariosCreateWithoutComerciosInput = {
-    pkusuario: string
-    contrasena: string
-    estado: tbl_estados_usuarioCreateNestedOneWithoutUsuariosInput
-    persona: tbl_personasCreateNestedOneWithoutUsuariosInput
-    rol: tbl_rolesCreateNestedOneWithoutUsuariosInput
+  export type tbl_usuariosUpsertWithoutComercios_usuariosInput = {
+    update: XOR<tbl_usuariosUpdateWithoutComercios_usuariosInput, tbl_usuariosUncheckedUpdateWithoutComercios_usuariosInput>
+    create: XOR<tbl_usuariosCreateWithoutComercios_usuariosInput, tbl_usuariosUncheckedCreateWithoutComercios_usuariosInput>
+    where?: tbl_usuariosWhereInput
   }
 
-  export type tbl_usuariosUncheckedCreateWithoutComerciosInput = {
-    pkusuario: string
-    contrasena: string
-    fkid_tbl_roles: bigint | number
-    fkid_tbl_estados_usuario: bigint | number
-    fkid_tbl_personas: bigint | number
+  export type tbl_usuariosUpdateToOneWithWhereWithoutComercios_usuariosInput = {
+    where?: tbl_usuariosWhereInput
+    data: XOR<tbl_usuariosUpdateWithoutComercios_usuariosInput, tbl_usuariosUncheckedUpdateWithoutComercios_usuariosInput>
   }
 
-  export type tbl_usuariosCreateOrConnectWithoutComerciosInput = {
-    where: tbl_usuariosWhereUniqueInput
-    create: XOR<tbl_usuariosCreateWithoutComerciosInput, tbl_usuariosUncheckedCreateWithoutComerciosInput>
+  export type tbl_usuariosUpdateWithoutComercios_usuariosInput = {
+    pkusuario?: StringFieldUpdateOperationsInput | string
+    contrasena?: StringFieldUpdateOperationsInput | string
+    estado?: tbl_estados_usuarioUpdateOneRequiredWithoutUsuariosNestedInput
+    persona?: tbl_personasUpdateOneRequiredWithoutUsuariosNestedInput
+    rol?: tbl_rolesUpdateOneRequiredWithoutUsuariosNestedInput
   }
 
-  export type tbl_campaniasUpsertWithWhereUniqueWithoutComercioInput = {
+  export type tbl_usuariosUncheckedUpdateWithoutComercios_usuariosInput = {
+    pkusuario?: StringFieldUpdateOperationsInput | string
+    contrasena?: StringFieldUpdateOperationsInput | string
+    fkid_tbl_roles?: BigIntFieldUpdateOperationsInput | bigint | number
+    fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
+    fkid_tbl_personas?: BigIntFieldUpdateOperationsInput | bigint | number
+  }
+
+  export type tbl_comerciosUpsertWithoutComercios_usuariosInput = {
+    update: XOR<tbl_comerciosUpdateWithoutComercios_usuariosInput, tbl_comerciosUncheckedUpdateWithoutComercios_usuariosInput>
+    create: XOR<tbl_comerciosCreateWithoutComercios_usuariosInput, tbl_comerciosUncheckedCreateWithoutComercios_usuariosInput>
+    where?: tbl_comerciosWhereInput
+  }
+
+  export type tbl_comerciosUpdateToOneWithWhereWithoutComercios_usuariosInput = {
+    where?: tbl_comerciosWhereInput
+    data: XOR<tbl_comerciosUpdateWithoutComercios_usuariosInput, tbl_comerciosUncheckedUpdateWithoutComercios_usuariosInput>
+  }
+
+  export type tbl_comerciosUpdateWithoutComercios_usuariosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    correo?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type tbl_comerciosUncheckedUpdateWithoutComercios_usuariosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    telefono?: StringFieldUpdateOperationsInput | string
+    correo?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type tbl_estados_usuarioUpsertWithoutComercios_usuariosInput = {
+    update: XOR<tbl_estados_usuarioUpdateWithoutComercios_usuariosInput, tbl_estados_usuarioUncheckedUpdateWithoutComercios_usuariosInput>
+    create: XOR<tbl_estados_usuarioCreateWithoutComercios_usuariosInput, tbl_estados_usuarioUncheckedCreateWithoutComercios_usuariosInput>
+    where?: tbl_estados_usuarioWhereInput
+  }
+
+  export type tbl_estados_usuarioUpdateToOneWithWhereWithoutComercios_usuariosInput = {
+    where?: tbl_estados_usuarioWhereInput
+    data: XOR<tbl_estados_usuarioUpdateWithoutComercios_usuariosInput, tbl_estados_usuarioUncheckedUpdateWithoutComercios_usuariosInput>
+  }
+
+  export type tbl_estados_usuarioUpdateWithoutComercios_usuariosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
+    usuarios?: tbl_usuariosUpdateManyWithoutEstadoNestedInput
+  }
+
+  export type tbl_estados_usuarioUncheckedUpdateWithoutComercios_usuariosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nomenclatura?: StringFieldUpdateOperationsInput | string
+    usuarios?: tbl_usuariosUncheckedUpdateManyWithoutEstadoNestedInput
+  }
+
+  export type tbl_campaniasUpsertWithWhereUniqueWithoutComercios_usuariosInput = {
     where: tbl_campaniasWhereUniqueInput
-    update: XOR<tbl_campaniasUpdateWithoutComercioInput, tbl_campaniasUncheckedUpdateWithoutComercioInput>
-    create: XOR<tbl_campaniasCreateWithoutComercioInput, tbl_campaniasUncheckedCreateWithoutComercioInput>
+    update: XOR<tbl_campaniasUpdateWithoutComercios_usuariosInput, tbl_campaniasUncheckedUpdateWithoutComercios_usuariosInput>
+    create: XOR<tbl_campaniasCreateWithoutComercios_usuariosInput, tbl_campaniasUncheckedCreateWithoutComercios_usuariosInput>
   }
 
-  export type tbl_campaniasUpdateWithWhereUniqueWithoutComercioInput = {
+  export type tbl_campaniasUpdateWithWhereUniqueWithoutComercios_usuariosInput = {
     where: tbl_campaniasWhereUniqueInput
-    data: XOR<tbl_campaniasUpdateWithoutComercioInput, tbl_campaniasUncheckedUpdateWithoutComercioInput>
+    data: XOR<tbl_campaniasUpdateWithoutComercios_usuariosInput, tbl_campaniasUncheckedUpdateWithoutComercios_usuariosInput>
   }
 
-  export type tbl_campaniasUpdateManyWithWhereWithoutComercioInput = {
+  export type tbl_campaniasUpdateManyWithWhereWithoutComercios_usuariosInput = {
     where: tbl_campaniasScalarWhereInput
-    data: XOR<tbl_campaniasUpdateManyMutationInput, tbl_campaniasUncheckedUpdateManyWithoutComercioInput>
+    data: XOR<tbl_campaniasUpdateManyMutationInput, tbl_campaniasUncheckedUpdateManyWithoutComercios_usuariosInput>
   }
 
   export type tbl_campaniasScalarWhereInput = {
@@ -23219,50 +25052,23 @@ export namespace Prisma {
     presupuesto_gastado?: FloatFilter<"tbl_campanias"> | number
     fecha_inicio?: DateTimeFilter<"tbl_campanias"> | Date | string
     fecha_fin?: DateTimeFilter<"tbl_campanias"> | Date | string
-    fkid_tbl_comercios?: BigIntNullableFilter<"tbl_campanias"> | bigint | number | null
+    fkid_tbl_comercios_usuarios?: BigIntNullableFilter<"tbl_campanias"> | bigint | number | null
   }
 
-  export type tbl_clientesUpsertWithWhereUniqueWithoutComerciosInput = {
+  export type tbl_clientesUpsertWithWhereUniqueWithoutComercios_usuariosInput = {
     where: tbl_clientesWhereUniqueInput
-    update: XOR<tbl_clientesUpdateWithoutComerciosInput, tbl_clientesUncheckedUpdateWithoutComerciosInput>
-    create: XOR<tbl_clientesCreateWithoutComerciosInput, tbl_clientesUncheckedCreateWithoutComerciosInput>
+    update: XOR<tbl_clientesUpdateWithoutComercios_usuariosInput, tbl_clientesUncheckedUpdateWithoutComercios_usuariosInput>
+    create: XOR<tbl_clientesCreateWithoutComercios_usuariosInput, tbl_clientesUncheckedCreateWithoutComercios_usuariosInput>
   }
 
-  export type tbl_clientesUpdateWithWhereUniqueWithoutComerciosInput = {
+  export type tbl_clientesUpdateWithWhereUniqueWithoutComercios_usuariosInput = {
     where: tbl_clientesWhereUniqueInput
-    data: XOR<tbl_clientesUpdateWithoutComerciosInput, tbl_clientesUncheckedUpdateWithoutComerciosInput>
+    data: XOR<tbl_clientesUpdateWithoutComercios_usuariosInput, tbl_clientesUncheckedUpdateWithoutComercios_usuariosInput>
   }
 
-  export type tbl_clientesUpdateManyWithWhereWithoutComerciosInput = {
+  export type tbl_clientesUpdateManyWithWhereWithoutComercios_usuariosInput = {
     where: tbl_clientesScalarWhereInput
-    data: XOR<tbl_clientesUpdateManyMutationInput, tbl_clientesUncheckedUpdateManyWithoutComerciosInput>
-  }
-
-  export type tbl_usuariosUpsertWithoutComerciosInput = {
-    update: XOR<tbl_usuariosUpdateWithoutComerciosInput, tbl_usuariosUncheckedUpdateWithoutComerciosInput>
-    create: XOR<tbl_usuariosCreateWithoutComerciosInput, tbl_usuariosUncheckedCreateWithoutComerciosInput>
-    where?: tbl_usuariosWhereInput
-  }
-
-  export type tbl_usuariosUpdateToOneWithWhereWithoutComerciosInput = {
-    where?: tbl_usuariosWhereInput
-    data: XOR<tbl_usuariosUpdateWithoutComerciosInput, tbl_usuariosUncheckedUpdateWithoutComerciosInput>
-  }
-
-  export type tbl_usuariosUpdateWithoutComerciosInput = {
-    pkusuario?: StringFieldUpdateOperationsInput | string
-    contrasena?: StringFieldUpdateOperationsInput | string
-    estado?: tbl_estados_usuarioUpdateOneRequiredWithoutUsuariosNestedInput
-    persona?: tbl_personasUpdateOneRequiredWithoutUsuariosNestedInput
-    rol?: tbl_rolesUpdateOneRequiredWithoutUsuariosNestedInput
-  }
-
-  export type tbl_usuariosUncheckedUpdateWithoutComerciosInput = {
-    pkusuario?: StringFieldUpdateOperationsInput | string
-    contrasena?: StringFieldUpdateOperationsInput | string
-    fkid_tbl_roles?: BigIntFieldUpdateOperationsInput | bigint | number
-    fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
-    fkid_tbl_personas?: BigIntFieldUpdateOperationsInput | bigint | number
+    data: XOR<tbl_clientesUpdateManyMutationInput, tbl_clientesUncheckedUpdateManyWithoutComercios_usuariosInput>
   }
 
   export type tbl_pedidosCreateWithoutTransportadorasInput = {
@@ -23313,31 +25119,33 @@ export namespace Prisma {
     data: XOR<tbl_pedidosUpdateManyMutationInput, tbl_pedidosUncheckedUpdateManyWithoutTransportadorasInput>
   }
 
-  export type tbl_comerciosCreateWithoutUsuariosInput = {
+  export type tbl_comercios_usuariosCreateWithoutUsuariosInput = {
     pkid?: bigint | number
-    nombre: string
-    telefono: string
-    correo: string
-    campanias?: tbl_campaniasCreateNestedManyWithoutComercioInput
-    clientes?: tbl_clientesCreateNestedManyWithoutComerciosInput
+    nivel_acceso: number
+    fecha_asignacion: Date | string
+    comercios?: tbl_comerciosCreateNestedOneWithoutComercios_usuariosInput
+    estado: tbl_estados_usuarioCreateNestedOneWithoutComercios_usuariosInput
+    campanias?: tbl_campaniasCreateNestedManyWithoutComercios_usuariosInput
+    clientes?: tbl_clientesCreateNestedManyWithoutComercios_usuariosInput
   }
 
-  export type tbl_comerciosUncheckedCreateWithoutUsuariosInput = {
+  export type tbl_comercios_usuariosUncheckedCreateWithoutUsuariosInput = {
     pkid?: bigint | number
-    nombre: string
-    telefono: string
-    correo: string
-    campanias?: tbl_campaniasUncheckedCreateNestedManyWithoutComercioInput
-    clientes?: tbl_clientesUncheckedCreateNestedManyWithoutComerciosInput
+    fkid_tbl_comercios: bigint | number
+    nivel_acceso: number
+    fkid_tbl_estados_usuario: bigint | number
+    fecha_asignacion: Date | string
+    campanias?: tbl_campaniasUncheckedCreateNestedManyWithoutComercios_usuariosInput
+    clientes?: tbl_clientesUncheckedCreateNestedManyWithoutComercios_usuariosInput
   }
 
-  export type tbl_comerciosCreateOrConnectWithoutUsuariosInput = {
-    where: tbl_comerciosWhereUniqueInput
-    create: XOR<tbl_comerciosCreateWithoutUsuariosInput, tbl_comerciosUncheckedCreateWithoutUsuariosInput>
+  export type tbl_comercios_usuariosCreateOrConnectWithoutUsuariosInput = {
+    where: tbl_comercios_usuariosWhereUniqueInput
+    create: XOR<tbl_comercios_usuariosCreateWithoutUsuariosInput, tbl_comercios_usuariosUncheckedCreateWithoutUsuariosInput>
   }
 
-  export type tbl_comerciosCreateManyUsuariosInputEnvelope = {
-    data: tbl_comerciosCreateManyUsuariosInput | tbl_comerciosCreateManyUsuariosInput[]
+  export type tbl_comercios_usuariosCreateManyUsuariosInputEnvelope = {
+    data: tbl_comercios_usuariosCreateManyUsuariosInput | tbl_comercios_usuariosCreateManyUsuariosInput[]
     skipDuplicates?: boolean
   }
 
@@ -23345,12 +25153,14 @@ export namespace Prisma {
     pkid?: bigint | number
     nombre: string
     nomenclatura: string
+    comercios_usuarios?: tbl_comercios_usuariosCreateNestedManyWithoutEstadoInput
   }
 
   export type tbl_estados_usuarioUncheckedCreateWithoutUsuariosInput = {
     pkid?: bigint | number
     nombre: string
     nomenclatura: string
+    comercios_usuarios?: tbl_comercios_usuariosUncheckedCreateNestedManyWithoutEstadoInput
   }
 
   export type tbl_estados_usuarioCreateOrConnectWithoutUsuariosInput = {
@@ -23394,31 +25204,20 @@ export namespace Prisma {
     create: XOR<tbl_rolesCreateWithoutUsuariosInput, tbl_rolesUncheckedCreateWithoutUsuariosInput>
   }
 
-  export type tbl_comerciosUpsertWithWhereUniqueWithoutUsuariosInput = {
-    where: tbl_comerciosWhereUniqueInput
-    update: XOR<tbl_comerciosUpdateWithoutUsuariosInput, tbl_comerciosUncheckedUpdateWithoutUsuariosInput>
-    create: XOR<tbl_comerciosCreateWithoutUsuariosInput, tbl_comerciosUncheckedCreateWithoutUsuariosInput>
+  export type tbl_comercios_usuariosUpsertWithWhereUniqueWithoutUsuariosInput = {
+    where: tbl_comercios_usuariosWhereUniqueInput
+    update: XOR<tbl_comercios_usuariosUpdateWithoutUsuariosInput, tbl_comercios_usuariosUncheckedUpdateWithoutUsuariosInput>
+    create: XOR<tbl_comercios_usuariosCreateWithoutUsuariosInput, tbl_comercios_usuariosUncheckedCreateWithoutUsuariosInput>
   }
 
-  export type tbl_comerciosUpdateWithWhereUniqueWithoutUsuariosInput = {
-    where: tbl_comerciosWhereUniqueInput
-    data: XOR<tbl_comerciosUpdateWithoutUsuariosInput, tbl_comerciosUncheckedUpdateWithoutUsuariosInput>
+  export type tbl_comercios_usuariosUpdateWithWhereUniqueWithoutUsuariosInput = {
+    where: tbl_comercios_usuariosWhereUniqueInput
+    data: XOR<tbl_comercios_usuariosUpdateWithoutUsuariosInput, tbl_comercios_usuariosUncheckedUpdateWithoutUsuariosInput>
   }
 
-  export type tbl_comerciosUpdateManyWithWhereWithoutUsuariosInput = {
-    where: tbl_comerciosScalarWhereInput
-    data: XOR<tbl_comerciosUpdateManyMutationInput, tbl_comerciosUncheckedUpdateManyWithoutUsuariosInput>
-  }
-
-  export type tbl_comerciosScalarWhereInput = {
-    AND?: tbl_comerciosScalarWhereInput | tbl_comerciosScalarWhereInput[]
-    OR?: tbl_comerciosScalarWhereInput[]
-    NOT?: tbl_comerciosScalarWhereInput | tbl_comerciosScalarWhereInput[]
-    pkid?: BigIntFilter<"tbl_comercios"> | bigint | number
-    nombre?: StringFilter<"tbl_comercios"> | string
-    telefono?: StringFilter<"tbl_comercios"> | string
-    correo?: StringFilter<"tbl_comercios"> | string
-    fkusuario_tbl_usuarios?: StringNullableFilter<"tbl_comercios"> | string | null
+  export type tbl_comercios_usuariosUpdateManyWithWhereWithoutUsuariosInput = {
+    where: tbl_comercios_usuariosScalarWhereInput
+    data: XOR<tbl_comercios_usuariosUpdateManyMutationInput, tbl_comercios_usuariosUncheckedUpdateManyWithoutUsuariosInput>
   }
 
   export type tbl_estados_usuarioUpsertWithoutUsuariosInput = {
@@ -23436,12 +25235,14 @@ export namespace Prisma {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
+    comercios_usuarios?: tbl_comercios_usuariosUpdateManyWithoutEstadoNestedInput
   }
 
   export type tbl_estados_usuarioUncheckedUpdateWithoutUsuariosInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     nomenclatura?: StringFieldUpdateOperationsInput | string
+    comercios_usuarios?: tbl_comercios_usuariosUncheckedUpdateManyWithoutEstadoNestedInput
   }
 
   export type tbl_personasUpsertWithoutUsuariosInput = {
@@ -23569,10 +25370,18 @@ export namespace Prisma {
     fkid_tbl_personas: bigint | number
   }
 
+  export type tbl_comercios_usuariosCreateManyEstadoInput = {
+    pkid?: bigint | number
+    fkusuario_tbl_usuarios: string
+    fkid_tbl_comercios: bigint | number
+    nivel_acceso: number
+    fecha_asignacion: Date | string
+  }
+
   export type tbl_usuariosUpdateWithoutEstadoInput = {
     pkusuario?: StringFieldUpdateOperationsInput | string
     contrasena?: StringFieldUpdateOperationsInput | string
-    comercios?: tbl_comerciosUpdateManyWithoutUsuariosNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUpdateManyWithoutUsuariosNestedInput
     persona?: tbl_personasUpdateOneRequiredWithoutUsuariosNestedInput
     rol?: tbl_rolesUpdateOneRequiredWithoutUsuariosNestedInput
   }
@@ -23582,7 +25391,7 @@ export namespace Prisma {
     contrasena?: StringFieldUpdateOperationsInput | string
     fkid_tbl_roles?: BigIntFieldUpdateOperationsInput | bigint | number
     fkid_tbl_personas?: BigIntFieldUpdateOperationsInput | bigint | number
-    comercios?: tbl_comerciosUncheckedUpdateManyWithoutUsuariosNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUncheckedUpdateManyWithoutUsuariosNestedInput
   }
 
   export type tbl_usuariosUncheckedUpdateManyWithoutEstadoInput = {
@@ -23592,12 +25401,40 @@ export namespace Prisma {
     fkid_tbl_personas?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
+  export type tbl_comercios_usuariosUpdateWithoutEstadoInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarios?: tbl_usuariosUpdateOneWithoutComercios_usuariosNestedInput
+    comercios?: tbl_comerciosUpdateOneWithoutComercios_usuariosNestedInput
+    campanias?: tbl_campaniasUpdateManyWithoutComercios_usuariosNestedInput
+    clientes?: tbl_clientesUpdateManyWithoutComercios_usuariosNestedInput
+  }
+
+  export type tbl_comercios_usuariosUncheckedUpdateWithoutEstadoInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    fkusuario_tbl_usuarios?: StringFieldUpdateOperationsInput | string
+    fkid_tbl_comercios?: BigIntFieldUpdateOperationsInput | bigint | number
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    campanias?: tbl_campaniasUncheckedUpdateManyWithoutComercios_usuariosNestedInput
+    clientes?: tbl_clientesUncheckedUpdateManyWithoutComercios_usuariosNestedInput
+  }
+
+  export type tbl_comercios_usuariosUncheckedUpdateManyWithoutEstadoInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    fkusuario_tbl_usuarios?: StringFieldUpdateOperationsInput | string
+    fkid_tbl_comercios?: BigIntFieldUpdateOperationsInput | bigint | number
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type tbl_clientesCreateManyMunicipiosInput = {
     nombres: string
     apellidos: string
     correo: string
     direccion: string
-    fkid_tbl_comercios?: bigint | number | null
+    fkid_tbl_comercios_usuarios?: bigint | number | null
     pkid?: bigint | number
     telefono: string
   }
@@ -23619,7 +25456,7 @@ export namespace Prisma {
     direccion?: StringFieldUpdateOperationsInput | string
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     telefono?: StringFieldUpdateOperationsInput | string
-    comercios?: tbl_comerciosUpdateOneWithoutClientesNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUpdateOneWithoutClientesNestedInput
     pedidos?: tbl_pedidosUpdateManyWithoutClientesNestedInput
   }
 
@@ -23628,7 +25465,7 @@ export namespace Prisma {
     apellidos?: StringFieldUpdateOperationsInput | string
     correo?: StringFieldUpdateOperationsInput | string
     direccion?: StringFieldUpdateOperationsInput | string
-    fkid_tbl_comercios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_comercios_usuarios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     telefono?: StringFieldUpdateOperationsInput | string
     pedidos?: tbl_pedidosUncheckedUpdateManyWithoutClientesNestedInput
@@ -23639,7 +25476,7 @@ export namespace Prisma {
     apellidos?: StringFieldUpdateOperationsInput | string
     correo?: StringFieldUpdateOperationsInput | string
     direccion?: StringFieldUpdateOperationsInput | string
-    fkid_tbl_comercios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    fkid_tbl_comercios_usuarios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     telefono?: StringFieldUpdateOperationsInput | string
   }
@@ -23718,7 +25555,7 @@ export namespace Prisma {
   export type tbl_usuariosUpdateWithoutPersonaInput = {
     pkusuario?: StringFieldUpdateOperationsInput | string
     contrasena?: StringFieldUpdateOperationsInput | string
-    comercios?: tbl_comerciosUpdateManyWithoutUsuariosNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUpdateManyWithoutUsuariosNestedInput
     estado?: tbl_estados_usuarioUpdateOneRequiredWithoutUsuariosNestedInput
     rol?: tbl_rolesUpdateOneRequiredWithoutUsuariosNestedInput
   }
@@ -23728,7 +25565,7 @@ export namespace Prisma {
     contrasena?: StringFieldUpdateOperationsInput | string
     fkid_tbl_roles?: BigIntFieldUpdateOperationsInput | bigint | number
     fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
-    comercios?: tbl_comerciosUncheckedUpdateManyWithoutUsuariosNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUncheckedUpdateManyWithoutUsuariosNestedInput
   }
 
   export type tbl_usuariosUncheckedUpdateManyWithoutPersonaInput = {
@@ -23810,7 +25647,7 @@ export namespace Prisma {
   export type tbl_usuariosUpdateWithoutRolInput = {
     pkusuario?: StringFieldUpdateOperationsInput | string
     contrasena?: StringFieldUpdateOperationsInput | string
-    comercios?: tbl_comerciosUpdateManyWithoutUsuariosNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUpdateManyWithoutUsuariosNestedInput
     estado?: tbl_estados_usuarioUpdateOneRequiredWithoutUsuariosNestedInput
     persona?: tbl_personasUpdateOneRequiredWithoutUsuariosNestedInput
   }
@@ -23820,7 +25657,7 @@ export namespace Prisma {
     contrasena?: StringFieldUpdateOperationsInput | string
     fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
     fkid_tbl_personas?: BigIntFieldUpdateOperationsInput | bigint | number
-    comercios?: tbl_comerciosUncheckedUpdateManyWithoutUsuariosNestedInput
+    comercios_usuarios?: tbl_comercios_usuariosUncheckedUpdateManyWithoutUsuariosNestedInput
   }
 
   export type tbl_usuariosUncheckedUpdateManyWithoutRolInput = {
@@ -23830,7 +25667,43 @@ export namespace Prisma {
     fkid_tbl_personas?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
-  export type tbl_campaniasCreateManyComercioInput = {
+  export type tbl_comercios_usuariosCreateManyComerciosInput = {
+    pkid?: bigint | number
+    fkusuario_tbl_usuarios: string
+    nivel_acceso: number
+    fkid_tbl_estados_usuario: bigint | number
+    fecha_asignacion: Date | string
+  }
+
+  export type tbl_comercios_usuariosUpdateWithoutComerciosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarios?: tbl_usuariosUpdateOneWithoutComercios_usuariosNestedInput
+    estado?: tbl_estados_usuarioUpdateOneRequiredWithoutComercios_usuariosNestedInput
+    campanias?: tbl_campaniasUpdateManyWithoutComercios_usuariosNestedInput
+    clientes?: tbl_clientesUpdateManyWithoutComercios_usuariosNestedInput
+  }
+
+  export type tbl_comercios_usuariosUncheckedUpdateWithoutComerciosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    fkusuario_tbl_usuarios?: StringFieldUpdateOperationsInput | string
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    campanias?: tbl_campaniasUncheckedUpdateManyWithoutComercios_usuariosNestedInput
+    clientes?: tbl_clientesUncheckedUpdateManyWithoutComercios_usuariosNestedInput
+  }
+
+  export type tbl_comercios_usuariosUncheckedUpdateManyWithoutComerciosInput = {
+    pkid?: BigIntFieldUpdateOperationsInput | bigint | number
+    fkusuario_tbl_usuarios?: StringFieldUpdateOperationsInput | string
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type tbl_campaniasCreateManyComercios_usuariosInput = {
     pkid?: bigint | number
     nombre: string
     presupuesto_gastado: number
@@ -23838,7 +25711,7 @@ export namespace Prisma {
     fecha_fin: Date | string
   }
 
-  export type tbl_clientesCreateManyComerciosInput = {
+  export type tbl_clientesCreateManyComercios_usuariosInput = {
     nombres: string
     apellidos: string
     correo: string
@@ -23848,7 +25721,7 @@ export namespace Prisma {
     telefono: string
   }
 
-  export type tbl_campaniasUpdateWithoutComercioInput = {
+  export type tbl_campaniasUpdateWithoutComercios_usuariosInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     presupuesto_gastado?: FloatFieldUpdateOperationsInput | number
@@ -23856,7 +25729,7 @@ export namespace Prisma {
     fecha_fin?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type tbl_campaniasUncheckedUpdateWithoutComercioInput = {
+  export type tbl_campaniasUncheckedUpdateWithoutComercios_usuariosInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     presupuesto_gastado?: FloatFieldUpdateOperationsInput | number
@@ -23864,7 +25737,7 @@ export namespace Prisma {
     fecha_fin?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type tbl_campaniasUncheckedUpdateManyWithoutComercioInput = {
+  export type tbl_campaniasUncheckedUpdateManyWithoutComercios_usuariosInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
     nombre?: StringFieldUpdateOperationsInput | string
     presupuesto_gastado?: FloatFieldUpdateOperationsInput | number
@@ -23872,7 +25745,7 @@ export namespace Prisma {
     fecha_fin?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type tbl_clientesUpdateWithoutComerciosInput = {
+  export type tbl_clientesUpdateWithoutComercios_usuariosInput = {
     nombres?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     correo?: StringFieldUpdateOperationsInput | string
@@ -23883,7 +25756,7 @@ export namespace Prisma {
     pedidos?: tbl_pedidosUpdateManyWithoutClientesNestedInput
   }
 
-  export type tbl_clientesUncheckedUpdateWithoutComerciosInput = {
+  export type tbl_clientesUncheckedUpdateWithoutComercios_usuariosInput = {
     nombres?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     correo?: StringFieldUpdateOperationsInput | string
@@ -23894,7 +25767,7 @@ export namespace Prisma {
     pedidos?: tbl_pedidosUncheckedUpdateManyWithoutClientesNestedInput
   }
 
-  export type tbl_clientesUncheckedUpdateManyWithoutComerciosInput = {
+  export type tbl_clientesUncheckedUpdateManyWithoutComercios_usuariosInput = {
     nombres?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     correo?: StringFieldUpdateOperationsInput | string
@@ -23946,36 +25819,40 @@ export namespace Prisma {
     fkid_tbl_municipios?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
-  export type tbl_comerciosCreateManyUsuariosInput = {
+  export type tbl_comercios_usuariosCreateManyUsuariosInput = {
     pkid?: bigint | number
-    nombre: string
-    telefono: string
-    correo: string
+    fkid_tbl_comercios: bigint | number
+    nivel_acceso: number
+    fkid_tbl_estados_usuario: bigint | number
+    fecha_asignacion: Date | string
   }
 
-  export type tbl_comerciosUpdateWithoutUsuariosInput = {
+  export type tbl_comercios_usuariosUpdateWithoutUsuariosInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
-    nombre?: StringFieldUpdateOperationsInput | string
-    telefono?: StringFieldUpdateOperationsInput | string
-    correo?: StringFieldUpdateOperationsInput | string
-    campanias?: tbl_campaniasUpdateManyWithoutComercioNestedInput
-    clientes?: tbl_clientesUpdateManyWithoutComerciosNestedInput
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    comercios?: tbl_comerciosUpdateOneWithoutComercios_usuariosNestedInput
+    estado?: tbl_estados_usuarioUpdateOneRequiredWithoutComercios_usuariosNestedInput
+    campanias?: tbl_campaniasUpdateManyWithoutComercios_usuariosNestedInput
+    clientes?: tbl_clientesUpdateManyWithoutComercios_usuariosNestedInput
   }
 
-  export type tbl_comerciosUncheckedUpdateWithoutUsuariosInput = {
+  export type tbl_comercios_usuariosUncheckedUpdateWithoutUsuariosInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
-    nombre?: StringFieldUpdateOperationsInput | string
-    telefono?: StringFieldUpdateOperationsInput | string
-    correo?: StringFieldUpdateOperationsInput | string
-    campanias?: tbl_campaniasUncheckedUpdateManyWithoutComercioNestedInput
-    clientes?: tbl_clientesUncheckedUpdateManyWithoutComerciosNestedInput
+    fkid_tbl_comercios?: BigIntFieldUpdateOperationsInput | bigint | number
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    campanias?: tbl_campaniasUncheckedUpdateManyWithoutComercios_usuariosNestedInput
+    clientes?: tbl_clientesUncheckedUpdateManyWithoutComercios_usuariosNestedInput
   }
 
-  export type tbl_comerciosUncheckedUpdateManyWithoutUsuariosInput = {
+  export type tbl_comercios_usuariosUncheckedUpdateManyWithoutUsuariosInput = {
     pkid?: BigIntFieldUpdateOperationsInput | bigint | number
-    nombre?: StringFieldUpdateOperationsInput | string
-    telefono?: StringFieldUpdateOperationsInput | string
-    correo?: StringFieldUpdateOperationsInput | string
+    fkid_tbl_comercios?: BigIntFieldUpdateOperationsInput | bigint | number
+    nivel_acceso?: IntFieldUpdateOperationsInput | number
+    fkid_tbl_estados_usuario?: BigIntFieldUpdateOperationsInput | bigint | number
+    fecha_asignacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

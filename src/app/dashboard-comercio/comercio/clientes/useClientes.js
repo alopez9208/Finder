@@ -1,15 +1,15 @@
 'use client'
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useModalCloseEvents } from "@/app/hooks/useModalCloseEvents";
-import { useComercioSeleccionado } from "@/app/hooks/useComercioSeleccionado";
-import { TbArrowsSort } from "react-icons/tb";
+import { useRelacionSeleccionada } from "@/app/hooks/useRelacionSeleccionada";
+import { TbArrowsSort } from "react-icons/tb";   
 
 const useClientes = () => {
   
   const [searchTelefono, setsearchTelefono] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const clientesPerPage = 5;
+  const clientesPerPage = 20;
   const [clientes, setClientes] = useState([]);
   const [municipios, setMunicipios] = useState([]);
   const [comercios, setComercios] = useState([]);
@@ -25,94 +25,53 @@ const useClientes = () => {
   const [selectedMunicipio, setSelectedMunicipio] = useState("");
   const [selectedComercio, setSelectedComercio] = useState("");
   const modalRef = useRef();
-  const comercioSeleccionado = useComercioSeleccionado();
+  const relacionSeleccionada = useRelacionSeleccionada();
   const hasFetchedRef = useRef(false);
 
   useModalCloseEvents({ modalOpen, setModalOpen, modalRef });
 
   useEffect(() => {
-    if (comercioSeleccionado && !hasFetchedRef.current) {
-      fetchClientes();
-      fetchMunicipios();
-      fetchComercios();
+    if (relacionSeleccionada && !hasFetchedRef.current) {
+      fetchClientes();     
       hasFetchedRef.current = true;
     }
-  }, [comercioSeleccionado]);    
+  }, [relacionSeleccionada]);    
+
+  useEffect(() => {
+    fetchMunicipios();
+  }, []);
 
   const fetchClientes = async () => {
-    const comercioId = comercioSeleccionado;
-
-    if (!comercioId) {
-      console.warn("No se encontró 'comercioSeleccionado' en localStorage.");
-      return;
-    }
-
+    if (!relacionSeleccionada) return;
+  
     try {
-      const res = await fetch("/api/dashboard-comercio/clientes", {
+      const res = await fetch(`/api/dashboard-comercio/clientes?comercioId=${relacionSeleccionada.pkidRelacion}`, {
         headers: {
-          "x-comercio-id": comercioId,
+          "x-comercio-id": relacionSeleccionada.pkidRelacion.toString(),
         },
       });
-
       const data = await res.json();
-      console.log("Respuesta del backend:", data);
-
-      if (data.success) {
+      if (data.success) {        
         setClientes(data.clientes);
-        console.log("Clientes recibidos:", data.clientes);
-      } else {
-        console.error("No se encontraron clientes");
       }
     } catch (error) {
-      console.error("Error al obtener clientes:", error);
+      console.error("Error fetching clientes:", error);
     }
-  };
+  };  
 
   const fetchMunicipios = async () => {
     try {
       const res = await fetch("/api/dashboard/municipios");
       const data = await res.json();
-      console.log("Respuesta del backend:", data);
       if (data.success) {
         setMunicipios(data.municipios);
-        console.log("Municipios recibidos:", data.municipios);
       } else {
         console.error("No se encontraron municipios");
       }
     } catch (error) {
       console.error("Error al obtener municipios:", error);
     }
-  };
-
-  const fetchComercios = async () => {
-    const usuario = JSON.parse(localStorage.getItem("usuario"));
-    const usuarioId = usuario?.pkusuario;
-
-    if (!usuarioId) {
-      console.warn("No se encontró el ID de usuario en localStorage.");
-      return;
-    }
-
-    try {
-      const res = await fetch("/api/dashboard-comercio/comercios", {
-        headers: {
-          "x-usuario-id": usuarioId.toString(),
-        },
-      });
-
-      const data = await res.json();
-      console.log("Respuesta del backend:", data);
-
-      if (data.success) {
-        setComercios(data.comercios);
-        console.log("Comercios recibidos:", data.comercios);
-      } else {
-        console.error("No se encontraron comercios");
-      }
-    } catch (error) {
-      console.error("Error al obtener comercios:", error);
-    }
-  };
+  };  
 
   const openModalForNew = () => {
     setEditingCliente(null);
@@ -136,26 +95,18 @@ const useClientes = () => {
     setModalOpen(true);
   };
 
-  const handleSubmit = async () => {
-    const comercioId = comercioSeleccionado;
-
-    console.log("comercioId:", comercioId);
-
-    if (!comercioId) {
-      alert("No se encontró el comercio. Por favor inicia sesión nuevamente.");
-      return;
-    }
-
+  const handleSubmit = async () => {      
+  
     if (!selectedMunicipio) {
       alert("Por favor selecciona un municipio.");
       return;
     }
-
+  
     if (!telefono.trim() || !nombres.trim() || !apellidos.trim() || !correo.trim() || !direccion.trim() || !selectedMunicipio) {
       alert("Por favor, completa todos los campos.");
       return;
-  }
-
+    }
+  
     const clienteData = {
       telefono,
       nombres,
@@ -163,32 +114,31 @@ const useClientes = () => {
       correo,
       direccion,
       fkid_tbl_municipios: selectedMunicipio,
-      fkid_tbl_comercios: comercioId,
+      fkid_tbl_comercios_usuarios: relacionSeleccionada.pkidRelacion,
     };
-
-    console.log("clienteData:", clienteData);
-
+  
     try {
       const response = await fetch("/api/dashboard-comercio/clientes", {
         method: editingCliente ? "PUT" : "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-comercio-id": relacionSeleccionada.pkidRelacion.toString(),
         },
         body: JSON.stringify(editingCliente ? { ...clienteData, pkid: editingCliente.pkid } : clienteData),
       });
-
+  
       const data = await response.json();
-
+  
       if (!response.ok) {
         throw new Error(data.message || "Error al guardar el cliente");
       }
-
+  
       setModalOpen(false);
       fetchClientes();
     } catch (error) {
       console.error("Error:", error.message);
     }
-  };
+  };  
 
   const filteredClientes = clientes
     .filter((cliente) => {
@@ -277,10 +227,10 @@ const useClientes = () => {
     totalPages,
     visibleClientes,
     fetchClientes,
-    fetchMunicipios,
-    fetchComercios,
+    fetchMunicipios,   
     modalRef,
-    comercioSeleccionado,
+    selectedComercio,
+    setSelectedComercio,
     hasFetchedRef,
   };
 };

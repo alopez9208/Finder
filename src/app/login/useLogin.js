@@ -10,8 +10,7 @@ const useLogin = () => {
   const [error, setError] = useState(null);
   const searchParams = useSearchParams();
   const router = useRouter();
-
-  // Cuando cambie el query param 'error', actualiza el estado error para mostrar mensaje
+ 
   useEffect(() => {
     const errorFromQuery = searchParams.get("error");
     if (errorFromQuery) {

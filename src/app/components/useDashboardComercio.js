@@ -2,7 +2,7 @@
 
 import { useState, useEffect, createContext, useContext } from 'react';
 import useAuthRol from '@/app/hooks/useAuthRol'
-import { useComercio } from '@/context/ComercioContext';
+import { useRelacionSeleccionada } from "@/app/hooks/useRelacionSeleccionada";
 import { formatearNumero } from '@/app/utils/numberUtils';
 
 const useDashboardComercio = () => {
@@ -11,7 +11,7 @@ const useDashboardComercio = () => {
     const [valor_flete, setValor_flete] = useState("");
     const [suma_total, setSuma_total] = useState(0);
     const [suma_flete, setSuma_flete] = useState(0);
-    const { selectedComercio } = useComercio();
+    const relacionSeleccionada = useRelacionSeleccionada();
     const [costoTotal, setCostoTotal] = useState(0);
     const [campanias, setCampanias] = useState([]);
     const [sumaPresupuestoGastado, setSumaPresupuestoGastado] = useState(0);
@@ -28,20 +28,15 @@ const useDashboardComercio = () => {
         loading
     } = useAuthRol({ rolPermitido: 2, estadoPermitido: 1 });
 
-    const getComercioSeleccionado = () => {
-        const comercioSeleccionado = localStorage.getItem("comercioSeleccionado");
-        return comercioSeleccionado;
-    };    
-
     const fetchPedidos = async (fecha_inicio = null, fecha_fin = null) => {
         try {
-            const comercioId = getComercioSeleccionado();
+            const comercioId = relacionSeleccionada.pkidRelacion.toString();
             let url = `/api/dashboard-comercio/pedidos`;
-
+    
             if (fecha_inicio && fecha_fin) {
                 url += `?fecha_inicio=${fecha_inicio}&fecha_fin=${fecha_fin}`;
             }
-
+    
             const res = await fetch(url, {
                 method: "GET",
                 headers: {
@@ -49,20 +44,20 @@ const useDashboardComercio = () => {
                     "x-comercio-id": comercioId,
                 },
             });
-
+    
             if (!res.ok) throw new Error("Error al obtener pedidos");
-
+    
             const data = await res.json();
-
+    
             if (data.success && Array.isArray(data.pedidos)) {
                 setPedidos(data.pedidos);
                 setCantidadPedidos(data.pedidos.length);
-
+    
                 let servi = 0;
                 let inter = 0;
                 let envia = 0;
                 let swayp = 0;
-
+    
                 data.pedidos.forEach(pedido => {
                     const id = Number(pedido.fkid_tbl_transportadoras);
                     switch (id) {
@@ -83,12 +78,12 @@ const useDashboardComercio = () => {
                             break;
                     }
                 });
-
+    
                 setContadorServi(servi);
                 setContadorInter(inter);
                 setContadorEnvia(envia);
                 setContadorSwayp(swayp);
-
+    
                 const parseNumber = (val) => {
                     if (typeof val === 'number') return val;
                     if (typeof val === 'string') {
@@ -96,20 +91,20 @@ const useDashboardComercio = () => {
                     }
                     return 0;
                 };
-
+    
                 const suma_total = data.pedidos.reduce(
                     (acc, pedido) => acc + parseNumber(pedido.valor_total),
                     0
                 );
-
+    
                 const suma_flete = data.pedidos.reduce(
                     (acc, pedido) => acc + parseNumber(pedido.valor_flete),
                     0
                 );
-
+    
                 setValor_total(suma_total.toString());
                 setValor_flete(suma_flete.toString());
-
+    
                 return data.pedidos;
             } else {
                 console.error("No hay pedidos o data.pedidos no es un array:", data.pedidos);
@@ -120,14 +115,11 @@ const useDashboardComercio = () => {
             return [];
         }
     };
+    
 
     const fetchCostoTotal = async (pedidoIds) => {
         try {
-            const comercioId = getComercioSeleccionado();
-            if (!comercioId) {
-                console.warn("No se encontró 'comercioSeleccionado' en localStorage.");
-                return;
-            }    
+            const comercioId = relacionSeleccionada.pkidRelacion;
             
             if (pedidoIds && pedidoIds.length === 0) {
                 setCostoTotal(0);
@@ -155,17 +147,12 @@ const useDashboardComercio = () => {
     };    
 
     const fetchCampanias = async () => {
-        const comercioId = getComercioSeleccionado();
-    
-        if (!comercioId) {
-            console.warn("No se encontró 'comercioSeleccionado' en localStorage.");
-            return;
-        }
+        const comercioId = relacionSeleccionada.pkidRelacion.toString();
     
         try {
             const res = await fetch("/api/dashboard-comercio/campanias", {
                 headers: {
-                    "x-comercio-id": comercioId,
+                    "x-comercio-id": comercioId.toString(),
                 },
             });
     
@@ -229,12 +216,12 @@ const useDashboardComercio = () => {
     
 
     useEffect(() => {
-        if (!loading && selectedComercio) {
+        if (!loading && relacionSeleccionada) {
             fetchPedidos();
             fetchCostoTotal();
             fetchCampanias();
         }
-    }, [loading, selectedComercio]);
+    }, [loading, relacionSeleccionada]);
 
     return {
         nombre,
@@ -242,12 +229,11 @@ const useDashboardComercio = () => {
         valor_total,
         valor_flete,
         fetchPedidos,
-        getComercioSeleccionado,
         loading,
         suma_total,
         suma_flete,
         formatearNumero,
-        selectedComercio,
+        relacionSeleccionada,
         costoTotal,
         campanias,
         sumaPresupuestoGastado,

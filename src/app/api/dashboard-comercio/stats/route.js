@@ -16,7 +16,7 @@ export async function GET(request) {
         filters.push({
             pedidos: {
                 clientes: {
-                    fkid_tbl_comercios: BigInt(comercioId),
+                    fkid_tbl_comercios_usuarios: BigInt(comercioId),
                 },
             },
         });

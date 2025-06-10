@@ -123,7 +123,7 @@ exports.Prisma.Tbl_campaniasScalarFieldEnum = {
   presupuesto_gastado: 'presupuesto_gastado',
   fecha_inicio: 'fecha_inicio',
   fecha_fin: 'fecha_fin',
-  fkid_tbl_comercios: 'fkid_tbl_comercios'
+  fkid_tbl_comercios_usuarios: 'fkid_tbl_comercios_usuarios'
 };
 
 exports.Prisma.Tbl_clientesScalarFieldEnum = {
@@ -132,7 +132,7 @@ exports.Prisma.Tbl_clientesScalarFieldEnum = {
   correo: 'correo',
   direccion: 'direccion',
   fkid_tbl_municipios: 'fkid_tbl_municipios',
-  fkid_tbl_comercios: 'fkid_tbl_comercios',
+  fkid_tbl_comercios_usuarios: 'fkid_tbl_comercios_usuarios',
   pkid: 'pkid',
   telefono: 'telefono'
 };
@@ -209,8 +209,16 @@ exports.Prisma.Tbl_comerciosScalarFieldEnum = {
   pkid: 'pkid',
   nombre: 'nombre',
   telefono: 'telefono',
-  correo: 'correo',
-  fkusuario_tbl_usuarios: 'fkusuario_tbl_usuarios'
+  correo: 'correo'
+};
+
+exports.Prisma.Tbl_comercios_usuariosScalarFieldEnum = {
+  pkid: 'pkid',
+  fkusuario_tbl_usuarios: 'fkusuario_tbl_usuarios',
+  fkid_tbl_comercios: 'fkid_tbl_comercios',
+  nivel_acceso: 'nivel_acceso',
+  fkid_tbl_estados_usuario: 'fkid_tbl_estados_usuario',
+  fecha_asignacion: 'fecha_asignacion'
 };
 
 exports.Prisma.Tbl_transportadorasScalarFieldEnum = {
@@ -256,6 +264,7 @@ exports.Prisma.ModelName = {
   tbl_empresas: 'tbl_empresas',
   tbl_roles: 'tbl_roles',
   tbl_comercios: 'tbl_comercios',
+  tbl_comercios_usuarios: 'tbl_comercios_usuarios',
   tbl_transportadoras: 'tbl_transportadoras',
   tbl_usuarios: 'tbl_usuarios'
 };

@@ -5,10 +5,32 @@ import prisma from "@/lib/prisma";
 export const dynamic = 'force-dynamic';
 
 export async function POST(request) {
+
+    const comercioUsuarioId = request.headers.get("x-comercio-id");
+
+    if (!comercioUsuarioId) {
+        return new Response(JSON.stringify({ success: false, message: "ID de comercio usuario no proporcionado" }), { status: 400 });
+
+    }
     try {
+        // 1. Buscar el comercio correspondiente al usuario
+        const relacion = await prisma.tbl_comercios_usuarios.findUnique({
+            where: {
+                pkid: BigInt(comercioUsuarioId),
+            },
+            select: {
+                fkid_tbl_comercios: true,
+            },
+        });
+
+        if (!relacion) {
+            return new Response(JSON.stringify({ success: false, message: "No se encontró la relación comercio-usuario" }), { status: 404 });
+        }
+
+        const comercioId = relacion.fkid_tbl_comercios;
+
         const formData = await request.formData();
-        const file = formData.get("file");
-        const comercioId = request.headers.get("x-comercio-id"); 
+        const file = formData.get("file");        
 
         if (!file) {
             return NextResponse.json({ success: false, message: "No se recibió ningún archivo." }, { status: 400 });
@@ -30,29 +52,29 @@ export async function POST(request) {
             const telefonoStr = String(row.telefono_cliente);
 
             let cliente = await prisma.tbl_clientes.findFirst({
-                where: { 
+                where: {
                     telefono: telefonoStr,
-                    fkid_tbl_comercios: BigInt(comercioId),
+                    fkid_tbl_comercios_usuarios: BigInt(comercioUsuarioId),
                 },
             });
             if (!cliente) {
                 return new Response(
-                  JSON.stringify({
-                    success: false,
-                    message: `El cliente con telefono ${telefonoStr} no existe o no pertenece a este comercio.`,
-                  }),
-                  { status: 400 }
+                    JSON.stringify({
+                        success: false,
+                        message: `El cliente con telefono ${telefonoStr} no existe o no pertenece a este comercio.`,
+                    }),
+                    { status: 400 }
                 );
             }
             if (!cliente) {
                 cliente = await prisma.tbl_clientes.create({
                     data: {
                         telefono: telefonoStr,
-                        nombre: row.nombre_cliente,                          
+                        nombre: row.nombre_cliente,
                     },
                 });
-            }   
-            
+            }
+
             const municipio = await prisma.tbl_municipios.findFirst({
                 where: { nombre: row.nombre_municipio },
             });
@@ -63,15 +85,16 @@ export async function POST(request) {
 
             const pedido = await prisma.tbl_pedidos.create({
                 data: {
-                    guia: row.guia,
-                    fkid_tbl_clientes: cliente.pkid,
-                    fkid_tbl_municipios: municipio?.pkid,
-                    fkid_tbl_transportadoras: transportadora?.pkid,
-                    fecha_creacion: new Date(),
-                    valor_total: row.valor_total,
-                    valor_flete: row.valor_flete,
+                  guia: row.guia,
+                  fkid_tbl_clientes: BigInt(cliente.pkid),
+                  fkid_tbl_municipios: municipio ? BigInt(municipio.pkid) : null,
+                  fkid_tbl_transportadoras: transportadora ? BigInt(transportadora.pkid) : null,
+                  fecha_creacion: new Date(row.fecha_creacion.trim()), 
+                  valor_total: Number(row.valor_total),
+                  valor_flete: Number(row.valor_flete),                 
                 },
-            });
+              });
+              
             pedidosCreados.push(pedido);
 
             const productos = JSON.parse(row.productos);
@@ -88,15 +111,15 @@ export async function POST(request) {
             }
         }
 
-        return NextResponse.json({ 
-            success: true, 
+        return NextResponse.json({
+            success: true,
             message: `Se importaron ${pedidosCreados.length} pedidos.`,
             cantidad: pedidosCreados.length
         });
     } catch (error) {
         console.error("Error al importar pedidos:", error);
-        return NextResponse.json({ 
-            success: false, 
+        return NextResponse.json({
+            success: false,
             message: "Error interno del servidor.",
             error: error.message
         }, { status: 500 });

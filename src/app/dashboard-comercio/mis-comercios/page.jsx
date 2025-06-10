@@ -28,15 +28,16 @@ export default function ComerciosPage(onComercioCreado) {
     const usuarioId = usuario?.pkusuario;
 
     try {
-      const response = await fetch("/api/dashboard-comercio/comercios", {
+      const response = await fetch("/api/dashboard-comercio/comercios_usuarios", {
         headers: {
-          "x-usuario-id": usuarioId ? usuarioId.toString() : "",  // Envías el id como string
+          "x-usuario-id": usuarioId ? usuarioId.toString() : "",  
         },
       });
 
       const data = await response.json();
-      if (data.success && data.comercios.length > 0) {
-        setComercio(data.comercios);
+      if (data.success && data.relaciones.length > 0) {
+        const listaComercios = data.relaciones.map((r) => r.comercios);
+        setComercio(listaComercios);
       }
     } catch (error) {
       console.error("Error al cargar comercios:", error);
@@ -64,29 +65,32 @@ export default function ComerciosPage(onComercioCreado) {
       alert("Por favor, completa todos los campos.");
       return;
     }
-
+  
     const usuario = JSON.parse(localStorage.getItem("usuario"));
     const usuarioId = usuario?.pkusuario;
-
+  
     const method = editingComercio ? "PUT" : "POST";
     const url = "/api/dashboard-comercio/comercios";
-
+  
     const payload = editingComercio
-      ? { pkid: editingComercio.pkid, nombre, telefono, correo, fkusuario_tbl_usuarios: usuarioId }
-      : { nombre, telefono, correo, fkusuario_tbl_usuarios: usuarioId };
-
+      ? { pkid: editingComercio.pkid, nombre, telefono, correo }
+      : { nombre, telefono, correo }; 
+  
     try {
       const res = await fetch(url, {
         method,
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-usuario-id": usuarioId.toString(), 
+        },
         body: JSON.stringify(payload),
       });
-
+  
       const data = await res.json();
       if (data.success) {
         setModalOpen(false);
-        await obtenerComercios();
-        fetchComercios();
+        await obtenerComercios(); 
+        fetchComercios(); 
       } else {
         console.error("Error al guardar el comercio");
       }
@@ -94,6 +98,7 @@ export default function ComerciosPage(onComercioCreado) {
       console.error("Error al enviar datos:", error);
     }
   };
+  
 
   const filteredComercios = comercios
     .filter((comercio) => {

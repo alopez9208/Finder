@@ -14,7 +14,7 @@ export async function GET(request) {
     try {
         const campanias = await prisma.tbl_campanias.findMany({
             where: {
-                fkid_tbl_comercios: BigInt(comercioId),
+                fkid_tbl_comercios_usuarios: BigInt(comercioId),
             },
             select: {
                 pkid: true,
@@ -22,10 +22,14 @@ export async function GET(request) {
                 presupuesto_gastado: true,
                 fecha_inicio: true,
                 fecha_fin: true,
-                fkid_tbl_comercios: true,
-                comercio: {
+                fkid_tbl_comercios_usuarios: true,
+                comercios_usuarios: {
                     select: {
-                        nombre: true,
+                        comercios: {
+                            select: {
+                                nombre: true,
+                            },
+                        },
                     },
                 },
             },
@@ -37,8 +41,8 @@ export async function GET(request) {
             presupuesto_gastado: item.presupuesto_gastado,
             fecha_inicio: item.fecha_inicio,
             fecha_fin: item.fecha_fin,
-            fkid_tbl_comercios: item.fkid_tbl_comercios?.toString() ?? null,
-            nombre_comercio: item.comercio?.nombre ?? null,
+            fkid_tbl_comercios_usuarios: item.fkid_tbl_comercios_usuarios?.toString() ?? null,
+            nombre_comercio: item.comercios_usuarios?.comercios?.nombre ?? null,
         }));
 
         return new Response(
@@ -66,12 +70,12 @@ export async function POST(request) {
             presupuesto_gastado: valorString,
             fecha_inicio,
             fecha_fin,
-            fkid_tbl_comercios
+            fkid_tbl_comercios_usuarios
         } = await request.json();
 
         const presupuesto_gastado = parseFloat(valorString);
 
-        if (!nombre || isNaN(presupuesto_gastado) || !fecha_inicio || !fecha_fin || !fkid_tbl_comercios) {
+        if (!nombre || isNaN(presupuesto_gastado) || !fecha_inicio || !fecha_fin || !fkid_tbl_comercios_usuarios) {
             return handleErrorResponse(null, "Todos los campos son requeridos y válidos", 400);
         }
 
@@ -84,14 +88,14 @@ export async function POST(request) {
                 presupuesto_gastado,
                 fecha_inicio: fechaInicioDate,
                 fecha_fin: fechaFinDate,
-                fkid_tbl_comercios: BigInt(fkid_tbl_comercios),
+                fkid_tbl_comercios_usuarios: BigInt(fkid_tbl_comercios_usuarios),
             },
         });
 
         const serializado = {
             ...nuevaCampania,
             pkid: nuevaCampania.pkid.toString(),
-            fkid_tbl_comercios: nuevaCampania.fkid_tbl_comercios.toString(),
+            fkid_tbl_comercios_usuarios: nuevaCampania.fkid_tbl_comercios_usuarios.toString(),
         };
 
         return new Response(
@@ -113,7 +117,7 @@ export async function PUT(request) {
             presupuesto_gastado: valorString,
             fecha_inicio,
             fecha_fin,
-            fkid_tbl_comercios
+            fkid_tbl_comercios_usuarios
         } = await request.json();
 
         if (!fecha_inicio) {
@@ -126,7 +130,7 @@ export async function PUT(request) {
 
         const presupuesto_gastado = parseFloat(valorString);
 
-        if (!nombre || isNaN(presupuesto_gastado) || !fecha_inicio || !fecha_fin || !fkid_tbl_comercios) {
+        if (!nombre || isNaN(presupuesto_gastado) || !fecha_inicio || !fecha_fin || !fkid_tbl_comercios_usuarios) {
             return handleErrorResponse(null, "Todos los campos son requeridos y válidos", 400);
         }        
 
@@ -138,7 +142,7 @@ export async function PUT(request) {
             presupuesto_gastado,
             fecha_inicio: fechaInicioDate,
             fecha_fin: fechaFinDate,
-            fkid_tbl_comercios: BigInt(fkid_tbl_comercios),
+            fkid_tbl_comercios_usuarios: BigInt(fkid_tbl_comercios_usuarios),
         };
         const campaniaActualizada = await prisma.tbl_campanias.update({
             where: { pkid: BigInt(pkid) },
@@ -148,7 +152,7 @@ export async function PUT(request) {
         const serializado = {
             ...campaniaActualizada,
             pkid: campaniaActualizada.pkid.toString(),
-            fkid_tbl_comercios: campaniaActualizada.fkid_tbl_comercios.toString(),
+            fkid_tbl_comercios_usuarios: campaniaActualizada.fkid_tbl_comercios_usuarios.toString(),
         };
 
         return new Response(

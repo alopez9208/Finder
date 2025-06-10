@@ -1,12 +1,35 @@
 import prisma from "@/lib/prisma";
 
 export async function GET(request) {
-  const comercioId = request.headers.get("x-comercio-id"); 
+  const comercioUsuarioId = request.headers.get("x-comercio-id");
+
+  if (!comercioUsuarioId) {
+    return new Response(JSON.stringify({ success: false, message: "ID de comercio usuario no proporcionado" }), { status: 400 });
+  }
 
   try {
+    // 1. Buscar el comercio correspondiente al usuario
+    const relacion = await prisma.tbl_comercios_usuarios.findUnique({
+      where: {
+        pkid: BigInt(comercioUsuarioId),
+      },
+      select: {
+        fkid_tbl_comercios: true,
+      },
+    });
+
+    if (!relacion) {
+      return new Response(JSON.stringify({ success: false, message: "No se encontró la relación comercio-usuario" }), { status: 404 });
+    }
+
+    const comercioId = relacion.fkid_tbl_comercios;
+
+    // 2. Buscar los clientes que pertenecen a ese comercio
     const clientes = await prisma.tbl_clientes.findMany({
       where: {
-        fkid_tbl_comercios: BigInt(comercioId),
+        comercios_usuarios: {
+          fkid_tbl_comercios: comercioId,
+        },
       },
       select: {
         pkid: true,
@@ -17,15 +40,15 @@ export async function GET(request) {
         direccion: true,
         fkid_tbl_municipios: true,
         municipios: {
-          select: {
-            nombre: true,
-          },
+          select: { nombre: true },
         },
-        fkid_tbl_comercios: true,
-        comercios: {
+        fkid_tbl_comercios_usuarios: true,
+        comercios_usuarios: {
           select: {
-            nombre: true,
-          }
+            comercios: {
+              select: { nombre: true },
+            },
+          },
         },
       },
     });
@@ -39,35 +62,29 @@ export async function GET(request) {
       direccion: item.direccion,
       fkid_tbl_municipios: item.fkid_tbl_municipios?.toString() ?? null,
       nombre_municipio: item.municipios?.nombre ?? null,
-      fkid_tbl_comercios: item.fkid_tbl_comercios?.toString() ?? null,
-      nombre_comercio: item.comercios?.nombre ?? null,
+      fkid_tbl_comercios_usuarios: item.fkid_tbl_comercios_usuarios?.toString() ?? null,
+      nombre_comercio: item.comercios_usuarios?.comercios?.nombre ?? null,
     }));
 
-    return new Response(
-      JSON.stringify({ success: true, clientes: clientesSerializados }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    return new Response(JSON.stringify({ success: true, clientes: clientesSerializados }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.error("Error al obtener clientes:", error);
     return new Response(
       JSON.stringify({ success: false, message: error.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      }
+      { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 }
 
 export async function POST(request) {
-  const { telefono, nombres, apellidos, correo, direccion, fkid_tbl_municipios, fkid_tbl_comercios } = await request.json();
+  const { telefono, nombres, apellidos, correo, direccion, fkid_tbl_municipios, fkid_tbl_comercios_usuarios } = await request.json();
 
-  if (!fkid_tbl_comercios) {
+  if (!fkid_tbl_comercios_usuarios) {
     return new Response(
-      JSON.stringify({ success: false, message: "fkid_tbl_comercios es requerido" }),
+      JSON.stringify({ success: false, message: "fkid_tbl_comercios_usuarios es requerido" }),
       { status: 400 }
     );
   }
@@ -88,7 +105,7 @@ export async function POST(request) {
         correo,
         direccion,
         fkid_tbl_municipios: BigInt(fkid_tbl_municipios),
-        fkid_tbl_comercios: BigInt(fkid_tbl_comercios),
+        fkid_tbl_comercios_usuarios: BigInt(fkid_tbl_comercios_usuarios),
       },
     });
 
@@ -96,7 +113,7 @@ export async function POST(request) {
       ...nuevoCliente,
       pkid: nuevoCliente.pkid.toString(),
       fkid_tbl_municipios: nuevoCliente.fkid_tbl_municipios.toString(),
-      fkid_tbl_comercios: nuevoCliente.fkid_tbl_comercios.toString(),
+      fkid_tbl_comercios_usuarios: nuevoCliente.fkid_tbl_comercios_usuarios.toString(),
     };
 
     return new Response(
@@ -127,7 +144,7 @@ export async function PUT(request) {
     correo,
     direccion,
     fkid_tbl_municipios,
-    fkid_tbl_comercios,
+    fkid_tbl_comercios_usuarios,
   } = await request.json();
 
   try {
@@ -140,7 +157,7 @@ export async function PUT(request) {
         correo,
         direccion,
         fkid_tbl_municipios: BigInt(fkid_tbl_municipios),
-        fkid_tbl_comercios: BigInt(fkid_tbl_comercios),
+        fkid_tbl_comercios_usuarios: BigInt(fkid_tbl_comercios_usuarios),
       },
     });
 
@@ -148,7 +165,7 @@ export async function PUT(request) {
       ...clienteActualizado,
       pkid: clienteActualizado.pkid.toString(),
       fkid_tbl_municipios: clienteActualizado.fkid_tbl_municipios.toString(),
-      fkid_tbl_comercios: clienteActualizado.fkid_tbl_comercios.toString(),
+      fkid_tbl_comercios_usuarios: clienteActualizado.fkid_tbl_comercios_usuarios.toString(),
     };
 
     return new Response(

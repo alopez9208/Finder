@@ -14,7 +14,6 @@ export default function CampaniasPage() {
     setCurrentPage,
     campaniasPerPage,
     campanias,
-    comercios,
     sortConfig,
     setSortConfig,
     modalOpen,
@@ -40,12 +39,11 @@ export default function CampaniasPage() {
     totalPages,
     visiblecampanias,
     fetchCampanias,
-    fetchComercios,
     formatFecha,
     modalRef,
     formatearNumero,
     hasFetchedRef,
-    comercioSeleccionado,
+    relacionSeleccionada,
   } = useCampanias();
 
   return (

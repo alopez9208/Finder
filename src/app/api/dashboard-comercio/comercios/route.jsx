@@ -1,57 +1,42 @@
+// src/app/api/comercios/route.js
 import prisma from "@/lib/prisma";
 
 export async function GET(req) {
   try {
-    const usuarioId = req.headers.get("x-usuario-id");    
-    const cleanedUsuarioId = usuarioId ? usuarioId.trim() : null;    
+    const usuarioId = req.headers.get("x-usuario-id")?.trim();
 
-    if (!cleanedUsuarioId) {
-      return new Response(
-        JSON.stringify({ success: false, message: "Usuario no autenticado o ID inválido" }),
-        { status: 401, headers: { "Content-Type": "application/json" } }
-      );
-    }  
+    if (!usuarioId) {
+      return Response.json({ success: false, message: "Usuario no autenticado" }, { status: 401 });
+    }
 
-    const comercios = await prisma.tbl_comercios.findMany({
+    const relaciones = await prisma.tbl_comercios_usuarios.findMany({
       where: {
-        fkusuario_tbl_usuarios: cleanedUsuarioId,
+        fkusuario_tbl_usuarios: usuarioId,
+        estado: {
+          nomenclatura: "ACTIVO",
+        },
       },
-      select: {
-        pkid: true,
-        nombre: true,
-        telefono: true,
-        correo: true,
+      include: {
+        comercios: true,
       },
     });
 
-    const comerciosSerializados = comercios.map((item) => ({
-      pkid: item.pkid.toString(),
-      nombre: item.nombre,
-      telefono: item.telefono,
-      correo: item.correo,
+    const comercios = relaciones.map((rel) => ({
+      pkid: rel.comercios.pkid.toString(),
+      nombre: rel.comercios.nombre,
+      telefono: rel.comercios.telefono,
+      correo: rel.comercios.correo,
     }));
 
-    return new Response(
-      JSON.stringify({ success: true, comercios: comerciosSerializados }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    return Response.json({ success: true, comercios });
   } catch (error) {
     console.error("Error al obtener comercios:", error.message);
-    return new Response(
-      JSON.stringify({ success: false, message: "Error interno del servidor" }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    return Response.json({ success: false, message: "Error interno del servidor" }, { status: 500 });
   }
 }
 
 export async function POST(request) {
-  const { nit, nombre, telefono, correo, fkusuario_tbl_usuarios } = await request.json();
+  const { nombre, telefono, correo} = await request.json();
 
   try {
     const nuevoComercio = await prisma.tbl_comercios.create({
@@ -59,14 +44,12 @@ export async function POST(request) {
         nombre,
         telefono,
         correo,
-        fkusuario_tbl_usuarios,
       },
     });
 
     const serializado = {
       ...nuevoComercio,
       pkid: nuevoComercio.pkid.toString(),
-      fkusuario_tbl_usuarios: nuevoComercio.fkusuario_tbl_usuarios?.toString() ?? null,
     };
 
     return new Response(
@@ -89,12 +72,12 @@ export async function POST(request) {
 }
 
 export async function PUT(request) {
-  const { pkid, nombre, telefono, correo, fkusuario_tbl_usuarios } = await request.json();
+  const { pkid, nombre, telefono, correo } = await request.json();
 
   try {
     const comercioActualizado = await prisma.tbl_comercios.update({
       where: { pkid: BigInt(pkid) },
-      data: { nombre, telefono, correo, fkusuario_tbl_usuarios },
+      data: { nombre, telefono, correo },
     });
 
     const serializado = {

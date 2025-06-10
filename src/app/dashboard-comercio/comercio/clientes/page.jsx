@@ -15,7 +15,6 @@ export default function ClientesPage() {
     clientesPerPage,
     clientes,
     municipios,
-    comercios,
     sortConfig,
     setSortConfig,
     modalOpen,
@@ -41,13 +40,14 @@ export default function ClientesPage() {
     visibleClientes,
     fetchClientes,
     fetchMunicipios,
-    fetchComercios,
     handleSort,
     renderSortIcon,
     handlePageChange,
     modalRef,
-    comercioSeleccionado,
+    relacionSeleccionada,
     hasFetchedRef,
+    selectedComercio,
+    setSelectedComercio,
   } = useClientes();
 
   return (
@@ -175,8 +175,7 @@ export default function ClientesPage() {
             <select
               value={selectedMunicipio}
               onChange={(e) => setSelectedMunicipio(e.target.value)}
-              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"
-              disabled={!!editingCliente}
+              className="w-full mb-4 px-4 py-2 border rounded focus:outline-none bg-white"              
             >
               <option value="">Seleccione un Municipio</option>
               {municipios.map((muni) => (

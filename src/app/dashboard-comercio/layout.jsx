@@ -26,7 +26,7 @@ function LayoutInterno({ children }) {
   const { nombre } = useAuthRol({ rolPermitido: 2, estadoPermitido: 1 });
   const [sidebarVisible, setSidebarVisible] = useState(true);
   const toggleModal = () => setIsOpen(!isOpen);
-  const { comercios, selectedComercio, cambiarComercio } = useComercio();
+  const { comercios, selectedRelacionId, cambiarRelacion } = useComercio();
   const pathname = usePathname();
 
   const handleMiCuenta = () => {
@@ -41,7 +41,7 @@ function LayoutInterno({ children }) {
 
   const handleChange = (e) => {
     const value = e.target.value;
-    cambiarComercio(value);
+    cambiarRelacion(value);
     if (pathname !== "/dashboard-comercio") {
       router.push("/dashboard-comercio/comercio");
     }
@@ -73,18 +73,19 @@ function LayoutInterno({ children }) {
                 {sidebarVisible ? <IoMenuOutline className="text-xl" /> : <IoMenuOutline className="text-xl" />}
               </button>
               <select
-                value={selectedComercio}
+                value={selectedRelacionId}
                 onChange={handleChange}
                 className="w-2/3 pr-8 pl-8 p-2 rounded bg-[#2D9EE8] text-white focus:outline-none text-center text-lg"
               >
                 {comercios.length === 0 && (
                   <option value="">No hay comercios</option>
                 )}
-                {comercios.map((comercio) => (
-                  <option key={comercio.pkid} value={comercio.pkid}>
-                    {comercio.nombre}
+                {comercios.map((c) => (
+                  <option key={c.pkidRelacion} value={c.pkidRelacion}>
+                    {c.comercio.nombre}
                   </option>
                 ))}
+
               </select>
             </div>
 

@@ -14,8 +14,8 @@ model tbl_campanias {
   presupuesto_gastado Float
   fecha_inicio        DateTime       @db.Date
   fecha_fin           DateTime       @db.Date
-  fkid_tbl_comercios  BigInt?
-  comercio            tbl_comercios? @relation(fields: [fkid_tbl_comercios], references: [pkid])
+  fkid_tbl_comercios_usuarios  BigInt?
+  comercios_usuarios           tbl_comercios_usuarios? @relation(fields: [fkid_tbl_comercios_usuarios], references: [pkid])
 }
 
 model tbl_clientes {
@@ -24,10 +24,10 @@ model tbl_clientes {
   correo              String          @db.VarChar(255)
   direccion           String          @db.VarChar(255)
   fkid_tbl_municipios BigInt?
-  fkid_tbl_comercios  BigInt?
+  fkid_tbl_comercios_usuarios  BigInt?
   pkid                BigInt          @id @default(autoincrement())
   telefono            String          @db.VarChar(255)
-  comercios           tbl_comercios?  @relation(fields: [fkid_tbl_comercios], references: [pkid])
+  comercios_usuarios           tbl_comercios_usuarios?  @relation(fields: [fkid_tbl_comercios_usuarios], references: [pkid])
   municipios          tbl_municipios? @relation(fields: [fkid_tbl_municipios], references: [pkid])
   pedidos             tbl_pedidos[]
 }
@@ -55,6 +55,7 @@ model tbl_estados_usuario {
   nombre       String         @db.VarChar(255)
   nomenclatura String         @db.VarChar(255)
   usuarios     tbl_usuarios[]
+  comercios_usuarios    tbl_comercios_usuarios[]
 }
 
 model tbl_municipios {
@@ -96,6 +97,7 @@ model tbl_productos {
   costo             Float
   valor             Float
   fkid_tbl_empresas BigInt?
+  
   det_productos     tbl_det_productos[]
   empresas          tbl_empresas?       @relation(fields: [fkid_tbl_empresas], references: [pkid])
 }
@@ -120,11 +122,25 @@ model tbl_comercios {
   pkid                   BigInt          @id @default(autoincrement())
   nombre                 String          @unique @db.VarChar(255)
   telefono               String          @db.VarChar(255)
-  correo                 String          @db.VarChar(255)
-  fkusuario_tbl_usuarios String?
-  campanias              tbl_campanias[]
-  clientes               tbl_clientes[]
-  usuarios               tbl_usuarios?   @relation(fields: [fkusuario_tbl_usuarios], references: [pkusuario])
+  correo                 String          @db.VarChar(255)  
+  
+  comercios_usuarios     tbl_comercios_usuarios[]
+}
+
+model tbl_comercios_usuarios {
+  pkid                      BigInt          @id @default(autoincrement())
+  fkusuario_tbl_usuarios    String
+  fkid_tbl_comercios        BigInt 
+  nivel_acceso              Int
+  fkid_tbl_estados_usuario  BigInt  
+  fecha_asignacion          DateTime        @db.Date
+
+  usuarios                  tbl_usuarios?   @relation(fields: [fkusuario_tbl_usuarios], references: [pkusuario])
+  comercios                 tbl_comercios?  @relation(fields: [fkid_tbl_comercios], references: [pkid])
+  estado                    tbl_estados_usuario @relation(fields: [fkid_tbl_estados_usuario], references: [pkid])
+  
+  campanias                 tbl_campanias[]
+  clientes                  tbl_clientes[]
 }
 
 model tbl_transportadoras {
@@ -140,7 +156,7 @@ model tbl_usuarios {
   fkid_tbl_roles           BigInt
   fkid_tbl_estados_usuario BigInt
   fkid_tbl_personas        BigInt
-  comercios                tbl_comercios[]
+  comercios_usuarios       tbl_comercios_usuarios[]
   estado                   tbl_estados_usuario @relation(fields: [fkid_tbl_estados_usuario], references: [pkid])
   persona                  tbl_personas        @relation(fields: [fkid_tbl_personas], references: [pkid])
   rol                      tbl_roles           @relation(fields: [fkid_tbl_roles], references: [pkid])
