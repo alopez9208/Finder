@@ -30,7 +30,7 @@ export default function ComerciosPage(onComercioCreado) {
     try {
       const response = await fetch("/api/dashboard-comercio/comercios_usuarios", {
         headers: {
-          "x-usuario-id": usuarioId ? usuarioId.toString() : "",  
+          "x-usuario-id": usuarioId ? usuarioId.toString() : "",
         },
       });
 
@@ -65,40 +65,48 @@ export default function ComerciosPage(onComercioCreado) {
       alert("Por favor, completa todos los campos.");
       return;
     }
-  
+
     const usuario = JSON.parse(localStorage.getItem("usuario"));
     const usuarioId = usuario?.pkusuario;
-  
+
+    if (!usuarioId) {
+      alert("No se encontró usuario autenticado.");
+      return;
+    }
+
     const method = editingComercio ? "PUT" : "POST";
     const url = "/api/dashboard-comercio/comercios";
-  
+
     const payload = editingComercio
       ? { pkid: editingComercio.pkid, nombre, telefono, correo }
-      : { nombre, telefono, correo }; 
-  
+      : { nombre, telefono, correo };
+
     try {
       const res = await fetch(url, {
         method,
         headers: {
           "Content-Type": "application/json",
-          "x-usuario-id": usuarioId.toString(), 
+          "x-usuario-id": usuarioId.toString(), // Enviamos el usuarioId en el header
         },
         body: JSON.stringify(payload),
       });
-  
+
       const data = await res.json();
+
       if (data.success) {
         setModalOpen(false);
-        await obtenerComercios(); 
-        fetchComercios(); 
+        await obtenerComercios();  // Recarga los comercios desde el backend
+        fetchComercios();          // Actualiza estado local o vista
       } else {
-        console.error("Error al guardar el comercio");
+        console.error("Error al guardar el comercio:", data.message);
+        alert(data.message || "Error al guardar el comercio");
       }
     } catch (error) {
       console.error("Error al enviar datos:", error);
+      alert("Error de conexión o inesperado");
     }
   };
-  
+
 
   const filteredComercios = comercios
     .filter((comercio) => {

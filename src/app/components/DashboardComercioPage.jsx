@@ -7,29 +7,30 @@ export default function DashboardComercioPage() {
 
   const {
     nombre,
-        pedidos,
-        valor_total,
-        valor_flete,
-        fetchPedidos,
-        loading,
-        suma_total,
-        suma_flete,
-        formatearNumero,
-        relacionSeleccionada,
-        costoTotal,
-        campanias,
-        sumaPresupuestoGastado,
-        cantidadPedidos,
-        contador_servi,
-        contador_inter,
-        contador_envia,
-        contador_swayp,
-        fecha_inicio,
-        fecha_fin,
-        setFecha_inicio,
-        setFecha_fin,
-        fetchCostoTotal,
-        fetchCampanias
+    pedidos,
+    valor_total,
+    valor_flete,
+    fetchPedidos,
+    loading,
+    suma_total,
+    suma_flete,
+    formatearNumero,
+    relacionSeleccionada,
+    costoTotal,
+    campanias,
+    sumaPresupuestoGastado,
+    cantidadPedidos,
+    contador_servi,
+    contador_inter,
+    contador_envia,
+    contador_swayp,
+    fecha_inicio,
+    fecha_fin,
+    setFecha_inicio,
+    setFecha_fin,
+    fetchCostoTotal,
+    fetchCampanias,
+
   } = useDashboardComercio()
 
   if (loading) {
@@ -79,6 +80,22 @@ export default function DashboardComercioPage() {
         <div className="w-1/3 max-w-xl bg-white p-4 rounded-2xl text-gray-800 font-sans">
 
           <h2 className="text-2xl font-semibold mb-4">Estadísticas del mes</h2>
+
+          {/*<div className="mb-4 w-1/2">
+            <select
+              className="border rounded p-2 w-full"
+              value={usuarioSeleccionado ?? ''}
+              onChange={(e) => setUsuarioSeleccionado(e.target.value)}
+            >
+              <option value="">Selecciona un usuario</option>
+              {usuariosRelacionados.map((usuario) => (
+                <option key={usuario.id} value={usuario.id}>
+                  {usuario.nombre}
+                </option>
+
+              ))}
+            </select>
+          </div>*/}
 
           <div className="flex items-center gap-4 max-w-md mx-auto mb-4">
             <input
