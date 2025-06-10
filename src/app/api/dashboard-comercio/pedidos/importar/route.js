@@ -2,6 +2,23 @@ import { NextResponse } from "next/server";
 import * as XLSX from "xlsx";
 import prisma from "@/lib/prisma";
 
+const validateAndConvertId = (id) => {
+    if (!id) return undefined;
+    if (/^\d+$/.test(id.toString())) {
+      return BigInt(id);
+    }
+    return id; // string no numérico
+  };
+
+  async function fileToBuffer(file) {
+    const chunks = [];
+    for await (const chunk of file.stream()) {
+      chunks.push(chunk);
+    }
+    return Buffer.concat(chunks);
+  }
+  
+
 export const dynamic = 'force-dynamic';
 
 export async function POST(request) {
@@ -36,7 +53,7 @@ export async function POST(request) {
             return NextResponse.json({ success: false, message: "No se recibió ningún archivo." }, { status: 400 });
         }
 
-        const buffer = Buffer.from(await file.arrayBuffer());
+        const buffer = await fileToBuffer(file);
         const workbook = XLSX.read(buffer, { type: "buffer" });
         const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
@@ -54,7 +71,9 @@ export async function POST(request) {
             let cliente = await prisma.tbl_clientes.findFirst({
                 where: {
                     telefono: telefonoStr,
-                    fkid_tbl_comercios_usuarios: BigInt(comercioUsuarioId),
+                    comercios_usuarios: {
+                        fkid_tbl_comercios: BigInt(comercioId),
+                    },
                 },
             });
             if (!cliente) {
@@ -82,16 +101,19 @@ export async function POST(request) {
             const transportadora = await prisma.tbl_transportadoras.findFirst({
                 where: { nombre: row.nombre_transportadora },
             });
+            
+            const usuarioId = request.headers.get("x-usuario-id");
 
             const pedido = await prisma.tbl_pedidos.create({
                 data: {
-                  guia: row.guia,
+                  guia: String(row.guia),
                   fkid_tbl_clientes: BigInt(cliente.pkid),
                   fkid_tbl_municipios: municipio ? BigInt(municipio.pkid) : null,
                   fkid_tbl_transportadoras: transportadora ? BigInt(transportadora.pkid) : null,
                   fecha_creacion: new Date(row.fecha_creacion.trim()), 
                   valor_total: Number(row.valor_total),
-                  valor_flete: Number(row.valor_flete),                 
+                  valor_flete: Number(row.valor_flete),      
+                  fkid_tbl_usuarios: validateAndConvertId(usuarioId),
                 },
               });
               

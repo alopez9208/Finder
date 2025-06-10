@@ -173,7 +173,8 @@ exports.Prisma.Tbl_pedidosScalarFieldEnum = {
   valor_total: 'valor_total',
   valor_flete: 'valor_flete',
   guia: 'guia',
-  fkid_tbl_municipios: 'fkid_tbl_municipios'
+  fkid_tbl_municipios: 'fkid_tbl_municipios',
+  fkid_tbl_usuarios: 'fkid_tbl_usuarios'
 };
 
 exports.Prisma.Tbl_personasScalarFieldEnum = {

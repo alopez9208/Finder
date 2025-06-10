@@ -114,38 +114,42 @@ const useDashboardComercio = () => {
             console.error("Error al obtener pedidos:", error);
             return [];
         }
-    };
-    
+    };    
 
     const fetchCostoTotal = async (pedidoIds) => {
         try {
-            const comercioId = relacionSeleccionada.pkidRelacion;
-            
-            if (pedidoIds && pedidoIds.length === 0) {
-                setCostoTotal(0);
-                return;
-            }
-    
-            let url = `/api/dashboard-comercio/stats?comercioId=${comercioId}`;
-            if (pedidoIds && pedidoIds.length > 0) {
-                url += `&pedidoIds=${pedidoIds.join(',')}`;
-            }
-    
-            const res = await fetch(url);
-            if (!res.ok) throw new Error('Error al obtener costo total');
-    
-            const data = await res.json();
-            if (data.success && typeof data.costoTotal === 'number') {
-                setCostoTotal(data.costoTotal);
-            } else {
-                setCostoTotal(0);
-            }
-        } catch (error) {
-            console.error('Error al obtener costo total:', error);
+          const comercioId = relacionSeleccionada.pkidRelacion;
+      
+          if (pedidoIds && pedidoIds.length === 0) {
             setCostoTotal(0);
+            return;
+          }
+      
+          let url = `/api/dashboard-comercio/stats`;
+          if (pedidoIds && pedidoIds.length > 0) {
+            url += `?pedidoIds=${pedidoIds.join(',')}`;
+          }
+      
+          const res = await fetch(url, {
+            headers: {
+              'x-comercio-id': comercioId.toString(),
+            },
+          });
+      
+          if (!res.ok) throw new Error('Error al obtener costo total');
+      
+          const data = await res.json();
+          if (data.success && typeof data.costoTotal === 'number') {
+            setCostoTotal(data.costoTotal);
+          } else {
+            setCostoTotal(0);
+          }
+        } catch (error) {
+          console.error('Error al obtener costo total:', error);
+          setCostoTotal(0);
         }
-    };    
-
+      };
+      
     const fetchCampanias = async () => {
         const comercioId = relacionSeleccionada.pkidRelacion.toString();
     
@@ -156,17 +160,14 @@ const useDashboardComercio = () => {
                 },
             });
     
-            const data = await res.json();
-            console.log("Respuesta del backend:", data);
+            const data = await res.json();          
     
             if (data.success) {
-                setCampanias(data.campanias);
-    
-                // Convertir estados string a Date, solo si tienen valor
+                setCampanias(data.campanias);   
+               
                 const fechaFiltroInicio = fecha_inicio ? new Date(fecha_inicio) : null;
-                const fechaFiltroFin = fecha_fin ? new Date(fecha_fin) : null;
-    
-                // Si no hay filtro definido, sumar todo (o manejar como prefieras)
+                const fechaFiltroFin = fecha_fin ? new Date(fecha_fin) : null;    
+               
                 if (!fechaFiltroInicio || !fechaFiltroFin) {
                     const sumaPresupuestoGastado = data.campanias.reduce((acc, campania) => {
                         const valor = typeof campania.presupuesto_gastado === 'number'
@@ -177,9 +178,8 @@ const useDashboardComercio = () => {
     
                     setSumaPresupuestoGastado(sumaPresupuestoGastado);
                     return;
-                }
-    
-                // Cálculo proporcional según filtro
+                }    
+               
                 const sumaPresupuestoEnRango = data.campanias.reduce((acc, campania) => {
                     const presupuesto = typeof campania.presupuesto_gastado === 'number'
                         ? campania.presupuesto_gastado
@@ -188,11 +188,9 @@ const useDashboardComercio = () => {
                     const campaniaInicio = new Date(campania.fecha_inicio);
                     const campaniaFin = new Date(campania.fecha_fin);
     
-                    // Días campaña
                     const diasCampania = (campaniaFin - campaniaInicio) / (1000 * 60 * 60 * 24) +1 ;
                     const gastoDiario = presupuesto / diasCampania;
     
-                    // Intersección con filtro
                     const fechaInicioReal = campaniaInicio > fechaFiltroInicio ? campaniaInicio : fechaFiltroInicio;
                     const fechaFinReal = campaniaFin < fechaFiltroFin ? campaniaFin : fechaFiltroFin;
     

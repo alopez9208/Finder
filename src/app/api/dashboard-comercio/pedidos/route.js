@@ -1,8 +1,12 @@
 import prisma from "@/lib/prisma";
 
 const validateAndConvertId = (id) => {
-    return id ? BigInt(id) : undefined;
-};
+    if (!id) return undefined;
+    if (/^\d+$/.test(id.toString())) {
+      return BigInt(id);
+    }
+    return id; // string no numérico
+  };
 
 const handleErrorResponse = (error, message, statusCode = 500) => {
     console.error(message, error);
@@ -16,11 +20,36 @@ const handleErrorResponse = (error, message, statusCode = 500) => {
 };
 
 export async function GET(request) {
-    try {
+
+    const comercioUsuarioId = request.headers.get("x-comercio-id");
+
+    if (!comercioUsuarioId) {
+        return NextResponse.json(
+            { success: false, message: "ID de comercio no proporcionado" },
+            { status: 400 }
+        );
+    }
+
+    try {             
+        // 1. Buscar el comercio correspondiente al usuario
+        const relacion = await prisma.tbl_comercios_usuarios.findUnique({
+            where: {
+                pkid: BigInt(comercioUsuarioId),
+            },
+            select: {
+                fkid_tbl_comercios: true,
+            },
+        });
+
+        if (!relacion) {
+            return new Response(JSON.stringify({ success: false, message: "No se encontró la relación comercio-usuario" }), { status: 404 });
+        }
+
+        const comercioId = relacion.fkid_tbl_comercios;
+
         const { searchParams } = new URL(request.url);
         const fecha_inicio = searchParams.get("fecha_inicio");
-        const fecha_fin = searchParams.get("fecha_fin");
-        const comercioId = request.headers.get("x-comercio-id");
+        const fecha_fin = searchParams.get("fecha_fin");        
 
         const fechaInicio = fecha_inicio ? new Date(fecha_inicio) : null;
         const fechaFin = fecha_fin ? new Date(fecha_fin) : null;
@@ -35,7 +64,9 @@ export async function GET(request) {
 
         const whereClause = {
             clientes: {
-                fkid_tbl_comercios_usuarios: BigInt(comercioId),
+                comercios_usuarios: {
+                    fkid_tbl_comercios: BigInt(comercioId),
+                },
             },
         };
 
@@ -61,7 +92,13 @@ export async function GET(request) {
                 guia: true,
                 valor_total: true,
                 valor_flete: true,
-                fecha_creacion: true,
+                fecha_creacion: true,       
+                fkid_tbl_usuarios: true,
+                usuarios: {
+                    select: {
+                        pkusuario: true,                        
+                    },
+                },
                 fkid_tbl_clientes: true,
                 clientes: {
                     select: {
@@ -95,6 +132,10 @@ export async function GET(request) {
             valor_total: item.valor_total,
             valor_flete: item.valor_flete,
             fecha_creacion: item.fecha_creacion,
+            fkid_tbl_usuarios: item.fkid_tbl_usuarios?.toString() ?? null,
+            usuarios: {
+                pkusuario: item.usuarios?.pkusuario ?? null,                
+            },
             fkid_tbl_clientes: item.fkid_tbl_clientes?.toString() ?? null,
             clientes: {
                 nombres: item.clientes?.nombres ?? null,
@@ -134,6 +175,7 @@ export async function POST(request) {
             valor_flete,
             fkid_tbl_municipios,
             fecha_creacion,
+            fkid_tbl_usuarios,
         } = await request.json();
 
         if (!valor_total || !valor_flete || !fecha_creacion) {
@@ -151,6 +193,7 @@ export async function POST(request) {
                 fkid_tbl_clientes: validateAndConvertId(fkid_tbl_clientes),
                 fkid_tbl_transportadoras: validateAndConvertId(fkid_tbl_transportadoras),
                 fkid_tbl_municipios: validateAndConvertId(fkid_tbl_municipios),
+                fkid_tbl_usuarios: validateAndConvertId(fkid_tbl_usuarios),
             },
         });
 

@@ -20,7 +20,12 @@ export async function GET(request, { params }) {
             nombre: true,
             valor: true,
             costo: true,
-          },
+            empresas: {
+              select: {
+                nombre: true
+              }
+            }
+          }
         },
       },
     });
@@ -34,18 +39,21 @@ export async function GET(request, { params }) {
       cantidad: det.cantidad,
       precio_venta_unitario: parseFloat(det.precio_venta_unitario),
       costo_unitario: parseFloat(det.costo_unitario),
-      fkid_tbl_productos: det.fkid_tbl_productos ? det.fkid_tbl_productos.toString() : null,
+      fkid_tbl_productos: det.fkid_tbl_productos?.toString() || null,
       fkid_tbl_pedidos: det.fkid_tbl_pedidos.toString(),
       productos: det.productos ? {
         nombre: det.productos.nombre,
         precio_venta: parseFloat(det.productos.valor),
         costo: parseFloat(det.productos.costo),
+        empresa: det.productos.empresas?.nombre || "Empresa no encontrada"
       } : {
         nombre: "Producto no encontrado",
         precio_venta: 0,
-        costo: 0
+        costo: 0,
+        empresa: "Empresa no encontrada"
       },
     }));
+    
 
     return NextResponse.json({ success: true, detalles: detallesSerializados }, { status: 200 });
   } catch (error) {

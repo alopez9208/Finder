@@ -77,10 +77,12 @@ model tbl_pedidos {
   valor_flete              Float
   guia                     String?               @unique @db.VarChar(255)
   fkid_tbl_municipios      BigInt?
+  fkid_tbl_usuarios        String?
   det_productos            tbl_det_productos[]
   clientes                 tbl_clientes?        @relation(fields: [fkid_tbl_clientes], references: [pkid])
   municipios               tbl_municipios?      @relation(fields: [fkid_tbl_municipios], references: [pkid])
   transportadoras          tbl_transportadoras? @relation(fields: [fkid_tbl_transportadoras], references: [pkid])
+  usuarios                 tbl_usuarios?        @relation("UsuarioPedidos", fields: [fkid_tbl_usuarios], references: [pkusuario])
 }
 
 model tbl_personas {
@@ -157,7 +159,8 @@ model tbl_usuarios {
   fkid_tbl_estados_usuario BigInt
   fkid_tbl_personas        BigInt
   comercios_usuarios       tbl_comercios_usuarios[]
+  pedidos                  tbl_pedidos[]       @relation("UsuarioPedidos") // <- campo inverso con el mismo nombre
   estado                   tbl_estados_usuario @relation(fields: [fkid_tbl_estados_usuario], references: [pkid])
   persona                  tbl_personas        @relation(fields: [fkid_tbl_personas], references: [pkid])
-  rol                      tbl_roles           @relation(fields: [fkid_tbl_roles], references: [pkid])
+  rol                      tbl_roles           @relation(fields: [fkid_tbl_roles], references: [pkid])  
 }

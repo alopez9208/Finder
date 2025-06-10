@@ -3,18 +3,35 @@ import { NextResponse } from "next/server";
 import { handleErrorResponse } from "@/app/utils/errores";
 
 export async function GET(request) {
-    const comercioId = request.headers.get("x-comercio-id");
+    const comercioUsuarioId = request.headers.get("x-comercio-id");
 
-    if (!comercioId) {
+    if (!comercioUsuarioId) {
         return NextResponse.json(
             { success: false, message: "ID de comercio no proporcionado" },
             { status: 400 }
         );
     }
     try {
+        // 1. Buscar el comercio correspondiente al usuario
+        const relacion = await prisma.tbl_comercios_usuarios.findUnique({
+            where: {
+                pkid: BigInt(comercioUsuarioId),
+            },
+            select: {
+                fkid_tbl_comercios: true,
+            },
+        });
+
+        if (!relacion) {
+            return new Response(JSON.stringify({ success: false, message: "No se encontró la relación comercio-usuario" }), { status: 404 });
+        }
+
+        const comercioId = relacion.fkid_tbl_comercios;
         const campanias = await prisma.tbl_campanias.findMany({
             where: {
-                fkid_tbl_comercios_usuarios: BigInt(comercioId),
+                comercios_usuarios: {
+                    fkid_tbl_comercios: BigInt(comercioId),
+                },
             },
             select: {
                 pkid: true,
@@ -132,7 +149,7 @@ export async function PUT(request) {
 
         if (!nombre || isNaN(presupuesto_gastado) || !fecha_inicio || !fecha_fin || !fkid_tbl_comercios_usuarios) {
             return handleErrorResponse(null, "Todos los campos son requeridos y válidos", 400);
-        }        
+        }
 
         const fechaInicioDate = new Date(`${fecha_inicio}T00:00:00-05:00`);
         const fechaFinDate = new Date(`${fecha_fin}T00:00:00-05:00`);

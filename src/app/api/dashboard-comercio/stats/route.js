@@ -2,58 +2,76 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
 export async function GET(request) {
-    try {
-        const { searchParams } = new URL(request.url);
-        const comercioId = searchParams.get('comercioId');
-        const pedidoIdsParam = searchParams.get('pedidoIds'); // puede venir como '1,2,3'
+  const comercioUsuarioId = request.headers.get("x-comercio-id");
 
-        if (!comercioId) {
-            return NextResponse.json({ success: false, message: "comercioId requerido" }, { status: 400 });
-        }
+  if (!comercioUsuarioId) {
+    return NextResponse.json(
+      { success: false, message: "ID de comercio no proporcionado" },
+      { status: 400 }
+    );
+  }
 
-        const filters = [];
+  try {
+    const relacion = await prisma.tbl_comercios_usuarios.findUnique({
+      where: { pkid: BigInt(comercioUsuarioId) },
+      select: { fkid_tbl_comercios: true },
+    });
 
-        filters.push({
-            pedidos: {
-                clientes: {
-                    fkid_tbl_comercios_usuarios: BigInt(comercioId),
-                },
-            },
-        });
-
-        if (pedidoIdsParam) {
-            const pedidoIds = pedidoIdsParam
-                .split(',')
-                .map((id) => parseInt(id))
-                .filter((id) => !isNaN(id));
-
-            if (pedidoIds.length > 0) {
-                filters.push({
-                    pedidos: {
-                        pkid: { in: pedidoIds },
-                    },
-                });
-            }
-        }
-
-        const detalles = await prisma.tbl_det_productos.findMany({
-            where: {
-                AND: filters,
-            },
-            select: {
-                costo_unitario: true,
-                cantidad: true,
-            },
-        });
-
-
-        const costoTotal = detalles.reduce((total, item) => {
-            return total + (item.costo_unitario * item.cantidad);
-        }, 0);
-
-        return NextResponse.json({ success: true, costoTotal });
-    } catch (error) {
-        console.error("Error en /api/dashboard-comercio/stats:", error);
-        return NextResponse.json({ success: false, message: "Error interno del servidor" }, { status: 500 });
+    if (!relacion) {
+      return NextResponse.json(
+        { success: false, message: "No se encontró la relación comercio-usuario" },
+        { status: 404 }
+      );
     }
+
+    const comercioId = relacion.fkid_tbl_comercios;
+    const { searchParams } = new URL(request.url);
+    const pedidoIdsParam = searchParams.get('pedidoIds');
+
+    // Filtro base por comercio en clientes->comercios_usuarios->fkid_tbl_comercios
+    const filtroBase = {
+      pedidos: {
+        clientes: {
+          comercios_usuarios: {
+            fkid_tbl_comercios: comercioId,
+          },
+        },
+      },
+    };
+
+    // Si hay pedidoIds, añadir filtro
+    const filtroPedidoIds = pedidoIdsParam
+      ? {
+          pedidos: {
+            pkid: {
+              in: pedidoIdsParam
+                .split(',')
+                .map(id => parseInt(id))
+                .filter(id => !isNaN(id)),
+            },
+          },
+        }
+      : {};
+
+    // Combinar filtros con AND si hay pedidoIds
+    const filtros = pedidoIdsParam ? { AND: [filtroBase, filtroPedidoIds] } : filtroBase;
+
+    const detalles = await prisma.tbl_det_productos.findMany({
+      where: filtros,
+      select: {
+        costo_unitario: true,
+        cantidad: true,
+      },
+    });
+
+    const costoTotal = detalles.reduce((total, item) => total + item.costo_unitario * item.cantidad, 0);
+
+    return NextResponse.json({ success: true, costoTotal });
+  } catch (error) {
+    console.error("Error en /api/dashboard-comercio/stats:", error);
+    return NextResponse.json(
+      { success: false, message: "Error interno del servidor" },
+      { status: 500 }
+    );
+  }
 }

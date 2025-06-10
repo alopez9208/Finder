@@ -30,6 +30,7 @@ const usePedidos = () => {
     const [selectedTransportadora, setSelectedTransportadora] = useState("");
     const [selectedCliente, setSelectedCliente] = useState("");
     const [selectedMunicipio, setSelectedMunicipio] = useState("");
+    const [selectedUsuario, setSelectedUsuario] = useState("");
 
     const [productosDisponibles, setProductosDisponibles] = useState([]);
     const [searchProducto, setSearchProducto] = useState("");
@@ -44,7 +45,7 @@ const usePedidos = () => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
-    const handleFileUpload = async (event) => {       
+    const handleFileUpload = async (event) => {
         const file = event.target.files[0];
         const formData = new FormData();
         formData.append("file", file);
@@ -177,6 +178,16 @@ const usePedidos = () => {
         setSelectedTransportadora("");
         setProductosSeleccionados([]);
         setSelectedMunicipio("");
+        setSelectedUsuario("");
+
+        // Obtener usuario del localStorage y setearlo
+        const usuarioGuardado = JSON.parse(localStorage.getItem("usuario"));
+        if (usuarioGuardado && usuarioGuardado.pkusuario) {
+            setSelectedUsuario(usuarioGuardado.pkusuario);
+        } else {
+            setSelectedUsuario("");
+        }
+
         setModalOpen(true);
     };
 
@@ -213,13 +224,8 @@ const usePedidos = () => {
         setModalMode("costo");
         setViewCosto(pedido);
         setPKID_pedido(pedido.pkid);
-        setGuia(pedido.guia);
-        setValor_total(pedido.valor_total.toString());
-        setValor_flete(pedido.valor_flete.toString());
-        setFecha_creacion(formatFecha(pedido.fecha_creacion));
-        setSelectedCliente(pedido.fkid_tbl_clientes);
-        setSelectedTransportadora(pedido.fkid_tbl_transportadoras);
-        setSelectedMunicipio(pedido.fkid_tbl_municipios);
+        setGuia(pedido.guia);        
+        setFecha_creacion(formatFecha(pedido.fecha_creacion));              
         await loadDetalleProductosForEdit(pedido.pkid);
         setModalOpen(true);
     };
@@ -265,7 +271,6 @@ const usePedidos = () => {
         );
     };
 
-    // Función para inicializar los productosSeleccionados al editar
     const loadDetalleProductosForEdit = async (pedidoId) => {
         try {
             const res = await fetch(`/api/dashboard-comercio/pedidos/${pedidoId}`);
@@ -274,12 +279,13 @@ const usePedidos = () => {
 
             if (data.success) {
                 const detalles = data.detalles.map(det => ({
-                    pkid: det.fkid_tbl_productos, // El ID del producto
+                    pkid: det.fkid_tbl_productos,
                     nombre: det.productos ? det.productos.nombre : "Producto no encontrado",
                     precio_unitario: det.precio_venta_unitario || 0,
                     costo_unitario: det.costo_unitario || 0,
                     cantidad: det.cantidad || 1,
-                    detallePkid: det.pkid
+                    detallePkid: det.pkid,
+                    empresa: det.productos?.empresa || "Proveedor no encontrado",
                 }));
                 console.log("Detalles mapeados:", detalles);
                 setProductosSeleccionados(detalles);
@@ -306,12 +312,33 @@ const usePedidos = () => {
             return;
         }
 
+        const usuario = JSON.parse(localStorage.getItem("usuario"));
+        const currentUserId = usuario?.pkusuario || null;
+
         const method = editingPedido ? "PUT" : "POST";
         const url = "/api/dashboard-comercio/pedidos";
 
         const payload = editingPedido
-            ? { pkid: editingPedido.pkid, guia: guia, valor_total: valorNumerico, fecha_creacion: localFecha_Creacion, fkid_tbl_transportadoras: selectedTransportadora, fkid_tbl_clientes: selectedCliente, valor_flete: valor_flete, fkid_tbl_municipios: selectedMunicipio }
-            : { guia: guia, valor_total: valorNumerico, fecha_creacion: localFecha_Creacion, fkid_tbl_transportadoras: selectedTransportadora, fkid_tbl_clientes: selectedCliente, valor_flete: valor_flete, fkid_tbl_municipios: selectedMunicipio };
+            ? {
+                pkid: editingPedido.pkid,
+                guia: guia,
+                valor_total: valorNumerico,
+                fecha_creacion: localFecha_Creacion,
+                fkid_tbl_transportadoras: selectedTransportadora,
+                fkid_tbl_clientes: selectedCliente,
+                valor_flete: valor_flete,
+                fkid_tbl_municipios: selectedMunicipio
+            }
+            : {
+                guia: guia,
+                valor_total: valorNumerico,
+                fecha_creacion: localFecha_Creacion,
+                fkid_tbl_transportadoras: selectedTransportadora,
+                fkid_tbl_clientes: selectedCliente,
+                valor_flete: valor_flete,
+                fkid_tbl_municipios: selectedMunicipio,
+                fkid_tbl_usuarios: currentUserId,
+            };
 
         try {
             const res = await fetch(url, {

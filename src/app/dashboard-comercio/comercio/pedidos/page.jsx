@@ -8,70 +8,70 @@ export default function PedidosPage() {
 
   const {
     searchTelefono,
-        setsearchTelefono,
-        currentPage,
-        setCurrentPage,
-        pedidosPerPage,
-        pedidos,
-        clientes,
-        transportadoras,
-        sortConfig,
-        handleSort,
-        renderSortIcon,
-        visiblepedidos,
-        totalPages,
-        handlePageChange,
-        openModalForEdit,
-        modalRef,
-        modalOpen,
-        editingPedido,
-        pkid_pedido,
-        setPKID_pedido,
-        guia,
-        setGuia,
-        setValor_total,
-        setValor_flete,
-        valor_total,
-        valor_flete,
-        fecha_creacion,
-        setFecha_creacion,
-        selectedCliente,
-        setSelectedCliente,
-        selectedTransportadora,
-        setSelectedTransportadora,
-        productosDisponibles,
-        searchProducto,
-        setSearchProducto,
-        productosSeleccionados,
-        setProductosSeleccionados,
-        selectedProductToAdd,
-        setSelectedProductToAdd,
-        cantidadProducto,
-        setCantidadProducto,
-        addProductToCart,
-        removeProductFromCart,
-        openModalForNew,
-        openModalForView,
-        openModalForViewCosto,
-        setModalOpen,
-        modalMode,
-        handleSubmit,
-        setError,
-        error,
-        setSuccess,
-        success,
-        formatFecha,
-        municipios,
-        selectedMunicipio,
-        setSelectedMunicipio,
-        comercioSeleccionado,
-        viewPedido,
-        viewCosto,
-        formatearNumero,
-        handleFileUpload,
-        hasFetchedRef,
-        useModalCloseEvents,
-        contarDiasDesde,
+    setsearchTelefono,
+    currentPage,
+    setCurrentPage,
+    pedidosPerPage,
+    pedidos,
+    clientes,
+    transportadoras,
+    sortConfig,
+    handleSort,
+    renderSortIcon,
+    visiblepedidos,
+    totalPages,
+    handlePageChange,
+    openModalForEdit,
+    modalRef,
+    modalOpen,
+    editingPedido,
+    pkid_pedido,
+    setPKID_pedido,
+    guia,
+    setGuia,
+    setValor_total,
+    setValor_flete,
+    valor_total,
+    valor_flete,
+    fecha_creacion,
+    setFecha_creacion,
+    selectedCliente,
+    setSelectedCliente,
+    selectedTransportadora,
+    setSelectedTransportadora,
+    productosDisponibles,
+    searchProducto,
+    setSearchProducto,
+    productosSeleccionados,
+    setProductosSeleccionados,
+    selectedProductToAdd,
+    setSelectedProductToAdd,
+    cantidadProducto,
+    setCantidadProducto,
+    addProductToCart,
+    removeProductFromCart,
+    openModalForNew,
+    openModalForView,
+    openModalForViewCosto,
+    setModalOpen,
+    modalMode,
+    handleSubmit,
+    setError,
+    error,
+    setSuccess,
+    success,
+    formatFecha,
+    municipios,
+    selectedMunicipio,
+    setSelectedMunicipio,
+    comercioSeleccionado,
+    viewPedido,
+    viewCosto,
+    formatearNumero,
+    handleFileUpload,
+    hasFetchedRef,
+    useModalCloseEvents,
+    contarDiasDesde,
   } = usePedidos();
 
   return (
@@ -187,20 +187,40 @@ export default function PedidosPage() {
             className="bg-[#f0ebff] p-6 rounded-xl shadow-xl w-full max-w-4xl relative text-gray-700 border"
           >
             {modalMode === "view" ? (
-              // MODO FACTURA
+              // MODO VIEW (Factura)
               <div className="text-sm text-gray-800 ml-12 text-center">
-                <h2 className="text-2xl font-bold mb-4">Factura del Pedido  <span className="text-xl">#{guia}</span></h2>
+                <h2 className="text-2xl font-bold mb-4">
+                  Factura del Pedido <span className="text-xl">#{guia}</span>
+                </h2>
                 <div className="border-t pt-4">
                   <p className="font-semibold text-lg mb-2">Datos del cliente</p>
-                  <p><strong>Nombre:</strong> {clientes.find(c => c.pkid === selectedCliente)?.nombres || "N/A"} {clientes.find(c => c.pkid === selectedCliente)?.apellidos || "N/A"}</p>
-                  <p><strong>Teléfono:</strong> {clientes.find(c => c.pkid === selectedCliente)?.telefono || "N/A"}</p>
-                  <p><strong>Dirección:</strong> {clientes.find(c => c.pkid === selectedCliente)?.direccion || "N/A"}</p>
-                  <p><strong>Municipio:</strong> {municipios.find(m => m.pkid === selectedMunicipio)?.nombre || "N/A"}</p>
+                  <p>
+                    <strong>Nombre:</strong>{" "}
+                    {clientes.find((c) => c.pkid === selectedCliente)?.nombres || "N/A"}{" "}
+                    {clientes.find((c) => c.pkid === selectedCliente)?.apellidos || "N/A"}
+                  </p>
+                  <p>
+                    <strong>Teléfono:</strong>{" "}
+                    {clientes.find((c) => c.pkid === selectedCliente)?.telefono || "N/A"}
+                  </p>
+                  <p>
+                    <strong>Dirección:</strong>{" "}
+                    {clientes.find((c) => c.pkid === selectedCliente)?.direccion || "N/A"}
+                  </p>
+                  <p>
+                    <strong>Municipio:</strong>{" "}
+                    {municipios.find((m) => m.pkid === selectedMunicipio)?.nombre || "N/A"}
+                  </p>
                 </div>
                 <div className="border-t mt-4 pt-4">
                   <p className="font-semibold text-lg mb-2">Datos de la transportadora</p>
-                  <p><strong>Transportadora:</strong> {transportadoras.find(t => t.pkid === selectedTransportadora)?.nombre || "N/A"}</p>
-                  <p><strong>Valor Flete:</strong> ${formatearNumero(valor_flete)}</p>
+                  <p>
+                    <strong>Transportadora:</strong>{" "}
+                    {transportadoras.find((t) => t.pkid === selectedTransportadora)?.nombre || "N/A"}
+                  </p>
+                  <p>
+                    <strong>Valor Flete:</strong> ${formatearNumero(valor_flete)}
+                  </p>
                 </div>
 
                 <div className="mt-4 border-t pt-4">
@@ -221,21 +241,78 @@ export default function PedidosPage() {
                             <td className="px-4 py-2 border">{item.nombre}</td>
                             <td className="px-4 py-2 border">{item.cantidad}x</td>
                             <td className="px-4 py-2 border">${formatearNumero(item.precio_unitario)}</td>
-                            <td className="px-4 py-2 border">${formatearNumero(item.precio_unitario * item.cantidad)}</td>
+                            <td className="px-4 py-2 border">
+                              ${formatearNumero(item.precio_unitario * item.cantidad)}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
-
                   ) : (
                     <p>No hay productos en este pedido.</p>
                   )}
                 </div>
+
                 <div className="mt-4 pt-4 text-2xl">
-                  <p><strong>Recaudo:</strong> ${formatearNumero(valor_total)}</p>
+                  <p>
+                    <strong>Recaudo:</strong> ${formatearNumero(valor_total)}
+                  </p>
                 </div>
                 <div className="mt-4 pt-4">
-                  <p><strong>Fecha de creación:</strong> {fecha_creacion?.substring(0, 10)}</p>
+                  <p>
+                    <strong>Fecha de creación:</strong> {fecha_creacion?.substring(0, 10)}
+                  </p>
+                </div>
+              </div>
+            ) : modalMode === "costo" ? (
+              // MODO COSTO
+              <div className="text-sm text-gray-800 ml-12 text-center">
+                <h2 className="text-2xl font-bold mb-4">
+                  Costos del Pedido <span className="text-xl">#{guia}</span>
+                </h2>
+
+                <div className="mt-4 border-t pt-4">
+                  <h4 className="font-semibold text-lg mb-2">Productos</h4>
+                  {productosSeleccionados.length > 0 ? (
+                    <table className="min-w-full">
+                      <thead>
+                        <tr className="bg-gray-100">
+                          <th className="px-4 py-2 border">Descripción</th>
+                          <th className="px-4 py-2 border">Unid</th>
+                          <th className="px-4 py-2 border">Costo c/u</th>
+                          <th className="px-4 py-2 border">Importe</th>
+                          <th className="px-4 py-2 border">Proveedor</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {productosSeleccionados.map((item) => (
+                          <tr key={item.pkid} className="text-center">
+                            <td className="px-4 py-2 border">{item.nombre}</td>
+                            <td className="px-4 py-2 border">{item.cantidad}x</td>
+                            <td className="px-4 py-2 border">${formatearNumero(item.costo_unitario)}</td>
+                            <td className="px-4 py-2 border">
+                              ${formatearNumero(item.costo_unitario * item.cantidad)}
+                            </td>
+                            <td className="px-4 py-2 border">{item.empresa}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <p>No hay productos en este pedido.</p>
+                  )}
+                </div>
+
+                <div className="mt-4 pt-4 text-2xl">
+                  <p>
+                    <strong>Costo Total:</strong> $
+                    {formatearNumero(
+                      productosSeleccionados.reduce(
+                        (acc, item) => acc + item.costo_unitario * item.cantidad,
+                        0
+                      )
+                    )}
+                  </p>
                 </div>
               </div>
             ) : (
@@ -429,12 +506,13 @@ export default function PedidosPage() {
               >
                 {modalMode === "view" ? "Cerrar" : "Cancelar"}
               </button>
-              {modalMode !== "view" && (
+
+              {modalMode !== "view" && modalMode !== "costo" && (
                 <button
                   onClick={handleSubmit}
                   className="px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600 cursor-pointer"
                 >
-                  {modalMode === "view" ? "Cerrar" : "Guardar"}
+                  Guardar
                 </button>
               )}
             </div>
