@@ -41,7 +41,7 @@ export default function SidebarComercio() {
           <span className="text-white text-sm ml-4">Usuario</span>
 
           <button
-            
+            onClick={() => router.push("/dashboard-comercio/mi-cuenta")}
             className={`flex items-center gap-1 mt-1 rounded p-1 cursor-pointer mb-2 justify-center ${isActive(
               "/dashboard-comercio/mi-cuenta"
             )}`}

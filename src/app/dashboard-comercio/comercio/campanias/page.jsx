@@ -85,8 +85,7 @@ export default function CampaniasPage() {
               </tr>
             </thead>
             <tbody>
-              {visiblecampanias.map((campania, index) => {
-                console.log('Campaña en render:', campania);
+              {visiblecampanias.map((campania, index) => {              
                 return (
                   <tr key={index} className="border-b">
                     <td className="p-3">{campania.pkid}</td>

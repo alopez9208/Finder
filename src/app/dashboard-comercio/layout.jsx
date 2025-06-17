@@ -2,6 +2,7 @@
 
 import { ComercioProvider, useComercio } from "@/context/ComercioContext";
 import SidebarComercio from "../components/sidebardashboard-comercio";
+import { useModalCloseEvents } from "@/app/hooks/useModalCloseEvents";
 import { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { IoLogOutOutline, IoSettingsOutline, IoMenuOutline } from "react-icons/io5";
@@ -20,23 +21,30 @@ export default function DashboardComercioLayout({ children }) {
 function LayoutInterno({ children }) {
 
   const [fechaActual, setFechaActual] = useState("");
-  const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
-  const modalRef = useRef(null);
+  const router = useRouter(); 
+  const modalRef = useRef();
   const { nombre } = useAuthRol({ rolPermitido: 2, estadoPermitido: 1 });
   const [sidebarVisible, setSidebarVisible] = useState(true);
-  const toggleModal = () => setIsOpen(!isOpen);
+  const toggleModal = () => setModalOpen(!modalOpen);
   const { comercios, selectedRelacionId, cambiarRelacion } = useComercio();
   const pathname = usePathname();
+  const [modalOpen, setModalOpen] = useState(false);
+
+  useModalCloseEvents({ modalOpen, setModalOpen, modalRef });
 
   const handleMiCuenta = () => {
-    router.push("/mi-cuenta");
-    setIsOpen(false);
+    router.push("/dashboard-comercio/mi-cuenta");
+    setModalOpen(false);
+  };
+
+  const handleMisComercios = () => {
+    router.push("/dashboard-comercio/mi-cuenta/mis-comercios");
+    setModalOpen(false);
   };
 
   const handleSalir = () => {
     router.push("/login");
-    setIsOpen(false);
+    setModalOpen(false);
   };
 
   const handleChange = (e) => {
@@ -100,7 +108,7 @@ function LayoutInterno({ children }) {
                   <FaRegUserCircle className="text-2xl text-gray-500 bg-white rounded-full" />
                 </button>
 
-                {isOpen && (
+                {modalOpen && (
                   <div
                     ref={modalRef}
                     className="absolute right-0 w-80 bg-white rounded-lg shadow-2xl ring-1 ring-black ring-opacity-5"
@@ -111,19 +119,14 @@ function LayoutInterno({ children }) {
                     <div className="border-t border-gray-300 m-2"></div>
                     <div className="flex flex-col gap-2 m-4">
                       <button
-                        onClick={() => {
-                          setIsOpen(false);
-                        }}
+                        onClick={handleMiCuenta}
                         className="flex items-center gap-2 block w-full text-left px-4 py-2 text-gray-700 cursor-pointer hover:bg-[#3E82FF] transition duration-200 hover:text-white rounded-md py-4"
                       >
                         <IoSettingsOutline className="text-2xl" />
                         Mi cuenta
                       </button>
                       <button
-                        onClick={() => {
-                          router.push("/dashboard-comercio/mis-comercios");
-                          setIsOpen(false);
-                        }}
+                        onClick={handleMisComercios}
                         className="flex items-center gap-2 block w-full text-left px-4 py-2 text-gray-700 cursor-pointer hover:bg-[#3E82FF] transition duration-200 hover:text-white rounded-md py-4"
                       >
                         <LuStore className="text-2xl" />
