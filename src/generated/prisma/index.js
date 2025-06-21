@@ -253,7 +253,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\tavol\\PJIC 20251\\Construccion de software\\Finder\\src\\generated\\prisma",
+      "value": "D:\\Andrés\\Poli\\Construccion software\\Proyecto 1\\finder-app\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -267,7 +267,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\tavol\\PJIC 20251\\Construccion de software\\Finder\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\Andrés\\Poli\\Construccion software\\Proyecto 1\\finder-app\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

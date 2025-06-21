@@ -6,8 +6,11 @@ import { formatearNumero } from "@/app/utils/numberUtils";
 import { contarDiasDesde } from "@/app/utils/contarDiasDesde";
 import { useRelacionSeleccionada } from "@/app/hooks/useRelacionSeleccionada";
 import { TbArrowsSort } from "react-icons/tb";
+import { useAuth } from "@/app/hooks/useAuth";
 
 const usePedidos = () => {
+    const { usuarioId } = useAuth();
+
     const [searchTelefono, setsearchTelefono] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const pedidosPerPage = 20;
@@ -40,15 +43,21 @@ const usePedidos = () => {
     const relacionSeleccionada = useRelacionSeleccionada();
     const hasFetchedRef = useRef(false);
 
-    useModalCloseEvents({ modalOpen, setModalOpen, modalRef });
-
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
-
     const handleFileUpload = async (event) => {
+        if (!usuarioId) {
+            alert("Usuario no identificado, por favor inicia sesión de nuevo.");
+            return;
+        }
+        if (!relacionSeleccionada) {
+            alert("Comercio no seleccionado, por favor selecciona un comercio.");
+            return;
+        }
+
         const file = event.target.files[0];
         const formData = new FormData();
         formData.append("file", file);
+
+        console.log("usuarioId antes de enviar:", usuarioId);
 
         try {
             const res = await fetch("/api/dashboard-comercio/pedidos/importar", {
@@ -56,6 +65,7 @@ const usePedidos = () => {
                 body: formData,
                 headers: {
                     "x-comercio-id": relacionSeleccionada.pkidRelacion.toString(),
+                    "x-usuario-id": usuarioId,
                 },
             });
 
@@ -69,6 +79,8 @@ const usePedidos = () => {
             console.error("Error al importar pedidos:", err);
         }
     };
+
+
 
     useEffect(() => {
         if (relacionSeleccionada && !hasFetchedRef.current) {
@@ -224,8 +236,8 @@ const usePedidos = () => {
         setModalMode("costo");
         setViewCosto(pedido);
         setPKID_pedido(pedido.pkid);
-        setGuia(pedido.guia);        
-        setFecha_creacion(formatFecha(pedido.fecha_creacion));              
+        setGuia(pedido.guia);
+        setFecha_creacion(formatFecha(pedido.fecha_creacion));
         await loadDetalleProductosForEdit(pedido.pkid);
         setModalOpen(true);
     };
@@ -515,11 +527,7 @@ const usePedidos = () => {
         openModalForViewCosto,
         setModalOpen,
         modalMode,
-        handleSubmit,
-        setError,
-        error,
-        setSuccess,
-        success,
+        handleSubmit,         
         formatFecha,
         municipios,
         selectedMunicipio,

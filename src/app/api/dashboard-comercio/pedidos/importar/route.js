@@ -5,19 +5,18 @@ import prisma from "@/lib/prisma";
 const validateAndConvertId = (id) => {
     if (!id) return undefined;
     if (/^\d+$/.test(id.toString())) {
-      return BigInt(id);
+        return BigInt(id);
     }
     return id; // string no numérico
-  };
+};
 
-  async function fileToBuffer(file) {
+async function fileToBuffer(file) {
     const chunks = [];
     for await (const chunk of file.stream()) {
-      chunks.push(chunk);
+        chunks.push(chunk);
     }
     return Buffer.concat(chunks);
-  }
-  
+}
 
 export const dynamic = 'force-dynamic';
 
@@ -47,7 +46,7 @@ export async function POST(request) {
         const comercioId = relacion.fkid_tbl_comercios;
 
         const formData = await request.formData();
-        const file = formData.get("file");        
+        const file = formData.get("file");
 
         if (!file) {
             return NextResponse.json({ success: false, message: "No se recibió ningún archivo." }, { status: 400 });
@@ -101,22 +100,27 @@ export async function POST(request) {
             const transportadora = await prisma.tbl_transportadoras.findFirst({
                 where: { nombre: row.nombre_transportadora },
             });
-            
+
             const usuarioId = request.headers.get("x-usuario-id");
+            console.log("Header x-usuario-id recibido:", usuarioId);
+
+            if (!usuarioId) {
+                return NextResponse.json({ success: false, message: "No se recibió el ID de usuario." }, { status: 400 });
+            }
 
             const pedido = await prisma.tbl_pedidos.create({
                 data: {
-                  guia: String(row.guia),
-                  fkid_tbl_clientes: BigInt(cliente.pkid),
-                  fkid_tbl_municipios: municipio ? BigInt(municipio.pkid) : null,
-                  fkid_tbl_transportadoras: transportadora ? BigInt(transportadora.pkid) : null,
-                  fecha_creacion: new Date(row.fecha_creacion.trim()), 
-                  valor_total: Number(row.valor_total),
-                  valor_flete: Number(row.valor_flete),      
-                  fkid_tbl_usuarios: validateAndConvertId(usuarioId),
+                    guia: String(row.guia),
+                    fkid_tbl_clientes: BigInt(cliente.pkid),
+                    fkid_tbl_municipios: municipio ? BigInt(municipio.pkid) : null,
+                    fkid_tbl_transportadoras: transportadora ? BigInt(transportadora.pkid) : null,
+                    fecha_creacion: new Date(row.fecha_creacion.trim()),
+                    valor_total: Number(row.valor_total),
+                    valor_flete: Number(row.valor_flete),
+                    fkid_tbl_usuarios: usuarioId,
                 },
-              });
-              
+            });
+
             pedidosCreados.push(pedido);
 
             const productos = JSON.parse(row.productos);
