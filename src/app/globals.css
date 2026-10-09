@@ -31,3 +31,23 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;  
 }
+
+
+/* ===== Panel nuevo (/panel): tokens de color usables como clases de Tailwind =====
+   Los valores reales viven en src/app/panel/panel.css y cambian con el tema. */
+@theme inline {
+  --color-p-bg: var(--p-bg);
+  --color-p-surface: var(--p-surface);
+  --color-p-raised: var(--p-raised);
+  --color-p-line: var(--p-line);
+  --color-p-text: var(--p-text);
+  --color-p-muted: var(--p-muted);
+  --color-p-accent: var(--p-accent);
+  --color-p-solid: var(--p-solid);
+  --color-p-accent-soft: var(--p-accent-soft);
+  --color-p-on-solid: var(--p-on-solid);
+  --color-p-ok: var(--p-ok);
+  --color-p-warn: var(--p-warn);
+  --color-p-bad: var(--p-bad);
+  --color-p-info: var(--p-info);
+}
